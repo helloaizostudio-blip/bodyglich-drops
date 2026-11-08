@@ -1,0 +1,13 @@
+{
+  "name": "blockheads-cast",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Blockheads character builder v2, cast specs and Character Studio",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node tools/test.mjs",
+    "contact": "node tools/contact.mjs",
+    "expressions": "node tools/expressions.mjs"
+  },
+  "devDependencies": { "three": "0.128.0" }
+}
