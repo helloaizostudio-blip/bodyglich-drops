@@ -101,26 +101,51 @@ def pulse(bpm, d, f=55.0):
     return x
 
 
+def bonk():
+    t = t_(0.35); x = np.sin(2 * np.pi * np.geomspace(900, 300, len(t)) * t) * np.exp(-t * 12) * 0.8
+    w = tone(1500, 0.5) * np.sin(2 * np.pi * 7 * t_(0.5)) * np.exp(-t_(0.5) * 5) * 0.15
+    out = np.zeros(int(0.5 * SR)); out[:len(x)] += x; out += w; return out
+def knock():
+    x = lp_fast(noise(0.09), 700) * np.exp(-np.linspace(0, 16, int(0.09 * SR))); return x * 2.2 + tone(110, 0.09) * np.exp(-np.linspace(0, 20, int(0.09 * SR))) * 0.8
+def rumble(d, grow=True):
+    t = t_(d); x = lp_fast(noise(d), 120) * 3 + np.sin(2 * np.pi * 38 * t) * 0.5 + np.sin(2 * np.pi * 41.5 * t) * 0.4
+    g = np.linspace(0.2, 1, len(t)) if grow else np.ones(len(t)); return x * g * 0.6
+def buzz(d):
+    t = t_(d); x = np.sign(np.sin(2 * np.pi * 120 * t)) * 0.15 * (np.sin(2 * np.pi * 9 * t) > 0); return lp_fast(x, 2000)
+def burst():
+    d = 1.6; x = hp_fast(noise(d), 1500) * np.exp(-t_(d) * 2.5) * 0.4; return x + shimmer(d) * 2.2
+def boop():
+    a = tone(523.25, 0.12, 'tri') * env(int(0.12 * SR), 0.005, 0.08); b = tone(392, 0.22, 'tri') * env(int(0.22 * SR), 0.005, 0.15)
+    return np.concatenate([a, np.zeros(int(0.03 * SR)), b]) * 0.5
+
+
 def build_score(m, tl):
     seg = {s['id']: s for s in tl['segs']}
     def s_(i): return seg[i]['start']
     def e_(i): return seg[i]['end']
     total = tl['dur']
-    # 1. intro/world-building: slow minor progression
-    t = 0.0; prog = ['Am', 'F', 'C', 'G']; i = 0
-    while t < s_('until'):
-        d = min(2.4, s_('until') - t); m.put(pad(prog[i % 4], d + 0.4, 0.4), t, 0.5, bus='music'); t += d; i += 1
+    def pads(prog, a, b, warm, gain, step=2.4):
+        t = a; i = 0
+        while t < b:
+            d = min(step, b - t); m.put(pad(prog[i % len(prog)], d + 0.4, warm), t, gain, bus='music'); t += d; i += 1
+    # 1. world-building: slow minor progression + pulse on the 11:59 run
+    pads(['Am', 'F', 'C', 'G'], 0.0, s_('until'), 0.4, 0.5)
     m.put(pulse(92, s_('until') - s_('adapt3')), s_('adapt3'), 0.45, bus='music')
-    # 2. "Until last Friday": drop to a low drone, tension builds through the chase
+    # 2. Friday: low drone, chase pulse into the figure
     m.put(pad('Dm', e_('turn') - s_('until') + 0.3, 0.2) * 0.8, s_('until'), 0.5, bus='music')
     m.put(pulse(118, e_('figure') - s_('run'), 41.2), s_('run'), 0.55, bus='music')
     m.put(riser(e_('figure') - s_('figure') + 0.2), s_('figure'), 0.7, bus='music')
-    # 3. reveal + hug: warm major swell
-    t = s_('reveal'); prog = ['C', 'G', 'Am', 'F']; i = 0
-    while t < e_('hug') + 0.4:
-        d = 1.8; m.put(pad(prog[i % 4], d + 0.4, 0.9), t, 0.6, bus='music'); t += d; i += 1
-    # 4. twist: cold drone to the end
-    m.put(pad('E', total - s_('twist') + 0.2, 0.15) * 0.7, s_('twist'), 0.5, bus='music')
+    # 3. reveal + banter: light, warm, playful
+    pads(['C', 'G', 'Am', 'F'], s_('reveal'), s_('flick'), 0.8, 0.45, 1.8)
+    # 4. the Dark: drone + fast pulse + riser into "I opened the jar"
+    m.put(pad('E', s_('open') - s_('flick') + 0.2, 0.15) * 0.8, s_('flick'), 0.5, bus='music')
+    m.put(pulse(140, s_('rulethk') - s_('grabh'), 41.2), s_('grabh'), 0.6, bus='music')
+    m.put(riser(s_('open') - s_('onelight')), s_('onelight'), 0.8, bus='music')
+    # 5. fireflies + home: big warm major swell
+    pads(['C', 'G', 'Am', 'F', 'C'], s_('burst'), e_('hug') + 0.5, 1.0, 0.65, 1.7)
+    # 6. twist: cold drone; tag: tiny playful button over the end card
+    m.put(pad('E', s_('tag1') - s_('twist') + 0.2, 0.15) * 0.7, s_('twist'), 0.5, bus='music')
+    pads(['C', 'G'], s_('tag2') + 0.3, total, 0.9, 0.35, 1.4)
 
 
 def build_sfx(m, tl):
@@ -129,30 +154,55 @@ def build_sfx(m, tl):
         for x in seg[sid]['words']:
             if x['w'].lower() == w: return x['s']
         return seg[sid]['start']
+    def shot(n): return next(x for x in shots if x['name'] == n)
     for s in shots[1:]:
-        m.put(whoosh(0.3), s['s'] - 0.12, 0.22, pan=rng.uniform(-0.4, 0.4))
+        m.put(whoosh(0.3), s['s'] - 0.12, 0.2, pan=rng.uniform(-0.4, 0.4))
     m.put(power_down(), word('rule', 'off'), 0.8)
-    door = next(s for s in shots if s['name'] == 'door_lock')
+    m.put(rumble(e_(seg, 'dark0') - seg['dark0']['start'] + 0.5, False), seg['dark0']['start'], 0.5)
+    door = shot('door_lock')
     for i in range(3): m.put(clack(), door['s'] + 0.12 + i * 0.22, 0.7, pan=0.3)
     for n in ('clock_1159', 'clock_1200', 'clock_1201'):
-        s = next(x for x in shots if x['name'] == n)
+        s = shot(n)
         for k in range(int((s['e'] - s['s']) / 0.5) + 1): m.put(tick(), s['s'] + k * 0.5, 0.5)
-    m.put(bell(), next(x for x in shots if x['name'] == 'clock_1200')['s'], 0.55)
-    cr = [x for x in shots if x['name'] in ('crowd_run', 'crowd_low')]
-    for s in cr:
+    m.put(bell(), shot('clock_1200')['s'], 0.55)
+    for s in [x for x in shots if x['name'] in ('crowd_run', 'crowd_low')]:
         t = s['s']
         while t < s['e']: m.put(step(), t, 0.35 * rng.uniform(0.6, 1.0), pan=rng.uniform(-0.8, 0.8)); t += rng.uniform(0.03, 0.08)
     m.put(power_down(), seg['liza']['start'], 0.7)
-    g = next(x for x in shots if x['name'] == 'grab'); m.put(click(), g['s'] + 0.3, 0.9)
-    r = next(x for x in shots if x['name'] == 'run_street'); t = r['s']
+    m.put(click(), shot('grab')['s'] + 0.3, 0.9)
+    r = shot('run_street'); t = r['s']
     while t < r['e'] + 0.6: m.put(step(), t, 0.7, pan=0.1); t += 0.21
     for s_id in ('figure', 'turn'):
         t = seg[s_id]['start'] - 0.1
         for k in range(3): m.put(heartbeat(), t + k * 0.62, 0.8)
     m.put(shimmer(2.6), seg['reveal']['start'] + 0.3, 0.8)
     m.put(shimmer(1.6), seg['q']['start'], 0.5)
+    m.put(bonk(), shot('smack')['s'] + 0.53, 1.0)
+    fl = shot('jar_flicker'); m.put(buzz(fl['e'] - fl['s']), fl['s'], 0.35)
+    # the Dark: a rumble that grows from "darkness started moving" until the fireflies burst
+    a, b = seg['dark1']['start'], seg['burst']['start'] + 0.6
+    m.put(rumble(b - a, True), a, 0.9)
+    for s_id in ('dark2', 'rulethk'):
+        t = seg[s_id]['start']
+        for k in range(2): m.put(heartbeat(), t + k * 0.6, 0.7)
+    for n in ('run_two', 'flash_flicker', 'flash_dead', 'run_back'):
+        s = shot(n); t = s['s']
+        while t < s['e']: m.put(step(), t, 0.6, pan=-0.2); m.put(step(), t + 0.1, 0.45, pan=0.2); t += 0.2
+    ff = shot('flash_flicker'); m.put(buzz(ff['e'] - ff['s']), ff['s'], 0.45)
+    m.put(click(), shot('flash_dead')['s'] + 0.05, 0.9)
+    bg = shot('door_bang'); t = bg['s'] + 0.1
+    while t < bg['e']: m.put(knock(), t, 0.9, pan=-0.3); t += 0.31
+    m.put(click(), shot('curtain_close')['s'] + 0.4, 0.6)
+    m.put(clack(), shot('jar_open')['s'] + 0.25, 0.8)
+    m.put(burst(), seg['burst']['start'], 1.0)
+    m.put(shimmer(2.6), seg['burst']['start'] + 0.8, 0.9)
+    rh = shot('run_home'); t = rh['s']
+    while t < rh['e']: m.put(step(), t, 0.55); t += 0.22
+    m.put(clack(), shot('dad_door')['s'], 0.6)
     m.put(power_up(), word('twist', 'on'), 0.8)
     m.put(sting(), seg['twist2']['start'] - 0.1, 0.8)
+    m.put(boop(), seg['tag2']['end'] + 0.15, 0.9)
+def e_(seg, i): return seg[i]['end']
 
 
 def master_voice(path):

@@ -41,9 +41,9 @@ def stage_voice():
         words = align_words(y, text, t)
         segs.append(dict(id=sid, who=who, tag=tag, text=clean, start=t, end=t + dur, words=words, shots=shots))
         clips.append(y.astype(np.float32)); t += dur
-        gap = 0.12 if sid not in ('until', 'turn', 'figure') else 0.42   # longer beats before reveals
+        gap = getattr(S, 'LONG_GAPS', {}).get(sid, 0.12)   # longer beats before reveals
         clips.append(np.zeros(int(gap * SR), np.float32)); t += gap
-    clips.append(np.zeros(int(1.6 * SR), np.float32)); t += 1.6     # tail for the final sting
+    tail = getattr(S, 'TAIL', 1.6); clips.append(np.zeros(int(tail * SR), np.float32)); t += tail     # tail for the end card
     voice = np.concatenate(clips)
     os.makedirs(OUT, exist_ok=True)
     sf.write(os.path.join(OUT, 'voice_raw.wav'), voice, SR)
@@ -128,7 +128,7 @@ def stage_audio():
 
 # ---------------------------------------------------------------- encode
 def stage_encode():
-    mp4 = os.path.join(OUT, 'blockheads_sample_midnight_lights.mp4')
+    mp4 = os.path.join(OUT, 'blockheads_midnight_lights_full.mp4')
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', os.path.join(FR, '%04d.jpg'), '-i', os.path.join(OUT, 'mix.wav'),
                     '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k',
                     '-shortest', '-movflags', '+faststart', mp4], check=True)
@@ -137,7 +137,7 @@ def stage_encode():
 
 # ---------------------------------------------------------------- QA
 def stage_qa():
-    mp4 = os.path.join(OUT, 'blockheads_sample_midnight_lights.mp4'); tl = json.load(open(os.path.join(OUT, 'timeline.json')))
+    mp4 = os.path.join(OUT, 'blockheads_midnight_lights_full.mp4'); tl = json.load(open(os.path.join(OUT, 'timeline.json')))
     pr = json.loads(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'stream=codec_name,width,height,r_frame_rate,nb_frames:format=duration',
                                     '-of', 'json', mp4], capture_output=True, text=True).stdout)
     r = subprocess.run(['ffmpeg', '-hide_banner', '-i', mp4, '-af', 'ebur128=peak=true', '-f', 'null', '-'], capture_output=True, text=True).stderr
