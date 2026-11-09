@@ -23,6 +23,7 @@ burn, Zash landing on his face.
 Format: (id, speaker, tag, text, shots). Words in *stars* get the red danger caption.
 """
 TITLE = "The Wall"
+SLUG = "ep02_the_wall"
 
 LINES = [
     # 1. rule + threat

@@ -12,10 +12,17 @@ import numpy as np, soundfile as sf
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, 'voice')); sys.path.insert(0, HERE)
-OUT = os.path.join(HERE, 'out'); FR = os.path.join(OUT, 'frames')
+# Episode folder: BH_EP=<dir> holding script.py, scene.js, audio.py (default: this sample folder)
+EP = os.path.abspath(os.environ.get('BH_EP', HERE))
+OUT = os.path.join(EP, 'out'); FR = os.path.join(OUT, 'frames')
 W, H, FPS = int(os.environ.get('BH_W', 1080)), int(os.environ.get('BH_H', 1920)), int(os.environ.get('BH_FPS', 30))
 SR = 24000
-import script_sample as S
+import importlib.util
+def _load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+S = _load('episode_script', os.path.join(EP, 'script.py')) if os.path.exists(os.path.join(EP, 'script.py')) else __import__('script_sample')
+SCENE = os.path.join(EP, 'scene.js') if os.path.exists(os.path.join(EP, 'scene.js')) else os.path.join(HERE, 'scene_sample.js')
+SLUG = getattr(S, 'SLUG', 'midnight_lights_full')
 
 
 # ---------------------------------------------------------------- voice + timeline
@@ -115,20 +122,21 @@ def stage_render():
     todo = [f for f in range(n) if not os.path.exists(os.path.join(FR, f'{f:04d}.jpg'))]
     if not todo: print('render: all frames present'); return
     chunks = [todo[i::workers] for i in range(workers)]
-    procs = [subprocess.Popen(['node', os.path.join(HERE, 'render_sample.mjs'), ','.join(map(str, c)), str(W), str(H)]) for c in chunks if c]
+    env = dict(os.environ, BH_SCENE=SCENE, BH_OUTDIR=OUT)
+    procs = [subprocess.Popen(['node', os.path.join(HERE, 'render_sample.mjs'), ','.join(map(str, c)), str(W), str(H)], env=env) for c in chunks if c]
     rc = [p.wait() for p in procs]
     if any(rc): sys.exit(f'render failed: {rc}')
 
 
 # ---------------------------------------------------------------- audio
 def stage_audio():
-    import audio_sample
-    audio_sample.mix(os.path.join(OUT, 'timeline.json'), os.path.join(OUT, 'voice_raw.wav'), os.path.join(OUT, 'mix.wav'))
+    A = _load('episode_audio', os.path.join(EP, 'audio.py')) if os.path.exists(os.path.join(EP, 'audio.py')) else __import__('audio_sample')
+    A.mix(os.path.join(OUT, 'timeline.json'), os.path.join(OUT, 'voice_raw.wav'), os.path.join(OUT, 'mix.wav'))
 
 
 # ---------------------------------------------------------------- encode
 def stage_encode():
-    mp4 = os.path.join(OUT, 'blockheads_midnight_lights_full.mp4')
+    mp4 = os.path.join(OUT, f'blockheads_{SLUG}.mp4')
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', os.path.join(FR, '%04d.jpg'), '-i', os.path.join(OUT, 'mix.wav'),
                     '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k',
                     '-shortest', '-movflags', '+faststart', mp4], check=True)
@@ -137,7 +145,7 @@ def stage_encode():
 
 # ---------------------------------------------------------------- QA
 def stage_qa():
-    mp4 = os.path.join(OUT, 'blockheads_midnight_lights_full.mp4'); tl = json.load(open(os.path.join(OUT, 'timeline.json')))
+    mp4 = os.path.join(OUT, f'blockheads_{SLUG}.mp4'); tl = json.load(open(os.path.join(OUT, 'timeline.json')))
     pr = json.loads(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'stream=codec_name,width,height,r_frame_rate,nb_frames:format=duration',
                                     '-of', 'json', mp4], capture_output=True, text=True).stdout)
     r = subprocess.run(['ffmpeg', '-hide_banner', '-i', mp4, '-af', 'ebur128=peak=true', '-f', 'null', '-'], capture_output=True, text=True).stderr
