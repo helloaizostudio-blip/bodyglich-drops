@@ -855,6 +855,15 @@ function buildHair(c,grp){
   const fringe=(n,a0,a1,y,len,dz,mat)=>{for(let i=0;i<n;i++){const a=lerp(a0,a1,n>1?i/(n-1):0.5)+(r()-.5)*0.08;const p=V(Math.sin(a)*0.66,y,Math.cos(a)*0.66);const d=V(Math.sin(a)*dz+(r()-.5)*0.25,-1,Math.cos(a)*dz);grp.add(lock(mat||m,len*(0.8+r()*0.4),0.16,0.07,p,d,a));}};
   const sideLocks=(n,len,y)=>{[-1,1].forEach(s=>{for(let i=0;i<n;i++){const a=s*(Math.PI*0.42+i*0.16);const p=V(Math.sin(a)*0.67,y,Math.cos(a)*0.67);grp.add(lock(r()<.3?dk:m,len*(0.8+r()*0.4),0.15,0.07,p,V(Math.sin(a)*0.2,-1,Math.cos(a)*0.1),a));}});};
   const st=h.style;
+  // 'classic' = the original v1 messy hair (chunky clumps + front fringe), same layout as v1, nicer material.
+  if(st==='classic'){const R2=0.68;const mm=MAT(h.color,0.85);const dd=MAT(shade(h.color,-0.12),0.9);
+    const r1=rng(c.id+'h');
+    const dome=new THREE.Mesh(new THREE.SphereGeometry(R2,28,14,0,Math.PI*2,0,Math.PI/2),mm);dome.position.y=5.1;dome.scale.y=0.5;grp.add(dome);
+    const band=new THREE.Mesh(new THREE.CylinderGeometry(R2-0.01,R2-0.01,0.18,28,1,true),mm);band.material.side=THREE.DoubleSide;band.position.y=5.02;grp.add(band);
+    const back=new THREE.Mesh(new THREE.CylinderGeometry(0.67,0.67,0.62,28,1,true,Math.PI*0.32,Math.PI*1.36),mm);back.position.y=5.1-0.31;grp.add(back);
+    for(let i=0;i<18;i++){const a=(r1()-0.5)*Math.PI*2;const up=r1();const rad=0.62*Math.sqrt(1-up*up*0.8);const s2=0.26+r1()*0.2;const b=rbox(s2,s2*0.7,s2,0.05,r1()<.3?dd:mm);b.position.set(Math.sin(a)*rad,5.12+up*0.3,Math.cos(a)*rad);b.rotation.set(r1()*1.2,r1()*3,r1()*1.2);grp.add(b);}
+    for(let i=0;i<7;i++){const a=-0.75+i*0.25+(r1()-.5)*0.1;const b=rbox(0.24,0.32,0.12,0.04,mm);b.position.set(Math.sin(a)*0.66,4.98,Math.cos(a)*0.66);b.rotation.y=a;b.rotation.z=(r1()-.5)*0.5;grp.add(b);}
+    return;}
   if(st==='sides'){const back=backShell(grp,m,0.6,0,0.665);back.position.y=4.6;sideLocks(3,0.38,4.85);for(let i=0;i<12;i++){const a=Math.PI*0.45+r()*Math.PI*1.1;grp.add(lock(m,0.34,0.2,0.13,V(Math.sin(a)*0.67,4.95,Math.cos(a)*0.67),V(Math.sin(a)*0.5,-1,Math.cos(a)*0.5),a));}return;}
   if(st==='buzz'||st==='flattop'||st==='undercut'){hairCap(grp,m,0.625,true);}
   else if(st==='frizzy'||st==='curly'||st==='afro'){/* volume handled below */ hairCap(grp,m,0.66,false);}
@@ -1279,7 +1288,7 @@ const CAST = [
  /* ---------------------------- ORIGINALS (upgraded) ---------------------------- */
  {id:'leo',aliases:['zash'],name:'Zash',formerName:'Leo',role:'The Narrator',group:'Main',origin:'original',stories:['Every episode'],
   bio:'The "I" in every story. An ordinary kid who keeps ending up with strange rules and powers. Sarcastic, a little lazy, secretly kind. Has a crush on Somi he thinks nobody knows about (everyone knows).',
-  skin:'#e8b98f',hair:{style:'messy',color:'#4a2f1e'},
+  skin:'#e8b98f',hair:{style:'classic',color:'#4a2f1e'},
   face:{eyes:'dot',eyeColor:'#5a3a22',brows:'normal',mouth:'smile',nose:'button'},
   torso:{inner:'#f2efe6',outer:{style:'hoodie',color:'#d9a23a',fabric:'fleece',strings:'#f4efe2'}},
   sleeves:{color:'#d9a23a',len:'full',cuff:'#c08d2c',fabric:'fleece'},pants:{color:'#3b5a80',fabric:'denim',jeans:true,shoes:'#efefef',accent:'#d9a23a'}},
