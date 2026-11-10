@@ -48,7 +48,7 @@ export function Chip({
       type="button"
       aria-pressed={active}
       className={cn(
-        "h-9 shrink-0 rounded-full px-4 text-[13px] font-semibold transition-colors",
+        "h-10 shrink-0 rounded-full px-4 text-[13px] font-semibold transition-colors md:h-9",
         active ? "bg-brand-600 text-white shadow-[0_4px_12px_-4px_rgb(38_112_230/0.6)]" : "bg-white text-navy-700 ring-1 ring-inset ring-line hover:bg-brand-100",
         className,
       )}

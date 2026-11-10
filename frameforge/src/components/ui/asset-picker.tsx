@@ -131,17 +131,17 @@ export function AssetField({
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex min-w-0 flex-col gap-1.5">
       <span className="text-[13px] font-semibold text-navy-800">{label}</span>
       {asset ? (
-        <div className="flex items-center gap-3 rounded-2xl bg-white p-2 ring-1 ring-line">
+        <div className="flex min-w-0 items-center gap-3 rounded-2xl bg-white p-2 ring-1 ring-line">
           <AssetThumb asset={asset} className={cn("w-24 shrink-0 rounded-xl", kind === "audio" ? "aspect-square w-14" : aspect)} />
           <div className="min-w-0 flex-1">
-            <p className="flex items-center gap-1 truncate text-sm font-semibold text-navy-900">
+            <p className="flex min-w-0 items-center gap-1 text-sm font-semibold text-navy-900">
               <Check className="size-3.5 shrink-0 text-ok-700" />
-              <span className="truncate">{asset.name}</span>
+              <span className="min-w-0 truncate">{asset.name}</span>
             </p>
-            <div className="mt-1 flex gap-1">
+            <div className="mt-1 flex flex-wrap gap-1">
               <Button size="sm" variant="secondary" onClick={() => setOpen(true)}>
                 Change
               </Button>

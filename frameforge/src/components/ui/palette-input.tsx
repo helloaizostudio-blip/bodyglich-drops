@@ -23,7 +23,7 @@ export function PaletteInput({ label, value, onChange, max = 8 }: { label: strin
               type="button"
               aria-label={`Remove colour ${c}`}
               onClick={() => onChange(value.filter((_, j) => j !== i))}
-              className="absolute -right-1.5 -top-1.5 grid size-5 place-items-center rounded-full bg-navy-900 text-white shadow"
+              className="absolute -right-2.5 -top-2.5 grid size-7 place-items-center rounded-full bg-navy-900 text-white shadow ring-2 ring-white"
             >
               <X className="size-3" />
             </button>

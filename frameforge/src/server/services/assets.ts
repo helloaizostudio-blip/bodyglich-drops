@@ -242,3 +242,11 @@ export async function deleteAssetCompletely(ctx: Ctx, asset: Asset) {
   await ctx.db.delete(assets).where(eq(assets.id, asset.id));
   await storage().delete(asset.storageKey).catch((err) => console.error("[storage delete failed]", err));
 }
+
+/** Loads an asset's bytes into memory (reference images sent to providers). */
+export async function readAssetBuffer(asset: Asset): Promise<Buffer> {
+  const stream = await storage().read(asset.storageKey);
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk as Uint8Array));
+  return Buffer.concat(chunks);
+}

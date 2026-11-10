@@ -22,7 +22,7 @@ export function Field({
 }) {
   const id = useId();
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
+    <div className={cn("flex min-w-0 flex-col gap-1.5", className)}>
       <label htmlFor={id} className="text-[13px] font-semibold text-navy-800">
         {label}
       </label>

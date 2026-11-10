@@ -102,7 +102,6 @@ button:not(:disabled), summary, select, [role="button"] {
 dialog.ff-modal {
   margin: auto auto 0;
   width: 100%;
-  max-width: 100%;
   max-height: 92dvh;
   border: 0;
   padding: 0;
@@ -117,6 +116,12 @@ dialog.ff-modal::backdrop {
   background: rgb(11 27 54 / 0.5);
   backdrop-filter: blur(2px);
   animation: var(--animate-fade);
+}
+/* max-width comes from Tailwind's sm:max-w-* size classes on larger screens, so only cap it on phones. */
+@media (max-width: 639.98px) {
+  dialog.ff-modal {
+    max-width: 100%;
+  }
 }
 @media (min-width: 640px) {
   dialog.ff-modal {

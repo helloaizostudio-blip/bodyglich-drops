@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Download, FolderOpen, Link2, Search, Trash2, UploadCloud, X } from "lucide-react";
+import { Download, FolderOpen, Link2, Search, Sparkles, Trash2, UploadCloud, X } from "lucide-react";
 import type { Asset, AssetCategory } from "@/db/schema";
 import { ASSET_CATEGORIES } from "@/db/schema";
 import type { AssetUsage } from "@/server/services/assets";
@@ -74,9 +74,14 @@ export function AssetLibrary({
         title="Asset Library"
         subtitle="Every image, clip and sound for your episodes, in one place."
         actions={
-          <Button icon={<UploadCloud className="size-4" />} onClick={() => setUploadOpen(true)}>
-            Upload
-          </Button>
+          <>
+            <Link href="/assets/generate" className="inline-flex h-11 items-center gap-2 rounded-xl bg-white px-4 text-sm font-semibold text-navy-900 ring-1 ring-inset ring-line hover:bg-brand-100">
+              <Sparkles className="size-4 text-brand-600" /> Generate
+            </Link>
+            <Button icon={<UploadCloud className="size-4" />} onClick={() => setUploadOpen(true)}>
+              Upload
+            </Button>
+          </>
         }
       >
         <div className="flex flex-col gap-3">
