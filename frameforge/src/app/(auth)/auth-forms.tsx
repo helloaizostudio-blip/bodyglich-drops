@@ -29,10 +29,11 @@ export function LoginForm() {
   );
 }
 
-export function SetupForm() {
+export function SetupForm({ needsCode }: { needsCode: boolean }) {
   const [state, action, pending] = useActionState(setupStudio, {});
   return (
     <form action={action} className="flex flex-col gap-4">
+      {needsCode ? <TextField label="Setup code" name="setupCode" autoComplete="off" required hint="The one-time code you were given when this studio was put online." /> : null}
       <TextField label="Your name" name="name" autoComplete="name" required defaultValue={state.values?.name} />
       <TextField label="YouTube channel" name="channel" required defaultValue={state.values?.channel ?? "BLOCKHEADS"} hint="Shown across the studio. You can change it later in Settings." />
       <TextField label="Email" name="email" type="email" autoComplete="email" required defaultValue={state.values?.email} />

@@ -5,16 +5,27 @@ import path from "node:path";
 import { Readable } from "node:stream";
 import { dataDir } from "@/db";
 import { sign } from "@/server/secret";
+import { ChunkedStorage, type BlobStore } from "./chunked";
+import { netlifyBlobStore } from "./netlify";
 
 /**
  * File storage adapter. Media never lives in the database or in browser storage:
  *  - "local": files on the server disk under DATA_DIR/storage (dev, or any host with a persistent volume)
  *  - "s3": any S3-compatible bucket (AWS S3, Cloudflare R2, Supabase Storage, Backblaze B2, MinIO)
+ *  - "netlify": Netlify Blobs, with files stored and uploaded in small parts (serverless size limits)
  */
-export type UploadTicket = { url: string; method: "PUT"; headers: Record<string, string> };
+export type UploadTicket = {
+  url: string;
+  method: "PUT";
+  headers: Record<string, string>;
+  /** When set, the browser must upload the file in parts of this many bytes (`&part=<n>` on the URL). */
+  chunkSize?: number;
+};
 
 export interface StorageDriver {
-  readonly id: "local" | "s3";
+  readonly id: "local" | "s3" | "netlify";
+  /** Largest body this driver can send in one HTTP response (serverless hosts), if limited. */
+  readonly maxResponseBytes?: number;
   /** Where the browser should PUT the file bytes. */
   createUpload(key: string, mimeType: string, sizeBytes: number): Promise<UploadTicket>;
   put(key: string, data: Buffer, mimeType: string): Promise<void>;
@@ -162,16 +173,102 @@ class S3Driver implements StorageDriver {
   }
 }
 
-export function storageMode(): "local" | "s3" {
+/** Parts of 4 MB stay under Netlify's ~4.5 MB limit for binary request bodies. */
+const NETLIFY_CHUNK_BYTES = 4 * 1024 * 1024;
+
+/** Filesystem-backed blob store. Only used to exercise the chunked code path in local tests. */
+function diskBlobStore(): BlobStore {
+  const root = path.join(dataDir(), "chunked-storage");
+  const file = (key: string) => path.join(root, safeKey(key));
+  return {
+    async set(key, data) {
+      await fsp.mkdir(path.dirname(file(key)), { recursive: true });
+      await fsp.writeFile(file(key), data);
+    },
+    async get(key) {
+      try {
+        return new Uint8Array(await fsp.readFile(file(key)));
+      } catch {
+        return null;
+      }
+    },
+    async delete(key) {
+      await fsp.rm(file(key), { force: true });
+    },
+    async list(prefix) {
+      const dir = path.dirname(file(`${prefix}x`));
+      try {
+        return (await fsp.readdir(dir)).map((name) => `${prefix}${name}`);
+      } catch {
+        return [];
+      }
+    },
+  };
+}
+
+/**
+ * Chunked driver: every object is stored in parts so uploads and playback fit serverless limits.
+ * Backed by Netlify Blobs in production ("netlify"); "chunked-test" backs it with local files.
+ */
+class NetlifyDriver implements StorageDriver {
+  readonly id = "netlify" as const;
+  /** Netlify streams at most 20 MB per response; stay well below it. */
+  readonly maxResponseBytes = 8 * 1024 * 1024;
+  readonly chunks: ChunkedStorage;
+  constructor(store: BlobStore) {
+    this.chunks = new ChunkedStorage(store, NETLIFY_CHUNK_BYTES);
+  }
+
+  async createUpload(key: string, _mime: string, sizeBytes: number): Promise<UploadTicket> {
+    const exp = Date.now() + 6 * 60 * 60_000;
+    const sig = sign(`upload:${safeKey(key)}:${sizeBytes}:${exp}`);
+    const qs = new URLSearchParams({ key, size: String(sizeBytes), exp: String(exp), sig });
+    return { url: `/api/storage/upload?${qs}`, method: "PUT", headers: {}, chunkSize: NETLIFY_CHUNK_BYTES };
+  }
+  async put(key: string, data: Buffer) {
+    await this.chunks.put(safeKey(key), data);
+  }
+  async stat(key: string) {
+    const m = await this.chunks.manifest(safeKey(key));
+    return m ? { size: m.size } : null;
+  }
+  async delete(key: string) {
+    await this.chunks.delete(safeKey(key));
+  }
+  async directUrl() {
+    return null;
+  }
+  async read(key: string, range?: { start: number; end: number }) {
+    return this.chunks.read(safeKey(key), range);
+  }
+  async downloadTo(key: string, filePath: string) {
+    await this.chunks.downloadTo(safeKey(key), filePath);
+  }
+}
+
+export function storageMode(): "local" | "s3" | "netlify" {
   const explicit = process.env.STORAGE_DRIVER;
-  if (explicit === "s3" || explicit === "local") return explicit;
-  return process.env.S3_BUCKET && process.env.S3_ACCESS_KEY_ID && process.env.S3_SECRET_ACCESS_KEY ? "s3" : "local";
+  if (explicit === "chunked-test") return "netlify";
+  if (explicit === "s3" || explicit === "local" || explicit === "netlify") return explicit;
+  if (process.env.S3_BUCKET && process.env.S3_ACCESS_KEY_ID && process.env.S3_SECRET_ACCESS_KEY) return "s3";
+  // On Netlify there is no persistent disk, so Netlify Blobs is the default there.
+  return process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT || process.env.NETLIFY_DB_URL ? "netlify" : "local";
 }
 
 let driver: StorageDriver | undefined;
 export function storage(): StorageDriver {
-  driver ??= storageMode() === "s3" ? new S3Driver() : new LocalDriver();
+  if (!driver) {
+    const mode = storageMode();
+    const blobs = process.env.STORAGE_DRIVER === "chunked-test" ? diskBlobStore() : netlifyBlobStore();
+    driver = mode === "s3" ? new S3Driver() : mode === "netlify" ? new NetlifyDriver(blobs) : new LocalDriver();
+  }
   return driver;
+}
+
+/** The chunked layer when the active driver stores files in parts, otherwise null. */
+export function chunkedDriver(): ChunkedStorage | null {
+  const d = storage();
+  return d instanceof NetlifyDriver ? d.chunks : null;
 }
 
 export function localDriver(): LocalDriver | null {

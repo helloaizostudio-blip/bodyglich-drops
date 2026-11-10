@@ -4,6 +4,7 @@ import { storageMode } from "@/server/storage";
 import { providerStatuses } from "@/server/providers/config";
 import { studioGuides } from "@/server/services/settings";
 import { textUsageSummary } from "@/server/services/usage";
+import { ffmpegStatus } from "@/server/services/render";
 import { PageHeader } from "@/components/ui/misc";
 import { SettingsView } from "./settings-view";
 
@@ -25,6 +26,7 @@ export default async function SettingsPage() {
           database: databaseMode(),
           storage: storageMode(),
           secretFromEnv: !!process.env.APP_SECRET,
+          ffmpeg: (await ffmpegStatus()).available,
         }}
       />
     </>

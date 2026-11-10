@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, CircleDashed, Database, ExternalLink, HardDrive, KeyRound, ShieldAlert, TriangleAlert } from "lucide-react";
+import { CheckCircle2, CircleDashed, Clapperboard, Database, ExternalLink, HardDrive, KeyRound, ShieldAlert, TriangleAlert } from "lucide-react";
 import type { ProviderCapability } from "@/db/schema";
 import type { ProviderStatusView } from "@/server/providers/config";
 import type { UsageSummary } from "@/server/services/usage";
@@ -30,7 +30,7 @@ export function SettingsView({
   guides: { styleGuide: string; storyGuide: string };
   user: { name: string; email: string };
   usage: UsageSummary;
-  system: { database: "postgres" | "embedded"; storage: "local" | "s3"; secretFromEnv: boolean };
+  system: { database: "postgres" | "embedded"; storage: "local" | "s3" | "netlify"; secretFromEnv: boolean; ffmpeg: boolean };
 }) {
   return (
     <div className="flex flex-col gap-5">
@@ -123,8 +123,20 @@ export function SettingsView({
             <li className="flex items-start gap-3">
               <HardDrive className="mt-0.5 size-5 shrink-0 text-brand-600" />
               <div>
-                <p className="font-semibold text-navy-900">File storage: {system.storage === "s3" ? "S3-compatible bucket" : "Server disk"}</p>
+                <p className="font-semibold text-navy-900">File storage: {system.storage === "s3" ? "S3-compatible bucket" : system.storage === "netlify" ? "Netlify Blobs" : "Server disk"}</p>
+                {system.storage === "netlify" ? <p className="text-[13px] text-muted">Files are uploaded and stored in 4 MB parts to fit Netlify&apos;s request limits. Large videos upload more slowly than on a dedicated server.</p> : null}
                 {system.storage === "local" ? <p className="text-[13px] text-muted">Uploads live in the server&apos;s data folder. Use a persistent volume, or configure an S3-compatible bucket.</p> : null}
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <Clapperboard className={system.ffmpeg ? "mt-0.5 size-5 shrink-0 text-brand-600" : "mt-0.5 size-5 shrink-0 text-warn-700"} />
+              <div>
+                <p className="font-semibold text-navy-900">Video rendering: {system.ffmpeg ? "ffmpeg is available" : "not available on this host"}</p>
+                {!system.ffmpeg ? (
+                  <p className="text-[13px] text-muted">
+                    This host has no ffmpeg, so the Video Editor cannot render the final MP4 here. Everything else works; export your clips and audio, or move FRAMEFORGE to a container host to render in the studio.
+                  </p>
+                ) : null}
               </div>
             </li>
             <li className="flex items-start gap-3">

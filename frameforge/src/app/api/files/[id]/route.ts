@@ -6,6 +6,9 @@ import { storage } from "@/server/storage";
 
 export const runtime = "nodejs";
 
+/** Largest whole-file response on hosts that limit response size (Netlify streams up to 20 MB). */
+const FULL_LIMIT = 16 * 1024 * 1024;
+
 /** Serves a library asset to the signed-in studio. Supports HTTP range requests for video/audio seeking. */
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const ctx = await getCtx();
@@ -32,12 +35,17 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   });
   if (download) headers.set("Content-Disposition", `attachment; filename="${safeName}"`);
 
-  const range = req.headers.get("range");
+  // Hosts with a response-size limit get the file in ranges: media players ask for the next range
+  // automatically, and the app's own downloader (see downloadAsset) stitches ranges back together.
+  const cap = driver.maxResponseBytes;
+  // A request without a Range header (an <img>, a plain download) may be up to FULL_LIMIT in one piece.
+  const range = req.headers.get("range") ?? (cap && stat.size > FULL_LIMIT ? "bytes=0-" : null);
   const match = range ? /^bytes=(\d*)-(\d*)$/.exec(range) : null;
   if (match && (match[1] || match[2])) {
     let start = match[1] ? Number(match[1]) : Math.max(0, stat.size - Number(match[2]));
     let end = match[1] && match[2] ? Number(match[2]) : stat.size - 1;
     end = Math.min(end, stat.size - 1);
+    if (cap) end = Math.min(end, start + cap - 1);
     if (start > end || start >= stat.size) {
       return new Response(null, { status: 416, headers: { "Content-Range": `bytes */${stat.size}` } });
     }

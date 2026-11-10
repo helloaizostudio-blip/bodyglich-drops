@@ -43,3 +43,6 @@ next-env.d.ts
 # local data (embedded database, uploaded files, generated secret)
 /.data/
 !.env.example
+
+# netlify local state
+.netlify

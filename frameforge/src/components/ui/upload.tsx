@@ -74,7 +74,7 @@ async function probe(file: File, kind: AssetKind): Promise<{ width?: number; hei
   }
 }
 
-function putWithProgress(url: string, headers: Record<string, string>, file: File, onProgress: (f: number) => void): Promise<void> {
+function putWithProgress(url: string, headers: Record<string, string>, file: Blob, onProgress: (f: number) => void): Promise<void> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("PUT", url);
@@ -88,6 +88,25 @@ function putWithProgress(url: string, headers: Record<string, string>, file: Fil
   });
 }
 
+/** Uploads a file as numbered parts (hosts that limit request size). Each part is retried a few times. */
+async function putInParts(url: string, headers: Record<string, string>, file: File, chunkSize: number, onProgress: (f: number) => void): Promise<void> {
+  const parts = Math.max(1, Math.ceil(file.size / chunkSize));
+  for (let i = 0; i < parts; i++) {
+    const blob = file.slice(i * chunkSize, Math.min(file.size, (i + 1) * chunkSize));
+    let attempt = 0;
+    for (;;) {
+      try {
+        await putWithProgress(`${url}&part=${i}`, headers, blob, (f) => onProgress((i * chunkSize + f * blob.size) / Math.max(file.size, 1)));
+        break;
+      } catch (err) {
+        if (++attempt >= 3) throw err;
+        await new Promise((r) => setTimeout(r, 800 * attempt));
+      }
+    }
+  }
+  onProgress(1);
+}
+
 export type UploadOptions = { category: AssetCategory; episodeId?: string; sceneId?: string; name?: string };
 
 export async function uploadFile(file: File, opts: UploadOptions, onProgress: (fraction: number) => void = () => {}): Promise<Asset> {
@@ -97,7 +116,9 @@ export async function uploadFile(file: File, opts: UploadOptions, onProgress: (f
   const name = (opts.name ?? file.name.replace(/\.[^.]+$/, "")).slice(0, 120) || "Untitled";
   const begin = await beginUpload({ name, mimeType, sizeBytes: file.size, category: opts.category });
   if (!begin.ok) throw new Error(begin.error);
-  const [meta] = await Promise.all([probe(file, kind), putWithProgress(begin.data.ticket.url, begin.data.ticket.headers, file, onProgress)]);
+  const { ticket } = begin.data;
+  const send = ticket.chunkSize ? putInParts(ticket.url, ticket.headers, file, ticket.chunkSize, onProgress) : putWithProgress(ticket.url, ticket.headers, file, onProgress);
+  const [meta] = await Promise.all([probe(file, kind), send]);
   const done = await completeUpload({
     key: begin.data.key,
     name,

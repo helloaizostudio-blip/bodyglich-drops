@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Download, FolderOpen, Link2, Search, Sparkles, Trash2, UploadCloud, X } from "lucide-react";
+import { FolderOpen, Link2, Search, Sparkles, Trash2, UploadCloud, X } from "lucide-react";
 import type { Asset, AssetCategory } from "@/db/schema";
 import { ASSET_CATEGORIES } from "@/db/schema";
 import type { AssetUsage } from "@/server/services/assets";
 import { attachAsset, deleteAsset, episodeScenesBrief, getAssetUsage, updateAsset } from "@/server/actions/assets";
 import { ASSET_CATEGORY_KINDS, ASSET_CATEGORY_LABELS } from "@/lib/constants";
-import { fileUrl, formatBytes, formatDuration, timeAgo } from "@/lib/utils";
+import { formatBytes, formatDuration, timeAgo } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input, SelectField, TextField } from "@/components/ui/field";
 import { Badge, Chip, ChipRow, EmptyState, PageHeader, Spinner } from "@/components/ui/misc";
@@ -16,6 +16,7 @@ import { ConfirmDialog, Modal } from "@/components/ui/modal";
 import { AssetPlayer, AssetThumb } from "@/components/ui/media";
 import { Dropzone } from "@/components/ui/upload";
 import { useRun } from "@/components/ui/use-run";
+import { DownloadButton } from "@/components/ui/download";
 import Link from "next/link";
 
 type EpisodeOption = { id: string; title: string; number: number };
@@ -300,9 +301,7 @@ function AssetDetail({ asset, episodes, onClose }: { asset: Asset; episodes: Epi
             ) : null}
 
             <div className="flex flex-wrap gap-2 border-t border-line pt-4">
-              <a href={`${fileUrl(asset.id)}?download=1`} className="inline-flex h-9 items-center gap-2 rounded-xl bg-white px-3 text-[13px] font-semibold text-navy-900 ring-1 ring-inset ring-line hover:bg-brand-100">
-                <Download className="size-3.5" /> Download
-              </a>
+              <DownloadButton asset={asset} />
               <Button variant="ghost" size="sm" className="!text-bad-700 hover:!bg-bad-100" icon={<Trash2 className="size-3.5" />} onClick={() => setConfirmDelete(true)}>
                 Delete
               </Button>

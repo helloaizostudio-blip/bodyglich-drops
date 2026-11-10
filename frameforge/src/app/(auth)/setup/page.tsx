@@ -11,7 +11,7 @@ export default async function SetupPage() {
     <>
       <h1 className="text-2xl font-extrabold text-navy-900">Set up your studio</h1>
       <p className="mb-6 mt-1 text-sm text-muted">Create the owner account for this FRAMEFORGE installation. This screen is only available once.</p>
-      <SetupForm />
+      <SetupForm needsCode={!!process.env.SETUP_CODE?.trim()} />
     </>
   );
 }

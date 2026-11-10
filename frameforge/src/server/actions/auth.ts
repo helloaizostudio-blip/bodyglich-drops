@@ -1,5 +1,6 @@
 "use server";
 
+import crypto from "node:crypto";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
@@ -39,6 +40,13 @@ export async function setupStudio(_prev: AuthFormState, form: FormData): Promise
     .safeParse({ ...values, password: form.get("password") });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message, values };
   if (await hasAnyUser()) return { error: "This studio is already set up. Please sign in instead.", values };
+  // On a public URL, SETUP_CODE stops a stranger from claiming the studio before its owner does.
+  const required = process.env.SETUP_CODE?.trim();
+  if (required) {
+    const given = Buffer.from(String(form.get("setupCode") ?? "").trim());
+    const expected = Buffer.from(required);
+    if (given.length !== expected.length || !crypto.timingSafeEqual(given, expected)) return { error: "That setup code is not correct.", values };
+  }
 
   const db = await getDb();
   const [user] = await db

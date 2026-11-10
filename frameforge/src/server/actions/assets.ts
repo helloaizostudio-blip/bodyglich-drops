@@ -4,7 +4,7 @@ import { z } from "zod";
 import { and, eq, isNull } from "drizzle-orm";
 import { action, UserError, zId, zName } from "@/server/action";
 import { assets, assetLinks, characterReferences, characters, episodes, scenes, ASSET_CATEGORIES } from "@/db/schema";
-import { storage, maxUploadBytes } from "@/server/storage";
+import { chunkedDriver, storage, maxUploadBytes } from "@/server/storage";
 import {
   assertCategoryAccepts,
   assetUsage,
@@ -52,6 +52,9 @@ export const completeUpload = action(
     if (!isSupportedMime(input.mimeType)) throw new UserError("Unsupported file type.");
     const kind = kindFromMime(input.mimeType);
     assertCategoryAccepts(input.category, kind);
+    // Chunked storage: confirm every part arrived before the file is considered stored.
+    const chunks = chunkedDriver();
+    if (chunks && !(await chunks.finalize(input.key, input.sizeBytes))) throw new UserError("The upload did not finish. Please try again.");
     const stat = await storage().stat(input.key);
     if (!stat) throw new UserError("The upload did not finish. Please try again.");
     const [asset] = await ctx.db
