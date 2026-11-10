@@ -511,6 +511,15 @@ function TownBuilder.build()
 
 	setupLighting()
 
+	-- If the scripts were synced into Studio's default Baseplate template, remove its
+	-- floor and its spawn (which would sit inside the fountain). Runtime only.
+	for _, name in { "Baseplate", "SpawnLocation" } do
+		local leftover = Workspace:FindFirstChild(name)
+		if leftover and leftover:IsA("BasePart") then
+			leftover:Destroy()
+		end
+	end
+
 	local town = Make("Folder", { Name = "Town" })
 	buildGround(town)
 	buildPlaza(town, result)

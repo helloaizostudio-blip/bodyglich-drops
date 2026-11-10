@@ -35,6 +35,7 @@ local DataService = {
 local profiles: { [Player]: any } = {}
 local dirty: { [Player]: boolean } = {}
 local releasing: { [Player]: boolean } = {}
+local savingUsers: { [number]: boolean } = {} -- userIds whose final save is in flight
 local store: any = nil
 local usingMock = false
 local shuttingDown = false
@@ -272,6 +273,19 @@ local function saveAsync(userId: number, profile: any, release: boolean): boolea
 	return false
 end
 
+-- Clears this server's session lock without changing anything else in the save.
+local function unlockAsync(userId: number)
+	pcall(function()
+		getStore():UpdateAsync(keyFor(userId), function(old)
+			if not old or not old.Session or old.Session.JobId ~= game.JobId then
+				return nil
+			end
+			old.Session = nil
+			return old
+		end)
+	end)
+end
+
 ---------------------------------------------------------------------------------------
 -- Public API
 ---------------------------------------------------------------------------------------
@@ -296,6 +310,20 @@ local function onPlayerAdded(player: Player)
 	if profiles[player] or shuttingDown then
 		return
 	end
+	-- A quick rejoin to this same server must wait for the previous session's final
+	-- save, otherwise it could load stale data.
+	local waitUntil = os.clock() + 30
+	while savingUsers[player.UserId] and os.clock() < waitUntil do
+		task.wait(0.2)
+	end
+	if savingUsers[player.UserId] then
+		player:Kick("Your data is still saving. Please rejoin in a moment.")
+		return
+	end
+	if player.Parent == nil then
+		return
+	end
+
 	local joinedAt = os.time()
 	local data, reason = loadAsync(player)
 
@@ -308,16 +336,17 @@ local function onPlayerAdded(player: Player)
 
 	local ok, err = pcall(prepare, data)
 	if not ok then
-		-- Corrupt or unexpected data: do not touch it, just release our lock by leaving
-		-- the stored value alone, and ask the player to rejoin.
+		-- Corrupt or unexpected data: leave the stored value alone, hand back only the
+		-- session lock, and ask the player to rejoin.
 		warn(`[DataService] Could not prepare data for {player.Name}: {err}`)
+		unlockAsync(player.UserId)
 		player:Kick("Your data could not be read. Please rejoin; if this keeps happening contact the developer.")
 		return
 	end
 
 	if player.Parent == nil then
 		-- Left while loading: hand the lock back without changing anything else.
-		saveAsync(player.UserId, data, true)
+		unlockAsync(player.UserId)
 		return
 	end
 
@@ -338,11 +367,14 @@ local function release(player: Player)
 	if typeof(joinedAt) == "number" then
 		profile.Stats.PlayTime += math.max(0, os.time() - joinedAt)
 	end
+	local userId = player.UserId
+	savingUsers[userId] = true
 	DataService.Releasing:Fire(player, profile)
-	saveAsync(player.UserId, profile, true)
+	saveAsync(userId, profile, true)
 	profiles[player] = nil
 	dirty[player] = nil
 	releasing[player] = nil
+	savingUsers[userId] = nil
 end
 
 function DataService.Init() end
@@ -402,16 +434,13 @@ function DataService.Start()
 
 	game:BindToClose(function()
 		shuttingDown = true
-		local pending = 0
 		for player in profiles do
-			pending += 1
-			task.spawn(function()
-				release(player)
-				pending -= 1
-			end)
+			task.spawn(release, player)
 		end
+		-- Wait on the real state: a save started by PlayerRemoving just before
+		-- shutdown is still in flight even though release() returns early for it.
 		local deadline = os.clock() + 25
-		while pending > 0 and os.clock() < deadline do
+		while (next(profiles) ~= nil or next(savingUsers) ~= nil) and os.clock() < deadline do
 			task.wait(0.1)
 		end
 	end)

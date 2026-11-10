@@ -4,7 +4,7 @@
 --
 -- Layout (kept clear of the mobile thumbstick and jump button):
 --   top centre    coins, level + XP, combo, rush banner, toasts
---   left middle   Quests, Daily, Rush, My Shop, Settings
+--   top left      Quests, Daily, Rush, My Shop, Settings
 --   bottom centre Shop, Team, Upgrades, Collection
 
 local Players = game:GetService("Players")
@@ -66,12 +66,18 @@ end
 -- Creates an empty pop-up panel. Returns the content frame to fill in.
 function Hud.newPanel(name: string, title: string, size: Vector2?): Frame
 	local dimensions = size or Vector2.new(660, 470)
-	local frame = Kit.frame({
+	-- A text-less button rather than a Frame: it swallows clicks, so tapping the
+	-- panel background (or a disabled button) does not fall through to the backdrop
+	-- and close the panel.
+	local frame = Kit.make("TextButton", {
 		Name = name .. "Panel",
 		Size = UDim2.fromOffset(dimensions.X, dimensions.Y),
 		Position = UDim2.fromScale(0.5, 0.5),
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		BackgroundColor3 = Theme.Panel,
+		BorderSizePixel = 0,
+		AutoButtonColor = false,
+		Text = "",
 		Visible = false,
 		ZIndex = 20,
 		Parent = Hud.Root,
@@ -294,10 +300,10 @@ end
 -- HUD construction
 ---------------------------------------------------------------------------------------
 
-local function menuButton(parent: Instance, order: number, emoji: string, caption: string, color: Color3, onClick: () -> ()): TextButton
+local function menuButton(parent: Instance, order: number, emoji: string, caption: string, color: Color3, onClick: () -> (), small: boolean?): TextButton
 	local button = Kit.button({
 		Name = caption,
-		Size = UDim2.fromOffset(78, 72),
+		Size = if small then UDim2.fromOffset(66, 62) else UDim2.fromOffset(78, 72),
 		LayoutOrder = order,
 		Color = color,
 		Text = "",
@@ -305,10 +311,10 @@ local function menuButton(parent: Instance, order: number, emoji: string, captio
 		Parent = parent,
 	})
 	Kit.text({
-		Size = UDim2.new(1, 0, 0, 40),
+		Size = UDim2.new(1, 0, 0, if small then 34 else 40),
 		Position = UDim2.fromOffset(0, 4),
 		Text = emoji,
-		TextSize = 34,
+		TextSize = if small then 28 else 34,
 		TextXAlignment = Enum.TextXAlignment.Center,
 		Parent = button,
 	})
@@ -316,7 +322,7 @@ local function menuButton(parent: Instance, order: number, emoji: string, captio
 		Size = UDim2.new(1, 0, 0, 22),
 		Position = UDim2.new(0, 0, 1, -26),
 		Text = caption,
-		TextSize = 15,
+		TextSize = if small then 13 else 15,
 		Parent = button,
 	})
 	local badge = Kit.frame({
@@ -367,6 +373,7 @@ local function build()
 	Kit.round(levelPill, 25)
 	Kit.stroke(levelPill, 3)
 	xpFill = Kit.frame({ Name = "XP", Size = UDim2.fromScale(0, 1), BackgroundColor3 = Theme.Purple, Parent = levelPill })
+	Kit.round(xpFill, 25) -- ClipsDescendants does not clip to rounded corners
 	levelLabel = Kit.title({ Size = UDim2.fromScale(1, 1), Text = "⭐ Level 1", TextSize = 22, ZIndex = 2, Parent = levelPill })
 
 	comboLabel = Kit.title({
@@ -408,31 +415,31 @@ local function build()
 	})
 	Kit.list(toastHolder, 6)
 
-	-- Left column.
+	-- Top-left row. It sits along the top edge on purpose: on phones the lower-left
+	-- of the screen is the movement thumbstick area and must stay empty.
 	local left = Kit.frame({
-		Name = "Left",
-		Size = UDim2.fromOffset(78, 400),
-		Position = UDim2.new(0, 12, 0.5, -30),
-		AnchorPoint = Vector2.new(0, 0.5),
+		Name = "TopLeft",
+		Size = UDim2.fromOffset(360, 62),
+		Position = UDim2.fromOffset(12, 8),
 		BackgroundTransparency = 1,
 		Parent = root,
 	})
-	Kit.list(left, 8, false, { VerticalAlignment = Enum.VerticalAlignment.Center })
+	Kit.list(left, 6, true)
 	menuButton(left, 1, "📜", "Quests", Theme.Purple, function()
 		Hud.toggle("Quests")
-	end)
+	end, true)
 	menuButton(left, 2, "🎁", "Daily", Theme.Green, function()
 		Hud.toggle("Daily")
-	end)
+	end, true)
 	menuButton(left, 3, "⚡", "Rush", Theme.Red, function()
 		Hud.toggle("Rush")
-	end)
+	end, true)
 	menuButton(left, 4, "🏠", "My Shop", Theme.Blue, function()
 		State.action("TeleportHome")
-	end)
+	end, true)
 	menuButton(left, 5, "⚙️", "Settings", Theme.Grey, function()
 		Hud.toggle("Settings")
-	end)
+	end, true)
 
 	-- Bottom row.
 	local bottom = Kit.frame({
@@ -482,6 +489,7 @@ local function build()
 	-- Dark backdrop behind panels; clicking it closes the open panel.
 	backdrop = Kit.make("TextButton", {
 		Name = "Backdrop",
+		Modal = true, -- frees the mouse in first person / shift-lock while a panel is open
 		Size = UDim2.fromScale(1, 1),
 		BackgroundColor3 = Color3.new(0, 0, 0),
 		BackgroundTransparency = 0.55,

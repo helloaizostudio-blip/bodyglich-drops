@@ -2313,14 +2313,17 @@ local function tickSim(sim, now: number)
 	if head and isIdle(head, now) then
 		if sim.Head ~= head then
 			sim.Head = head
+			sim.Holding = false
 			sim.HeadReadyAt = now
 			sim.HeadServeTime = serveTime(sim, head)
 			plot.Prompt.HoldDuration = sim.HeadServeTime
 			plot.Prompt.ObjectText = orderText(head)
 			plot.Prompt.Enabled = true
 		end
+		-- Staff step aside while the owner is holding Serve, so a fast team can never
+		-- snatch a customer (and the combo / rush points) out of the player's hands.
 		local staffMultiplier = Formulas.staffTimeMultiplier(profile)
-		if staffMultiplier and profile.Register < Formulas.registerCapacity(profile) then
+		if staffMultiplier and not sim.Holding and profile.Register < Formulas.registerCapacity(profile) then
 			if now >= sim.HeadReadyAt + sim.HeadServeTime * staffMultiplier then
 				completeServe(sim, head, "Staff", now)
 			end
@@ -2387,6 +2390,7 @@ local function createSim(plot, player: Player, profile)
 		Head = nil,
 		HeadReadyAt = 0,
 		HeadServeTime = 0,
+		Holding = false,
 		RegisterTimer = 0,
 		Rng = Random.new(),
 		RushRng = if CustomerService.RushActive then Random.new(CustomerService.RushSeed) else nil,
@@ -2437,6 +2441,18 @@ function CustomerService.Start()
 	for _, plot in PlotService.Plots do
 		plot.Prompt.Triggered:Connect(function(player)
 			onPromptTriggered(plot, player)
+		end)
+		plot.Prompt.PromptButtonHoldBegan:Connect(function(player)
+			local sim = sims[plot]
+			if sim and sim.Player == player then
+				sim.Holding = true
+			end
+		end)
+		plot.Prompt.PromptButtonHoldEnded:Connect(function(player)
+			local sim = sims[plot]
+			if sim and sim.Player == player then
+				sim.Holding = false
+			end
 		end)
 		if plot.Owner and DataService.get(plot.Owner) then
 			createSim(plot, plot.Owner, DataService.get(plot.Owner))
@@ -2503,6 +2519,7 @@ local DataService = {
 local profiles: { [Player]: any } = {}
 local dirty: { [Player]: boolean } = {}
 local releasing: { [Player]: boolean } = {}
+local savingUsers: { [number]: boolean } = {} -- userIds whose final save is in flight
 local store: any = nil
 local usingMock = false
 local shuttingDown = false
@@ -2740,6 +2757,19 @@ local function saveAsync(userId: number, profile: any, release: boolean): boolea
 	return false
 end
 
+-- Clears this server's session lock without changing anything else in the save.
+local function unlockAsync(userId: number)
+	pcall(function()
+		getStore():UpdateAsync(keyFor(userId), function(old)
+			if not old or not old.Session or old.Session.JobId ~= game.JobId then
+				return nil
+			end
+			old.Session = nil
+			return old
+		end)
+	end)
+end
+
 ---------------------------------------------------------------------------------------
 -- Public API
 ---------------------------------------------------------------------------------------
@@ -2764,6 +2794,20 @@ local function onPlayerAdded(player: Player)
 	if profiles[player] or shuttingDown then
 		return
 	end
+	-- A quick rejoin to this same server must wait for the previous session's final
+	-- save, otherwise it could load stale data.
+	local waitUntil = os.clock() + 30
+	while savingUsers[player.UserId] and os.clock() < waitUntil do
+		task.wait(0.2)
+	end
+	if savingUsers[player.UserId] then
+		player:Kick("Your data is still saving. Please rejoin in a moment.")
+		return
+	end
+	if player.Parent == nil then
+		return
+	end
+
 	local joinedAt = os.time()
 	local data, reason = loadAsync(player)
 
@@ -2776,16 +2820,17 @@ local function onPlayerAdded(player: Player)
 
 	local ok, err = pcall(prepare, data)
 	if not ok then
-		-- Corrupt or unexpected data: do not touch it, just release our lock by leaving
-		-- the stored value alone, and ask the player to rejoin.
+		-- Corrupt or unexpected data: leave the stored value alone, hand back only the
+		-- session lock, and ask the player to rejoin.
 		warn(`[DataService] Could not prepare data for {player.Name}: {err}`)
+		unlockAsync(player.UserId)
 		player:Kick("Your data could not be read. Please rejoin; if this keeps happening contact the developer.")
 		return
 	end
 
 	if player.Parent == nil then
 		-- Left while loading: hand the lock back without changing anything else.
-		saveAsync(player.UserId, data, true)
+		unlockAsync(player.UserId)
 		return
 	end
 
@@ -2806,11 +2851,14 @@ local function release(player: Player)
 	if typeof(joinedAt) == "number" then
 		profile.Stats.PlayTime += math.max(0, os.time() - joinedAt)
 	end
+	local userId = player.UserId
+	savingUsers[userId] = true
 	DataService.Releasing:Fire(player, profile)
-	saveAsync(player.UserId, profile, true)
+	saveAsync(userId, profile, true)
 	profiles[player] = nil
 	dirty[player] = nil
 	releasing[player] = nil
+	savingUsers[userId] = nil
 end
 
 function DataService.Init() end
@@ -2870,16 +2918,13 @@ function DataService.Start()
 
 	game:BindToClose(function()
 		shuttingDown = true
-		local pending = 0
 		for player in profiles do
-			pending += 1
-			task.spawn(function()
-				release(player)
-				pending -= 1
-			end)
+			task.spawn(release, player)
 		end
+		-- Wait on the real state: a save started by PlayerRemoving just before
+		-- shutdown is still in flight even though release() returns early for it.
 		local deadline = os.clock() + 25
-		while pending > 0 and os.clock() < deadline do
+		while (next(profiles) ~= nil or next(savingUsers) ~= nil) and os.clock() < deadline do
 			task.wait(0.1)
 		end
 	end)
@@ -3135,6 +3180,8 @@ local PlotService = {
 
 local byPlayer: { [Player]: any } = {}
 local refreshQueued: { [Player]: boolean } = {}
+local lastRefresh: { [Player]: number } = {}
+local REFRESH_COOLDOWN = 1 -- seconds between rebuilds of one shop (rebuilds replicate to everyone)
 
 local function createPlot(index: number, cframe: CFrame, size: number, parent: Instance)
 	local model = Make("Model", { Name = "Plot" .. index })
@@ -3211,8 +3258,10 @@ function PlotService.refresh(player: Player)
 		return
 	end
 	refreshQueued[player] = true
-	task.defer(function()
+	local wait = math.max(0, REFRESH_COOLDOWN - (os.clock() - (lastRefresh[player] or 0)))
+	task.delay(wait, function()
 		refreshQueued[player] = nil
+		lastRefresh[player] = os.clock()
 		local plot = byPlayer[player]
 		local profile = DataService.get(player)
 		if not plot or not profile then
@@ -3256,6 +3305,7 @@ local function releasePlot(player: Player)
 	end
 	byPlayer[player] = nil
 	refreshQueued[player] = nil
+	lastRefresh[player] = nil
 	plot.Owner = nil
 	plot.Model:SetAttribute("OwnerUserId", 0)
 	plot.Model:SetAttribute("OwnerName", "")
@@ -4319,7 +4369,10 @@ function StandBuilder.build(cframe: CFrame, ownerName: string, profile): Folder
 			Build.part({ Name = "SideWall", Size = Vector3.new(1, awningY, depth - 4), CFrame = cframe * CFrame.new(x, awningY / 2, backZ - (depth - 4) / 2), Color = business.Wall, Parent = folder })
 			Build.part({ Name = "Pillar", Size = Vector3.new(1.2, awningY, 1.2), CFrame = cframe * CFrame.new(x, awningY / 2, counterZ), Color = business.Accent, Parent = folder })
 		end
-		Build.part({ Name = "Roof", Size = Vector3.new(halfWidth * 2 + 2, 1, depth + 7), CFrame = cframe * CFrame.new(0, awningY + 0.5, backZ - (depth + 5) / 2), Color = business.Accent, Parent = folder })
+		-- The roof covers the back of the shop only. The strip where the owner stands
+		-- to serve stays open to the sky, so the camera is never pushed in by a ceiling.
+		local roofFront = 3.5
+		Build.part({ Name = "Roof", Size = Vector3.new(halfWidth * 2 + 2, 1, backZ + 1 - roofFront), CFrame = cframe * CFrame.new(0, awningY + 0.5, (backZ + 1 + roofFront) / 2), Color = business.Accent, Parent = folder })
 		-- Shelves on the back wall.
 		for row = 1, 2 do
 			Build.part({ Name = "Shelf", Size = Vector3.new(halfWidth * 1.4, 0.3, 1.4), CFrame = cframe * CFrame.new(0, 2.5 + row * 2.2, backZ - 1.2), Color = business.Accent, Parent = folder })
@@ -4901,6 +4954,15 @@ function TownBuilder.build()
 
 	setupLighting()
 
+	-- If the scripts were synced into Studio's default Baseplate template, remove its
+	-- floor and its spawn (which would sit inside the fountain). Runtime only.
+	for _, name in { "Baseplate", "SpawnLocation" } do
+		local leftover = Workspace:FindFirstChild(name)
+		if leftover and leftover:IsA("BasePart") then
+			leftover:Destroy()
+		end
+	end
+
 	local town = Make("Folder", { Name = "Town" })
 	buildGround(town)
 	buildPlaza(town, result)
@@ -5317,7 +5379,7 @@ return Effects
 --
 -- Layout (kept clear of the mobile thumbstick and jump button):
 --   top centre    coins, level + XP, combo, rush banner, toasts
---   left middle   Quests, Daily, Rush, My Shop, Settings
+--   top left      Quests, Daily, Rush, My Shop, Settings
 --   bottom centre Shop, Team, Upgrades, Collection
 
 local Players = game:GetService("Players")
@@ -5379,12 +5441,18 @@ end
 -- Creates an empty pop-up panel. Returns the content frame to fill in.
 function Hud.newPanel(name: string, title: string, size: Vector2?): Frame
 	local dimensions = size or Vector2.new(660, 470)
-	local frame = Kit.frame({
+	-- A text-less button rather than a Frame: it swallows clicks, so tapping the
+	-- panel background (or a disabled button) does not fall through to the backdrop
+	-- and close the panel.
+	local frame = Kit.make("TextButton", {
 		Name = name .. "Panel",
 		Size = UDim2.fromOffset(dimensions.X, dimensions.Y),
 		Position = UDim2.fromScale(0.5, 0.5),
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		BackgroundColor3 = Theme.Panel,
+		BorderSizePixel = 0,
+		AutoButtonColor = false,
+		Text = "",
 		Visible = false,
 		ZIndex = 20,
 		Parent = Hud.Root,
@@ -5607,10 +5675,10 @@ end
 -- HUD construction
 ---------------------------------------------------------------------------------------
 
-local function menuButton(parent: Instance, order: number, emoji: string, caption: string, color: Color3, onClick: () -> ()): TextButton
+local function menuButton(parent: Instance, order: number, emoji: string, caption: string, color: Color3, onClick: () -> (), small: boolean?): TextButton
 	local button = Kit.button({
 		Name = caption,
-		Size = UDim2.fromOffset(78, 72),
+		Size = if small then UDim2.fromOffset(66, 62) else UDim2.fromOffset(78, 72),
 		LayoutOrder = order,
 		Color = color,
 		Text = "",
@@ -5618,10 +5686,10 @@ local function menuButton(parent: Instance, order: number, emoji: string, captio
 		Parent = parent,
 	})
 	Kit.text({
-		Size = UDim2.new(1, 0, 0, 40),
+		Size = UDim2.new(1, 0, 0, if small then 34 else 40),
 		Position = UDim2.fromOffset(0, 4),
 		Text = emoji,
-		TextSize = 34,
+		TextSize = if small then 28 else 34,
 		TextXAlignment = Enum.TextXAlignment.Center,
 		Parent = button,
 	})
@@ -5629,7 +5697,7 @@ local function menuButton(parent: Instance, order: number, emoji: string, captio
 		Size = UDim2.new(1, 0, 0, 22),
 		Position = UDim2.new(0, 0, 1, -26),
 		Text = caption,
-		TextSize = 15,
+		TextSize = if small then 13 else 15,
 		Parent = button,
 	})
 	local badge = Kit.frame({
@@ -5680,6 +5748,7 @@ local function build()
 	Kit.round(levelPill, 25)
 	Kit.stroke(levelPill, 3)
 	xpFill = Kit.frame({ Name = "XP", Size = UDim2.fromScale(0, 1), BackgroundColor3 = Theme.Purple, Parent = levelPill })
+	Kit.round(xpFill, 25) -- ClipsDescendants does not clip to rounded corners
 	levelLabel = Kit.title({ Size = UDim2.fromScale(1, 1), Text = "⭐ Level 1", TextSize = 22, ZIndex = 2, Parent = levelPill })
 
 	comboLabel = Kit.title({
@@ -5721,31 +5790,31 @@ local function build()
 	})
 	Kit.list(toastHolder, 6)
 
-	-- Left column.
+	-- Top-left row. It sits along the top edge on purpose: on phones the lower-left
+	-- of the screen is the movement thumbstick area and must stay empty.
 	local left = Kit.frame({
-		Name = "Left",
-		Size = UDim2.fromOffset(78, 400),
-		Position = UDim2.new(0, 12, 0.5, -30),
-		AnchorPoint = Vector2.new(0, 0.5),
+		Name = "TopLeft",
+		Size = UDim2.fromOffset(360, 62),
+		Position = UDim2.fromOffset(12, 8),
 		BackgroundTransparency = 1,
 		Parent = root,
 	})
-	Kit.list(left, 8, false, { VerticalAlignment = Enum.VerticalAlignment.Center })
+	Kit.list(left, 6, true)
 	menuButton(left, 1, "📜", "Quests", Theme.Purple, function()
 		Hud.toggle("Quests")
-	end)
+	end, true)
 	menuButton(left, 2, "🎁", "Daily", Theme.Green, function()
 		Hud.toggle("Daily")
-	end)
+	end, true)
 	menuButton(left, 3, "⚡", "Rush", Theme.Red, function()
 		Hud.toggle("Rush")
-	end)
+	end, true)
 	menuButton(left, 4, "🏠", "My Shop", Theme.Blue, function()
 		State.action("TeleportHome")
-	end)
+	end, true)
 	menuButton(left, 5, "⚙️", "Settings", Theme.Grey, function()
 		Hud.toggle("Settings")
-	end)
+	end, true)
 
 	-- Bottom row.
 	local bottom = Kit.frame({
@@ -5795,6 +5864,7 @@ local function build()
 	-- Dark backdrop behind panels; clicking it closes the open panel.
 	backdrop = Kit.make("TextButton", {
 		Name = "Backdrop",
+		Modal = true, -- frees the mouse in first person / shift-lock while a panel is open
 		Size = UDim2.fromScale(1, 1),
 		BackgroundColor3 = Color3.new(0, 0, 0),
 		BackgroundTransparency = 0.55,
@@ -6105,9 +6175,17 @@ local function updatePlot(plot: Instance)
 end
 
 local function watchPlot(plot: Instance)
-	updatePlot(plot)
-	plot:GetAttributeChangedSignal("OwnerUserId"):Connect(function()
+	task.spawn(function()
+		-- The plot's children may arrive after the plot itself.
+		plot:WaitForChild("Pad", 30)
+		local servePoint = plot:WaitForChild("ServePoint", 30)
+		if servePoint then
+			servePoint:WaitForChild("ServePrompt", 30)
+		end
 		updatePlot(plot)
+		plot:GetAttributeChangedSignal("OwnerUserId"):Connect(function()
+			updatePlot(plot)
+		end)
 	end)
 end
 
@@ -6873,14 +6951,30 @@ function Kit.scroll(props: { [string]: any }): ScrollingFrame
 		ScrollBarThickness = 8,
 		ScrollBarImageColor3 = Theme.Dark,
 		CanvasSize = UDim2.new(0, 0, 0, 0),
-		AutomaticCanvasSize = Enum.AutomaticSize.Y,
 		ScrollingDirection = Enum.ScrollingDirection.Y,
 	}
 	for key, value in props do
 		merged[key] = value
 	end
 	local scroll = Make("ScrollingFrame", merged)
-	Kit.list(scroll, 8)
+	local spacing = 8
+	local layout = Kit.list(scroll, spacing)
+
+	-- The canvas height is added up from the rows' own design-pixel heights instead of
+	-- using AutomaticCanvasSize, which miscalculates when an ancestor has a UIScale
+	-- (the whole HUD does), leaving the last rows unreachable on phones.
+	local function resize()
+		local height = 12
+		for _, child in scroll:GetChildren() do
+			if child:IsA("GuiObject") and child.Visible then
+				height += child.Size.Y.Offset + spacing
+			end
+		end
+		scroll.CanvasSize = UDim2.fromOffset(0, height)
+	end
+	layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(resize)
+	scroll:GetPropertyChangedSignal("AbsoluteSize"):Connect(resize)
+	task.defer(resize)
 	Make("UIPadding", { PaddingRight = UDim.new(0, 12), PaddingBottom = UDim.new(0, 8), PaddingTop = UDim.new(0, 2), PaddingLeft = UDim.new(0, 2), Parent = scroll })
 	return scroll
 end

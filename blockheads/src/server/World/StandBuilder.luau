@@ -194,7 +194,10 @@ function StandBuilder.build(cframe: CFrame, ownerName: string, profile): Folder
 			Build.part({ Name = "SideWall", Size = Vector3.new(1, awningY, depth - 4), CFrame = cframe * CFrame.new(x, awningY / 2, backZ - (depth - 4) / 2), Color = business.Wall, Parent = folder })
 			Build.part({ Name = "Pillar", Size = Vector3.new(1.2, awningY, 1.2), CFrame = cframe * CFrame.new(x, awningY / 2, counterZ), Color = business.Accent, Parent = folder })
 		end
-		Build.part({ Name = "Roof", Size = Vector3.new(halfWidth * 2 + 2, 1, depth + 7), CFrame = cframe * CFrame.new(0, awningY + 0.5, backZ - (depth + 5) / 2), Color = business.Accent, Parent = folder })
+		-- The roof covers the back of the shop only. The strip where the owner stands
+		-- to serve stays open to the sky, so the camera is never pushed in by a ceiling.
+		local roofFront = 3.5
+		Build.part({ Name = "Roof", Size = Vector3.new(halfWidth * 2 + 2, 1, backZ + 1 - roofFront), CFrame = cframe * CFrame.new(0, awningY + 0.5, (backZ + 1 + roofFront) / 2), Color = business.Accent, Parent = folder })
 		-- Shelves on the back wall.
 		for row = 1, 2 do
 			Build.part({ Name = "Shelf", Size = Vector3.new(halfWidth * 1.4, 0.3, 1.4), CFrame = cframe * CFrame.new(0, 2.5 + row * 2.2, backZ - 1.2), Color = business.Accent, Parent = folder })

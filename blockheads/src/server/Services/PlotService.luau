@@ -30,6 +30,8 @@ local PlotService = {
 
 local byPlayer: { [Player]: any } = {}
 local refreshQueued: { [Player]: boolean } = {}
+local lastRefresh: { [Player]: number } = {}
+local REFRESH_COOLDOWN = 1 -- seconds between rebuilds of one shop (rebuilds replicate to everyone)
 
 local function createPlot(index: number, cframe: CFrame, size: number, parent: Instance)
 	local model = Make("Model", { Name = "Plot" .. index })
@@ -106,8 +108,10 @@ function PlotService.refresh(player: Player)
 		return
 	end
 	refreshQueued[player] = true
-	task.defer(function()
+	local wait = math.max(0, REFRESH_COOLDOWN - (os.clock() - (lastRefresh[player] or 0)))
+	task.delay(wait, function()
 		refreshQueued[player] = nil
+		lastRefresh[player] = os.clock()
 		local plot = byPlayer[player]
 		local profile = DataService.get(player)
 		if not plot or not profile then
@@ -151,6 +155,7 @@ local function releasePlot(player: Player)
 	end
 	byPlayer[player] = nil
 	refreshQueued[player] = nil
+	lastRefresh[player] = nil
 	plot.Owner = nil
 	plot.Model:SetAttribute("OwnerUserId", 0)
 	plot.Model:SetAttribute("OwnerName", "")

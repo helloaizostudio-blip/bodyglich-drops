@@ -411,14 +411,17 @@ local function tickSim(sim, now: number)
 	if head and isIdle(head, now) then
 		if sim.Head ~= head then
 			sim.Head = head
+			sim.Holding = false
 			sim.HeadReadyAt = now
 			sim.HeadServeTime = serveTime(sim, head)
 			plot.Prompt.HoldDuration = sim.HeadServeTime
 			plot.Prompt.ObjectText = orderText(head)
 			plot.Prompt.Enabled = true
 		end
+		-- Staff step aside while the owner is holding Serve, so a fast team can never
+		-- snatch a customer (and the combo / rush points) out of the player's hands.
 		local staffMultiplier = Formulas.staffTimeMultiplier(profile)
-		if staffMultiplier and profile.Register < Formulas.registerCapacity(profile) then
+		if staffMultiplier and not sim.Holding and profile.Register < Formulas.registerCapacity(profile) then
 			if now >= sim.HeadReadyAt + sim.HeadServeTime * staffMultiplier then
 				completeServe(sim, head, "Staff", now)
 			end
@@ -485,6 +488,7 @@ local function createSim(plot, player: Player, profile)
 		Head = nil,
 		HeadReadyAt = 0,
 		HeadServeTime = 0,
+		Holding = false,
 		RegisterTimer = 0,
 		Rng = Random.new(),
 		RushRng = if CustomerService.RushActive then Random.new(CustomerService.RushSeed) else nil,
@@ -535,6 +539,18 @@ function CustomerService.Start()
 	for _, plot in PlotService.Plots do
 		plot.Prompt.Triggered:Connect(function(player)
 			onPromptTriggered(plot, player)
+		end)
+		plot.Prompt.PromptButtonHoldBegan:Connect(function(player)
+			local sim = sims[plot]
+			if sim and sim.Player == player then
+				sim.Holding = true
+			end
+		end)
+		plot.Prompt.PromptButtonHoldEnded:Connect(function(player)
+			local sim = sims[plot]
+			if sim and sim.Player == player then
+				sim.Holding = false
+			end
 		end)
 		if plot.Owner and DataService.get(plot.Owner) then
 			createSim(plot, plot.Owner, DataService.get(plot.Owner))

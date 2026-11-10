@@ -140,6 +140,9 @@ for _, target in { "Shop:Business", "Shop:Style", "Characters:Collection" } do
 end
 Hud.close()
 check(Hud.OpenName == nil, "panel closes")
+local shopScroll = gui.Root.ShopPanel.Content.Products:FindFirstChildOfClass("ScrollingFrame")
+task.wait(0.1)
+check(shopScroll.CanvasSize.Y.Offset > 400, "scroll canvas is sized from its rows", shopScroll.CanvasSize.Y.Offset)
 
 ---------------------------------------------------------------------------------------
 section("Phase 2 - customers and serving")
@@ -330,6 +333,17 @@ Harness.moveCharacter(alice, home)
 check(waitFor(3, function()
 	return profile.Register == 0 and profile.Coins > coinsBefore
 end), "register is collected when the owner returns")
+-- Staff must not snatch a customer while the owner is holding Serve.
+profile.Upgrades.Staff = 8
+check(waitFor(8, function()
+	return prompt.Enabled
+end), "customer waiting with max staff")
+Harness.signal(prompt, "PromptButtonHoldBegan"):Fire(alice)
+servedBefore = profile.Stats.Served
+local holdFor = prompt.HoldDuration * 1.6
+task.wait(holdFor)
+check(profile.Stats.Served == servedBefore, "staff wait while the owner is holding Serve")
+Harness.signal(prompt, "PromptButtonHoldEnded"):Fire(alice)
 profile.Upgrades.Staff = 0
 
 ---------------------------------------------------------------------------------------
@@ -399,6 +413,10 @@ check(store.contents["Player_303"].Coins == 777777 and store.contents["Player_30
 check(DataService.get(lockedPlayer) == nil, "no profile exists for the locked save")
 
 section("Shutdown")
+-- Bob leaves and the server shuts down in the same instant: BindToClose must still
+-- wait for the save that PlayerRemoving started.
+Harness.state.saveDelay = 0.6
+Harness.removePlayer(bob)
 Harness.close()
 local bobSaved = store.contents["Player_202"]
 check(bobSaved ~= nil and bobSaved.Session == nil, "BindToClose saved and released remaining players")

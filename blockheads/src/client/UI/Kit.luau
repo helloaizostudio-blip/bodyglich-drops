@@ -184,14 +184,30 @@ function Kit.scroll(props: { [string]: any }): ScrollingFrame
 		ScrollBarThickness = 8,
 		ScrollBarImageColor3 = Theme.Dark,
 		CanvasSize = UDim2.new(0, 0, 0, 0),
-		AutomaticCanvasSize = Enum.AutomaticSize.Y,
 		ScrollingDirection = Enum.ScrollingDirection.Y,
 	}
 	for key, value in props do
 		merged[key] = value
 	end
 	local scroll = Make("ScrollingFrame", merged)
-	Kit.list(scroll, 8)
+	local spacing = 8
+	local layout = Kit.list(scroll, spacing)
+
+	-- The canvas height is added up from the rows' own design-pixel heights instead of
+	-- using AutomaticCanvasSize, which miscalculates when an ancestor has a UIScale
+	-- (the whole HUD does), leaving the last rows unreachable on phones.
+	local function resize()
+		local height = 12
+		for _, child in scroll:GetChildren() do
+			if child:IsA("GuiObject") and child.Visible then
+				height += child.Size.Y.Offset + spacing
+			end
+		end
+		scroll.CanvasSize = UDim2.fromOffset(0, height)
+	end
+	layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(resize)
+	scroll:GetPropertyChangedSignal("AbsoluteSize"):Connect(resize)
+	task.defer(resize)
 	Make("UIPadding", { PaddingRight = UDim.new(0, 12), PaddingBottom = UDim.new(0, 8), PaddingTop = UDim.new(0, 2), PaddingLeft = UDim.new(0, 2), Parent = scroll })
 	return scroll
 end

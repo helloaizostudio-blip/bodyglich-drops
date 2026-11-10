@@ -75,9 +75,17 @@ local function updatePlot(plot: Instance)
 end
 
 local function watchPlot(plot: Instance)
-	updatePlot(plot)
-	plot:GetAttributeChangedSignal("OwnerUserId"):Connect(function()
+	task.spawn(function()
+		-- The plot's children may arrive after the plot itself.
+		plot:WaitForChild("Pad", 30)
+		local servePoint = plot:WaitForChild("ServePoint", 30)
+		if servePoint then
+			servePoint:WaitForChild("ServePrompt", 30)
+		end
 		updatePlot(plot)
+		plot:GetAttributeChangedSignal("OwnerUserId"):Connect(function()
+			updatePlot(plot)
+		end)
 	end)
 end
 

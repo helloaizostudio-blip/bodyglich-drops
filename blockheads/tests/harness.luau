@@ -104,6 +104,7 @@ local state = {
 	watchedAttributes = {} :: { [any]: { [string]: any } },
 	tagged = {} :: { [any]: string },
 	isStudio = false,
+	saveDelay = nil :: number?,
 	errors = {} :: { string },
 }
 Harness.state = state
@@ -166,6 +167,9 @@ local function mockDataStore(name: string)
 		if state.failKeys[key] then
 			error("502: API Services rejected request (simulated outage)")
 		end
+		if state.saveDelay then
+			task.wait(state.saveDelay) -- simulate a slow DataStore request
+		end
 		local result = transform(deepCopy(self.contents[key]))
 		if result ~= nil then
 			self.contents[key] = deepCopy(result)
@@ -218,6 +222,8 @@ local function install()
 		{ "Player", "CharacterAdded" },
 		{ "BasePart", "Touched" },
 		{ "ProximityPrompt", "Triggered" },
+		{ "ProximityPrompt", "PromptButtonHoldBegan" },
+		{ "ProximityPrompt", "PromptButtonHoldEnded" },
 		{ "RemoteEvent", "OnServerEvent" },
 		{ "RemoteEvent", "OnClientEvent" },
 		{ "RunService", "Heartbeat" },

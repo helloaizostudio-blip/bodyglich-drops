@@ -33,8 +33,10 @@ that DataStores are unavailable in Studio and uses temporary in-memory data).
 The `.luau` files in `src/` are the source of truth. To push edits into Studio live:
 
 1. Install [Rojo](https://rojo.space) 7.x and the **Rojo plugin** in Studio.
-2. In this folder run `rojo serve`.
-3. In Studio: Plugins > Rojo > **Connect**. Saved file changes now appear in Studio.
+2. Open `build/Blockheads.rbxlx` in Studio (not a new Baseplate: the built place
+   already has the right Workspace settings, such as streaming turned off).
+3. In this folder run `rojo serve`.
+4. In Studio: Plugins > Rojo > **Connect**. Saved file changes now appear in Studio.
 
 Or rebuild the place file at any time: `rojo build -o build/Blockheads.rbxlx`.
 
@@ -127,7 +129,7 @@ The ten characters in `Characters.luau` are **placeholders**. To replace them:
 
 ```
 rojo build -o build/Blockheads.rbxlx
-lune run tests/run.luau      # 113 checks, about 90 seconds
+lune run tests/run.luau      # 116 checks, about 100 seconds
 selene src                   # lint
 ```
 
