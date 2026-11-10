@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Outfit Variable", "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* FRAMEFORGE palette: sky blue, white, deep navy, soft lavender */
+  --color-brand-50: #f4f9ff;
+  --color-brand-100: #eaf4ff;
+  --color-brand-200: #d5e8ff;
+  --color-brand-300: #a8cfff;
+  --color-brand-400: #63a9ff;
+  --color-brand-500: #3f8df7;
+  --color-brand-600: #2670e6;
+  --color-brand-700: #1d58bf;
+  --color-navy-950: #0b1b36;
+  --color-navy-900: #10264a;
+  --color-navy-800: #18335f;
+  --color-navy-700: #254577;
+  --color-navy-600: #3d5a8a;
+  --color-ink: #10264a;
+  --color-muted: #5a6b86;
+  --color-faint: #8b9ab3;
+  --color-line: #dbe6f5;
+  --color-lav-100: #edebff;
+  --color-lav-200: #dcd8ff;
+  --color-lav-600: #6a5fe0;
+  --color-ok-100: #dff7ea;
+  --color-ok-700: #12804a;
+  --color-warn-100: #fff1d6;
+  --color-warn-700: #9a6200;
+  --color-bad-100: #ffe3e3;
+  --color-bad-600: #d63a3a;
+  --color-bad-700: #b42323;
+
+  --shadow-card: 0 1px 2px rgb(16 38 74 / 0.04), 0 6px 20px -8px rgb(16 38 74 / 0.12);
+  --shadow-pop: 0 12px 40px -12px rgb(16 38 74 / 0.35);
+
+  --animate-rise: rise 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-fade: fade 0.2s ease-out both;
+  --animate-sheet: sheet 0.26s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-shimmer: shimmer 1.4s linear infinite;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes sheet {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-brand-50);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Inputs must be >=16px on phones or mobile browsers zoom the page on focus. */
+input, textarea, select {
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  input, textarea, select {
+    font-size: 14px;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+button, a, summary, label[for], select {
+  touch-action: manipulation;
+}
+button:not(:disabled), summary, select, [role="button"] {
+  cursor: pointer;
+}
+
+/* Modal: bottom sheet on phones, centred card on larger screens */
+dialog.ff-modal {
+  margin: auto auto 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 92dvh;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+}
+dialog.ff-modal[open] {
+  animation: var(--animate-sheet);
+}
+dialog.ff-modal::backdrop {
+  background: rgb(11 27 54 / 0.5);
+  backdrop-filter: blur(2px);
+  animation: var(--animate-fade);
+}
+@media (min-width: 640px) {
+  dialog.ff-modal {
+    margin: auto;
+    width: calc(100% - 2rem);
+  }
+}
+
+.ff-toasts {
+  position: fixed;
+  inset: auto 0 calc(env(safe-area-inset-bottom) + 5.25rem) 0;
+  margin: 0 auto;
+  border: 0;
+  padding: 0 1rem;
+  background: transparent;
+  overflow: visible;
+  width: min(100%, 26rem);
+  pointer-events: none;
+}
+@media (min-width: 1024px) {
+  .ff-toasts {
+    inset: auto 1.5rem 1.5rem auto;
+    margin: 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e3eefc 25%, #f1f7ff 37%, #e3eefc 63%);
+  background-size: 400% 100%;
+  animation: var(--animate-shimmer);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
