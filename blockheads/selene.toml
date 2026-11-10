@@ -1,0 +1,6 @@
+std = "roblox_min"
+
+[lints]
+shadowing = "allow"
+multiple_statements = "allow"
+if_same_then_else = "allow"
