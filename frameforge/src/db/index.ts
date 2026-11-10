@@ -31,7 +31,8 @@ async function open(): Promise<Db> {
     const { drizzle } = await import("drizzle-orm/node-postgres");
     const { migrate } = await import("drizzle-orm/node-postgres/migrator");
     const ssl = /sslmode=disable/.test(url) || /localhost|127\.0\.0\.1/.test(url) ? undefined : { rejectUnauthorized: false };
-    const pool = new Pool({ connectionString: url, max: 5, ssl });
+    const max = Math.max(1, Number(process.env.DATABASE_POOL_MAX) || 5);
+    const pool = new Pool({ connectionString: url, max, ssl });
     const db = drizzle(pool, { schema });
     await migrate(db, { migrationsFolder: migrationsFolder() });
     return db as unknown as Db;

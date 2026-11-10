@@ -9,7 +9,7 @@ import { saveSceneAnimation, setSceneClip, startVideoGeneration } from "@/server
 import { generateVisualPrompt } from "@/server/actions/storyboard";
 import { cancelJob } from "@/server/actions/jobs";
 import { ASPECT_RATIOS } from "@/lib/constants";
-import { cn, formatDuration, timeAgo } from "@/lib/utils";
+import { formatDuration, timeAgo } from "@/lib/utils";
 import { Button, LinkButton } from "@/components/ui/button";
 import { Badge, Card, EmptyState, Notice, ProgressBar, SectionTitle } from "@/components/ui/misc";
 import { Modal } from "@/components/ui/modal";
