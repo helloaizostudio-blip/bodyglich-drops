@@ -266,6 +266,10 @@ const SH={
   giant_lookup:(u,t,lt)=>{mood('dusk');crackState(1.3,t);const G=place('giant',132,0,0,Math.PI/2-ease(lt/1.0)*Math.PI*0.88);reset(G);face(G,'default');G.head.rotation.x=-ease((lt-0.8)/1.4)*0.75;const hp=head('giant');camAt(hp.clone().add(V3(-24,-8,6)),hp,36);showOnly(['giant']);},
   zash_eyes_twist:(u,t)=>{mood('dusk');const T=world.towerTop;const h=HOUSES[2];const b=h.g.localToWorld(V3(0,8.6,5.9));const P=place('leo',b.x,b.y,b.z,h.g.rotation.y);reset(P);face(P,'shocked');const hp=head('leo');camAt(hp.clone().add(h.g.localToWorld(V3(0,0,3.4)).sub(h.g.position)).add(V3(0,0.1,0)),hp.clone().add(V3(0,-0.1,0)),34);showOnly(['leo']);},
   giant_smile_wide:(u,t)=>{mood('dusk');crackState(1.3,t);const G=place('giant',132,0,0,-Math.PI*0.38);reset(G);G.setFace('happy');G.head.rotation.x=-0.75;const hp=head('giant');camAt(hp.clone().add(V3(-lerp(22,14,ease(u)),-3,lerp(8,5,u))),hp.clone().add(V3(0,-1,0)),34);showOnly(['giant']);},
+  zash_confused_balcony:(u,t)=>{mood('dusk');const h=HOUSES[2];const b=h.g.localToWorld(V3(0,8.6,5.9));const P=place('leo',b.x,b.y,b.z,h.g.rotation.y);reset(P);P.setFace('sad');P.head.rotation.z=0.18;P.head.rotation.y=Math.sin(t*0.8)*0.2;P.armR.rotation.x=-1.3;P.armR.rotation.z=0.5;
+    const f=h.g.localToWorld(V3(lerp(4,3,u),12.6,lerp(13,11,ease(u))));camAt(f,b.clone().add(V3(0,4.4,0)),40);showOnly(['leo']);},
+  zash_confused_close:(u,t)=>{mood('dusk');const h=HOUSES[2];const b=h.g.localToWorld(V3(0,8.6,5.9));const P=place('leo',b.x,b.y,b.z,h.g.rotation.y);reset(P);P.setFace(u<0.5?'shocked':'sad');P.head.rotation.z=-0.15;
+    const hp=head('leo');camAt(hp.clone().add(h.g.localToWorld(V3(0.4,0,lerp(3.4,2.6,ease(u)))).sub(h.g.position)).add(V3(0,0.15,0)),hp.clone().add(V3(0,-0.1,0)),34);showOnly(['leo']);},
   endcard:(u,t,lt)=>{mood('dusk');camAt(V3(lerp(-150,-130,u),110,150),V3(0,10,-10),46);showOnly([]);S.endcard=clamp((lt-0.3)/0.4,0,1);S.fade=clamp((lt-0.1)/0.5,0,0.55);},
 };
 function ringShot(lt,n){bellSwing(Math.sin(lt*7)*0.45*Math.exp(-lt*0.8));const b=world.bell.getWorldPosition(V3());const v=[[V3(9,-4,10),40],[V3(-6,-6,12),36],[V3(3,-1,6),32]][n||0];camAt(b.clone().add(v[0]),b.clone().add(V3(0,-1.6,0)),v[1]);if(lt<0.08)S.flash=0.3;if(n===2)shake(0.15,lt*10);showOnly([]);}
@@ -287,7 +291,7 @@ function drawOverlays(t){
   if(S.fade>0){og.fillStyle=`rgba(0,0,0,${S.fade})`;og.fillRect(0,0,W,H);}
   if(S.endcard>0){og.save();og.globalAlpha=S.endcard;og.textAlign='center';og.textBaseline='middle';og.lineJoin='round';
     og.font=`${W*0.13}px "Luckiest Guy", Impact`;og.lineWidth=W*0.022;og.strokeStyle='#0d0d12';og.strokeText('BLOCKHEADS',W/2,H*0.62);og.fillStyle='#ffd23f';og.fillText('BLOCKHEADS',W/2,H*0.62);
-    og.font=`${W*0.058}px "Luckiest Guy", Impact`;og.lineWidth=W*0.014;og.strokeText('FOLLOW IF YOU WANNA',W/2,H*0.7);og.strokeText('LIVE IN THIS WORLD',W/2,H*0.745);og.fillStyle='#ffffff';og.fillText('FOLLOW IF YOU WANNA',W/2,H*0.7);og.fillText('LIVE IN THIS WORLD',W/2,H*0.745);og.restore();}
+    og.font=`${W*0.058}px "Luckiest Guy", Impact`;og.lineWidth=W*0.014;og.font=`${W*0.085}px "Luckiest Guy", Impact`;og.lineWidth=W*0.018;og.strokeText('FOLLOW FOR PART 2',W/2,H*0.71);og.fillStyle='#ffffff';og.fillText('FOLLOW FOR PART 2',W/2,H*0.71);og.restore();}
   og.globalAlpha=0.04;og.drawImage(S.grain,(Math.random()*64)|0,(Math.random()*64)|0);og.globalAlpha=1;}
 
 /* ------------------------------------------------------------ entry points */

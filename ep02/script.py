@@ -77,7 +77,9 @@ LINES = [
     ("stop",    "zash", "tense",   "But right before the wall closed, it stopped.",                          ["giant_stop"]),
     ("up",      "zash", "whisper", "And slowly, it looked *up*.",                                            ["giant_lookup", "zash_eyes_twist"]),
     ("wider",   "zash", "whisper", "Right at me. And its smile got wider.",                                  ["giant_smile_wide"]),
-    ("cta",     "zash", "calm",    "Follow if you wanna live in this world.",                                ["endcard"]),
+    ("confused","zash", "calm",    "Giants eat everyone.",                                                   ["zash_confused_balcony"]),
+    ("whyme",   "zash", "whisper", "So why did it smile at *me*?",                                           ["zash_confused_close"]),
+    ("cta",     "zash", "calm",    "Follow for part 2.",                                                     ["endcard"]),
 ]
 
 VOICES = {
@@ -87,7 +89,7 @@ VOICES = {
     "somi": dict(voice="af_bella", speed=1.05, pitch=1.10, expressive=True),
 }
 LONG_GAPS = {"weak": 0.3, "cookie": 0.3, "ring1": 0.45, "ring2": 0.45, "ring3": 0.5, "snap": 0.4, "smile": 0.4,
-             "above": 0.3, "land": 0.35, "hate": 0.35, "notany": 0.6, "stop": 0.5, "up": 0.5, "dadend": 0.6, "wider": 0.8}
+             "above": 0.3, "land": 0.35, "hate": 0.35, "notany": 0.6, "stop": 0.5, "up": 0.5, "dadend": 0.6, "wider": 0.8, "confused": 0.25, "whyme": 0.9}
 TAIL = 2.8
 
 # New production pieces this episode needs (beyond Midnight Lights):
