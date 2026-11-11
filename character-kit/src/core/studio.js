@@ -48,5 +48,13 @@ export function studio(E, o = {}) {
   L.key.shadow.radius = 9;
   const rim2 = new THREE.DirectionalLight(c.tint, 1.6); rim2.position.set(3, 2.6, -3); scene.add(rim2);
   const fill = new THREE.DirectionalLight('#DDE8FF', 0.45); fill.position.set(3, 1.6, 3.5); scene.add(fill);
-  return { scene, lights: L, glow: wall, update() {} };
+  // mood: 0 = show lights up, 1 = lights dropped for an x-ray (the backdrop goes to a deep blue ember, people become dim shapes)
+  const lights = []; scene.traverse((o) => { if (o.isLight) lights.push([o, o.intensity]); });
+  const wc = wall.material.color.clone(), sc = strip.material.color.clone(), COOL = new THREE.Color('#0B2238');
+  function setMood(k = 0) {
+    lights.forEach(([l, i]) => (l.intensity = i * (1 - 0.86 * k)));
+    wall.material.color.copy(wc).lerp(COOL, k).multiplyScalar(1 - 0.55 * k); strip.material.color.copy(sc).lerp(new THREE.Color('#4FD1E8').multiplyScalar(1.6), k);
+    floor.material.color.setScalar(1 - 0.8 * k); lineM.opacity = 0.55 * (1 - k); scene.environmentIntensity = 0.22 * (1 - 0.8 * k);
+  }
+  return { scene, lights: L, glow: wall, setMood, update() {} };
 }

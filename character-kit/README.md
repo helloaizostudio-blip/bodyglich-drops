@@ -20,7 +20,7 @@ Demo: [`preview/host-v2-demo.mp4`](preview/host-v2-demo.mp4) (15 s, 1080x1920, 3
 
 ## Install into a Body Glitch project
 
-1. Copy `src/core/host.js`, `src/core/motion.js` and `src/core/studio.js` into the project's `src/core/`.
+1. Copy `src/core/host.js`, `motion.js`, `studio.js` and `shift.js` into the project's `src/core/`.
    Nothing existing is replaced; `human.js`, `sets.js` and the x-ray shots keep working.
 2. In `src/shots.js`:
 
@@ -41,7 +41,8 @@ ST.scene.add(host.group, blip.group);
 
 3. Render at full quality and 30 fps: `FPS=30 node tools/capture.mjs video renders/<name>.mp4`.
 
-`example-shots.js` + `example-script.json` are the demo above; they show every pattern below in context.
+`examples/host-demo-*` is the host demo above and `examples/shapeshift-*` is the Blip transformation demo; copy one
+over `src/shots.js` + `script.json` to render it.
 
 ## Acting with the motion kit
 
@@ -72,3 +73,37 @@ blip.set({ y: h.y, squash: h.squash, armL: 14 + h.air * 120, mouth: h.air, lean:
 ```
 
 Keep Blip's face above the caption zone: in a two-shot aim the camera at about y 0.6 so he sits in the middle third.
+
+## Shape-shifting Blip
+
+Demo: [`preview/blip-shapeshift-demo.mp4`](preview/blip-shapeshift-demo.mp4). When the narrator names something, Blip
+charges up (glow and shiver), flashes, and springs out as that thing. Every form keeps his colours, eyes and antenna.
+
+```js
+import { Shifter } from './core/shift.js';
+const blip = new Shifter({});                      // forms: human, xray, octopus, shark, cat
+ST.scene.add(blip.group);
+
+// the whole show is one list: which word turns him into what
+const PLAN = [
+  { t: Wd('you', 1),     form: 'human' },
+  { t: Wd('heart', 2),   form: 'xray' },           // the same body as x-ray glass, with a beating heart
+  { t: Wd('octopus', 3), form: 'octopus' },
+  { t: L(6),             form: 'blip' },
+];
+Shifter.cues(PLAN, cue);                           // charge-up, whoosh, pop and sparkle for every change
+
+// in draw():
+const s = blip.update(t, PLAN, { blip: { y, squash, armL } });   // Buddy.set() args for his own form
+ST.setMood(s.xray);                                // drops the studio lights while he is an x-ray
+```
+
+`update()` returns `{ form, since, charge, flash, kick, xray }`: use `kick` for a camera punch-in and shake, `flash`
+for a screen flash, `since` to time reactions and pills. The change takes 0.24 s to charge and 0.4 s to settle; give a
+plan entry its own `charge` (for example 0.1) for rapid-fire changes.
+
+Forms can be acted further after `update()`: `blip.forms.xray.heart`, `.lungs`, `.stomach`, `blip.forms.human.human`
+(takes `pose()`), `blip.forms.cat.head`, `blip.forms.shark.tail`, `blip.forms.octopus.arms`.
+
+Add an animal: `Shifter.FORMS.frog = (c) => ({ group, cy, animate(t) })`, sculpted with `sdf.js` in Blip's colours
+(`c.color`, `c.belly`, `c.dark`), with feet on y 0 and facing +z. The cat in `shift.js` is the shortest one to copy.

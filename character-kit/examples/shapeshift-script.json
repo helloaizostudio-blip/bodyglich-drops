@@ -1,0 +1,24 @@
+{
+  "title": "Body Glitch: Blip the shape-shifter",
+  "voice": "am_michael",
+  "speed": 1.0,
+  "lead": 0.3,
+  "outro": 1.1,
+  "gap": 0.22,
+  "music": "bed",
+  "sources": [
+    "British Heart Foundation / Cleveland Clinic: a resting adult heart beats about 100,000 times a day (60-100 bpm)",
+    "Smithsonian National Zoo, 'Octopus': octopuses have three hearts (two branchial, one systemic)",
+    "Smithsonian Ocean / NOAA Fisheries: shark skeletons are cartilage, with no bones",
+    "Li et al. 2005, PLoS Genetics, 'Pseudogenization of a sweet-receptor gene accounts for cats' indifference toward sugar' (Tas1r2)"
+  ],
+  "lines": [
+    { "text": "This is Blip, and he turns into whatever I talk about.", "caps": "This is *Blip | he turns *into | whatever I *talk about" },
+    { "text": "Like you.", "caps": "Like *you" },
+    { "text": "Your heart beats a hundred thousand times a day.", "caps": "Your *heart | beats *100,000 | times a *day" },
+    { "text": "An octopus has three hearts.", "caps": "An *octopus | has *three hearts" },
+    { "text": "A shark has zero bones.", "caps": "A *shark | has *zero bones" },
+    { "text": "And a cat can't even taste sugar.", "caps": "And a *cat | can't *taste | *sugar" },
+    { "text": "Follow, and see what he becomes next.", "caps": "*Follow | see what he | becomes *next" }
+  ]
+}
