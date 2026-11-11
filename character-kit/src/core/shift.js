@@ -66,7 +66,7 @@ export const FORMS = {
     h.setAllMaterial(xm); h.parts.forEach((p) => (p.castShadow = false));
     const I = insides(); h.spine.add(I.group);
     const bone = new THREE.MeshStandardMaterial({ color: '#E6F7FF', emissive: '#7FDDF2', emissiveIntensity: 0.28, roughness: 0.4 });
-    const skull = M(h.head, new THREE.SphereGeometry(1, 28, 20), bone); skull.scale.set(0.082, 0.098, 0.092); skull.position.set(0, 0.165, -0.008); skull.castShadow = false;
+    const skull = M(h.head, new THREE.SphereGeometry(1, 28, 20), new THREE.MeshStandardMaterial({ color: '#E6F7FF', emissive: '#7FDDF2', emissiveIntensity: 0.28, roughness: 0.4, transparent: true, opacity: 0.28, depthWrite: false })); skull.scale.set(0.082, 0.098, 0.092); skull.position.set(0, 0.165, -0.008); skull.castShadow = false;
     const jaw = M(h.head, new THREE.SphereGeometry(1, 24, 16), bone); jaw.scale.set(0.058, 0.05, 0.06); jaw.position.set(0, 0.085, 0.02); jaw.castShadow = false;
     for (const s of [-1, 1]) {                                                                             // arm + leg bones
       for (const [par, len] of [[h.arm[s < 0 ? 'L' : 'R'].sh, 0.25], [h.arm[s < 0 ? 'L' : 'R'].el, 0.24], [h.leg[s < 0 ? 'L' : 'R'].hip, 0.38], [h.leg[s < 0 ? 'L' : 'R'].kn, 0.36]]) { const b = M(par, new THREE.CapsuleGeometry(0.013, len, 6, 10), bone); b.position.y = -len / 2 - 0.01; b.castShadow = false; }
@@ -77,8 +77,19 @@ export const FORMS = {
     const gut = M(h.spine, new THREE.TubeGeometry(gutCurve, 160, 0.019, 10), new THREE.MeshPhysicalMaterial({ color: '#F0A0AC', roughness: 0.4, clearcoat: 0.6, emissive: '#E87A8C', emissiveIntensity: 0.22, transparent: true, opacity: 0.8 })); gut.castShadow = false;
     const gasM = new THREE.MeshBasicMaterial({ color: new THREE.Color('#D6FF4A').multiplyScalar(0.8) }), bloodM = new THREE.MeshBasicMaterial({ color: new THREE.Color('#FF7A6A').multiplyScalar(1.0) }), gg = new THREE.SphereGeometry(0.011, 12, 8), gas = [];
     for (let i = 0; i < 40; i++) { const b = new THREE.Mesh(gg, gasM); b.visible = false; h.spine.add(b); gas.push(b); }
+    // urinary system: kidneys, ureters, a bladder that fills (scale it), the ring of muscle under it, and a brain to message
+    const organM = (col, o = {}) => new THREE.MeshPhysicalMaterial({ color: col, roughness: 0.35, clearcoat: 0.8, emissive: col, emissiveIntensity: 0.3, ...o });
+    const bladder = M(h.spine, new THREE.SphereGeometry(0.04, 32, 24), organM('#FFD23F', { transparent: true, opacity: 0.88, depthWrite: false })); bladder.position.set(0, -0.085, 0.045); bladder.castShadow = false;
+    const ring = M(h.spine, new THREE.TorusGeometry(0.017, 0.0075, 10, 32), organM('#FF5A5A')); ring.rotation.x = Math.PI / 2; ring.position.set(0, -0.135, 0.045); ring.castShadow = false;
+    const kidneys = [];
+    for (const s of [-1, 1]) {
+      const k = M(h.spine, new THREE.SphereGeometry(1, 20, 14), organM('#C8524F')); k.scale.set(0.022, 0.036, 0.018); k.position.set(s * 0.075, 0.15, -0.045); k.rotation.z = s * 0.25; k.castShadow = false; kidneys.push(k);
+      const u = M(h.spine, new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(s * 0.06, 0.14, -0.04), new THREE.Vector3(s * 0.05, 0.03, -0.01), new THREE.Vector3(s * 0.025, -0.06, 0.035)]), 20, 0.0045, 6), organM('#FFD23F')); u.castShadow = false;
+    }
+    const brain = M(h.head, new THREE.SphereGeometry(1, 24, 16), organM('#F2A3C0')); brain.scale.set(0.068, 0.052, 0.074); brain.position.set(0, 0.19, -0.012); brain.castShadow = false;
+    const sigM = new THREE.MeshBasicMaterial({ color: new THREE.Color('#FFF3A0').multiplyScalar(1.3) });
     const f = face(h.head, [0, 0.152, 0.106], c, { gap: 0.043, r: 0.021, curve: 0.38, cheeks: false, mouth: false }), an = antenna(h.head, [0, 0.275, 0], c, 0.8);
-    return { group: h.group, cy: 0.62, human: h, heart: I.heart, gut, gutCurve, gas, gasM, bloodM, lungs: I.lungs, stomach: I.stomach, face: f, antenna: an, xm, isXray: true, animate(t) {
+    return { group: h.group, cy: 0.62, human: h, heart: I.heart, gut, gutCurve, gas, gasM, bloodM, sigM, bladder, ring, kidneys, brain, lungs: I.lungs, stomach: I.stomach, face: f, antenna: an, xm, isXray: true, animate(t) {
       const w = Math.sin(t * 2.2), beat = Math.pow(Math.max(0, Math.sin(t * 7.6)), 6) + 0.5 * Math.pow(Math.max(0, Math.sin(t * 7.6 - 0.9)), 6);
       h.pose({ spine: [0, w * 3, 0], head: [-3, w * 4, 0], shL: [4, 0, 20], shR: [4, 0, 20], elL: 16, elR: 16 }); f.set({ lid: blinkAt(t, 3) });
       I.heart.scale.setScalar(1 + beat * 0.22); I.heart.material.emissiveIntensity = 0.5 + beat * 1.6; I.lungs.forEach((l) => l.scale.setScalar(1 + Math.sin(t * 1.9) * 0.05));

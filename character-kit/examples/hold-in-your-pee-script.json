@@ -1,0 +1,28 @@
+{
+  "title": "What Happens If You Hold In Your Pee?",
+  "voice": "am_michael",
+  "speed": 1.0,
+  "lead": 0.35,
+  "outro": 1.0,
+  "gap": 0.24,
+  "music": "bed",
+  "sources": [
+    "Piedmont Healthcare, 'How long is it safe to hold your urine?': a healthy bladder holds about 400-500 mL (roughly 2 cups); habitual holding can weaken the bladder muscle; rupture is rare",
+    "OSF HealthCare / Columbia Doctors (urology): urine that sits in the bladder stagnates and raises the risk of urinary tract infection; chronic overstretching can cause lasting damage",
+    "Michigan Medicine, 'Is it time to let go of holding it?': the bladder signals the brain as it fills; occasional holding is fine, a habit is not",
+    "Yang, Pham, Choo & Hu 2014, PNAS 111(33), 'Duration of urination does not change with body size': mammals above 3 kg empty their bladders in 21 ± 13 seconds"
+  ],
+  "lines": [
+    { "text": "What happens if you hold in your pee?", "caps": "What *happens | if you *hold in | your *pee?" },
+    { "text": "Your bladder is a stretchy bag that holds about two cups,", "caps": "Your *bladder | is a *stretchy bag | that holds | about *two cups" },
+    { "text": "and as it fills, sensors in its wall start messaging your brain.", "caps": "As it *fills | *sensors | in its wall | start *messaging | your *brain" },
+    { "text": "Hold it, and a ring of muscle clamps shut", "caps": "*Hold it | a *ring | of muscle | *clamps shut" },
+    { "text": "while the bag keeps on stretching.", "caps": "The bag | keeps on | *stretching" },
+    { "text": "Once in a while, that's totally fine.", "caps": "Once in a *while | that's totally *fine" },
+    { "text": "But make it a habit, and bacteria get time to multiply,", "caps": "Make it a *habit | and *bacteria | get time | to *multiply" },
+    { "text": "and the muscle can stretch out and get weaker.", "caps": "The *muscle | can stretch *out | and get *weaker" },
+    { "text": "So when you've gotta go, just go.", "caps": "When you've | gotta *go | just *go", "gap": 0.9 },
+    { "text": "Fun fact: almost every mammal bigger than a cat pees for about twenty-one seconds.", "caps": "*Fun fact | almost every *mammal | bigger than | a *cat | pees for | about *21 | *seconds" },
+    { "text": "Follow for the next glitch.", "caps": "*Follow | for the next | *glitch" }
+  ]
+}
