@@ -10,7 +10,7 @@ import { providerFetch } from "./http";
  *   POST /v1/text-to-speech/{voice_id}?output_format=mp3_44100_128   body { text, model_id } → audio/mpeg bytes
  */
 // ELEVENLABS_BASE_URL selects a data-residency endpoint (e.g. https://api.eu.residency.elevenlabs.io) or a proxy.
-const BASE = (process.env.ELEVENLABS_BASE_URL || "https://api.elevenlabs.io").replace(/\/+$/, "");
+const BASE = (process.env.FRAMEFORGE_ELEVENLABS_BASE_URL || "https://api.elevenlabs.io").replace(/\/+$/, "");
 
 export function createElevenLabsProvider(resolved: ResolvedProvider): VoiceProvider {
   const headers = { "xi-api-key": resolved.apiKey };

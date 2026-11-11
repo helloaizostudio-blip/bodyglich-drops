@@ -47,7 +47,8 @@ function keyFor(descriptor: ProviderDescriptor, row: ProviderConfig | undefined)
       // Stored with a different APP_SECRET — treat as missing so the user is asked to re-enter it.
     }
   }
-  const env = process.env[descriptor.envVar];
+  // On Netlify these variables are injected by its AI gateway and are not the studio's own keys.
+  const env = process.env.NETLIFY ? undefined : process.env[descriptor.envVar];
   return env ? { key: env, source: "environment" } : null;
 }
 

@@ -14,7 +14,7 @@ import { blobOf, providerFetch } from "./http";
  *   GET  /v1/models/{model}       (used as the free verification call)
  */
 // OPENAI_BASE_URL lets self-hosters route through a gateway or proxy; the default is the public API.
-const BASE = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
+const BASE = (process.env.FRAMEFORGE_OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
 const auth = (key: string) => ({ Authorization: `Bearer ${key}` });
 
 /* ---------------- images ---------------- */

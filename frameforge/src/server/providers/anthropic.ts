@@ -4,6 +4,12 @@ import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { z } from "zod";
 import { UserError } from "@/server/action";
 import type { ResolvedProvider } from "./config";
+/**
+ * Always talk to Anthropic directly. Hosts such as Netlify inject ANTHROPIC_BASE_URL (their AI gateway),
+ * which the SDK would otherwise pick up and send the user's own key to — and the gateway rejects it.
+ * FRAMEFORGE_ANTHROPIC_BASE_URL is an explicit override for self-hosters.
+ */
+const BASE_URL = process.env.FRAMEFORGE_ANTHROPIC_BASE_URL || "https://api.anthropic.com";
 import type { AssistantTool, TextProvider, TextUsage } from "./types";
 
 type Effort = "low" | "medium" | "high";
@@ -49,7 +55,7 @@ const textOf = (message: Anthropic.Beta.BetaMessage) =>
     .trim();
 
 export function createAnthropicProvider(resolved: ResolvedProvider): TextProvider {
-  const client = new Anthropic({ apiKey: resolved.apiKey, maxRetries: 2 });
+  const client = new Anthropic({ apiKey: resolved.apiKey, authToken: null, baseURL: BASE_URL, maxRetries: 2 });
   const model = resolved.config.model;
   const effort = (resolved.config.effort as Effort) ?? "medium";
 
@@ -170,7 +176,7 @@ export function createAnthropicProvider(resolved: ResolvedProvider): TextProvide
 
 /** Free call that confirms the key works and the chosen model is available to it. */
 export async function verifyAnthropic(resolved: ResolvedProvider): Promise<void> {
-  const client = new Anthropic({ apiKey: resolved.apiKey, maxRetries: 1, timeout: 20_000 });
+  const client = new Anthropic({ apiKey: resolved.apiKey, authToken: null, baseURL: BASE_URL, maxRetries: 1, timeout: 20_000 });
   try {
     await client.models.retrieve(resolved.config.model);
   } catch (err) {
