@@ -63,7 +63,7 @@ LINES = [
     ("oh",      "zash", "whisper", "Oh. She was the second S-rank.",                                        ["zash_dead", "somi_eyes"]),
     ("tobi3",   "tobi", "excited", "So the chart was wrong?",                                               ["chart_crossout"]),
     ("end",     "zash", "calm",    "Anyway. Back to mewing.",                                               ["end_mew"]),
-    ("cta",     "zash", "calm",    "Comment your rank. Follow for part 2.",                                 ["endcard"]),
+    ("cta",     "zash", "calm",    "Comment your rank. Follow for more.",                                 ["endcard"]),
 ]
 
 VOICES = {
