@@ -88,8 +88,13 @@ export const FORMS = {
     }
     const brain = M(h.head, new THREE.SphereGeometry(1, 24, 16), organM('#F2A3C0')); brain.scale.set(0.068, 0.052, 0.074); brain.position.set(0, 0.19, -0.012); brain.castShadow = false;
     const sigM = new THREE.MeshBasicMaterial({ color: new THREE.Color('#FFF3A0').multiplyScalar(1.3) });
+    // diaphragm: a thin muscle dome under the lungs (scale y to flatten it on a hiccup), and the voice box in the throat
+    const diaG = G(h.spine, [0, 0.235, 0.0]);
+    const diaphragm = M(diaG, mesh((p) => { const e = ellipsoid(p, [0, 0, 0], [0.15, 0.075, 0.115]); return smax(Math.abs(e) - 0.006, -(p[1] + 0.002), 0.004); }, [[-0.17, -0.02, -0.13], [0.17, 0.09, 0.13]], 0.004), organM('#E8505A', { transparent: true, opacity: 0.85, side: THREE.DoubleSide, depthWrite: false }));
+    diaphragm.castShadow = false;
+    const larynx = M(h.spine, new THREE.TorusGeometry(0.019, 0.006, 10, 28), organM('#7FE0F0')); larynx.rotation.x = Math.PI / 2; larynx.position.set(0, 0.545, 0.03); larynx.castShadow = false;
     const f = face(h.head, [0, 0.152, 0.106], c, { gap: 0.043, r: 0.021, curve: 0.38, cheeks: false, mouth: false }), an = antenna(h.head, [0, 0.275, 0], c, 0.8);
-    return { group: h.group, cy: 0.62, human: h, heart: I.heart, gut, gutCurve, gas, gasM, bloodM, sigM, bladder, ring, kidneys, brain, lungs: I.lungs, stomach: I.stomach, face: f, antenna: an, xm, isXray: true, animate(t) {
+    return { group: h.group, cy: 0.62, human: h, heart: I.heart, gut, gutCurve, gas, gasM, bloodM, sigM, bladder, ring, kidneys, brain, diaphragm, diaG, larynx, lungs: I.lungs, stomach: I.stomach, face: f, antenna: an, xm, isXray: true, animate(t) {
       const w = Math.sin(t * 2.2), beat = Math.pow(Math.max(0, Math.sin(t * 7.6)), 6) + 0.5 * Math.pow(Math.max(0, Math.sin(t * 7.6 - 0.9)), 6);
       h.pose({ spine: [0, w * 3, 0], head: [-3, w * 4, 0], shL: [4, 0, 20], shR: [4, 0, 20], elL: 16, elR: 16 }); f.set({ lid: blinkAt(t, 3) });
       I.heart.scale.setScalar(1 + beat * 0.22); I.heart.material.emissiveIntensity = 0.5 + beat * 1.6; I.lungs.forEach((l) => l.scale.setScalar(1 + Math.sin(t * 1.9) * 0.05));
@@ -142,6 +147,21 @@ export const FORMS = {
     return { group: g, cy: 0.42, body, tail, face: f, antenna: an, bubbles, animate(t) {
       const w = Math.sin(t * 6); tail.rotation.y = w * 0.55; body.rotation.set(Math.sin(t * 1.5) * 0.05, -w * 0.1, 0); body.position.y = 0.42 + Math.sin(t * 1.5) * 0.03; f.set({ lid: blinkAt(t, 11) }); an.rotation.z = D(-w * 10);
       bubbles.forEach((b, i) => { const k = ((t * 1.3 + i / 12) % 1), burst = Math.sin(t * 2.6 + i) > -0.3 ? 1 : 0; b.visible = burst > 0; b.position.set(Math.sin(i * 2.4 + k * 6) * 0.03 * k * 3, 0.36 + k * 0.5, -0.3 - k * 0.12 + Math.cos(i * 1.7) * 0.04); b.scale.setScalar((0.5 + hash(i) * 0.9) * Math.sin(Math.min(1, k * 4) * Math.PI / 2) * (1 - k * k)); });
+    } };
+  },
+  /** a tadpole: big round head-body, wiggling tail with a fin, feathery gills either side (gills.scale to breathe) */
+  tadpole(c) {
+    const g = new THREE.Group(), body = G(g, [0, 0.3, 0]), mat = VINYL({ roughness: 0.36, clearcoat: 0.5, clearcoatRoughness: 0.25, sheen: 0.2 }), B = rgb(c.color), BL = rgb(c.belly), BD = rgb(c.dark);
+    M(body, mesh((p) => smin(ellipsoid(p, [0, 0, 0.02], [0.17, 0.15, 0.2]), ellipsoid(p, [0, -0.02, -0.12], [0.11, 0.1, 0.12]), 0.06), [[-0.2, -0.18, -0.26], [0.2, 0.18, 0.25]], 0.006, (p) => mixc(mixc(BD, B, sstep(-0.02, 0.1, p[1])), BL, sstep(-0.02, -0.08, p[1]))), mat);
+    const tail = G(body, [0, -0.01, -0.2]), segs = [];
+    let par = tail; for (let i = 0; i < 4; i++) { const sg = G(par, i ? [0, 0, -0.09] : [0, 0, 0]); const w = 1 - i * 0.2; M(sg, mesh((p) => smin(capsule(p, [0, 0, 0], [0, 0, -0.1], 0.045 * w, 0.038 * w), ellipsoid(p, [0, 0, -0.05], [0.01, 0.085 * w, 0.06]), 0.02), [[-0.06, -0.1, -0.16], [0.06, 0.1, 0.06]], 0.005, () => mixc(B, BL, 0.25 * i / 3)), mat); segs.push(sg); par = sg; }
+    const gills = [], gm = new THREE.MeshStandardMaterial({ color: '#FF8FA3', roughness: 0.5, emissive: '#FF8FA3', emissiveIntensity: 0.3 });
+    for (const s of [-1, 1]) { const gg = G(body, [s * 0.15, 0.02, -0.03]); for (let i = 0; i < 3; i++) { const f = new THREE.Mesh(new THREE.CapsuleGeometry(0.012, 0.07, 6, 10), gm); f.position.set(s * 0.04, 0.03 - i * 0.03, -0.01 * i); f.rotation.z = s * (1.1 + i * 0.25); f.castShadow = true; gg.add(f); } gills.push(gg); }
+    const f = face(body, [0, 0.05, 0.19], c, { gap: 0.075, r: 0.034, curve: 0.5, mouthY: -0.08, mouthZ: 0.02 }), an = antenna(body, [0, 0.14, 0.06], c, 0.9);
+    return { group: g, cy: 0.3, body, tail, segs, gills, face: f, antenna: an, animate(t) {
+      segs.forEach((sg, i) => (sg.rotation.y = Math.sin(t * 8 - i * 0.9) * (0.28 + i * 0.08)));
+      body.rotation.set(Math.sin(t * 1.6) * 0.04, Math.sin(t * 8) * 0.05, 0); body.position.y = 0.3 + Math.sin(t * 1.6) * 0.025;
+      gills.forEach((gg, i) => gg.scale.setScalar(1 + 0.18 * Math.sin(t * 5 + i))); f.set({ lid: blinkAt(t, 13) }); an.rotation.z = D(Math.sin(t * 8) * 8);
     } };
   },
   cat(c) {

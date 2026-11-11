@@ -1,0 +1,26 @@
+{
+  "title": "What Actually Happens When You Get Hiccups?",
+  "voice": "am_michael",
+  "speed": 1.0,
+  "lead": 0.35,
+  "outro": 1.0,
+  "gap": 0.24,
+  "music": "bed",
+  "sources": [
+    "Scientific American, 'What causes hiccups?': a hiccup is a sudden involuntary contraction of the diaphragm followed by closure of the glottis, which makes the 'hic' sound; the reflex runs through the brainstem",
+    "Straus, Vasilakos, Wilson et al. 2003, BioEssays 25(6), 'A phylogenetic hypothesis for the origin of hiccough': hiccups may be a remnant of gill ventilation in tadpoles, which close the glottis so water does not enter the lungs (a hypothesis, not proven)",
+    "Guinness World Records / Smithsonian: Charles Osborne of Anthon, Iowa hiccuped continuously for 68 years (1922-1990), an estimated 430 million hiccups"
+  ],
+  "lines": [
+    { "text": "What actually happens when you get hiccups?", "caps": "What *actually | *happens | when you get | *hiccups?" },
+    { "text": "Something sets off a reflex deep in your brainstem,", "caps": "Something | *sets off | a *reflex | deep in your | *brainstem" },
+    { "text": "and your diaphragm, the big muscle under your lungs, suddenly jerks down.", "caps": "Your *diaphragm | the big *muscle | under your *lungs | suddenly | *jerks down" },
+    { "text": "Air rushes in, but a split second later, your vocal cords snap shut.", "caps": "Air *rushes in | a split *second | later | your *vocal cords | *snap shut" },
+    { "text": "That slam is the hic.", "caps": "That *slam | is the *hic" },
+    { "text": "But here's the weird part.", "caps": "Here's the | *weird part" },
+    { "text": "Scientists think hiccups are left over from tadpoles,", "caps": "*Scientists | think hiccups | are *left over | from *tadpoles" },
+    { "text": "which breathe with gills and snap their throat shut so water can't flood their lungs.", "caps": "They breathe | with *gills | and snap | their *throat shut | so *water | can't flood | their *lungs" },
+    { "text": "And one man in Iowa hiccuped for sixty-eight years straight.", "caps": "One *man | in *Iowa | hiccuped for | *68 years | *straight" },
+    { "text": "Follow for the next glitch.", "caps": "*Follow | for the next | *glitch" }
+  ]
+}
