@@ -8,13 +8,28 @@ let cached: Buffer | undefined;
 
 /**
  * Master secret used to encrypt stored provider API keys and to sign upload URLs.
- * Set APP_SECRET in production. Without it, a random secret is generated once and kept in DATA_DIR.
+ * Set APP_SECRET in production. Without it, a random secret is generated once and kept in DATA_DIR
+ * (or derived from the database credentials on hosts without a persistent disk).
  */
+export function secretSource(): "env" | "database" | "file" {
+  if (process.env.APP_SECRET && process.env.APP_SECRET.length >= 16) return "env";
+  if (process.env.NETLIFY_DB_URL || ((process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT) && process.env.DATABASE_URL)) return "database";
+  return "file";
+}
+
 export function appSecret(): Buffer {
   if (cached) return cached;
   const env = process.env.APP_SECRET;
   if (env && env.length >= 16) {
     cached = crypto.createHash("sha256").update(env).digest();
+    return cached;
+  }
+  // Serverless hosts (Netlify) have no persistent disk to keep a generated secret on. There the
+  // secret is derived from the database connection string, which is already this installation's
+  // most sensitive credential and is stable across deploys. Setting APP_SECRET always takes priority.
+  const dbUrl = process.env.NETLIFY_DB_URL || (process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT ? process.env.DATABASE_URL : undefined);
+  if (dbUrl) {
+    cached = crypto.createHash("sha256").update(`frameforge-app-secret:${dbUrl}`).digest();
     return cached;
   }
   const file = path.join(dataDir(), "app-secret");

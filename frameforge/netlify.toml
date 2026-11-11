@@ -5,3 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# The Next.js runtime turns server rendering, server actions and API routes into Netlify Functions.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

@@ -30,7 +30,7 @@ export function SettingsView({
   guides: { styleGuide: string; storyGuide: string };
   user: { name: string; email: string };
   usage: UsageSummary;
-  system: { database: "postgres" | "embedded"; storage: "local" | "s3" | "netlify"; secretFromEnv: boolean; ffmpeg: boolean };
+  system: { database: "postgres" | "embedded"; storage: "local" | "s3" | "netlify"; secretFromEnv: boolean; secretSource: "env" | "database" | "file"; ffmpeg: boolean };
 }) {
   return (
     <div className="flex flex-col gap-5">
@@ -142,7 +142,9 @@ export function SettingsView({
             <li className="flex items-start gap-3">
               {system.secretFromEnv ? <KeyRound className="mt-0.5 size-5 shrink-0 text-brand-600" /> : <ShieldAlert className="mt-0.5 size-5 shrink-0 text-warn-700" />}
               <div>
-                <p className="font-semibold text-navy-900">Encryption secret: {system.secretFromEnv ? "APP_SECRET is set" : "auto-generated file"}</p>
+                <p className="font-semibold text-navy-900">
+                  Encryption secret: {system.secretSource === "env" ? "APP_SECRET is set" : system.secretSource === "database" ? "derived from this site's database credentials" : "auto-generated file"}
+                </p>
                 {!system.secretFromEnv ? (
                   <p className="text-[13px] text-muted">Set the APP_SECRET environment variable in production so saved provider keys survive redeploys.</p>
                 ) : null}
