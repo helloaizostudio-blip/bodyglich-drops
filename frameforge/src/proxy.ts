@@ -6,7 +6,8 @@ import { NextResponse, type NextRequest } from "next/server";
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (pathname.startsWith("/login") || pathname.startsWith("/setup")) return NextResponse.next();
+  // The self-check does its own authorisation (owner session, or the one-time setup code before setup).
+  if (pathname.startsWith("/login") || pathname.startsWith("/setup") || pathname === "/api/selfcheck") return NextResponse.next();
   if (!request.cookies.has("ff_session")) {
     if (pathname.startsWith("/api/")) return NextResponse.json({ error: "Signed out" }, { status: 401 });
     return NextResponse.redirect(new URL("/login", request.url));

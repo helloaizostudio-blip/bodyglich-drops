@@ -12,7 +12,11 @@ import fsp from "node:fs/promises";
  */
 export interface BlobStore {
   set(key: string, data: Uint8Array): Promise<void>;
-  /** Returns null when the key does not exist. */
+  /**
+   * Reads a key that is known to exist. Some stores (Netlify Blobs with strong consistency) stall
+   * instead of answering "not found", so this layer always confirms existence with `list` first
+   * and never calls `get` speculatively.
+   */
   get(key: string): Promise<Uint8Array | null>;
   delete(key: string): Promise<void>;
   /** Keys that start with the prefix. */
@@ -29,6 +33,11 @@ export class ChunkedStorage {
     private readonly store: BlobStore,
     readonly chunkSize: number,
   ) {}
+
+  /** The underlying key/value store (used by the system self-check). */
+  rawStore(): BlobStore {
+    return this.store;
+  }
 
   partCount(size: number): number {
     return Math.max(1, Math.ceil(size / this.chunkSize));
@@ -55,15 +64,31 @@ export class ChunkedStorage {
     if (!last || last.byteLength !== lastExpected) return null;
     const manifest: Manifest = { size: expectedSize, chunkSize: this.chunkSize, parts };
     await this.store.set(manifestKey(key), new TextEncoder().encode(JSON.stringify(manifest)));
+    this.remember(key, manifest);
     return manifest;
   }
 
+  /** Manifests never change once written, so found ones are remembered for a short while. */
+  private readonly known = new Map<string, { manifest: Manifest; at: number }>();
+
+  private remember(key: string, manifest: Manifest) {
+    if (this.known.size > 500) this.known.clear();
+    this.known.set(key, { manifest, at: Date.now() });
+  }
+
   async manifest(key: string): Promise<Manifest | null> {
-    const raw = await this.store.get(manifestKey(key));
+    const hit = this.known.get(key);
+    if (hit && Date.now() - hit.at < 5 * 60_000) return hit.manifest;
+    const mk = manifestKey(key);
+    // Existence is checked by listing: a speculative get of a missing key can hang on some stores.
+    if (!(await this.store.list(mk)).includes(mk)) return null;
+    const raw = await this.store.get(mk);
     if (!raw) return null;
     try {
       const m = JSON.parse(new TextDecoder().decode(raw)) as Manifest;
-      return Number.isFinite(m.size) && m.chunkSize > 0 && m.parts > 0 ? m : null;
+      if (!(Number.isFinite(m.size) && m.chunkSize > 0 && m.parts > 0)) return null;
+      this.remember(key, m);
+      return m;
     } catch {
       return null;
     }
@@ -77,6 +102,7 @@ export class ChunkedStorage {
     }
     const manifest: Manifest = { size: data.byteLength, chunkSize: this.chunkSize, parts };
     await this.store.set(manifestKey(key), new TextEncoder().encode(JSON.stringify(manifest)));
+    this.remember(key, manifest);
   }
 
   /** Streams the object, or an inclusive byte range of it, fetching only the parts it needs. */
@@ -103,6 +129,7 @@ export class ChunkedStorage {
   }
 
   async delete(key: string): Promise<void> {
+    this.known.delete(key);
     for (const k of await this.store.list(`${key}/`)) await this.store.delete(k);
   }
 

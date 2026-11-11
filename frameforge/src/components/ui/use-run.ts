@@ -23,7 +23,7 @@ export function useRun() {
         if (successMessage) toast.success(successMessage);
         return res.data;
       } catch {
-        toast.error("Could not reach the server. Check your connection and try again.");
+        toast.error("The server did not answer. Check your connection — or, if this was a long AI generation, the host may have cut it off: try a shorter request or a faster model.");
         return undefined;
       } finally {
         setPending(false);

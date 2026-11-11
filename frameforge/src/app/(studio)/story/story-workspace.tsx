@@ -6,7 +6,7 @@ import { ArrowRight, Check, ClipboardCheck, Lightbulb, Loader2, PenLine, Refresh
 import type { ScriptReview, ScriptSectionKey, ScriptSections, StoryInputs } from "@/db/schema";
 import { SCRIPT_SECTIONS } from "@/db/schema";
 import type { StoryIdea } from "@/server/services/story";
-import { rewriteSection, runScriptReview, saveScriptSections, suggestIdeas, writeStory } from "@/server/actions/story";
+import { rewriteSection, runScriptReview, saveScriptSections, suggestIdeas, writeStoryOutline, writeStoryScriptPart } from "@/server/actions/story";
 import { SCRIPT_SECTION_LABELS } from "@/lib/constants";
 import { cn, formatDuration } from "@/lib/utils";
 import { Button, LinkButton } from "@/components/ui/button";
@@ -56,6 +56,7 @@ export function StoryWorkspace({
   const [confirmOverwrite, setConfirmOverwrite] = useState(false);
   const [rewrite, setRewrite] = useState<ScriptSectionKey | null>(null);
   const [instruction, setInstruction] = useState("");
+  const [progress, setProgress] = useState("");
 
   const prev = script?.inputs;
   const [inputs, setInputs] = useState<StoryInputs>({
@@ -123,13 +124,31 @@ export function StoryWorkspace({
     setConfirmOverwrite(false);
     await flush();
     setBusy("story");
-    const res = await run(writeStory({ episodeId: episode.id, inputs }), "Story written");
-    setBusy(null);
-    if (res) {
-      setSections(res.sections);
-      setReview(null);
-      document.getElementById("script-editor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setProgress("Planning the story…");
+    // Written in stages (outline, then the script in parts) so every request is short.
+    const outline = await run(writeStoryOutline({ episodeId: episode.id, inputs }));
+    if (!outline) {
+      setBusy(null);
+      setProgress("");
+      return;
     }
+    setSections(outline.sections);
+    setReview(null);
+    document.getElementById("script-editor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    for (let part = 1; part <= outline.parts; part++) {
+      setProgress(outline.parts > 1 ? `Writing the script — part ${part} of ${outline.parts}…` : "Writing the script…");
+      const res = await run(writeStoryScriptPart({ episodeId: episode.id, part, parts: outline.parts }));
+      if (!res) {
+        toast.info(part > 1 ? `The script stopped after part ${part - 1} of ${outline.parts}. What was written is saved — use Regenerate on “Full script” to finish it.` : "The outline is saved. Use Regenerate on “Full script” to write the script.");
+        setBusy(null);
+        setProgress("");
+        return;
+      }
+      setSections(res.sections);
+    }
+    setBusy(null);
+    setProgress("");
+    toast.success("Story written");
   };
 
   const doRewrite = async () => {
@@ -237,7 +256,7 @@ export function StoryWorkspace({
         </div>
         {busy === "story" ? (
           <p className="mt-3 flex items-center gap-2 rounded-xl bg-brand-100 px-3 py-2.5 text-[13px] font-medium text-navy-800" role="status">
-            <Loader2 className="size-4 animate-spin text-brand-600" /> Writing the full episode. Long scripts can take a minute or two — keep this page open.
+            <Loader2 className="size-4 animate-spin text-brand-600" /> {progress || "Writing…"} Keep this page open — the story appears below as each stage finishes.
           </p>
         ) : null}
 

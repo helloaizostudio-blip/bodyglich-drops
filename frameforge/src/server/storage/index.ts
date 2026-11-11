@@ -196,9 +196,10 @@ function diskBlobStore(): BlobStore {
       await fsp.rm(file(key), { force: true });
     },
     async list(prefix) {
-      const dir = path.dirname(file(`${prefix}x`));
+      // Keys are "<object key>/<part>", so everything sharing a prefix lives in one directory.
+      const base = prefix.slice(0, prefix.lastIndexOf("/") + 1);
       try {
-        return (await fsp.readdir(dir)).map((name) => `${prefix}${name}`);
+        return (await fsp.readdir(path.join(root, base))).map((name) => `${base}${name}`).filter((k) => k.startsWith(prefix));
       } catch {
         return [];
       }

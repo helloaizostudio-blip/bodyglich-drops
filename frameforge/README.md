@@ -48,10 +48,36 @@ instead of pretending.
 - Asset thumbnails are the original files (no server-side resizing yet).
 - One studio per installation; there are no team roles yet.
 
-## Deploying from your phone
+## Live on Netlify
 
-You need a host that runs a Docker container with a persistent disk. Railway, Render and Fly.io all
-do this from a browser, with no terminal. The steps are the same everywhere (menu names differ):
+FRAMEFORGE runs on Netlify with no extra accounts: Netlify Database (Postgres) for data and Netlify
+Blobs for media. This is how the BLOCKHEADS studio is currently hosted.
+
+- **Database**: provisioned automatically; the SQL in `netlify/database/migrations/` is applied on every deploy.
+- **File storage**: `STORAGE_DRIVER=netlify`. Files are uploaded and stored in 4 MB parts, played back
+  through byte ranges, and large downloads are stitched together in the browser.
+- **First run**: set a `SETUP_CODE` environment variable; the setup screen asks for it, so nobody else
+  can claim the studio from the public URL.
+- **Self-check**: `/api/selfcheck` (owner session, or `?code=<SETUP_CODE>` before setup) proves that
+  database writes and file storage work on the host.
+
+Limits measured on Netlify's free plan:
+
+- **30 seconds per request.** Stories are therefore written in stages (an outline, then the script in
+  ~450-word parts). Other AI calls — script review, "break script into scenes" on long scripts, long
+  assistant tasks, image generation — fail if the provider takes longer than that; a faster model or
+  lower effort (Settings → AI providers) helps.
+- **No ffmpeg**, so the Video Editor's Render button is disabled there. Timeline, preview and
+  everything else work.
+- **Monthly credits.** Storage, bandwidth and compute draw on the plan's credits; heavy video use can exhaust them.
+
+To deploy your own copy: create a Netlify project with base directory `frameforge`, set
+`STORAGE_DRIVER=netlify` and `SETUP_CODE`, and deploy. `netlify.toml` already declares the build.
+
+## Deploying to a container host
+
+For video rendering and no request time limit, use a host that runs a Docker container with a
+persistent disk. Railway, Render and Fly.io all do this from a browser, with no terminal. The steps are the same everywhere (menu names differ):
 
 1. Create a new project **from this GitHub repository**.
 2. Set the service's **root directory** to `frameforge` — the host then builds the included `Dockerfile`
@@ -66,8 +92,7 @@ Recommended upgrades once you rely on it:
 - **Managed PostgreSQL**: add the host's Postgres add-on and set `DATABASE_URL`. Migrations apply automatically.
 - **Bucket storage**: set the `S3_*` variables to keep media off the server disk (see `.env.example`).
 
-Serverless hosts (Vercel, Netlify) can run the app only with `DATABASE_URL` and S3 storage set, and
-without video rendering (no ffmpeg) — a container host is the better fit.
+Other serverless hosts (for example Vercel) need `DATABASE_URL` and S3 storage set, and have no video rendering.
 
 ## Connecting AI providers
 

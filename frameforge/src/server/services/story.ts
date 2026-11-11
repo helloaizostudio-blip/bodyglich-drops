@@ -169,26 +169,80 @@ export async function generateIdeas(ctx: Ctx, episode: Episode, inputs: StoryInp
   });
 }
 
-const zStory = z.object({
+/**
+ * A full story is written in stages — an outline, then the script in parts of a few hundred words —
+ * instead of one very long request. Each stage is a short call, so it fits hosts that limit how
+ * long a request may run, the creator sees progress, and a failed part does not lose the rest.
+ */
+const zOutline = z.object({
   title: z.string().describe("Episode title, under 70 characters, honest about what happens."),
   hook: z.string().describe("Opening hook: exactly what happens on screen and what is said in the first 5–10 seconds."),
   concept: z.string().describe("Story concept in one short paragraph: setup, escalation, payoff."),
   characterRoles: z.string().describe("One line per character: NAME — what they want in this episode and their function in the story."),
-  script: z.string().describe("The full script from first to last line, with [stage directions] and NAME: dialogue lines."),
-  dialogue: z.string().describe("Only the spoken lines, in order, one per line as NAME: line — ready to hand to voice actors."),
-  sceneBreakdown: z.string().describe("Numbered scenes. For each: location, who is present, what happens, approximate seconds."),
+  sceneBreakdown: z.string().describe("Numbered scenes covering the whole episode. For each: location, who is present, what happens, approximate seconds."),
   ending: z.string().describe("How the episode ends and why it pays off the setup. Include the final line or image."),
   thumbnailConcept: z.string().describe("One thumbnail idea: the single image, characters' expressions, and at most 3 words of text."),
 });
 
-export async function generateStory(ctx: Ctx, episode: Episode, inputs: StoryInputs): Promise<Script> {
+const WORDS_PER_MINUTE = 140;
+const WORDS_PER_PART = 450;
+
+/** How many parts the script is written in for a target length (one part is roughly three minutes of video). */
+export function scriptPartCount(targetDurationSec: number): number {
+  const words = (targetDurationSec / 60) * WORDS_PER_MINUTE;
+  return Math.max(1, Math.min(8, Math.ceil(words / WORDS_PER_PART)));
+}
+
+/** Stage 1: the outline. Clears the old script so the parts that follow start from a clean page. */
+export async function generateOutline(ctx: Ctx, episode: Episode, inputs: StoryInputs): Promise<{ script: Script; parts: number }> {
   const cast = await charactersByIds(ctx, inputs.characterIds);
-  const prompt = `Write a complete episode.\n\n${inputsBrief(inputs, cast)}\n\n## Cast\n${await castContext(ctx, cast)}\n\nThe script section must be the whole episode at the target length, not a summary. The dialogue section must contain exactly the spoken lines of the script.`;
-  const sections = await logged(ctx, "full story", episode.id, prompt, async (p) => {
-    const { data, usage } = await p.generateObject({ system: await systemPrompt(ctx), prompt, schema: zStory, maxTokens: 48000 });
+  const prompt = `Plan a complete episode. Write everything except the script itself, which comes next.\n\n${inputsBrief(inputs, cast)}\n\n## Cast\n${await castContext(ctx, cast)}\n\nThe scene breakdown must cover the whole episode at the target length, because the script will be written from it.`;
+  const outline = await logged(ctx, "story outline", episode.id, prompt, async (p) => {
+    const { data, usage } = await p.generateObject({ system: await systemPrompt(ctx), prompt, schema: zOutline, maxTokens: 8000 });
     return { value: data, usage };
   });
-  return saveScript(ctx, episode, { sections, inputs, review: null });
+  const script = await saveScript(ctx, episode, { sections: { ...outline, script: "", dialogue: "" }, inputs, review: null });
+  return { script, parts: scriptPartCount(inputs.targetDurationSec) };
+}
+
+/** Spoken lines of a script (NAME: line), in order — what voice actors and Audio Studio work from. */
+export function dialogueFromScript(script: string): string {
+  return script
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => /^[A-Z][A-Za-z0-9 .'’()&-]{0,40}:\s*\S/.test(l) && !l.startsWith("["))
+    .join("\n");
+}
+
+/** Stage 2: one part of the script, continuing exactly where the previous part stopped. */
+export async function generateScriptPart(ctx: Ctx, episode: Episode, part: number, parts: number): Promise<Script> {
+  const existing = await getScript(ctx, episode.id);
+  const sections = existing?.sections ?? {};
+  const inputs = existing?.inputs;
+  if (!inputs || !(sections.sceneBreakdown ?? "").trim()) throw new UserError("Generate the story outline first.");
+  const cast = await charactersByIds(ctx, inputs.characterIds);
+  const soFar = part === 1 ? "" : (sections.script ?? "").trim();
+  const totalWords = Math.round((inputs.targetDurationSec / 60) * WORDS_PER_MINUTE);
+  const partWords = Math.max(60, Math.round(totalWords / parts));
+  const prompt = [
+    `Write part ${part} of ${parts} of the episode's script, about ${partWords} words (the whole script is about ${totalWords} words).`,
+    part === 1 ? "Start with the opening hook." : "Continue directly from the last line of the script so far. Do not repeat or summarise anything already written.",
+    part === parts ? "This is the final part: bring the story to the planned ending and finish the episode." : "Stop at a natural beat; the story continues in the next part, so do not wrap it up yet.",
+    `## Brief\n${inputsBrief(inputs, cast)}`,
+    `## Cast\n${await castContext(ctx, cast)}`,
+    `## Outline\n${scriptAsText({ ...sections, script: "", dialogue: "" })}`,
+    soFar ? `## Script so far\n${soFar}` : "",
+    "Reply with the script text for this part only — no heading, no part number, no commentary.",
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+  const text = await logged(ctx, `script part ${part}/${parts}`, episode.id, prompt, async (p) => {
+    const res = await p.generateText({ system: await systemPrompt(ctx), prompt, maxTokens: 6000 });
+    return { value: res.text, usage: res.usage };
+  });
+  const script = [soFar, text.trim()].filter(Boolean).join("\n\n");
+  // The dialogue sheet is derived from the script, so it always matches it exactly.
+  return saveScript(ctx, episode, { sections: { script, dialogue: dialogueFromScript(script) } });
 }
 
 function scriptAsText(sections: ScriptSections, skip?: ScriptSectionKey): string {
