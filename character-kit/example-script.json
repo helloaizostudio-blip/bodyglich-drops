@@ -1,0 +1,17 @@
+{
+  "title": "Body Glitch: host v2 motion test",
+  "voice": "am_michael",
+  "speed": 1.0,
+  "lead": 0.35,
+  "outro": 1.2,
+  "gap": 0.3,
+  "music": "bed",
+  "sources": [],
+  "lines": [
+    { "text": "Meet the new Body Glitch host.", "caps": "Meet the *new | Body Glitch *host" },
+    { "text": "Smoother shapes, softer light,", "caps": "*Smoother shapes | *softer light" },
+    { "text": "and a face that actually acts.", "caps": "A *face | that actually *acts" },
+    { "text": "Oh, and this little guy is Blip.", "caps": "Oh, and *this | little guy | is *Blip" },
+    { "text": "Same engine, whole new look.", "caps": "Same *engine | whole new *look" }
+  ]
+}
