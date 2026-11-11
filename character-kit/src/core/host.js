@@ -61,11 +61,11 @@ export class Host {
     }));
     for (const s of [-1, 1]) {                                                                              // drawstrings
       const st = new THREE.Mesh(new THREE.CapsuleGeometry(0.0055, 0.085, 6, 12), new THREE.MeshStandardMaterial({ color: c.trim, roughness: 0.5 }));
-      st.position.set(s * 0.062, 0.265, 0.121); st.rotation.set(0.1, 0, s * -0.1); st.castShadow = true; this.spine.add(st);
+      st.position.set(s * 0.062, 0.265, 0.121); st.rotation.set(0.1, 0, s * -0.1); st.castShadow = true; this.spine.add(st); (this.fronts ||= []).push([st, 0.121]);
     }
     if (c.badge) {
       const b = new THREE.Mesh(new THREE.CircleGeometry(0.03, 32), new THREE.MeshStandardMaterial({ map: badgeTex(c.badge, c.trim, '#1b1b1f'), roughness: 0.4, transparent: true }));
-      b.position.set(0.105, 0.2, 0.116); b.rotation.set(-0.05, 0.5, 0); this.spine.add(b); this.badge = b;
+      b.position.set(0.105, 0.2, 0.116); b.rotation.set(-0.05, 0.5, 0); this.spine.add(b); this.badge = b; (this.fronts ||= []).push([b, 0.116]);
     }
     const baggy = c.fit === 'baggy', PD = mixc(PA, [0, 0, 0], 0.22);
     add(this.hips, sculpt('h-pelvis' + c.pants + c.fit, (p) => ellipsoid(p, [0, -0.03, 0], baggy ? [0.172, 0.105, 0.128] : [0.152, 0.095, 0.112]), [[-0.2, -0.16, -0.16], [0.2, 0.1, 0.16]], 0.007, () => PA));
@@ -201,6 +201,8 @@ export class Host {
     this.group.scale.set(inv(sq), 1 + sq, inv(sq)); this.head.scale.set(inv(hs), 1 + hs, inv(hs));
     this.group.updateMatrixWorld(true);
   }
+  /** bloat the belly 0..1 (the hoodie swells forward; strings and badge ride on it) */
+  belly(k = 0) { this.parts[0].scale.set(1 + 0.1 * k, 1, 1 + 0.42 * k); (this.fronts || []).forEach(([m, z]) => (m.position.z = z * (1 + 0.42 * k))); }
   /** walking pose at phase ph (radians); extra = more joints to merge (face etc.) */
   walk(ph, amt = 1, extra = {}) { const s = Math.sin(ph) * amt; this.pose({ hipL: [s * 28, 0, 2], hipR: [-s * 28, 0, 2], knL: Math.max(0, -Math.sin(ph + 0.6)) * 46 * amt + 4, knR: Math.max(0, Math.sin(ph + 0.6)) * 46 * amt + 4, shL: [-s * 24, 0, 7], shR: [s * 24, 0, 7], elL: 22, elR: 22, spine: [3, s * 5, 0], head: [-2, -s * 3, 0], ...extra }); this.hips.position.y = 0.72 - Math.abs(Math.cos(ph)) * 0.014 * amt; }
   /** swap the body (not the head) to another material, e.g. x-ray glass; null restores */

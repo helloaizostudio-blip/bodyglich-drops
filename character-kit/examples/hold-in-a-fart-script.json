@@ -1,0 +1,27 @@
+{
+  "title": "What Happens If You Hold In a Fart?",
+  "voice": "am_michael",
+  "speed": 1.0,
+  "lead": 0.35,
+  "outro": 1.0,
+  "gap": 0.24,
+  "music": "bed",
+  "sources": [
+    "NIDDK (NIH), 'Symptoms & Causes of Gas in the Digestive Tract': people pass gas an average of 8 to 14 times a day; up to 25 is considered normal",
+    "Clare Collins (University of Newcastle), The Conversation / ScienceAlert, 'What happens to your body when you hold in a fart': pressure build-up causes bloating and discomfort; some gas is reabsorbed through the gut wall into the circulation and exhaled through the lungs; the rest is released later",
+    "Wilson, Batty & Dill 2004, Proc. R. Soc. B, 'Pacific and Atlantic herring produce burst pulse sounds': herring release gas bubbles from the anal duct with fast repetitive tick sounds, more at night and in groups; authors suggest a social function (not proven)"
+  ],
+  "lines": [
+    { "text": "What happens if you hold in a fart?", "caps": "What *happens | if you *hold in | a *fart?" },
+    { "text": "Well, most people pass gas eight to fourteen times a day,", "caps": "Most *people | pass *gas | *8 to 14 | times a *day" },
+    { "text": "because your gut never stops making it.", "caps": "Your *gut | never *stops | making *it" },
+    { "text": "Hold it in, and the pressure builds,", "caps": "*Hold it in | the *pressure | *builds" },
+    { "text": "which is why your belly bloats and starts to hurt.", "caps": "Your *belly | *bloats | starts to *hurt" },
+    { "text": "But here's the weird part.", "caps": "Here's the | *weird part" },
+    { "text": "Some of that gas can slip through your gut wall into your blood,", "caps": "Some of that *gas | can *slip through | your gut *wall | into your *blood" },
+    { "text": "travel to your lungs, and get breathed out.", "caps": "To your *lungs | and get | *breathed out" },
+    { "text": "The rest just waits, and escapes the moment you relax.", "caps": "The rest | just *waits | and *escapes | the moment | you *relax", "gap": 1.1 },
+    { "text": "And herring? Scientists think they use farts to stay together in the dark.", "caps": "And *herring? | *Scientists think | they use *farts | to stay *together | in the *dark" },
+    { "text": "So follow, before Blip turns into you.", "caps": "So *follow | before *Blip | turns into *you" }
+  ]
+}

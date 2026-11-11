@@ -71,8 +71,14 @@ export const FORMS = {
     for (const s of [-1, 1]) {                                                                             // arm + leg bones
       for (const [par, len] of [[h.arm[s < 0 ? 'L' : 'R'].sh, 0.25], [h.arm[s < 0 ? 'L' : 'R'].el, 0.24], [h.leg[s < 0 ? 'L' : 'R'].hip, 0.38], [h.leg[s < 0 ? 'L' : 'R'].kn, 0.36]]) { const b = M(par, new THREE.CapsuleGeometry(0.013, len, 6, 10), bone); b.position.y = -len / 2 - 0.01; b.castShadow = false; }
     }
+    // intestines: one long coil under the stomach, and a pool of gas bubbles the shot can place anywhere in the body
+    const gp = []; for (let r = 0; r < 5; r++) for (let k = 0; k < 5; k++) { const u = k / 4, x = (r % 2 ? 1 - u : u) * 0.17 - 0.085; gp.push(new THREE.Vector3(x * (1 - 0.12 * Math.abs(r - 2)), 0.1 - r * 0.036 - 0.01 * Math.sin(u * Math.PI), 0.035 + 0.012 * Math.sin(u * Math.PI))); }
+    const gutCurve = new THREE.CatmullRomCurve3(gp, false, 'catmullrom', 0.4);
+    const gut = M(h.spine, new THREE.TubeGeometry(gutCurve, 160, 0.019, 10), new THREE.MeshPhysicalMaterial({ color: '#F0A0AC', roughness: 0.4, clearcoat: 0.6, emissive: '#E87A8C', emissiveIntensity: 0.22, transparent: true, opacity: 0.8 })); gut.castShadow = false;
+    const gasM = new THREE.MeshBasicMaterial({ color: new THREE.Color('#D6FF4A').multiplyScalar(0.8) }), bloodM = new THREE.MeshBasicMaterial({ color: new THREE.Color('#FF7A6A').multiplyScalar(1.0) }), gg = new THREE.SphereGeometry(0.011, 12, 8), gas = [];
+    for (let i = 0; i < 40; i++) { const b = new THREE.Mesh(gg, gasM); b.visible = false; h.spine.add(b); gas.push(b); }
     const f = face(h.head, [0, 0.152, 0.106], c, { gap: 0.043, r: 0.021, curve: 0.38, cheeks: false, mouth: false }), an = antenna(h.head, [0, 0.275, 0], c, 0.8);
-    return { group: h.group, cy: 0.62, human: h, heart: I.heart, lungs: I.lungs, stomach: I.stomach, face: f, antenna: an, xm, isXray: true, animate(t) {
+    return { group: h.group, cy: 0.62, human: h, heart: I.heart, gut, gutCurve, gas, gasM, bloodM, lungs: I.lungs, stomach: I.stomach, face: f, antenna: an, xm, isXray: true, animate(t) {
       const w = Math.sin(t * 2.2), beat = Math.pow(Math.max(0, Math.sin(t * 7.6)), 6) + 0.5 * Math.pow(Math.max(0, Math.sin(t * 7.6 - 0.9)), 6);
       h.pose({ spine: [0, w * 3, 0], head: [-3, w * 4, 0], shL: [4, 0, 20], shR: [4, 0, 20], elL: 16, elR: 16 }); f.set({ lid: blinkAt(t, 3) });
       I.heart.scale.setScalar(1 + beat * 0.22); I.heart.material.emissiveIntensity = 0.5 + beat * 1.6; I.lungs.forEach((l) => l.scale.setScalar(1 + Math.sin(t * 1.9) * 0.05));
@@ -106,6 +112,25 @@ export const FORMS = {
     for (let i = 0; i < 7; i++) { const a = Math.PI + (Math.PI - arc) / 2 + (i + 0.5) / 7 * arc, th = new THREE.Mesh(new THREE.ConeGeometry(0.008, 0.02, 8), new THREE.MeshStandardMaterial({ color: '#FFFFFF', roughness: 0.3 })); th.position.set(Math.cos(a) * 0.06, 0.04 + Math.sin(a) * 0.06 + 0.008, 0.004); grin.add(th); }
     return { group: g, cy: 0.5, body, tail, face: f, antenna: an, animate(t) {
       const w = Math.sin(t * 5); tail.rotation.y = w * 0.5; body.rotation.set(Math.sin(t * 1.7) * 0.06, -w * 0.09, Math.sin(t * 2.5) * 0.05); body.position.y = 0.5 + Math.sin(t * 1.7) * 0.035; f.set({ lid: blinkAt(t, 7) }); an.rotation.z = D(-w * 10);
+    } };
+  },
+  /** a herring: slim fish that swims on the spot and lets a stream of bubbles go from its tail end */
+  fish(c) {
+    const g = new THREE.Group(), body = G(g, [0, 0.42, 0]), mat = VINYL({ roughness: 0.36, clearcoat: 0.5, clearcoatRoughness: 0.25, sheen: 0.2 }), B = rgb(c.color), BD = rgb(c.dark), SV = [0.86, 0.95, 0.97];
+    M(body, mesh((p) => {
+      let d = ellipsoid(p, [0, 0, 0.02], [0.082, 0.125, 0.25]);
+      d = smin(d, ellipsoid(p, [0, 0.12, -0.02], [0.016, 0.07, 0.085]), 0.03);                             // dorsal fin
+      for (const s of [-1, 1]) d = smin(d, ellipsoid(p, [s * 0.09, -0.05, 0.08], [0.05, 0.016, 0.05]), 0.02);
+      return d;
+    }, [[-0.17, -0.16, -0.27], [0.17, 0.22, 0.3]], 0.006, (p) => mixc(mixc(B, BD, sstep(0.04, 0.13, p[1])), SV, sstep(0.0, -0.045, p[1]))), mat);
+    const tail = G(body, [0, 0, -0.2]);
+    M(tail, mesh((p) => smin(ellipsoid(p, [0, 0, -0.05], [0.035, 0.05, 0.09]), ellipsoid(p, [0, 0, -0.16 - Math.abs(p[1]) * 0.3], [0.014, 0.14, 0.05]), 0.03), [[-0.06, -0.17, -0.3], [0.06, 0.17, 0.05]], 0.006, () => B), mat);
+    const f = face(body, [0, 0.03, 0.215], c, { gap: 0.066, r: 0.028, curve: 0.8, cheeks: false, mouthY: -0.07, mouthZ: 0.045 }), an = antenna(body, [0, 0.105, 0.14], c, 0.8);
+    const bm = new THREE.MeshPhysicalMaterial({ color: '#DFF8FF', roughness: 0.08, clearcoat: 1, transparent: true, opacity: 0.9, emissive: '#CFF4FF', emissiveIntensity: 0.9 }), bubbles = [];
+    for (let i = 0; i < 12; i++) { const b = new THREE.Mesh(new THREE.SphereGeometry(0.03, 14, 10), bm); g.add(b); bubbles.push(b); }
+    return { group: g, cy: 0.42, body, tail, face: f, antenna: an, bubbles, animate(t) {
+      const w = Math.sin(t * 6); tail.rotation.y = w * 0.55; body.rotation.set(Math.sin(t * 1.5) * 0.05, -w * 0.1, 0); body.position.y = 0.42 + Math.sin(t * 1.5) * 0.03; f.set({ lid: blinkAt(t, 11) }); an.rotation.z = D(-w * 10);
+      bubbles.forEach((b, i) => { const k = ((t * 1.3 + i / 12) % 1), burst = Math.sin(t * 2.6 + i) > -0.3 ? 1 : 0; b.visible = burst > 0; b.position.set(Math.sin(i * 2.4 + k * 6) * 0.03 * k * 3, 0.36 + k * 0.5, -0.3 - k * 0.12 + Math.cos(i * 1.7) * 0.04); b.scale.setScalar((0.5 + hash(i) * 0.9) * Math.sin(Math.min(1, k * 4) * Math.PI / 2) * (1 - k * k)); });
     } };
   },
   cat(c) {
