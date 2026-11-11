@@ -11,7 +11,7 @@ Demo: [`preview/host-v2-demo.mp4`](preview/host-v2-demo.mp4) (15 s, 1080x1920, 3
 
 | | before | v2 |
 |---|---|---|
-| Host | default sculpt with a face mesh | vinyl-toy proportions (big smooth head, small body), swept hair, real glasses, open hoodie with trim, drawstrings and a badge |
+| Host | default sculpt with a face mesh | vinyl-toy proportions (big smooth head, small body), curly hair, real glasses, oversized open hoodie with trim, drawstrings and a badge, baggy cargo pants stacked on chunky sneakers |
 | Face | eyelids only | eyes, brows, mouth and smile are rigged: `lid`, `look`, `brow`, `mouth`, `smile` |
 | Motion | joints lerped between poses | anticipation, overshoot, overlap (head and forearms arrive late), squash and stretch, breathing, blinking, eye drift, lip flap from the word timings |
 | Sidekick | none | Blip, a glossy cell with a glowing antenna that hops, squashes and waves |
@@ -30,7 +30,8 @@ import { studio } from './core/studio.js';
 import { track, drag, alive, breathe, mouthFor, hop, spring, bump, wobble, blink } from './core/motion.js';
 
 const ST = studio(E, { tint: '#FFB21F', tint2: '#FF6A2B' });     // any two colours
-const host = new Host({});                                       // hoodie, trim, tee, pants, shoes, skin, hair, badge
+const host = new Host({});                                       // hoodie, trim, tee, pants, shoes, skin, hair, badge,
+                                                                 // hairStyle: 'curly' | 'swept', fit: 'baggy' | 'slim'
 const blip = new Buddy({});                                      // color, belly, glow, scale
 ST.scene.add(host.group, blip.group);
 ```

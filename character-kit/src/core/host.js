@@ -5,7 +5,7 @@
 // Host is a drop-in for Human in shots (same pose() joints, .spine, .hips, .parts[0] = torso, setBodyMaterial()).
 // Sizes: host is 1.58 m tall, face at y 1.35, chest at y 1.0. Buddy is 0.42 m x scale.
 import * as THREE from 'three';
-import { sphere, ellipsoid, capsule, smin, smax, mesh, rgb } from './sdf.js';
+import { sphere, ellipsoid, capsule, rbox, smin, smax, mesh, rgb } from './sdf.js';
 
 const D = THREE.MathUtils.degToRad;
 const cache = new Map();
@@ -28,7 +28,7 @@ function badgeTex(text, bg, fg) {
 // ═════════════════════════ HOST ═════════════════════════
 export class Host {
   constructor(o = {}) {
-    const c = { skin: '#E9B08C', hoodie: '#2E3038', trim: '#FF9A1F', tee: '#DDD8CE', pants: '#23252D', shoes: '#F5F3EE', sole: '#FF9A1F', hair: '#221A17', frames: '#141416', badge: '?', glasses: true, ...o };
+    const c = { skin: '#E9B08C', hoodie: '#2E3038', trim: '#FF9A1F', tee: '#DDD8CE', pants: '#B5A88C', shoes: '#F5F3EE', sole: '#FF9A1F', hair: '#221A17', hairStyle: 'curly', fit: 'baggy', frames: '#141416', badge: '?', glasses: true, ...o };
     this.o = c; const K = JSON.stringify(c);
     const S = rgb(c.skin), HO = rgb(c.hoodie), HD = mixc(rgb(c.hoodie), [0, 0, 0], 0.28), TR = rgb(c.trim), TE = rgb(c.tee), PA = rgb(c.pants), SO = rgb(c.shoes), SL = rgb(c.sole), HA = rgb(c.hair);
     this.mat = VINYL(); this.parts = [];
@@ -43,14 +43,15 @@ export class Host {
     add(this.spine, sculpt('h-torso' + K, (p) => {
       let d = ellipsoid(p, [0, 0.245, 0], [0.172, 0.15, 0.122]);
       d = smin(d, ellipsoid(p, [0, 0.09, 0.006], [0.163, 0.15, 0.122]), 0.09);
-      d = smin(d, ellipsoid(p, [0, -0.035, 0.002], [0.168, 0.062, 0.126]), 0.05);                         // hem band
+      d = smin(d, ellipsoid(p, [0, -0.02, 0.004], [0.19, 0.1, 0.142]), 0.06);                            // long oversized body
+      d = smin(d, ellipsoid(p, [0, -0.1, 0.004], [0.202, 0.052, 0.152]), 0.03);                         // hem band
       d = smin(d, capsule(p, [-0.135, 0.335, -0.004], [0.135, 0.335, -0.004], 0.064), 0.07);              // shoulders
       d = smin(d, ellipsoid(p, [0, 0.365, -0.075], [0.125, 0.07, 0.07]), 0.04);                           // hood
       d = smin(d, capsule(p, [0, 0.34, 0.004], [0, 0.47, 0.008], 0.05, 0.046), 0.035);                    // neck
       return d;
-    }, [[-0.27, -0.13, -0.19], [0.27, 0.5, 0.17]], 0.0055, (p) => {
+    }, [[-0.27, -0.18, -0.2], [0.27, 0.5, 0.19]], 0.0055, (p) => {
       const ax = Math.abs(p[0]), neck = capsule(p, [0, 0.34, 0.004], [0, 0.5, 0.008], 0.052);
-      let col = mixc(HD, HO, sstep(-0.05, -0.03, p[1]));                                                   // darker hem
+      let col = mixc(HD, HO, sstep(-0.1, -0.085, p[1]));                                                   // darker hem
       if (p[2] > 0.0) {
         const w = teeW(p[1]), open = sstep(0.1, 0.13, p[1]);
         col = mixc(col, TR, sstep(0.012, 0.007, Math.abs(ax - w)) * (p[1] < 0.385 ? 1 : 0));              // zip + lapel trim
@@ -66,7 +67,8 @@ export class Host {
       const b = new THREE.Mesh(new THREE.CircleGeometry(0.03, 32), new THREE.MeshStandardMaterial({ map: badgeTex(c.badge, c.trim, '#1b1b1f'), roughness: 0.4, transparent: true }));
       b.position.set(0.105, 0.2, 0.116); b.rotation.set(-0.05, 0.5, 0); this.spine.add(b); this.badge = b;
     }
-    add(this.hips, sculpt('h-pelvis' + c.pants, (p) => ellipsoid(p, [0, -0.03, 0], [0.152, 0.095, 0.112]), [[-0.18, -0.15, -0.14], [0.18, 0.09, 0.14]], 0.007, () => PA));
+    const baggy = c.fit === 'baggy', PD = mixc(PA, [0, 0, 0], 0.22);
+    add(this.hips, sculpt('h-pelvis' + c.pants + c.fit, (p) => ellipsoid(p, [0, -0.03, 0], baggy ? [0.172, 0.105, 0.128] : [0.152, 0.095, 0.112]), [[-0.2, -0.16, -0.16], [0.2, 0.1, 0.16]], 0.007, () => PA));
 
     // head: big, smooth, almost no detail; the acting comes from the eyes, brows and mouth
     this.head = G(this.spine, [0, 0.43, 0]);
@@ -77,7 +79,21 @@ export class Host {
       d = smin(d, ellipsoid(p, [0, 0.137, 0.156], [0.02, 0.022, 0.022]), 0.022);                           // nose
       return d;
     }, [[-0.2, -0.03, -0.19], [0.2, 0.39, 0.2]], 0.0045, () => S));
-    add(this.head, sculpt('h-hair' + c.hair, (p) => {
+    // curls: a ring of soft balls over the scalp (bigger and looser on top, a fringe over the forehead)
+    const hairline = (x, z) => 0.1 + 0.172 * sstep(-0.05, 0.13, z) - 0.02 * sstep(0.09, 0.16, Math.abs(x)), hsh = (i) => { const v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
+    const curls = [];
+    for (let i = 0; i < 150; i++) {
+      const y = 1 - (i + 0.5) / 150 * 1.55, r = Math.sqrt(Math.max(0, 1 - y * y)), th = i * 2.39996, top = Math.max(0, y), out = 1 + 0.05 * top + 0.04 * hsh(i);
+      const q = [Math.cos(th) * r * 0.166 * out, 0.2 + y * 0.18 * out, -0.014 + Math.sin(th) * r * 0.172 * out];
+      if (q[1] > hairline(q[0], q[2]) + 0.012) curls.push([q, 0.034 + 0.012 * hsh(i + 50) + 0.008 * top]);
+    }
+    for (const x of [-0.092, -0.034, 0.03, 0.09]) curls.push([[x, 0.283 - Math.abs(x) * 0.12, 0.15 - Math.abs(x) * 0.22], 0.034]);    // fringe
+    add(this.head, sculpt('h-hair' + c.hair + c.hairStyle, (p) => {
+      if (c.hairStyle === 'curly') {
+        let d = smax(ellipsoid(p, [0, 0.2, -0.014], [0.163, 0.178, 0.168]), -(p[1] - hairline(p[0], p[2])), 0.03);
+        for (const [q, r] of curls) { const dx = p[0] - q[0], dy = p[1] - q[1], dz = p[2] - q[2], m = Math.abs(dx) + Math.abs(dy) + Math.abs(dz); if (m < r * 2.4) d = smin(d, sphere(p, q, r), 0.011); }
+        return d;
+      }
       let d = ellipsoid(p, [0, 0.2, -0.014], [0.171, 0.186, 0.176]);
       const front = sstep(-0.05, 0.13, p[2]), side = sstep(0.09, 0.16, Math.abs(p[0]));
       d = smax(d, -(p[1] - (0.1 + 0.172 * front - 0.02 * side)), 0.03);                                    // hairline: nape → temples → forehead
@@ -89,7 +105,7 @@ export class Host {
       d = smin(d, capsule(p, [-0.1, 0.33, 0.06], [-0.158, 0.25, 0.07], 0.04, 0.026), 0.02);                // the two side sweeps
       d = smin(d, capsule(p, [0.11, 0.33, 0.05], [0.166, 0.262, 0.062], 0.04, 0.028), 0.02);
       return d;
-    }, [[-0.23, 0.06, -0.21], [0.23, 0.43, 0.21]], 0.0045, () => HA), [0, 0, 0], VINYL({ roughness: 0.48, sheen: 0.25, sheenColor: new THREE.Color('#6a5a55'), clearcoat: 0.2 }));
+    }, [[-0.26, 0.05, -0.25], [0.26, 0.47, 0.24]], 0.0042, () => HA), [0, 0, 0], VINYL({ roughness: 0.48, sheen: 0.25, sheenColor: new THREE.Color('#6a5a55'), clearcoat: 0.2 }));
 
     // face rig
     const ink = new THREE.MeshStandardMaterial({ color: '#0B0B0D', roughness: 0.3, envMapIntensity: 0.25 }), glint = new THREE.MeshBasicMaterial({ color: '#FFFFFF' });
@@ -138,14 +154,23 @@ export class Host {
     // legs: tapered trousers into chunky sneakers with a coloured sole
     this.leg = {};
     for (const s of [-1, 1]) {
-      const k = s < 0 ? 'L' : 'R', hip = G(this.hips, [s * 0.076, -0.03, 0]);
-      add(hip, sculpt('h-thigh' + c.pants, (p) => capsule(p, [0, 0, 0], [0, -0.32, 0.004], 0.078, 0.064), [[-0.1, -0.4, -0.1], [0.1, 0.09, 0.1]], 0.0065, () => PA));
+      const k = s < 0 ? 'L' : 'R', hip = G(this.hips, [s * (baggy ? 0.084 : 0.076), -0.03, 0]);
+      add(hip, sculpt('h-thigh' + s + c.pants + c.fit, (p) => {
+        if (!baggy) return capsule(p, [0, 0, 0], [0, -0.32, 0.004], 0.078, 0.064);
+        let d = capsule(p, [0, 0, 0], [0, -0.32, 0.004], 0.09, 0.094);                                     // wide straight leg
+        return smin(d, rbox(p, [s * 0.088, -0.2, 0.0], [0.016, 0.062, 0.052], 0.014), 0.012);              // cargo pocket on the outside
+      }, [[-0.13, -0.42, -0.13], [0.13, 0.11, 0.13]], 0.0065, (p) => mixc(PA, PD, baggy ? sstep(0.006, 0.0, Math.abs(rbox(p, [s * 0.09, -0.2, 0.0], [0.02, 0.064, 0.054], 0.014) - 0.004)) * 0.6 + sstep(-0.006, 0.0, rbox(p, [s * 0.092, -0.155, 0.0], [0.02, 0.02, 0.056], 0.01)) * 0.25 : 0)));
       const kn = G(hip, [0, -0.32, 0.004]);
-      add(kn, sculpt('h-shin' + c.pants + c.shoes + c.sole, (p) => {
-        let d = capsule(p, [0, 0, 0], [0, -0.26, -0.004], 0.064, 0.054);
-        d = smin(d, ellipsoid(p, [0, -0.318, 0.036], [0.066, 0.056, 0.118]), 0.03);
+      add(kn, sculpt('h-shin' + c.pants + c.shoes + c.sole + c.fit, (p) => {
+        let d = baggy ? capsule(p, [0, 0, 0], [0, -0.2, -0.002], 0.094, 0.098) : capsule(p, [0, 0, 0], [0, -0.26, -0.004], 0.064, 0.054);
+        if (baggy) for (const [y, r] of [[-0.225, 0.104], [-0.262, 0.108], [-0.296, 0.1]]) d = smin(d, ellipsoid(p, [0, y, 0.004], [r, 0.03, r + 0.004]), 0.014);   // fabric stacking on the shoe
+        d = smin(d, ellipsoid(p, [0, -0.318, 0.04], baggy ? [0.076, 0.058, 0.132] : [0.066, 0.056, 0.118]), baggy ? 0.012 : 0.03);
         return smax(d, -(p[1] + 0.37), 0.012);
-      }, [[-0.1, -0.39, -0.1], [0.1, 0.08, 0.18]], 0.0055, (p) => mixc(mixc(PA, SO, sstep(-0.265, -0.275, p[1])), SL, sstep(-0.338, -0.346, p[1]))));
+      }, [[-0.13, -0.39, -0.13], [0.13, 0.11, 0.2]], 0.0055, (p) => {
+        const pant = baggy ? sstep(0.004, -0.004, Math.min(capsule(p, [0, 0, 0], [0, -0.2, -0.002], 0.094, 0.098), ...[[-0.225, 0.104], [-0.262, 0.108], [-0.296, 0.1]].map(([y, r]) => ellipsoid(p, [0, y, 0.004], [r, 0.03, r + 0.004]))) - 0.003) : sstep(-0.275, -0.265, p[1]);
+        const folds = baggy ? 0.3 * Math.max(...[-0.243, -0.279, -0.318].map((y) => sstep(0.008, 0.0, Math.abs(p[1] - y)))) * sstep(-0.2, -0.23, p[1]) : 0;
+        return mixc(mixc(mixc(SO, SL, sstep(-0.338, -0.346, p[1])), PA, pant), PD, folds * pant);
+      }));
       this.leg[k] = { hip, kn };
     }
     this.pose({});
