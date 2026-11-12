@@ -29,8 +29,9 @@ SLUG = getattr(S, 'SLUG', 'midnight_lights_full')
 def stage_voice():
     import voice_lab as VL
     k = VL.load_kokoro()
-    clips, segs, t = [], [], 0.35          # small lead-in
-    lead = np.zeros(int(0.35 * SR), np.float32); clips.append(lead)
+    lead_s = getattr(S, 'LEAD', 0.35)       # silent lead-in (0 = voice starts on frame 0)
+    clips, segs, t = [], [], lead_s
+    clips.append(np.zeros(int(lead_s * SR) + 1, np.float32))
     for (sid, who, tag, text, shots) in S.LINES:
         if tag == 'pause':
             n = int(0.6 * SR); clips.append(np.zeros(n, np.float32)); t += 0.6; continue
