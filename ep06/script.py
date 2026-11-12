@@ -39,7 +39,7 @@ LINES = [
 
 VOICES = {
     # Zash: voice option 1 (Puck), smooth pipeline (generated slower, sped up cleanly, anti-fizz EQ)
-    "zash": dict(voice="am_michael", speed=1.0, pitch=1.06, expressive=True),   # Zash now uses the Blaze-style voice (clean, natural)
+    "zash": dict(voice="am_michael", speed=1.1, pitch=1.06, expressive=True),   # Zash now uses the Blaze-style voice (clean, natural)
     "mom":  dict(voice="af_heart", speed=1.05, pitch=1.0, expressive=True, smooth=True, gen_speed=1.0),
     "max":  dict(voice="af_sky", speed=1.10, pitch=1.22, expressive=True, smooth=True, gen_speed=1.0),
 }
