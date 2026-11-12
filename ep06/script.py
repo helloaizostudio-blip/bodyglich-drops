@@ -1,39 +1,38 @@
-"""Episode 6: "Every Lie Rings a Bell" (short-twist format, ~35 s)
+"""Episode 6: "Ask Your Father" (short-twist format, ~35 s)
 
-Built from docs/competitor_breakdown_part2.md:
-  - rule + payoff image in the first 3 s, twist by ~0:08, 3-step visible escalation
-  - ~280-300 wpm, a cut every ~1 s, one repeating SFX as the joke engine (DING)
-  - last line is 1 word that flips the hook; cut to black, no "follow me" in the video
-Continuity: Dad's "five minutes" is never a lie (it was a to-do list), so his bell never rings.
+Rule: when your mom says "ask your father", you teleport straight to him (and back, if he says "ask your mother").
+Built from docs/competitor_breakdown_part2.md: rule + image in 3 s, a relatable parent saying taken literally,
+visible escalation (kitchen -> office -> faster -> car wash -> both at once), one repeating SFX (POOF),
+a short last line that pays off the hook. No Somi / Liza in this one: family + Max only.
 
 Format: (id, speaker, tag, text, shots). Words in *stars* get the highlighted caption word.
 """
-TITLE = "Every Lie Rings a Bell"
-SLUG = "ep06_lie_bell"
+TITLE = "Ask Your Father"
+SLUG = "ep06_ask_your_father"
 
 LINES = [
-    ("hook",   "zash", "tense",   "In my world, every time you lie, a *bell* rings over your head.", ["bell_town", "bell_ding", "bell_crowd"]),
-    ("liza",   "zash", "calm",    "My cousin's room sounds like a *church*.",                          ["liza_room"]),
-    ("dad",    "zash", "calm",    "Dad says five minutes every morning. It never rings. Nobody knows *how*.", ["dad_five", "dad_nobell"]),
-    ("plugs",  "zash", "calm",    "The richest store in town sells *earplugs*.",                       ["earplug_store"]),
-    ("pols",   "zash", "calm",    "Every politician in my town is *deaf*.",                            ["politician"]),
-    ("me",     "zash", "calm",    "Me? Fifteen years. Never rung *once*.",                             ["zash_clean"]),
-    ("cost",   "zash", "calm",    "Honesty has cost me every friend except *Tobi*.",                   ["tobi_shrug"]),
-    ("then",   "zash", "tense",   "Then Somi showed me her *drawing*.",                                ["somi_walk"]),
-    ("ask",    "somi", "calm",    "Be honest. Is it good?",                                            ["somi_ask"]),
-    ("horse",  "zash", "calm",    "It was a horse. I think. It had six *legs*.",                                        ["drawing_close"]),
-    ("lie",    "zash", "excited", "It's *amazing*!",                                                   ["zash_lie"]),
-    ("spread", "zash", "excited", "One bell. Then ten. Then the whole *city*.",                        ["bells_1", "bells_2", "bells_town"]),
-    ("truth",  "zash", "calm",    "So I told the truth. It's terrible. But I really *like* you.",      ["zash_truth"]),
-    ("quiet",  "zash", "whisper", "No bell.",                                                          ["no_bell"]),
-    ("too",    "somi", "calm",    "I like you too.",                                                   ["somi_too"]),
-    ("ding",   "zash", "calm",    "*Ding*.",                                                           ["final_ding"]),
+    ("hook",   "zash", "tense",   "In my world, when your mom says ask your father, you *teleport* straight to him.", ["mom_says", "poof", "dad_office"]),
+    ("kids",   "zash", "calm",    "Every kid in my town has seen the inside of a *bank vault*.",       ["kid_vault"]),
+    ("max",    "zash", "calm",    "My little brother once landed in a *submarine*.",                   ["max_sub"]),
+    ("divorce","zash", "calm",    "Kids with divorced parents have *frequent flyer* miles.",           ["flyer_kid"]),
+    ("money",  "zash", "excited", "So yesterday, I asked Mom for twenty *bucks*.",                     ["zash_ask"]),
+    ("mom1",   "mom",  "calm",    "Ask your father.",                                                  ["mom_ask"]),
+    ("land1",  "zash", "calm",    "Poof. I landed in Dad's meeting. On the *table*.",                  ["poof1", "meeting_table"]),
+    ("dad1",   "dad",  "calm",    "Ask your mother.",                                                  ["dad_ask"]),
+    ("loop",   "zash", "excited", "Poof. Kitchen. Poof. Office. Kitchen. Office. *Faster*.",           ["loop_kitchen", "loop_office", "loop_kitchen2", "loop_office2", "loop_blur"]),
+    ("wash",   "zash", "excited", "I went through a car wash. *Twice*.",                               ["car_wash"]),
+    ("shower", "zash", "excited", "Once I landed in Dad's shower. We *both* screamed.",               ["shower"]),
+    ("both",   "zash", "tense",   "Then they both said it at the *same time*.",                        ["both_say"]),
+    ("stuck",  "zash", "calm",    "I got stuck exactly halfway between them. In the *mailbox*. For three days.",                  ["mailbox"]),
+    ("mail",   "zash", "calm",    "This morning, Dad *mailed* me twenty bucks.",                       ["mail_money"]),
+    ("worth",  "zash", "excited", "*Worth* it.",                                                       ["worth_it"]),
 ]
 
 VOICES = {
-    "zash": dict(voice="am_liam", speed=1.32, pitch=1.40, expressive=True),
-    "somi": dict(voice="af_bella", speed=1.15, pitch=1.10, expressive=True),
+    "zash": dict(voice="am_puck", speed=1.30, pitch=1.12, expressive=True),   # new Zash voice (option 1)
+    "mom":  dict(voice="af_heart", speed=1.10, pitch=1.0, expressive=True),
+    "dad":  dict(voice="am_michael", speed=1.05, pitch=0.96, expressive=True),
 }
-LONG_GAPS = {"hook": 0.12, "me": 0.15, "ask": 0.2, "horse": 0.15, "lie": 0.5, "spread": 0.4, "truth": 0.35, "quiet": 0.5, "too": 0.7}
+LONG_GAPS = {"hook": 0.12, "money": 0.12, "mom1": 0.2, "dad1": 0.2, "wash": 0.25, "both": 0.45, "mail": 0.5}
 TAIL = 1.2
 LEAD = 0.0
