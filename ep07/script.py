@@ -1,10 +1,10 @@
-"""Episode 7: "The Fourteenth Step" (horror-twist format, ~60 s)
+"""Episode 7: "The Fourteenth Step" (horror, ~70 s)
 
-Built from docs/competitor_breakdown_part2.md (video C structure, original premise):
-  two hooks in 4 s (creepy rule + "last night I counted fifteen"), world lore with a number,
-  numbered nights as chapter cards (15, 18, 23), a planted detail (slippers on step 14) that returns,
-  a voice-mimic scare, a reveal that reframes everything (the house is sinking), and a sting aimed at the viewer.
-No dogs / guardian-pet premise (avoid looking like the reference video).
+Twist structure: a creepy rule + personal threat (0-4 s) -> the family vanishes one step per night (14, 15)
+-> a voice under the stairs (Dad: "don't step on me") -> REVEAL: the stairs aren't taking people, the stairs ARE the people
+-> Max sleepwalks onto Dad's step and Dad catches him -> the rule of exchange -> Zash lies down and becomes a step
+-> everyone returns -> FINAL TWIST: the narrator is the 14th step -> sting aimed at the viewer.
+Original premise; no dog / guardian-pet structure.
 
 Format: (id, speaker, tag, text, shots). Words in *stars* get the highlighted caption word.
 """
@@ -12,33 +12,34 @@ TITLE = "The Fourteenth Step"
 SLUG = "ep07_fourteenth_step"
 
 LINES = [
-    ("hook",   "zash", "tense",   "In my world, every staircase has thirteen steps. If you ever count *fourteen*, don't go down.", ["stairs_dark", "step_glow", "zash_top"]),
-    ("hook2",  "zash", "whisper", "Last night, I counted *fifteen*.",                                       ["card_15"]),
-    ("lore",   "zash", "calm",    "Everyone in my town counts their stairs before bed. Out *loud*.",       ["town_count"]),
-    ("ruiz",   "zash", "tense",   "Our neighbor counted fourteen once. They found his slippers on step fourteen. Just his *slippers*.", ["slippers_step"]),
-    ("n1",     "zash", "tense",   "Night one. Fifteen steps. Something at the bottom was *breathing*.",    ["night1", "dark_bottom"]),
-    ("dad",    "zash", "calm",    "Dad said it's an old house. Old houses *breathe*.",                     ["dad_shrug"]),
-    ("n2",     "zash", "tense",   "Night two. Eighteen steps. The basement light turned on by *itself*.",  ["card_18", "light_on"]),
-    ("n3",     "zash", "tense",   "Night three. Twenty three. Then I heard my name.",                      ["card_23", "zash_bed"]),
-    ("call",   "mom",  "whisper", "Zash. Come down here.",                                                 ["voice_dark"]),
-    ("asleep", "zash", "whisper", "It was Mom's voice. Mom was asleep in the room next to *mine*.",        ["mom_asleep"]),
-    ("n4",     "zash", "tense",   "Night four, my little brother's bed was *empty*.",                      ["max_bed_empty"]),
-    ("slip",   "zash", "sad",     "His slippers were on step *fourteen*.",                                 ["max_slippers"]),
-    ("down",   "zash", "tense",   "So I went down. Counting. Thirty. Forty. *Fifty*.",                     ["descent1", "descent2", "descent3"]),
-    ("max",    "zash", "tense",   "Max was at the bottom. Staring at a window.",                           ["max_window"]),
-    ("dirt",   "zash", "whisper", "Behind the glass was dirt. Roots. *Worms*.",                            ["window_dirt"]),
-    ("sink",   "zash", "tense",   "The stairs weren't getting longer. Our house was *sinking*.",           ["house_sink"]),
-    ("run",    "zash", "excited", "I grabbed Max and ran. I counted every step back up. All *ninety*.",    ["run_up", "door_top"]),
-    ("safe",   "zash", "calm",    "We moved out the next morning.",                                        ["moving_truck"]),
-    ("new",    "zash", "tense",   "Tonight, in our new house, I counted *fourteen*.",                      ["new_stairs"]),
-    ("sting",  "zash", "whisper", "Go count yours. Out *loud*.",                                           ["viewer_stairs"]),
+    # cold open: rule + personal threat
+    ("hook",   "zash", "tense",   "In my world, every staircase has thirteen steps. If you count *fourteen*, someone in your house is gone by morning.", ["stairs_dark", "step_glow", "zash_top"]),
+    ("hook2",  "zash", "whisper", "Last night, I counted *fourteen*.",                                       ["card_14"]),
+    ("lore",   "zash", "calm",    "They never find the person. Just their slippers. On the new *step*.",    ["slippers_step"]),
+    # the family vanishes, one step per night
+    ("n1",     "zash", "tense",   "Night one. Dad's slippers were on step fourteen. Dad was *gone*.",       ["dad_slippers", "dad_chair_empty"]),
+    ("n2",     "zash", "tense",   "Night two. Fifteen steps. Mom's *slippers*.",                            ["card_15", "mom_slippers"]),
+    ("n3",     "zash", "sad",     "Night three, I tied my little brother's wrist to mine. And I didn't *sleep*.", ["rope_wrist", "zash_awake"]),
+    # the voice under the stairs
+    ("voice",  "zash", "tense",   "At three in the morning, something whispered from under the stairs.",    ["clock_3am", "under_stairs"]),
+    ("dad",    "dad",  "whisper", "Zash. Don't step on me.",                                                ["voice_dark"]),
+    ("wood",   "zash", "whisper", "I put my ear on step fourteen. The wood was warm. It was *breathing*.",  ["ear_wood", "wood_breath"]),
+    ("reveal", "zash", "tense",   "The stairs weren't taking people. The stairs *were* the people.",         ["stairs_reveal", "faces_in_wood"]),
+    # the sacrifice
+    ("slack",  "zash", "tense",   "Then the rope went slack. Max was sleepwalking. Straight *down*.",        ["rope_slack", "max_sleepwalk"]),
+    ("catch",  "zash", "sad",     "He stepped on fourteen. The step bent like arms. Dad *caught* him.",      ["step_bends", "max_held"]),
+    ("rule",   "zash", "sad",     "A step only comes back if someone takes its *place*.",                   ["zash_decides"]),
+    ("lay",    "zash", "whisper", "So I lay down on the stairs. And I counted. *Thirteen*.",               ["zash_lies", "fade_wood"]),
+    # aftermath + twist ending (narrator is now the step) + sting at the viewer
+    ("morn",   "zash", "calm",    "In the morning, Dad was back. Mom was back. Max was *safe*.",           ["morning_family"]),
+    ("count",  "zash", "whisper", "They count thirteen now. Only Max counts *fourteen*.",                   ["max_counts", "max_touches_step"]),
+    ("sting",  "zash", "whisper", "If you count fourteen tonight, step softly. It might be *me*.",          ["viewer_stairs"]),
 ]
 
 VOICES = {
     "zash": dict(voice="am_michael", speed=1.1, pitch=1.06, expressive=True),
-    "mom":  dict(voice="af_heart", speed=0.95, pitch=0.97, expressive=True, smooth=True, gen_speed=0.95),
+    "dad":  dict(voice="am_onyx", speed=0.95, pitch=0.97, expressive=True, smooth=True, gen_speed=0.95),
 }
-LONG_GAPS = {"hook": 0.15, "hook2": 0.4, "ruiz": 0.35, "n1": 0.3, "n3": 0.4, "call": 0.6, "asleep": 0.45, "n4": 0.3,
-             "slip": 0.5, "down": 0.4, "dirt": 0.5, "sink": 0.5, "safe": 0.4, "new": 0.7}
+LONG_GAPS = {"hook": 0.2, "hook2": 0.5, "lore": 0.35, "n1": 0.35, "n2": 0.3, "n3": 0.45, "voice": 0.4, "dad": 0.6, "wood": 0.5, "reveal": 0.7, "slack": 0.3, "catch": 0.45, "rule": 0.45, "lay": 0.9, "morn": 0.4, "count": 0.6}
 TAIL = 1.5
 LEAD = 0.0
