@@ -37,9 +37,16 @@ def stage_voice():
             n = int(0.6 * SR); clips.append(np.zeros(n, np.float32)); t += 0.6; continue
         V = S.VOICES[who]; T = VL.TAGS.get(tag, VL.TAGS['calm'])
         clean = text.replace('*', '')
-        y, sr = k.create(clean, voice=V['voice'], speed=V['speed'] * T['speed'], lang='en-us')
-        y = VL.trim(y)
-        y = VL.pitch_shift(y, V['pitch'] * 2 ** (T['semi'] / 12))
+        voice = VL.style(k, V['voice']) if isinstance(V['voice'], tuple) else V['voice']
+        sp = V['speed'] * T['speed']; pf = V['pitch'] * 2 ** (T['semi'] / 12)
+        if V.get('smooth'):      # generate at a calmer speed, then speed up + pitch with rubberband (no buzz)
+            gen = V.get('gen_speed', 1.10)
+            y, sr = k.create(clean, voice=voice, speed=gen * T['speed'], lang='en-us')
+            y = VL.smooth_shift(VL.trim(y), pf, sp / (gen * T['speed']))
+        else:
+            y, sr = k.create(clean, voice=voice, speed=sp, lang='en-us')
+            y = VL.trim(y)
+            y = VL.pitch_shift(y, pf)
         sents = re.findall(r'[^.!?]+[.!?]*', clean)
         end = 1.6 if clean.rstrip().endswith('?') else T['drop']
         y = VL.contour(y, end) * 10 ** (T['gain'] / 20)

@@ -81,6 +81,16 @@ def pitch_shift(y, factor):
     return ffmpeg_filter(y, f"asetrate={SR}*{factor:.4f},aresample={SR},atempo={1/factor:.4f}")
 
 
+POLISH = "highpass=f=90,equalizer=f=3200:t=q:w=1.2:g=-3,equalizer=f=6500:t=q:w=1.5:g=-2,lowpass=f=9500"
+
+
+def smooth_shift(y, factor, tempo=1.0):
+    """Clean pitch/tempo change (rubberband, high quality) plus a light anti-fizz EQ.
+    Used with voices generated at a slower Kokoro speed: generating fast adds grit, so we speed up here instead."""
+    return ffmpeg_filter(y, f"aresample=48000,rubberband=pitch={factor:.4f}:tempo={tempo:.4f}:formant=shifted:pitchq=quality:"
+                            f"transients=smooth:window=long:smoothing=on,{POLISH},aresample={SR}")
+
+
 def contour(y, semis_end, tail=0.45):
     """Small pitch contour over the last `tail` seconds (rise for questions, drop for statements).
     Time-varying resample: local pitch + tempo change, kept subtle (≤ 2 semitones)."""
