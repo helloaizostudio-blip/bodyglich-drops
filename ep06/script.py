@@ -1,38 +1,40 @@
-"""Episode 6: "Ask Your Father" (short-twist format, ~35 s)
+"""Episode 6: "The Clone Goes To School" (short-twist format, ~40 s)
 
-Rule: when your mom says "ask your father", you teleport straight to him (and back, if he says "ask your mother").
-Built from docs/competitor_breakdown_part2.md: rule + image in 3 s, a relatable parent saying taken literally,
-visible escalation (kitchen -> office -> faster -> car wash -> both at once), one repeating SFX (POOF),
-a short last line that pays off the hook. No Somi / Liza in this one: family + Max only.
+Rule: if you skip school, a clone goes for you. Zash skips so much that his clone becomes the better son.
+When he comes back there are two of them, Mom asks one question, and the clone wins. Twist that flips the hook:
+now the clone is Zash, and Zash is the clone who goes to school whenever he skips.
+Built from docs/competitor_breakdown_*.md: rule + image in 3 s, escalation in visible steps, an emotional turn,
+a question everyone answers in their head ("do YOU know your mom's birthday?"), a 4-word last line.
+No Somi / Liza in this one.
 
 Format: (id, speaker, tag, text, shots). Words in *stars* get the highlighted caption word.
 """
-TITLE = "Ask Your Father"
-SLUG = "ep06_ask_your_father"
+TITLE = "The Clone Goes To School"
+SLUG = "ep06_clone"
 
 LINES = [
-    ("hook",   "zash", "tense",   "In my world, when your mom says ask your father, you *teleport* straight to him.", ["mom_says", "poof", "dad_office"]),
-    ("kids",   "zash", "calm",    "Every kid in my town has seen the inside of a *bank vault*.",       ["kid_vault"]),
-    ("max",    "zash", "calm",    "My little brother once landed in a *submarine*.",                   ["max_sub"]),
-    ("divorce","zash", "calm",    "Kids with divorced parents have *frequent flyer* miles.",           ["flyer_kid"]),
-    ("money",  "zash", "excited", "So yesterday, I asked Mom for twenty *bucks*.",                     ["zash_ask"]),
-    ("mom1",   "mom",  "calm",    "Ask your father.",                                                  ["mom_ask"]),
-    ("land1",  "zash", "calm",    "Poof. I landed in Dad's meeting. On the *table*.",                  ["poof1", "meeting_table"]),
-    ("dad1",   "dad",  "calm",    "Ask your mother.",                                                  ["dad_ask"]),
-    ("loop",   "zash", "excited", "Poof. Kitchen. Poof. Office. Kitchen. Office. *Faster*.",           ["loop_kitchen", "loop_office", "loop_kitchen2", "loop_office2", "loop_blur"]),
-    ("wash",   "zash", "excited", "I went through a car wash. *Twice*.",                               ["car_wash"]),
-    ("shower", "zash", "excited", "Once I landed in Dad's shower. We *both* screamed.",               ["shower"]),
-    ("both",   "zash", "tense",   "Then they both said it at the *same time*.",                        ["both_say"]),
-    ("stuck",  "zash", "calm",    "I got stuck exactly halfway between them. In the *mailbox*. For three days.",                  ["mailbox"]),
-    ("mail",   "zash", "calm",    "This morning, Dad *mailed* me twenty bucks.",                       ["mail_money"]),
-    ("worth",  "zash", "excited", "*Worth* it.",                                                       ["worth_it"]),
+    ("hook",    "zash", "tense",   "In my world, if you skip school, a *clone* goes for you.",          ["clone_poof", "clone_walks", "zash_bed"]),
+    ("same",    "zash", "calm",    "Same face. Same voice. Nobody can *tell*.",                          ["side_by_side"]),
+    ("skip",    "zash", "excited", "So I skipped. A *lot*.",                                              ["calendar_x"]),
+    ("better",  "zash", "calm",    "My clone got straight *A's*. Made the soccer team.",                  ["report_card", "soccer"]),
+    ("fridge",  "zash", "calm",    "Mom put his drawings on the *fridge*.",                               ["fridge"]),
+    ("sorry",   "zash", "calm",    "He said sorry to my little brother. I never *have*.",                 ["clone_max"]),
+    ("fish",    "zash", "sad",     "Dad took him *fishing*. Dad never took me fishing.",                  ["dad_fishing", "zash_window"]),
+    ("liked",   "zash", "calm",    "Everyone liked him more. Honestly? So did *I*.",                      ["family_laugh"]),
+    ("back",    "zash", "tense",   "So I went back to school. And there were *two* of us.",               ["two_zash"]),
+    ("onlyone", "mom",  "calm",    "Only one of you is coming home.",                                     ["mom_stern"]),
+    ("q",       "zash", "tense",   "She asked one question.",                                             ["mom_close"]),
+    ("bday",    "mom",  "calm",    "When's my birthday?",                                                 ["mom_bday"]),
+    ("idk",     "zash", "whisper", "I didn't *know*.",                                                    ["zash_sweat"]),
+    ("he",      "zash", "sad",     "He did.",                                                             ["clone_smile"]),
+    ("now",     "zash", "calm",    "So now he's Zash. And I'm the one who goes to school when he *skips*.", ["swap_poof", "zash_school"]),
+    ("end",     "zash", "calm",    "He skips a *lot*.",                                                   ["end_desk"]),
 ]
 
 VOICES = {
-    "zash": dict(voice="am_puck", speed=1.30, pitch=1.12, expressive=True),   # new Zash voice (option 1)
-    "mom":  dict(voice="af_heart", speed=1.10, pitch=1.0, expressive=True),
-    "dad":  dict(voice="am_michael", speed=1.05, pitch=0.96, expressive=True),
+    "zash": dict(voice="am_adam", speed=1.30, pitch=1.38, expressive=True),   # new Zash voice (option 6)
+    "mom":  dict(voice="af_heart", speed=1.05, pitch=1.0, expressive=True),
 }
-LONG_GAPS = {"hook": 0.12, "money": 0.12, "mom1": 0.2, "dad1": 0.2, "wash": 0.25, "both": 0.45, "mail": 0.5}
+LONG_GAPS = {"skip": 0.15, "fish": 0.3, "liked": 0.25, "back": 0.2, "onlyone": 0.3, "bday": 0.45, "idk": 0.4, "he": 0.6, "now": 0.35}
 TAIL = 1.2
 LEAD = 0.0
