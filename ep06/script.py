@@ -18,6 +18,7 @@ LINES = [
     ("mech",    "zash", "calm",    "You stay in bed, you sneeze, and a copy of you walks out the door with your *backpack*.", ["sneeze", "clone_door"]),
     ("bus",     "zash", "calm",    "Clones never miss the bus. Not *once*.",                                            ["bus_clones"]),
     ("princ",   "zash", "calm",    "Our principal hasn't been to school since nineteen ninety four. Nobody has *noticed*.", ["principal"]),
+    ("wed",     "zash", "calm",    "Some kids haven't been to school in years. Their clones are getting *married*.",     ["clone_wedding"]),
     ("pizza",   "zash", "calm",    "There's only one way to tell a clone apart. Clones can't eat *pizza*.",             ["pizza_test_old"]),
     # flaw
     ("lazy",    "zash", "excited", "And me? I'm the laziest kid in town. A hundred and twelve skips in *one* year.",    ["skip_counter"]),
@@ -26,11 +27,13 @@ LINES = [
     ("better",  "zash", "calm",    "Meanwhile, my clone got straight *A's*. Made the soccer team.",                      ["report_card", "soccer"]),
     ("fridge",  "zash", "calm",    "Mom put his drawings on the *fridge*.",                                              ["fridge"]),
     ("sorry",   "zash", "calm",    "He said sorry to my little brother. I never *have*.",                                ["clone_max"]),
+    ("room",    "zash", "calm",    "He even cleaned my room. Mom *cried*.",                                              ["clean_room"]),
     ("fish",    "zash", "sad",     "Dad took him *fishing*. Dad never took me fishing.",                                 ["dad_fishing", "zash_window"]),
     ("liked",   "zash", "calm",    "Everyone liked him more. Honestly? So did *I*.",                                     ["family_laugh"]),
     # crisis
     ("friday",  "zash", "tense",   "Then last Friday, I went back to school. And there were *two* of us.",               ["two_zash"]),
     ("rule2",   "zash", "tense",   "And when there are two, only one goes home. The other goes back to the clone factory. *Forever*.", ["clone_van"]),
+    ("look",    "zash", "tense",   "Mom stood between us. She looked at me. Then at him. For a really long *time*.",     ["mom_between"]),
     ("onlyone", "mom",  "calm",    "Only one of you is coming home.",                                                    ["mom_stern"]),
     ("bday",    "mom",  "calm",    "When's my birthday?",                                                                ["mom_bday"]),
     ("idk",     "zash", "whisper", "I didn't *know*.",                                                                   ["zash_sweat"]),
@@ -50,7 +53,7 @@ LINES = [
 
 VOICES = {
     # Zash: voice option 1 (Puck), smooth pipeline (generated slower, sped up cleanly, anti-fizz EQ)
-    "zash": dict(voice="am_puck", speed=1.25, pitch=1.12, expressive=True, smooth=True, gen_speed=1.05),
+    "zash": dict(voice="am_puck", speed=1.10, pitch=1.12, expressive=True, smooth=True, gen_speed=1.0),
     "mom":  dict(voice="af_heart", speed=1.05, pitch=1.0, expressive=True, smooth=True, gen_speed=1.0),
     "max":  dict(voice="af_sky", speed=1.10, pitch=1.22, expressive=True, smooth=True, gen_speed=1.0),
 }
