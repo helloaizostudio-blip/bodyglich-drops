@@ -26,6 +26,9 @@ BH.version = '2.0.0';
 if (BH.Q == null) BH.Q = 1.5;              // face texture resolution multiplier
 if (BH.legacyFaces == null) BH.legacyFaces = false; // true = paint v1 faces
 if (BH.detail == null) BH.detail = 1;      // 0 = cheapest (no bump maps), 1 = full
+// v3 look: shorter, wider head + anime-style face (bigger eyes set lower, smaller mouth). Set BH.headShape=null / BH.anime=false for the v2 look.
+if (BH.headShape === undefined) BH.headShape = [1.22, 0.82, 1.1];
+if (BH.anime == null) BH.anime = true;
 
 /* ============================ UTIL ============================ */
 const INK = '#1a1616';
@@ -156,7 +159,7 @@ function resolveFace(c,exprKey){
 }
 
 /* ============================ FACE (v2 painter) ============================ */
-const EYE_CX=58, EYE_Y=132;
+const EYE_CX=58, EYE_Y=132, ANIME_DY=30, ANIME_CX=72;
 function drawEyeV2(g,x,y,s,o,skin){
   const w=o.w,h=o.h,lid=o.lid||0,tilt=o.lidTilt||0;
   const outline=()=>{g.beginPath();
@@ -187,7 +190,7 @@ function drawEyeV2(g,x,y,s,o,skin){
   g.restore();
   // outline + lash line
   g.save();g.strokeStyle=INK;g.lineWidth=2.4;outline();g.globalAlpha=0.55;g.stroke();g.globalAlpha=1;
-  g.lineCap='round';g.lineWidth=o.lashes?6.5:5.2;
+  g.lineCap='round';g.lineWidth=(o.lashes?6.5:5.2)*(o.anime?1.45:1);
   if(lid>0){g.save();outline();g.clip();g.beginPath();g.moveTo(x-s*(w+4),lyI);g.lineTo(x+s*(w+4),lyO);g.lineWidth*=1.4;g.stroke();g.restore();}
   else{g.beginPath();if(o.almond){g.moveTo(x-s*w,y+3);g.quadraticCurveTo(x,y-h*1.5,x+s*w,y-5);}else g.ellipse(x,y,w,h,0,Math.PI*1.05,Math.PI*1.95);g.stroke();}
   // liner wing + lashes
@@ -298,6 +301,8 @@ function faceTexture(c,exprKey,opts){
   const sg=g.createRadialGradient(cx,175,60,cx,175,330);sg.addColorStop(0,'rgba(255,255,255,0.05)');sg.addColorStop(1,'rgba(80,30,20,0.10)');g.fillStyle=sg;g.fillRect(0,0,1024,328);
   const hairC=(c.hair&&c.hair.color)||'#333', beardC=f.beardColor||hairC, browC=f.browColor||shade(hairC,-0.1);
   const r=rng(c.id||'x');
+  const AN=BH.anime&&!c.noAnime;
+  g.save();if(AN){g.translate(cx,0);g.scale(0.94,1);g.translate(-cx,ANIME_DY);}
   // cheeks
   g.fillStyle=f.blush?'rgba(255,100,112,0.34)':'rgba(255,120,110,0.10)';[-1,1].forEach(s=>{const gr=g.createRadialGradient(cx+s*102,184,2,cx+s*102,184,34);gr.addColorStop(0,g.fillStyle);gr.addColorStop(1,'rgba(255,120,110,0)');g.save();g.fillStyle=gr;ell(g,cx+s*102,184,36,20);g.fill();g.restore();});
   if(f.blush){g.strokeStyle='rgba(220,70,90,0.45)';g.lineWidth=2.4;[-1,1].forEach(s=>{for(let i=0;i<3;i++){g.beginPath();g.moveTo(cx+s*(88+i*10),176);g.lineTo(cx+s*(84+i*10),188);g.stroke();}});}
@@ -310,19 +315,21 @@ function faceTexture(c,exprKey,opts){
       if(f.age==='old')for(let k=0;k<3;k++){g.beginPath();g.moveTo(cx+s*90,126+k*9);g.lineTo(cx+s*104,121+k*11);g.stroke();}});}
   drawFacialHair(g,cx,f,c,beardC,r);
   if(f.mole){g.fillStyle=rgba(shade(skin,-0.6),0.85);ell(g,cx+(f.mole==='l'?-50:50),190,3.4,3.4);g.fill();}
-  drawNose(g,cx,f.nose,skin);
+  if(AN){g.save();g.translate(cx,176);g.scale(0.7,0.7);g.translate(-cx,-176);}drawNose(g,cx,f.nose,skin);if(AN)g.restore();
   // eyes
   const iris=f.eyeColor||'#4a3022';
-  const base={dot:{w:21,h:25},big:{w:25,h:33},tired:{w:22,h:21,lid:0.45},sharp:{w:29,h:17,almond:true}}[f.eyes]||{w:21,h:25};
+  const base=Object.assign({},{dot:{w:21,h:25},big:{w:25,h:33},tired:{w:22,h:21,lid:0.45},sharp:{w:29,h:17,almond:true}}[f.eyes]||{w:21,h:25});
+  if(AN){base.w=Math.round(base.w*1.75);base.h=Math.round(base.h*1.7);base.irisScale=1.05;base.anime=true;}
   [-1,1].forEach(s=>{
-    const x=cx+s*EYE_CX;
+    const x=cx+s*(AN?ANIME_CX:EYE_CX);
     if(f.eyepatch&&((f.eyepatch==='l'&&s<0)||(f.eyepatch==='r'&&s>0))){g.fillStyle='#141414';g.beginPath();g.ellipse(x,EYE_Y,32,28,0,0,Math.PI*2);g.fill();g.fillStyle='rgba(255,255,255,0.12)';ell(g,x-10,EYE_Y-10,10,6);g.fill();
       g.strokeStyle='#141414';g.lineWidth=5;g.beginPath();g.moveTo(x-s*26,EYE_Y-18);g.lineTo(cx-s*200,70);g.moveTo(x+s*28,EYE_Y-12);g.lineTo(cx+s*220,110);g.stroke();return;}
-    if(blink){drawClosedEye(g,x,EYE_Y+4,s,f.lashes);return;}
-    if(f.eyes==='happy'||(f.eyes==='wink'&&s>0)){drawHappyEye(g,x,EYE_Y,s,f.lashes);return;}
-    if(f.eyes==='closed'){drawClosedEye(g,x,EYE_Y,s,f.lashes);return;}
+    const big=fn=>{if(AN){g.save();g.translate(x,EYE_Y);g.scale(1.5,1.4);g.translate(-x,-EYE_Y);}fn();if(AN)g.restore();};
+    if(blink){big(()=>drawClosedEye(g,x,EYE_Y+4,s,f.lashes));return;}
+    if(f.eyes==='happy'||(f.eyes==='wink'&&s>0)){big(()=>drawHappyEye(g,x,EYE_Y,s,f.lashes));return;}
+    if(f.eyes==='closed'){big(()=>drawClosedEye(g,x,EYE_Y,s,f.lashes));return;}
     if(f.eyes==='shades'){if(f.glasses3d===false||BH.noProps){g.fillStyle='#0e0e10';rr(g,x-54,108,108,50,16);g.fill();}return;}
-    const o=Object.assign({},base,{iris,lashes:f.lashes,liner:f.liner,shadow:f.shadow,pupil:f.pupil||1});
+    const o=Object.assign({},base,{iris,lashes:f.lashes,liner:f.liner,shadow:f.shadow,pupil:f.pupil||1});if(f.irisScale)o.irisScale=f.irisScale;
     if(f.lid!=null)o.lid=Math.max(f.lid, f.eyes==='tired'&&exprKey!=='shocked'?0.3:0);
     if(f.lidTilt!=null)o.lidTilt=f.lidTilt;
     if(exprKey==='sad')o.wet=true;
@@ -330,9 +337,9 @@ function faceTexture(c,exprKey,opts){
     drawEyeV2(g,x,EYE_Y,s,o,skin);
   });
   // brows
-  if(f.brows!=='none'){[-1,1].forEach(s=>drawBrowV2(g,cx,s,f.brows,f._baseBrows,browC,c.id||''));}
+  if(f.brows!=='none'){if(AN){g.save();g.translate(cx,-26);g.scale(1.2,1);g.translate(-cx,0);}[-1,1].forEach(s=>drawBrowV2(g,cx,s,f.brows,f._baseBrows,browC,c.id||''));if(AN)g.restore();}
   if(f.unibrow){g.fillStyle=browC;rr(g,cx-36,96,72,8,4);g.fill();}
-  drawMouthV2(g,cx,f);
+  if(AN){g.save();g.translate(cx,214);g.scale(0.74,0.74);g.translate(-cx,-214);}drawMouthV2(g,cx,f);if(AN)g.restore();
   drawMustache(g,cx,f,beardC);
   // marks
   if(f.scar){const s=f.scar==='l'?-1:1;g.strokeStyle=rgba(shade(skin,-0.3),0.9);g.lineWidth=4;g.lineCap='round';g.beginPath();g.moveTo(cx+s*44,84);g.lineTo(cx+s*76,168);g.stroke();g.lineWidth=2;for(let k=0;k<4;k++){const t=0.15+k*0.22;const x=lerp(cx+s*44,cx+s*76,t),y=lerp(84,168,t);g.beginPath();g.moveTo(x-7,y+2);g.lineTo(x+7,y-2);g.stroke();}}
@@ -346,6 +353,7 @@ function faceTexture(c,exprKey,opts){
     const mg=g.createLinearGradient(0,150,0,274);mg.addColorStop(0,'rgba(255,255,255,0.15)');mg.addColorStop(1,'rgba(0,0,0,0.12)');g.fillStyle=mg;g.fillRect(cx-140,150,280,124);g.restore();
     g.strokeStyle=shade(f.mask,-0.18);g.lineWidth=3;for(const y of[184,211,238]){g.beginPath();g.moveTo(cx-122,y);g.quadraticCurveTo(cx,y+5,cx+122,y);g.stroke();}
     g.strokeStyle='#cfd6dc';g.lineWidth=5;g.beginPath();g.moveTo(cx-60,154);g.quadraticCurveTo(cx,146,cx+60,154);g.stroke();}
+  g.restore();
   return tex(cnv);
 }
 function paintGlassesV1(g,cx,f){g.strokeStyle=f.glassColor||'#1c1c1c';g.lineWidth=5;g.fillStyle='rgba(255,255,255,0.12)';
@@ -1015,12 +1023,14 @@ function buildChar(c,expr='default'){
     let t=P._faceCache[k];if(!t){t=faceTexture(c,e,{blink:opts.blink,mouthOpen:mo});P._faceCache[k]=t;}
     const mat=P.headMesh.material[0];if(mat.map!==t){mat.map=t;mat.needsUpdate=true;}P.expr=e;};
   P.dispose=function(){Object.values(P._faceCache).forEach(t=>t.dispose());root.traverse(o2=>{if(o2.isMesh){[].concat(o2.material).forEach(m=>{if(m.map&&!m.map._shared)m.map.dispose();m.dispose();});}});};
+  if(BH.headShape&&!c.noHeadShape){const hs=BH.headShape;const shapeG=new THREE.Group();shapeG.name='headShape';shapeG.scale.set(hs[0],hs[1],hs[2]);
+    [...P.head.children].forEach(ch=>shapeG.add(ch));P.head.add(shapeG);P.headShape=shapeG;}
   root.userData.P=P;
   return root;
 }
 function buildFaceProps(c,P){
   const f=c.face||{};if(BH.legacyFaces||c.faceVersion===1||BH.noProps||f.glasses3d===false)return;
-  const ang=EYE_CX/1024*Math.PI*2, ex=0.6*Math.sin(ang), ez=0.6*Math.cos(ang), ey=1.2*(1-EYE_Y/328);
+  const ang=(BH.anime&&!c.noAnime?ANIME_CX:EYE_CX)/1024*Math.PI*2, ex=0.6*Math.sin(ang)*(BH.anime&&!c.noAnime?0.94:1), ez=0.6*Math.cos(ang), ey=1.2*(1-(EYE_Y+(BH.anime&&!c.noAnime?ANIME_DY:0))/328);
   if(f.glasses){const fc=f.glassColor||'#1c1c1c';const fm=f.glassColor&&/b8|c9|d4/.test(f.glassColor)?METAL(fc,0.3):new THREE.MeshStandardMaterial({color:new THREE.Color(fc).convertSRGBToLinear(),roughness:0.35});
     const lm=new THREE.MeshStandardMaterial({color:0xddeeff,roughness:0.05,metalness:0.1,transparent:true,opacity:0.18,depthWrite:false});
     const G=new THREE.Group();
