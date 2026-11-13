@@ -228,35 +228,56 @@ function drawEyeV2(g,x,y,s,o,skin){
   if(o.lashes){g.lineWidth=3.6;[[0,0,10,-9],[-7,-5,-1,-15],[-15,-8,-12,-18]].forEach(([a,b,c2,d])=>{g.beginPath();g.moveTo(ox+s*a,oy+b);g.lineTo(ox+s*c2,oy+d);g.stroke();});}
   g.restore();
 }
+// eye shape presets for the flat anime face (face.eyeShape). wk/hk: size, tilt: outer-corner lift (−up), ik/ih: iris size,
+// white: show the eye white, lash: lash-line weight, flick: outer flick length, low: lower lash, lid: resting lid, spark: highlight style
+const EYE_SHAPES={
+  almond:{wk:1,hk:1,tilt:0,ik:0.56,ih:0.98,white:true,lash:8.5,flick:17,low:true,lid:0,spark:2},
+  round:{wk:0.92,hk:1.25,tilt:0.05,ik:0.62,ih:0.9,white:true,lash:6.5,flick:9,low:false,lid:0,spark:3,round:true},
+  sharp:{wk:1.08,hk:0.62,tilt:-0.55,ik:0.42,ih:1.1,white:true,lash:9.5,flick:20,low:false,lid:0,spark:1},
+  droopy:{wk:1,hk:0.95,tilt:0.45,ik:0.55,ih:0.95,white:true,lash:7.5,flick:6,low:true,lid:0.04,spark:2},
+  cat:{wk:1.05,hk:0.88,tilt:-0.45,ik:0.5,ih:1.0,white:true,lash:10.5,flick:26,low:true,lid:0,spark:2,lashes:true},
+  sleepy:{wk:1.02,hk:0.85,tilt:0.15,ik:0.5,ih:1.0,white:true,lash:9,flick:10,low:true,lid:0.45,spark:1},
+  wide:{wk:1.05,hk:1.05,tilt:0,ik:0.4,ih:0.62,white:true,lash:5,flick:0,low:true,lid:0,spark:1,round:true,irisRound:true},
+  simple:{wk:0.42,hk:1.15,tilt:0,ik:1,ih:1,white:false,lash:0,flick:0,low:false,lid:0,spark:1,round:true},
+};
+BH.EYE_SHAPES=EYE_SHAPES;
+function eyeShapeFor(c){const f=c.face||{};if(f.eyeShape&&EYE_SHAPES[f.eyeShape])return f.eyeShape;
+  const keys=['almond','round','sharp','droopy','cat','sleepy','wide'];const r=rng((c.id||'x')+'eye');return keys[Math.floor(r()*keys.length)];}
 function drawEyeDecal(g,x,y,s,o,skin){
-  // flat 2D anime decal eye: white almond with lilac top shade, big dark iris, two highlights, thick upper lash line with a flick
-  const w=o.w,h=o.h,lid=o.lid||0,tilt=o.lidTilt||0,pu=o.pupil||1;
-  const shape=()=>{g.beginPath();g.moveTo(x-s*w,y+h*0.15);g.bezierCurveTo(x-s*w*0.7,y-h*1.15,x+s*w*0.75,y-h*1.2,x+s*w,y-h*0.2);
-    g.bezierCurveTo(x+s*w*0.85,y+h*0.95,x-s*w*0.6,y+h*1.05,x-s*w,y+h*0.15);g.closePath();};
-  g.save();shape();g.fillStyle='#fbfbfd';g.fill();g.clip();
-  const sg=g.createLinearGradient(0,y-h,0,y+h*0.2);sg.addColorStop(0,'rgba(150,128,196,0.55)');sg.addColorStop(1,'rgba(150,128,196,0)');g.fillStyle=sg;g.fillRect(x-w-4,y-h-4,w*2+8,h*2+8);
-  const ic=o.iris||'#4a3022', rx=w*0.56*pu*(o.irisScale||1), ry=h*0.98*pu*(o.irisScale||1), ix=x+s*w*0.04+(o.lookX||0), iy=y+h*0.12+(o.lookY||0);
-  const ig=g.createLinearGradient(0,iy-ry,0,iy+ry);ig.addColorStop(0,'#0d0b0e');ig.addColorStop(0.55,shade(ic,-0.72));ig.addColorStop(1,shade(ic,-0.25));
-  g.fillStyle=ig;ell(g,ix,iy,rx,ry);g.fill();
+  // flat 2D anime decal eye in one of several shapes
+  const S=EYE_SHAPES[o.shape]||EYE_SHAPES.almond;
+  const w=o.w*S.wk,h=o.h*S.hk,lid=Math.max(o.lid||0,S.lid),tilt=o.lidTilt||0,pu=o.pupil||1,to=S.tilt*h;
+  const shape=()=>{g.beginPath();if(S.round){g.ellipse(x,y,w,h,s*S.tilt*0.25,0,Math.PI*2);return;}
+    g.moveTo(x-s*w,y+h*0.15);g.bezierCurveTo(x-s*w*0.7,y-h*1.15,x+s*w*0.75,y-h*1.2+to,x+s*w,y-h*0.2+to);
+    g.bezierCurveTo(x+s*w*0.85,y+h*0.95+to*0.4,x-s*w*0.6,y+h*1.05,x-s*w,y+h*0.15);g.closePath();};
+  const ic=o.iris||'#4a3022';
+  g.save();shape();g.fillStyle=S.white?'#fbfbfd':'#0d0b0e';g.fill();g.clip();
+  let rx,ry,ix=x+s*w*0.04+(o.lookX||0),iy=y+h*0.1+(o.lookY||0);
+  if(S.white){const sg=g.createLinearGradient(0,y-h,0,y+h*0.2);sg.addColorStop(0,'rgba(150,128,196,0.5)');sg.addColorStop(1,'rgba(150,128,196,0)');g.fillStyle=sg;g.fillRect(x-w-4,y-h-4,w*2+8,h*2+8);
+    rx=w*S.ik*pu;ry=(S.irisRound?rx:h*S.ih)*pu;if(S.irisRound){iy=y;ry=rx*1.05;}
+    const ig=g.createLinearGradient(0,iy-ry,0,iy+ry);ig.addColorStop(0,'#0d0b0e');ig.addColorStop(0.45,shade(ic,-0.65));ig.addColorStop(1,shade(ic,0.05));
+    g.fillStyle=ig;ell(g,ix,iy,rx,ry);g.fill();g.fillStyle='rgba(0,0,0,0.85)';ell(g,ix,iy-ry*0.05,rx*0.42,ry*0.42);g.fill();}
+  else{rx=w;ry=h;ix=x;iy=y;const ig=g.createLinearGradient(0,y-h,0,y+h);ig.addColorStop(0.5,'#0d0b0e');ig.addColorStop(1,shade(ic,-0.3));g.fillStyle=ig;g.fillRect(x-w-2,y-h-2,w*2+4,h*2+4);}
   if(o.heart){g.strokeStyle='#fff';g.lineWidth=3;g.beginPath();const hx=ix,hy=iy;g.moveTo(hx,hy+8);g.bezierCurveTo(hx-14,hy-2,hx-8,hy-14,hx,hy-6);g.bezierCurveTo(hx+8,hy-14,hx+14,hy-2,hx,hy+8);g.stroke();}
-  else{g.fillStyle='#ffffff';ell(g,ix-rx*0.32,iy-ry*0.42,rx*0.3,ry*0.22);g.fill();g.fillStyle='rgba(255,255,255,0.85)';ell(g,ix+rx*0.34,iy+ry*0.38,rx*0.13,ry*0.1);g.fill();}
+  else{g.fillStyle='#ffffff';ell(g,ix-s*rx*0.32,iy-ry*0.42,rx*0.3,ry*0.22);g.fill();
+    if(S.spark>=2){g.fillStyle='rgba(255,255,255,0.85)';ell(g,ix+s*rx*0.34,iy+ry*0.38,rx*0.13,ry*0.1);g.fill();}
+    if(S.spark>=3){g.fillStyle='rgba(255,255,255,0.9)';ell(g,ix+s*rx*0.2,iy-ry*0.55,rx*0.1,ry*0.08);g.fill();ell(g,ix-s*rx*0.45,iy+ry*0.2,rx*0.07,ry*0.06);g.fill();}}
   if(o.wet){g.fillStyle='rgba(255,255,255,0.5)';ell(g,ix,iy+ry*0.62,rx*0.6,ry*0.12);g.fill();}
-  // lid (tired / angry / smug): skin drops over the top of the eye
   let lyI=null,lyO=null;
-  if(lid>0){const ly=y-h+2*h*lid;lyI=ly+tilt*h*0.55;lyO=ly-tilt*h*0.25;g.fillStyle=skin;g.beginPath();g.moveTo(x-s*(w+8),y-h-40);g.lineTo(x+s*(w+8),y-h-40);g.lineTo(x+s*(w+8),lyO);g.lineTo(x-s*(w+8),lyI);g.closePath();g.fill();}
+  if(lid>0){const ly=y-h+2*h*lid;lyI=ly+tilt*h*0.55;lyO=ly-tilt*h*0.25+to*0.6;g.fillStyle=skin;g.beginPath();g.moveTo(x-s*(w+8),y-h-60);g.lineTo(x+s*(w+8),y-h-60);g.lineTo(x+s*(w+8),lyO);g.lineTo(x-s*(w+8),lyI);g.closePath();g.fill();}
   g.restore();
+  if(!S.white)return;
   g.save();g.strokeStyle=INK;g.lineCap='round';g.lineJoin='round';
-  // soft outline
   g.globalAlpha=0.35;g.lineWidth=2;shape();g.stroke();g.globalAlpha=1;
-  // upper lash line
-  g.lineWidth=o.lashes?10:8.5;
-  if(lid>0){g.beginPath();g.moveTo(x-s*w*0.95,lyI);g.lineTo(x+s*w*1.02,lyO);g.stroke();}
-  else{g.beginPath();g.moveTo(x-s*w*0.98,y+h*0.05);g.bezierCurveTo(x-s*w*0.7,y-h*1.15,x+s*w*0.75,y-h*1.2,x+s*w*1.02,y-h*0.2);g.stroke();}
-  const ox=x+s*w*1.0, oy=lid>0?lyO:y-h*0.22;
-  g.lineWidth=o.lashes?5.5:4.5;g.beginPath();g.moveTo(ox-s*4,oy);g.quadraticCurveTo(ox+s*10,oy-2,ox+s*17,oy-10);g.stroke();
-  if(o.lashes){g.lineWidth=3.5;g.beginPath();g.moveTo(ox-s*10,oy-6);g.quadraticCurveTo(ox-s*4,oy-12,ox,oy-18);g.stroke();}
-  // lower lash hint
-  g.globalAlpha=0.55;g.lineWidth=2.4;g.beginPath();g.moveTo(x+s*w*0.2,y+h*0.98);g.quadraticCurveTo(x+s*w*0.7,y+h*0.85,x+s*w*0.92,y+h*0.35);g.stroke();g.globalAlpha=1;
+  const lw=S.lash*((o.lashes||S.lashes)?1.15:1);
+  if(lw>0){g.lineWidth=lw;
+    if(lid>0){g.beginPath();g.moveTo(x-s*w*0.95,lyI);g.lineTo(x+s*w*1.02,lyO);g.stroke();}
+    else if(S.round){g.beginPath();g.ellipse(x,y,w,h,s*S.tilt*0.25,Math.PI*1.08,Math.PI*1.92);g.stroke();}
+    else{g.beginPath();g.moveTo(x-s*w*0.98,y+h*0.05);g.bezierCurveTo(x-s*w*0.7,y-h*1.15,x+s*w*0.75,y-h*1.2+to,x+s*w*1.02,y-h*0.2+to);g.stroke();}}
+  if(S.flick>0){const ox=x+s*w*1.0, oy=lid>0?lyO:(S.round?y-h*0.3:y-h*0.22+to);const fl=S.flick;
+    g.lineWidth=Math.max(3.5,lw*0.55);g.beginPath();g.moveTo(ox-s*4,oy);g.quadraticCurveTo(ox+s*fl*0.6,oy-2,ox+s*fl,oy-fl*0.55);g.stroke();
+    if(o.lashes||S.lashes){g.lineWidth=3.5;g.beginPath();g.moveTo(ox-s*10,oy-6);g.quadraticCurveTo(ox-s*4,oy-12,ox,oy-18);g.stroke();g.beginPath();g.moveTo(ox-s*20,oy-10);g.quadraticCurveTo(ox-s*16,oy-17,ox-s*13,oy-21);g.stroke();}}
+  if(S.low){g.globalAlpha=0.55;g.lineWidth=2.4;g.beginPath();g.moveTo(x+s*w*0.2,y+h*0.98+to*0.3);g.quadraticCurveTo(x+s*w*0.7,y+h*0.85+to*0.4,x+s*w*0.92,y+h*0.35+to*0.7);g.stroke();g.globalAlpha=1;}
   g.restore();}
 function drawHappyEye(g,x,y,s,lashes){g.save();g.strokeStyle=INK;g.lineCap='round';g.lineWidth=lashes?8:7;g.beginPath();g.arc(x,y+14,20,Math.PI*1.12,Math.PI*1.88);g.stroke();
   if(lashes){g.lineWidth=3.5;g.beginPath();g.moveTo(x+s*18,y+2);g.lineTo(x+s*27,y-6);g.stroke();}
@@ -394,7 +415,7 @@ function faceTexture(c,exprKey,opts){
     if(f.lidTilt!=null)o.lidTilt=f.lidTilt;
     if(exprKey==='sad')o.wet=true;
     if(f.lidTilt&&f.lidTilt>0.5)o.lidTilt=f.lidTilt;
-    if(AN){o.heart=f.heartEyes;drawEyeDecal(g,x,EYE_Y,s,o,skin);}else drawEyeV2(g,x,EYE_Y,s,o,skin);
+    if(AN){o.heart=f.heartEyes;o.shape=f.eyes==='big'?(eyeShapeFor(c)==='simple'?'simple':'round'):eyeShapeFor(c);drawEyeDecal(g,x,EYE_Y,s,o,skin);}else drawEyeV2(g,x,EYE_Y,s,o,skin);
   });
   // brows
   if(f.brows!=='none'){if(AN){g.save();g.translate(cx,-26);g.scale(1.2,1);g.translate(-cx,0);}[-1,1].forEach(s=>drawBrowV2(g,cx,s,f.brows,AN?(f._baseBrows==='bushy'||f._baseBrows==='thick'?'normal':'arched'):f._baseBrows,AN?'#1e1718':browC,c.id||''));if(AN)g.restore();}
@@ -1272,35 +1293,35 @@ const CAST = [
  {id:'leo',aliases:['zash'],name:'Zash',formerName:'Leo',role:'The Narrator',group:'Main',origin:'original',stories:['Every episode'],
   bio:'The "I" in every story. An ordinary kid who keeps ending up with strange rules and powers. Sarcastic, a little lazy, secretly kind. Has a crush on Somi he thinks nobody knows about (everyone knows).',
   skin:'#e8b98f',hair:{style:'anime',color:'#2e1d14'},
-  face:{eyes:'dot',eyeColor:'#5a3a22',brows:'normal',mouth:'smile',nose:'button'},
+  face:{eyeShape:'almond',eyes:'dot',eyeColor:'#5a3a22',brows:'normal',mouth:'smile',nose:'button'},
   torso:{inner:'#f2efe6',outer:{style:'hoodie',color:'#d9a23a',fabric:'fleece',strings:'#f4efe2'}},
   sleeves:{color:'#d9a23a',len:'full',cuff:'#c08d2c',fabric:'fleece'},pants:{color:'#3b5a80',fabric:'denim',jeans:true,shoes:'#efefef',accent:'#d9a23a'}},
 
  {id:'mia',name:'Mia',role:'The Rich Girl',group:'Main',origin:'original',stories:['Compliment Money'],
   bio:'The richest kid at school whom nobody talks to. Quiet, a bit guarded, with a secret mirror routine. Her ponytail bow costs more than Zash\'s bike.',
   skin:'#c68a5e',hair:{style:'ponytail',color:'#1b1414',tie:'#ff6fa5'},
-  face:{eyes:'dot',eyeColor:'#3a2418',brows:'arched',mouth:'smirk',blush:true,lashes:true,lips:'#c0476b',nose:'button'},
+  face:{eyeShape:'cat',eyes:'dot',eyeColor:'#3a2418',brows:'arched',mouth:'smirk',blush:true,lashes:true,lips:'#c0476b',nose:'button'},
   torso:{inner:'#9b8ee0',graphic:{shape:'heart',color:'#f2f0ea'},outer:{style:'open',color:'#2f8f8a',fabric:'satin'}},
   sleeves:{color:'#2f8f8a',len:'full',fabric:'satin'},pants:{color:'#7b5aa6',style:'skirt',shoes:'#e05a5a',shoeStyle:'flat',socks:'#f4f2ee'},extras:['earrings:#d4af37','bow:#ff6fa5','necklace:#d4af37']},
 
  {id:'mom',name:'Mom',role:'Zash\'s Mom',group:'Family',origin:'original',stories:['The Lie Counter'],
   bio:'Warm and observant. She can tell when "I\'m fine" isn\'t true, even without a counter.',
   skin:'#f0c8a0',hair:{style:'long',color:'#5b3a24'},
-  face:{eyes:'dot',eyeColor:'#4a3a22',brows:'arched',mouth:'smile',lashes:true,lips:'#b8384a',age:'mid'},
+  face:{eyeShape:'droopy',eyes:'dot',eyeColor:'#4a3a22',brows:'arched',mouth:'smile',lashes:true,lips:'#b8384a',age:'mid'},
   torso:{inner:'#efe4cf',outer:{style:'cardigan',color:'#b5545c',btn:'#efe4cf'}},
   sleeves:{color:'#b5545c',len:'full',fabric:'knit'},pants:{color:'#4b4f63',style:'skirt',fabric:'wool',shoes:'#3a2a22',shoeStyle:'flat'},extras:['earrings:#d4af37']},
 
  {id:'dad',name:'Dad',role:'Zash\'s Dad',group:'Family',origin:'original',stories:['The Lie Counter','Swap Day'],
   bio:'Big beard, bigger lie counter (3,000 and counting). His "five minutes" turned out to be a to-do list, not a lie.',
   skin:'#d9a27a',hair:{style:'swept',color:'#2a2220'},
-  face:{eyes:'dot',eyeColor:'#3a2a1c',brows:'thick',mouth:'smile',beard:'full',glasses:'rect',nose:'round',age:'mid'},
+  face:{eyeShape:'sleepy',eyes:'dot',eyeColor:'#3a2a1c',brows:'thick',mouth:'smile',beard:'full',glasses:'rect',nose:'round',age:'mid'},
   torso:{inner:'#8a3b32',pattern:'check',patternColor:'#5e231d',belt:'#3a2416',collar:true,fabric:'cotton'},
   sleeves:{color:'#8a3b32',len:'rolled',pattern:'check',patternColor:'#5e231d'},pants:{color:'#2f3d55',fabric:'denim',jeans:true,shoes:'#4a3020',shoeStyle:'boot'},extras:['wristwatch:#c9ccd2']},
 
  {id:'max',name:'Max',role:'Little Brother',group:'Family',origin:'original',stories:['The Lie Counter'],
   bio:'Six years old, 212 lies. Most of them about who ate the cookies.',
   skin:'#e8b98f',hair:{style:'anime',color:'#5a3a22'},
-  face:{eyes:'big',eyeColor:'#5a3a22',brows:'raised',mouth:'grin',freckles:true},
+  face:{eyeShape:'round',eyes:'big',eyeColor:'#5a3a22',brows:'raised',mouth:'grin',freckles:true},
   torso:{inner:'#5aa05a',graphic:{shape:'star',color:'#ffe066'},trim:'#3f7d3f'},
   sleeves:{color:'#5aa05a',len:'short'},pants:{color:'#c9a77a',style:'shorts',fabric:'twill',shoes:'#d84a4a',socks:'#ffffff',sockStripe:'#d84a4a'}},
 
@@ -1372,28 +1393,28 @@ const CAST = [
  {id:'rex',name:'Rex',role:'Tough Guy',group:'Town',origin:'original',stories:['Extras'],
   bio:'Leather jacket, goatee and a permanent squint. Looks scary but cries at movies.',
   skin:'#c99a76',hair:{style:'messy',color:'#121212'},
-  face:{eyes:'tired',eyeColor:'#2a1a10',brows:'angry',mouth:'gritted',beard:'goatee',glasses:'rect',scar:'l'},
+  face:{eyeShape:'sharp',eyes:'tired',eyeColor:'#2a1a10',brows:'angry',mouth:'gritted',beard:'goatee',glasses:'rect',scar:'l'},
   torso:{inner:'#ececec',chain:true,outer:{style:'leather',color:'#4a3a32'},belt:'#8a8178'},
   sleeves:{color:'#4a3a32',len:'full',fabric:'leather'},pants:{color:'#25252d',fabric:'denim',jeans:true,shoes:'#7a1f1f',shoeStyle:'boot'}},
 
  {id:'kip',name:'Kip',role:'Lost Survivor',group:'Extras',origin:'original',stories:['Pause Button'],
   bio:'Torn clothes and no shoes. Has been stuck somewhere for a very long time. Good for a "paused for years" ending.',
   skin:'#d9a46c',hair:{style:'anime',color:'#151515'},
-  face:{eyes:'tired',eyeColor:'#2a1a10',brows:'normal',mouth:'flat',beard:'stubble',dirt:true},
+  face:{eyeShape:'wide',eyes:'tired',eyeColor:'#2a1a10',brows:'normal',mouth:'flat',beard:'stubble',dirt:true},
   torso:{inner:'#6b4528',torn:true,belt:'#3e2814',fabric:'canvas'},
   sleeves:{len:'none'},pants:{color:'#6b4528',style:'torn',fabric:'canvas',shoes:'#d9a46c'}},
 
  {id:'benny',name:'Benny',role:'The Nerd',group:'School',origin:'original',stories:['5 Seconds Ahead'],
   bio:'Overexcited, with glasses and a hoodie. Always has a theory about what is really going on.',
   skin:'#f1d9b5',hair:{style:'anime',color:'#121212'},
-  face:{eyes:'big',eyeColor:'#3a2a1a',brows:'raised',mouth:'teeth',glasses:'rect',beard:'stubble',braces:true},
+  face:{eyeShape:'round',eyes:'big',eyeColor:'#3a2a1a',brows:'raised',mouth:'teeth',glasses:'rect',beard:'stubble',braces:true},
   torso:{inner:'#f2f2f2',graphic:{shape:'circle',color:'#3a8fd9'},outer:{style:'ziphoodie',color:'#8c8c8c'},strap:true},
   sleeves:{color:'#8c8c8c',len:'full',fabric:'fleece'},pants:{color:'#161616',fabric:'twill',shoes:'#eaeaea'},extras:['backpack:#2f3a4a']},
 
  {id:'sora',name:'Sora',role:'The Traveler',group:'Extras',origin:'original',stories:['The Wish Store'],
   bio:'Hair over the eyes, a scarf and a duffel bag. Always arriving or leaving. Good for a mysterious stranger.',
   skin:'#e9dccf',hair:{style:'emo',color:'#2b2622'},
-  face:{eyes:'closed',brows:'none',mouth:'flat'},
+  face:{eyeShape:'cat',eyes:'closed',brows:'none',mouth:'flat'},
   torso:{inner:'#3a4c78',pattern:'pinstripe',patternColor:'#8fa0c8',tie:{color:'#2a2a2a',style:'normal'},collar:true,belt:'#1a1a1a'},
   sleeves:{color:'#3a4c78',len:'full',pattern:'pinstripe',patternColor:'#8fa0c8'},pants:{color:'#8a8a86',fabric:'twill',shoes:'#222',shoeStyle:'boot'},
   extras:['scarf:#7a6650','duffel:#1c1c1f']},
@@ -1401,28 +1422,28 @@ const CAST = [
  {id:'theo',name:'Theo',role:'The Bookworm',group:'School',origin:'original',stories:['The Lie Counter'],
   bio:'Always carrying a stack of books and always polite. His lie counter might be the second lowest in town.',
   skin:'#f3dcc4',hair:{style:'swept',color:'#2a1f1a'},
-  face:{eyes:'dot',eyeColor:'#4a6a3a',brows:'normal',mouth:'smile',freckles:true},
+  face:{eyeShape:'droopy',eyes:'dot',eyeColor:'#4a6a3a',brows:'normal',mouth:'smile',freckles:true},
   torso:{inner:'#f5f5f7',tie:{color:'#6a1f22'},collar:true,pocket:true,pens:true},
   sleeves:{color:'#f5f5f7',len:'full',cuff:'#ececf0'},pants:{color:'#1d1d22',fabric:'twill',shoes:'#111',shoeStyle:'dress'},extras:['books']},
 
  {id:'gus',name:'Gus',role:'School Janitor',group:'School',origin:'original',stories:['Compliment Money'],
   bio:'Knows every secret in the building. The first person Zash compliments.',
   skin:'#8d5a3b',hair:{style:'buzz',color:'#9a9a9a'},hat:{style:'beanie',color:'#4b5563'},
-  face:{eyes:'dot',eyeColor:'#2a1a10',brows:'thick',browColor:'#9a9a9a',mouth:'smile',beard:'mustache',beardColor:'#b5b5b5',nose:'wide',age:'old'},
+  face:{eyeShape:'simple',eyes:'dot',eyeColor:'#2a1a10',brows:'thick',browColor:'#9a9a9a',mouth:'smile',beard:'mustache',beardColor:'#b5b5b5',nose:'wide',age:'old'},
   torso:{inner:'#8a8f98',outer:{style:'overalls',color:'#3f5f8a'}},
   sleeves:{color:'#8a8f98',len:'short'},pants:{color:'#3f5f8a',fabric:'denim',shoes:'#3a2a1e',shoeStyle:'boot',stains:true},extras:['keys']},
 
  {id:'brick',name:'Brick',role:'The Bully',group:'School',origin:'original',stories:['Compliment Money'],
   bio:'Wears his cap backwards and smirks a lot. Broke, because he only ever says mean things.',
   skin:'#e2b48a',hair:{style:'buzz',color:'#6b4a2e'},hat:{style:'backcap',color:'#c0392b'},
-  face:{eyes:'tired',eyeColor:'#3a2a1a',brows:'angry',mouth:'smirk',nose:'wide'},
+  face:{eyeShape:'sharp',eyes:'tired',eyeColor:'#3a2a1a',brows:'angry',mouth:'smirk',nose:'wide'},
   torso:{inner:'#1b1b1f',graphic:{shape:'bolt',color:'#ffcf4a'}},
   sleeves:{color:'#1b1b1f',len:'short'},pants:{color:'#5b6340',fabric:'canvas',cargo:true,shoes:'#e8e8e8'},extras:['wristband:#c0392b']},
 
  {id:'nana',name:'Nana June',role:'Grandma',group:'Family',origin:'original',stories:['The Wish Store'],
   bio:'Remembers everything, which is rare in a world where memories buy wishes.',
   skin:'#efd0b5',hair:{style:'bun',color:'#cfcfcf'},
-  face:{eyes:'happy',brows:'arched',browColor:'#bdbdbd',mouth:'smile',glasses:'round',glassColor:'#b8963c',blush:true,lashes:true,lips:'#b0506a',age:'old'},
+  face:{eyeShape:'simple',eyes:'happy',brows:'arched',browColor:'#bdbdbd',mouth:'smile',glasses:'round',glassColor:'#b8963c',blush:true,lashes:true,lips:'#b0506a',age:'old'},
   torso:{inner:'#d98aa0',pattern:'floral',patternColor:'#f6d4dc',outer:{style:'cardigan',color:'#9b8cc4',btn:'#f4efe6'}},
   sleeves:{color:'#9b8cc4',len:'full',fabric:'knit'},pants:{color:'#d98aa0',style:'dress',shoes:'#6b4a33',shoeStyle:'flat'},extras:['earrings:#f4efe6','pearls']},
 
@@ -1430,7 +1451,7 @@ const CAST = [
  {id:'somi',name:'Somi',role:'The Girl Zash Likes',group:'Main',origin:'new',stories:['New'],
   bio:'Artsy, funny and impossible to impress. Always has paint on her sleeve and a sketchbook full of drawings she won\'t show anyone. Zash has rehearsed saying hi to her 400 times.',
   skin:'#f0cba8',hair:{style:'wavy',color:'#3a2418',part:'center',tie:'#ffb3a7'},
-  face:{eyes:'dot',eyeColor:'#5a3a22',brows:'arched',mouth:'smile',lashes:true,lips:'#e2697a',blush:true,freckles:true,nose:'button'},
+  face:{eyeShape:'cat',eyes:'dot',eyeColor:'#5a3a22',brows:'arched',mouth:'smile',lashes:true,lips:'#e2697a',blush:true,freckles:true,nose:'button'},
   torso:{inner:'#fbf6ee',stripe:'#ff8f7a',outer:{style:'cardigan',color:'#f6c8a8',btn:'#fbf6ee'}},
   sleeves:{color:'#f6c8a8',len:'full',fabric:'knit'},pants:{color:'#5a6fa8',style:'skirt',fabric:'denim',shoes:'#fbf6ee',socks:'#fbf6ee'},
   extras:['hoops:#d4af37','bow:#ff8f7a']},
@@ -1438,14 +1459,14 @@ const CAST = [
  {id:'liza',name:'Liza',role:'Zash\'s Cousin',group:'Family',origin:'new',stories:['New'],
   bio:'Zash\'s chaotic younger cousin who visits every holiday and leaves with all his secrets. Gamer, prankster, master negotiator. Will absolutely tell Somi.',
   skin:'#d9a27a',hair:{style:'spacebuns',color:'#2a1a14',tie:'#b06cff'},
-  face:{eyes:'big',eyeColor:'#3a2414',brows:'raised',mouth:'grin',lashes:true,braces:true,freckles:true,nose:'button'},
+  face:{eyeShape:'round',eyes:'big',eyeColor:'#3a2414',brows:'raised',mouth:'grin',lashes:true,braces:true,freckles:true,nose:'button'},
   torso:{inner:'#f2efe6',pattern:'stripes',patternColor:'#b06cff',outer:{style:'overalls',color:'#7fb04a'}},
   sleeves:{color:'#f2efe6',len:'full',pattern:'stripes',patternColor:'#b06cff'},pants:{color:'#7fb04a',style:'shorts',fabric:'denim',shoes:'#b06cff',socks:'#f2efe6',sockStripe:'#b06cff'},
   extras:['headset:#2a2a30']},
  {id:'tobi',name:'Tobi',role:'Zash\'s Best Friend',group:'Main',origin:'new',stories:['New'],
   bio:'Zash\'s best friend and worst advisor. Confident about everything, right about nothing. Makes beats on his phone and narrates his own life like a trailer.',
   skin:'#7a4a2c',hair:{style:'afro',color:'#141010'},
-  face:{eyes:'dot',eyeColor:'#2a1a10',brows:'thick',mouth:'grin',nose:'wide'},
+  face:{eyeShape:'wide',eyes:'dot',eyeColor:'#2a1a10',brows:'thick',mouth:'grin',nose:'wide'},
   torso:{inner:'#f4f4f0',graphic:{shape:'wave',color:'#2fb39a'},outer:{style:'bomber',color:'#3f6b3a',trim:'#e8a33a'}},
   sleeves:{color:'#3f6b3a',len:'full',fabric:'nylon',cuff:'#e8a33a'},pants:{color:'#3a3a40',fabric:'twill',cargo:true,shoes:'#f4f4f0',accent:'#e8a33a'},
   extras:['headphones:#1a1a1a']},
