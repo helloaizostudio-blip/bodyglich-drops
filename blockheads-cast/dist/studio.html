@@ -158,7 +158,9 @@ if (BH.legacyFaces == null) BH.legacyFaces = false; // true = paint v1 faces
 if (BH.detail == null) BH.detail = 1;      // 0 = cheapest (no bump maps), 1 = full
 // v3 look: shorter, wider head + anime-style face (bigger eyes set lower, smaller mouth). Set BH.headShape=null / BH.anime=false for the v2 look.
 if (BH.headShape === undefined) BH.headShape = [1.12, 1.0, 1.08];
-if (BH.roundHead == null) BH.roundHead = true;  // soft rounded 'pillow' head instead of a flat-edged cylinder
+if (BH.roundHead == null) BH.roundHead = true;
+// 'studio' look: blocky avatar built like a game-studio rig: smooth plastic, crisp blocks, flush hands/feet, glossy hair. BH.studio=false = v2 look.
+if (BH.studio == null) BH.studio = true;  // soft rounded 'pillow' head instead of a flat-edged cylinder
 if (BH.anime == null) BH.anime = true;
 
 /* ============================ UTIL ============================ */
@@ -814,13 +816,13 @@ hairTexture._c={};
 const _mcache={};
 const MAT=(col,rough=0.75)=>new THREE.MeshStandardMaterial({color:new THREE.Color(col).convertSRGBToLinear(),roughness:rough,metalness:0});
 const TM=(t,rough=0.8)=>new THREE.MeshStandardMaterial({map:t,roughness:rough,metalness:0});
-function FM(map,bump,rough,scale){const m=new THREE.MeshStandardMaterial({map,roughness:rough==null?0.85:rough,metalness:0});if(bump&&BH.detail>0){m.bumpMap=bump;m.bumpScale=scale==null?0.012:scale;}return m;}
+function FM(map,bump,rough,scale){if(BH.studio){rough=0.55;bump=null;}const m=new THREE.MeshStandardMaterial({map,roughness:rough==null?0.85:rough,metalness:0});if(bump&&BH.detail>0){m.bumpMap=bump;m.bumpScale=scale==null?0.012:scale;}return m;}
 function METAL(col,rough){return new THREE.MeshStandardMaterial({color:new THREE.Color(col).convertSRGBToLinear(),roughness:rough==null?0.3:rough,metalness:0.85});}
 function box(w,h,d,mat){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);}
 const _rbox={};
 // rounded box with analytic normals; keeps BoxGeometry's 6 material groups and per-face UVs
 function rboxGeo(w,h,d,r,seg){
-  seg=BH.detail>0?(seg||2):1;r=Math.min(r,w/2-0.001,h/2-0.001,d/2-0.001);const key=[w,h,d,r,seg].join(',');if(_rbox[key])return _rbox[key];
+  seg=BH.detail>0?(seg||2):1;if(BH.studio)r=r*0.45;r=Math.min(r,w/2-0.001,h/2-0.001,d/2-0.001);const key=[w,h,d,r,seg].join(',');if(_rbox[key])return _rbox[key];
   const N=seg*2+2;const geo=new THREE.BoxGeometry(w,h,d,N,N,N);const pos=geo.attributes.position, nor=geo.attributes.normal;
   const hw=w/2,hh=h/2,hd=d/2, inner=[hw-r,hh-r,hd-r], half=[hw,hh,hd];
   const remap=(v,hx,ri)=>{const t=Math.abs(v)/hx;if(t>0.999)return Math.sign(v)*hx;const k=N/2;const idx=Math.round(t*k);// idx 0..k
@@ -848,7 +850,7 @@ function lock(m,len,w,t,pos,dir,twist){const me=new THREE.Mesh(lockGeo(len,w,t),
 
 /* ============================ HAIR ============================ */
 function hairMats(c){const h=c.hair;const ht=hairTexture(h.color,c.id,h.shine);
-  const m=new THREE.MeshStandardMaterial({color:0xffffff,map:ht.map,roughness:h.style==='slick'?0.35:0.62,metalness:0});if(BH.detail>0){m.bumpMap=ht.bump;m.bumpScale=0.01;}
+  const m=new THREE.MeshStandardMaterial({color:0xffffff,map:ht.map,roughness:h.style==='slick'?0.35:(BH.studio?0.42:0.62),metalness:0});if(BH.detail>0&&!BH.studio){m.bumpMap=ht.bump;m.bumpScale=0.01;}
   const dk=new THREE.MeshStandardMaterial({color:new THREE.Color('#b4b4b4').convertSRGBToLinear(),map:ht.map,roughness:0.7,side:THREE.DoubleSide});
   const tip=h.tip?new THREE.MeshStandardMaterial({color:0xffffff,map:hairTexture(h.tip,c.id+'t').map,roughness:0.6}):m;
   m.side=THREE.DoubleSide;return {m,dk,tip};}
@@ -1138,8 +1140,9 @@ function buildChar(c,expr='default'){
   const handCol=P._gloves||c.skin;const handMat=MAT(handCol,P._gloves?0.55:0.62);
   const mkArm=s=>{const g=new THREE.Group();g.position.set(s*1.5,4,0);
     const m=new THREE.Mesh(rboxGeo(1,1.7,1,0.1,2),[armMat,armMat,MAT(sl.len==='none'||!sl.len?c.skin:sl.color,roughA),MAT(shade(sl.len==='full'||sl.len==='three'?(sl.cuff||sl.color):c.skin,-0.3),0.9),armMat,armMat]);m.position.y=-0.85;g.add(m);
-    const hand=rbox(0.84,0.38,0.84,0.14,handMat);hand.position.y=-1.86;g.add(hand);
-    const th=rbox(0.22,0.26,0.26,0.09,handMat);th.position.set(-s*0.36,-1.8,0.26);g.add(th);
+    if(BH.studio){const hand=rbox(1.0,0.36,1.0,0.1,handMat);hand.position.y=-1.88;g.add(hand);}
+    else{const hand=rbox(0.84,0.38,0.84,0.14,handMat);hand.position.y=-1.86;g.add(hand);
+    const th=rbox(0.22,0.26,0.26,0.09,handMat);th.position.set(-s*0.36,-1.8,0.26);g.add(th);}
     if(sl.len==='full'&&sl.cuff){const cf=rbox(1.04,0.16,1.04,0.06,MAT(sl.cuff,0.8));cf.position.y=-1.62;g.add(cf);}
     root.add(g);return g;};
   P.armL=mkArm(-1);P.armR=mkArm(1);
@@ -1204,6 +1207,8 @@ function buildFaceProps(c,P){
 }
 function buildShoe(c,g,s){
   const pt=c.pants, sty=pt.shoeStyle||(pt.shoes===c.skin?'bare':'sneaker'), col=pt.shoes||'#222';
+  if(BH.studio){const bare=sty==='bare'||!pt.shoes;const f=rbox(1.0,0.28,1.0,0.08,MAT(bare?c.skin:col,0.5));f.position.set(0,-1.88,0);g.add(f);
+    if(!bare&&sty==='sneaker'){const so=rbox(1.0,0.08,1.0,0.03,MAT(pt.sole||(lum(col)>0.8?'#d8d8d8':'#f3f3f0'),0.5));so.position.set(0,-1.97,0);g.add(so);}return;}
   if(sty==='bare'||!pt.shoes){const f=rbox(0.98,0.28,1.08,0.1,MAT(c.skin,0.65));f.position.set(0,-1.86,0.04);g.add(f);
     const [cc,g2]=cv(64,64);g2.fillStyle=c.skin;g2.fillRect(0,0,64,64);g2.strokeStyle=rgba(shade(c.skin,-0.35),0.6);g2.lineWidth=2;for(let x=14;x<64;x+=12){g2.beginPath();g2.moveTo(x,40);g2.lineTo(x,64);g2.stroke();}
     const toes=new THREE.Mesh(new THREE.PlaneGeometry(0.96,0.26),new THREE.MeshStandardMaterial({map:tex(cc),roughness:0.65}));toes.position.set(0,-1.86,0.585);g.add(toes);return;}
