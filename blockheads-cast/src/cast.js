@@ -39,7 +39,7 @@ const CAST = [
 
  {id:'max',name:'Max',role:'Little Brother',group:'Family',origin:'original',stories:['The Lie Counter'],
   bio:'Six years old, 212 lies. Most of them about who ate the cookies.',
-  skin:'#e8b98f',hair:{style:'spiky',color:'#4a2f1e'},
+  skin:'#e8b98f',hair:{style:'anime',color:'#5a3a22'},
   face:{eyes:'big',eyeColor:'#5a3a22',brows:'raised',mouth:'grin',freckles:true},
   torso:{inner:'#5aa05a',graphic:{shape:'star',color:'#ffe066'},trim:'#3f7d3f'},
   sleeves:{color:'#5aa05a',len:'short'},pants:{color:'#c9a77a',style:'shorts',fabric:'twill',shoes:'#d84a4a',socks:'#ffffff',sockStripe:'#d84a4a'}},
@@ -104,7 +104,7 @@ const CAST = [
 
  {id:'dave',name:'Dave',role:'Tired Office Guy',group:'Town',origin:'original',stories:['Pause Button'],
   bio:'Has been "almost done" with one spreadsheet for three years. Glasses, stubble and a plaster on his cheek.',
-  skin:'#e3b58c',hair:{style:'spiky',color:'#3d2a1c'},
+  skin:'#e3b58c',hair:{style:'anime',color:'#3d2a1c'},
   face:{eyes:'tired',eyeColor:'#4a3a2a',brows:'sad',mouth:'flat',beard:'stubble',glasses:'rect',bandage:true,age:'mid'},
   torso:{inner:'#f2f2f2',tie:{color:'#5d5f70'},collar:true,outer:{style:'suit',color:'#17171a'},belt:'#0b0b0b'},
   sleeves:{color:'#17171a',len:'full'},pants:{color:'#17171a',fabric:'wool',shoes:'#0b0b0b',shoeStyle:'dress'},extras:['mug:#f2f0ea','lanyard:#c0392b']},
@@ -118,14 +118,14 @@ const CAST = [
 
  {id:'kip',name:'Kip',role:'Lost Survivor',group:'Extras',origin:'original',stories:['Pause Button'],
   bio:'Torn clothes and no shoes. Has been stuck somewhere for a very long time. Good for a "paused for years" ending.',
-  skin:'#d9a46c',hair:{style:'spiky',color:'#151515'},
+  skin:'#d9a46c',hair:{style:'anime',color:'#151515'},
   face:{eyes:'tired',eyeColor:'#2a1a10',brows:'normal',mouth:'flat',beard:'stubble',dirt:true},
   torso:{inner:'#6b4528',torn:true,belt:'#3e2814',fabric:'canvas'},
   sleeves:{len:'none'},pants:{color:'#6b4528',style:'torn',fabric:'canvas',shoes:'#d9a46c'}},
 
  {id:'benny',name:'Benny',role:'The Nerd',group:'School',origin:'original',stories:['5 Seconds Ahead'],
   bio:'Overexcited, with glasses and a hoodie. Always has a theory about what is really going on.',
-  skin:'#f1d9b5',hair:{style:'spiky',color:'#121212'},
+  skin:'#f1d9b5',hair:{style:'anime',color:'#121212'},
   face:{eyes:'big',eyeColor:'#3a2a1a',brows:'raised',mouth:'teeth',glasses:'rect',beard:'stubble',braces:true},
   torso:{inner:'#f2f2f2',graphic:{shape:'circle',color:'#3a8fd9'},outer:{style:'ziphoodie',color:'#8c8c8c'},strap:true},
   sleeves:{color:'#8c8c8c',len:'full',fabric:'fleece'},pants:{color:'#161616',fabric:'twill',shoes:'#eaeaea'},extras:['backpack:#2f3a4a']},

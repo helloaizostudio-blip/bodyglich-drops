@@ -27,7 +27,7 @@ if (BH.Q == null) BH.Q = 1.5;              // face texture resolution multiplier
 if (BH.legacyFaces == null) BH.legacyFaces = false; // true = paint v1 faces
 if (BH.detail == null) BH.detail = 1;      // 0 = cheapest (no bump maps), 1 = full
 // v3 look: shorter, wider head + anime-style face (bigger eyes set lower, smaller mouth). Set BH.headShape=null / BH.anime=false for the v2 look.
-if (BH.headShape === undefined) BH.headShape = [1.12, 1.0, 1.08];
+if (BH.headShape === undefined) BH.headShape = [1.08, 1.0, 1.04];
 if (BH.roundHead == null) BH.roundHead = true;
 // 'studio' look: blocky avatar built like a game-studio rig: smooth plastic, crisp blocks, flush hands/feet, glossy hair. BH.studio=false = v2 look.
 if (BH.studio == null) BH.studio = true;  // soft rounded 'pillow' head instead of a flat-edged cylinder
@@ -227,6 +227,36 @@ function drawEyeV2(g,x,y,s,o,skin){
   if(o.lashes){g.lineWidth=3.6;[[0,0,10,-9],[-7,-5,-1,-15],[-15,-8,-12,-18]].forEach(([a,b,c2,d])=>{g.beginPath();g.moveTo(ox+s*a,oy+b);g.lineTo(ox+s*c2,oy+d);g.stroke();});}
   g.restore();
 }
+function drawEyeDecal(g,x,y,s,o,skin){
+  // flat 2D anime decal eye: white almond with lilac top shade, big dark iris, two highlights, thick upper lash line with a flick
+  const w=o.w,h=o.h,lid=o.lid||0,tilt=o.lidTilt||0,pu=o.pupil||1;
+  const shape=()=>{g.beginPath();g.moveTo(x-s*w,y+h*0.15);g.bezierCurveTo(x-s*w*0.7,y-h*1.15,x+s*w*0.75,y-h*1.2,x+s*w,y-h*0.2);
+    g.bezierCurveTo(x+s*w*0.85,y+h*0.95,x-s*w*0.6,y+h*1.05,x-s*w,y+h*0.15);g.closePath();};
+  g.save();shape();g.fillStyle='#fbfbfd';g.fill();g.clip();
+  const sg=g.createLinearGradient(0,y-h,0,y+h*0.2);sg.addColorStop(0,'rgba(150,128,196,0.55)');sg.addColorStop(1,'rgba(150,128,196,0)');g.fillStyle=sg;g.fillRect(x-w-4,y-h-4,w*2+8,h*2+8);
+  const ic=o.iris||'#4a3022', rx=w*0.56*pu*(o.irisScale||1), ry=h*0.98*pu*(o.irisScale||1), ix=x+s*w*0.04+(o.lookX||0), iy=y+h*0.12+(o.lookY||0);
+  const ig=g.createLinearGradient(0,iy-ry,0,iy+ry);ig.addColorStop(0,'#0d0b0e');ig.addColorStop(0.55,shade(ic,-0.72));ig.addColorStop(1,shade(ic,-0.25));
+  g.fillStyle=ig;ell(g,ix,iy,rx,ry);g.fill();
+  if(o.heart){g.strokeStyle='#fff';g.lineWidth=3;g.beginPath();const hx=ix,hy=iy;g.moveTo(hx,hy+8);g.bezierCurveTo(hx-14,hy-2,hx-8,hy-14,hx,hy-6);g.bezierCurveTo(hx+8,hy-14,hx+14,hy-2,hx,hy+8);g.stroke();}
+  else{g.fillStyle='#ffffff';ell(g,ix-rx*0.32,iy-ry*0.42,rx*0.3,ry*0.22);g.fill();g.fillStyle='rgba(255,255,255,0.85)';ell(g,ix+rx*0.34,iy+ry*0.38,rx*0.13,ry*0.1);g.fill();}
+  if(o.wet){g.fillStyle='rgba(255,255,255,0.5)';ell(g,ix,iy+ry*0.62,rx*0.6,ry*0.12);g.fill();}
+  // lid (tired / angry / smug): skin drops over the top of the eye
+  let lyI=null,lyO=null;
+  if(lid>0){const ly=y-h+2*h*lid;lyI=ly+tilt*h*0.55;lyO=ly-tilt*h*0.25;g.fillStyle=skin;g.beginPath();g.moveTo(x-s*(w+8),y-h-40);g.lineTo(x+s*(w+8),y-h-40);g.lineTo(x+s*(w+8),lyO);g.lineTo(x-s*(w+8),lyI);g.closePath();g.fill();}
+  g.restore();
+  g.save();g.strokeStyle=INK;g.lineCap='round';g.lineJoin='round';
+  // soft outline
+  g.globalAlpha=0.35;g.lineWidth=2;shape();g.stroke();g.globalAlpha=1;
+  // upper lash line
+  g.lineWidth=o.lashes?10:8.5;
+  if(lid>0){g.beginPath();g.moveTo(x-s*w*0.95,lyI);g.lineTo(x+s*w*1.02,lyO);g.stroke();}
+  else{g.beginPath();g.moveTo(x-s*w*0.98,y+h*0.05);g.bezierCurveTo(x-s*w*0.7,y-h*1.15,x+s*w*0.75,y-h*1.2,x+s*w*1.02,y-h*0.2);g.stroke();}
+  const ox=x+s*w*1.0, oy=lid>0?lyO:y-h*0.22;
+  g.lineWidth=o.lashes?5.5:4.5;g.beginPath();g.moveTo(ox-s*4,oy);g.quadraticCurveTo(ox+s*10,oy-2,ox+s*17,oy-10);g.stroke();
+  if(o.lashes){g.lineWidth=3.5;g.beginPath();g.moveTo(ox-s*10,oy-6);g.quadraticCurveTo(ox-s*4,oy-12,ox,oy-18);g.stroke();}
+  // lower lash hint
+  g.globalAlpha=0.55;g.lineWidth=2.4;g.beginPath();g.moveTo(x+s*w*0.2,y+h*0.98);g.quadraticCurveTo(x+s*w*0.7,y+h*0.85,x+s*w*0.92,y+h*0.35);g.stroke();g.globalAlpha=1;
+  g.restore();}
 function drawHappyEye(g,x,y,s,lashes){g.save();g.strokeStyle=INK;g.lineCap='round';g.lineWidth=lashes?8:7;g.beginPath();g.arc(x,y+14,20,Math.PI*1.12,Math.PI*1.88);g.stroke();
   if(lashes){g.lineWidth=3.5;g.beginPath();g.moveTo(x+s*18,y+2);g.lineTo(x+s*27,y-6);g.stroke();}
   g.strokeStyle='rgba(26,22,22,0.35)';g.lineWidth=2.5;g.beginPath();g.arc(x+s*4,y+30,12,Math.PI*1.2,Math.PI*1.7);g.stroke();g.restore();}
@@ -332,6 +362,7 @@ function faceTexture(c,exprKey,opts){
   const AN=BH.anime&&!c.noAnime;
   g.save();if(AN){g.translate(cx,0);g.scale(0.94,1);g.translate(-cx,ANIME_DY);}
   // cheeks
+  if(AN&&!f.blush){[-1,1].forEach(s=>{const gr=g.createRadialGradient(cx+s*104,186,2,cx+s*104,186,40);gr.addColorStop(0,'rgba(240,120,120,0.22)');gr.addColorStop(1,'rgba(240,120,120,0)');g.fillStyle=gr;ell(g,cx+s*104,186,44,24);g.fill();});}
   g.fillStyle=f.blush?'rgba(255,100,112,0.34)':'rgba(255,120,110,0.10)';[-1,1].forEach(s=>{const gr=g.createRadialGradient(cx+s*102,184,2,cx+s*102,184,34);gr.addColorStop(0,g.fillStyle);gr.addColorStop(1,'rgba(255,120,110,0)');g.save();g.fillStyle=gr;ell(g,cx+s*102,184,36,20);g.fill();g.restore();});
   if(f.blush){g.strokeStyle='rgba(220,70,90,0.45)';g.lineWidth=2.4;[-1,1].forEach(s=>{for(let i=0;i<3;i++){g.beginPath();g.moveTo(cx+s*(88+i*10),176);g.lineTo(cx+s*(84+i*10),188);g.stroke();}});}
   if(f.freckles){g.fillStyle=rgba(shade(skin,-0.38),0.55);const fr=rng(c.id+'fr');for(let i=0;i<26;i++){const s=i%2?1:-1;ell(g,cx+s*(26+fr()*70),158+fr()*28,1.8+fr(),1.8+fr());g.fill();}}
@@ -343,11 +374,11 @@ function faceTexture(c,exprKey,opts){
       if(f.age==='old')for(let k=0;k<3;k++){g.beginPath();g.moveTo(cx+s*90,126+k*9);g.lineTo(cx+s*104,121+k*11);g.stroke();}});}
   drawFacialHair(g,cx,f,c,beardC,r);
   if(f.mole){g.fillStyle=rgba(shade(skin,-0.6),0.85);ell(g,cx+(f.mole==='l'?-50:50),190,3.4,3.4);g.fill();}
-  if(AN){g.save();g.translate(cx,176);g.scale(0.7,0.7);g.translate(-cx,-176);}drawNose(g,cx,f.nose,skin);if(AN)g.restore();
+  if(!AN)drawNose(g,cx,f.nose,skin);
   // eyes
   const iris=f.eyeColor||'#4a3022';
   const base=Object.assign({},{dot:{w:21,h:25},big:{w:25,h:33},tired:{w:22,h:21,lid:0.45},sharp:{w:29,h:17,almond:true}}[f.eyes]||{w:21,h:25});
-  if(AN){base.w=Math.round(base.w*1.75);base.h=Math.round(base.h*1.7);base.irisScale=1.05;base.anime=true;}
+  if(AN){const D={dot:[45,35],big:[48,42],tired:[46,30],sharp:[48,26]}[f.eyes]||[38,30];base.w=D[0];base.h=D[1];base.anime=true;if(f.eyes==='tired')base.lid=0.42;if(f.eyes==='sharp')base.lid=0.35;}
   [-1,1].forEach(s=>{
     const x=cx+s*(AN?ANIME_CX:EYE_CX);
     if(f.eyepatch&&((f.eyepatch==='l'&&s<0)||(f.eyepatch==='r'&&s>0))){g.fillStyle='#141414';g.beginPath();g.ellipse(x,EYE_Y,32,28,0,0,Math.PI*2);g.fill();g.fillStyle='rgba(255,255,255,0.12)';ell(g,x-10,EYE_Y-10,10,6);g.fill();
@@ -362,12 +393,12 @@ function faceTexture(c,exprKey,opts){
     if(f.lidTilt!=null)o.lidTilt=f.lidTilt;
     if(exprKey==='sad')o.wet=true;
     if(f.lidTilt&&f.lidTilt>0.5)o.lidTilt=f.lidTilt;
-    drawEyeV2(g,x,EYE_Y,s,o,skin);
+    if(AN){o.heart=f.heartEyes;drawEyeDecal(g,x,EYE_Y,s,o,skin);}else drawEyeV2(g,x,EYE_Y,s,o,skin);
   });
   // brows
-  if(f.brows!=='none'){if(AN){g.save();g.translate(cx,-26);g.scale(1.2,1);g.translate(-cx,0);}[-1,1].forEach(s=>drawBrowV2(g,cx,s,f.brows,f._baseBrows,browC,c.id||''));if(AN)g.restore();}
+  if(f.brows!=='none'){if(AN){g.save();g.translate(cx,-26);g.scale(1.2,1);g.translate(-cx,0);}[-1,1].forEach(s=>drawBrowV2(g,cx,s,f.brows,AN?(f._baseBrows==='bushy'||f._baseBrows==='thick'?'normal':'arched'):f._baseBrows,AN?'#1e1718':browC,c.id||''));if(AN)g.restore();}
   if(f.unibrow){g.fillStyle=browC;rr(g,cx-36,96,72,8,4);g.fill();}
-  if(AN){g.save();g.translate(cx,214);g.scale(0.74,0.74);g.translate(-cx,-214);}drawMouthV2(g,cx,f);if(AN)g.restore();
+  if(AN){g.save();g.translate(cx,214);g.scale(0.58,0.58);g.translate(-cx,-214);}drawMouthV2(g,cx,f);if(AN)g.restore();
   drawMustache(g,cx,f,beardC);
   // marks
   if(f.scar){const s=f.scar==='l'?-1:1;g.strokeStyle=rgba(shade(skin,-0.3),0.9);g.lineWidth=4;g.lineCap='round';g.beginPath();g.moveTo(cx+s*44,84);g.lineTo(cx+s*76,168);g.stroke();g.lineWidth=2;for(let k=0;k<4;k++){const t=0.15+k*0.22;const x=lerp(cx+s*44,cx+s*76,t),y=lerp(84,168,t);g.beginPath();g.moveTo(x-7,y+2);g.lineTo(x+7,y-2);g.stroke();}}
@@ -786,8 +817,7 @@ function buildHair(c,grp){
       for(let i=0;i<9;i++){const a=-0.9+i*0.22;grp.add(lock(tip,0.55+r()*0.2,0.16,0.07,V(Math.sin(a)*0.45,5.52,Math.cos(a)*0.45),V(0.9,-0.35-r()*0.2,Math.cos(a)*0.2),0));}
       fringe(3,0.1,0.6,5.3,0.4,0.6,tip);break;}
     case 'anime':{ // soft layered anime cut: locks fall down over the forehead and sides, a few tufts on the crown
-      crown(34,0.42,0.22,0.75,-0.55);
-      for(let i=0;i<5;i++){const a=(r()-.5)*1.6;grp.add(lock(r()<.4?dk:m,0.34+r()*0.12,0.18,0.1,domePoint(a,0.85,0.55),V(Math.sin(a)*0.5+(r()-.5)*0.4,0.9,Math.cos(a)*0.2-0.5),r()));}
+      crown(40,0.42,0.26,0.7,-0.9);
       fringe(11,-0.95,0.95,5.16,0.5,0.32);fringe(6,-0.6,0.6,5.2,0.42,0.42,dk);
       sideLocks(3,0.46,5.02);
       for(let i=0;i<14;i++){const a=Math.PI*0.55+i/13*Math.PI*0.9;grp.add(lock(r()<.3?dk:m,0.5+r()*0.15,0.2,0.1,V(Math.sin(a)*0.68,5.1,Math.cos(a)*0.68),V(Math.sin(a)*0.25,-1,Math.cos(a)*0.25),a));}
@@ -989,15 +1019,22 @@ const BODY={buff:{torso:[1.25,1.06,1.25],arm:[1.35,1.0,0.3],leg:[1.15,1.0,0.08],
   slim:{torso:[0.88,1.0,0.85],arm:[0.82,1.0,-0.12],leg:[0.85,1.0,-0.04]}};
 let _roundHeadGeo=null;
 function roundHeadGeo(){
-  // superellipse profile (rounded square) with a slightly narrower jaw; v mapped by height so the face texture lines up with the old cylinder
+  // soft rounded cube (superellipsoid), like a classic block-avatar head; UVs follow the old cylinder (u by angle, v by height)
   if(_roundHeadGeo)return _roundHeadGeo.clone();
-  const H=1.2,R=0.6,n=3.2,N=44,pts=[];
-  for(let i=0;i<=N;i++){const t=i/N;const y=t*H;const k=Math.abs(2*t-1);let r=R*Math.pow(Math.max(0,1-Math.pow(k,n)),1/n);
-    const jaw=0.9+0.1*Math.min(1,Math.max(0,(t-0.05)/0.45));r*=jaw;pts.push(new THREE.Vector2(Math.max(r,0.0001),y));}
-  const g=new THREE.LatheGeometry(pts,64,Math.PI,Math.PI*2);
-  const pos=g.attributes.position,uv=g.attributes.uv;
-  for(let i=0;i<uv.count;i++)uv.setY(i,pos.getY(i)/H);
-  uv.needsUpdate=true;g.computeVertexNormals();_roundHeadGeo=g;return g.clone();}
+  const H=1.2,R=0.6,n=3.0,ny=3.4;
+  const g=new THREE.SphereGeometry(1,72,48);const pos=g.attributes.position,uv=g.attributes.uv;
+  for(let i=0;i<pos.count;i++){const x=pos.getX(i),y=pos.getY(i),z=pos.getZ(i);
+    // horizontal superellipse in x/z, vertical squircle in y
+    const hr=Math.pow(Math.pow(Math.abs(x),n)+Math.pow(Math.abs(z),n),1/n)||1e-6;const k=Math.pow(Math.pow(hr,ny)+Math.pow(Math.abs(y),ny),1/ny)||1e-6;
+    let X=x/k,Y=y/k,Z=z/k;
+    const hr2=Math.sqrt(X*X+Z*Z),hs=Math.pow(Math.pow(Math.abs(X),n)+Math.pow(Math.abs(Z),n),1/n)||1e-6;
+    // jaw: a touch narrower toward the bottom
+    const jaw=0.94+0.06*Math.min(1,Math.max(0,(Y+1)/0.9));
+    pos.setXYZ(i,X*R*jaw,(Y+1)*H/2,Z*R*jaw);
+    const th=Math.atan2(X,Z);let u=(th-Math.PI)/(Math.PI*2);u=((u%1)+1)%1;uv.setXY(i,u,(Y+1)/2);}
+  // fix the seam: vertices at the back seam keep the sphere's own u (0 or 1)
+  for(let i=0;i<uv.count;i++){const su=g.attributes.uv.getX(i);}
+  pos.needsUpdate=true;uv.needsUpdate=true;g.computeVertexNormals();_roundHeadGeo=g;return g.clone();}
 function buildChar(c,expr='default'){
   const root=new THREE.Group();const P={root,char:c};
   const torsoG=new THREE.Group();root.add(torsoG);P.torso=torsoG;

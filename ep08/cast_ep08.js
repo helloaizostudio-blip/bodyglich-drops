@@ -3,7 +3,7 @@
 (function(){
 const SPECS=[
  {id:'mako',name:'Mako',role:'Rowboat Captain',group:'Ep8',origin:'original',
-  skin:'#e3ad80',hair:{style:'spiky',color:'#17323a'},hat:{style:'headband',color:'#e2453a'},
+  skin:'#e3ad80',hair:{style:'anime',color:'#17323a'},
   face:{eyes:'big',eyeColor:'#2b6f8a',brows:'thick',mouth:'grin',nose:'button',bandage:true},
   torso:{inner:'#f6c945',outer:{style:'open',color:'#f4f1e8',fabric:'cotton'}},
   sleeves:{color:'#f4f1e8',len:'short'},pants:{color:'#2c4a73',style:'shorts',fabric:'canvas',shoes:'#8a5a32',shoeStyle:'flat'},
