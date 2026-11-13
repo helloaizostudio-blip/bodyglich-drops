@@ -52,6 +52,8 @@ def stage_voice():
         y = VL.contour(y, end) * 10 ** (T['gain'] / 20)
         if tag == 'whisper':
             y = VL.ffmpeg_filter(y, 'highpass=f=300,treble=g=4')
+        if V.get('filter'):      # e.g. a phone-call voice
+            y = VL.ffmpeg_filter(y, V['filter'])
         dur = len(y) / SR
         words = align_words(y, text, t)
         segs.append(dict(id=sid, who=who, tag=tag, text=clean, start=t, end=t + dur, words=words, shots=shots))
