@@ -32,8 +32,8 @@ LINES = [
 ]
 
 VOICES = {
-    # Zash's original voice (am_liam, the one used in Ep 2-5), now through the smooth pipeline so it doesn't buzz
-    "mako": dict(voice="am_liam", speed=1.12, pitch=1.40, expressive=True, smooth=True, gen_speed=1.10),
+    # Mako: Fenrir (voice option 5)
+    "mako": dict(voice="am_fenrir", speed=1.05, pitch=1.0, expressive=True),   # user picked option 5 (Fenrir), natural pitch, no shifting
     "pip":  dict(voice="af_bella", speed=1.05, pitch=1.04, expressive=True, smooth=True, gen_speed=1.0),
     "gorr": dict(voice="am_onyx", speed=0.95, pitch=0.86, expressive=True, smooth=True, gen_speed=1.0),
 }
