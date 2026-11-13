@@ -164,6 +164,31 @@ export const FORMS = {
       gills.forEach((gg, i) => gg.scale.setScalar(1 + 0.18 * Math.sin(t * 5 + i))); f.set({ lid: blinkAt(t, 13) }); an.rotation.z = D(Math.sin(t * 8) * 8);
     } };
   },
+  /** a molar: glossy enamel crown with four cusps, two roots for legs. chip (front-right cusp) can fly off to show the
+   *  dentin under it; crack is a dark line on the crown (crack.geometry.setDrawRange(0, n) with crackN to grow it) */
+  tooth(c) {
+    const g = new THREE.Group(), body = G(g, [0, 0, 0]), EN = [0.97, 0.96, 0.92], RT = [0.93, 0.86, 0.72];
+    const enamel = new THREE.MeshPhysicalMaterial({ vertexColors: true, roughness: 0.18, clearcoat: 1, clearcoatRoughness: 0.12, sheen: 0.2, emissive: '#FFFFFF', emissiveIntensity: 0.02 });
+    const CUSPS = [[-0.075, 0.445, 0.06], [0.075, 0.445, -0.06], [-0.075, 0.445, -0.06]], CHIP = [0.075, 0.445, 0.06];
+    M(body, mesh((p) => {
+      let d = ellipsoid(p, [0, 0.33, 0], [0.18, 0.12, 0.16]);
+      d = smin(d, ellipsoid(p, [0, 0.38, 0], [0.165, 0.08, 0.15]), 0.04);
+      for (const q of CUSPS) d = smin(d, sphere(p, q, 0.068), 0.05);
+      for (const s of [-1, 1]) d = smin(d, capsule(p, [s * 0.075, 0.25, 0], [s * 0.06, 0.035, s * 0.01], 0.062, 0.03), 0.05);
+      return smax(d, -(p[1] - 0.004), 0.01);
+    }, [[-0.24, -0.02, -0.22], [0.24, 0.53, 0.22]], 0.005, (p) => mixc(RT, EN, sstep(0.2, 0.25, p[1]))), enamel);
+    const dentin = M(body, new THREE.SphereGeometry(0.05, 24, 16), new THREE.MeshStandardMaterial({ color: '#E8C27A', roughness: 0.6 })); dentin.position.set(CHIP[0], CHIP[1] - 0.012, CHIP[2]); dentin.scale.set(1, 0.7, 1);
+    const chipG = G(body, CHIP), chip = M(chipG, mesh((p) => smax(sphere(p, [0, 0, 0], 0.068), -(p[1] + 0.03), 0.02), [[-0.08, -0.05, -0.08], [0.08, 0.08, 0.08]], 0.004, () => EN), enamel);
+    // crack: a jagged line down the front of the crown, from the chip
+    const cp = [], E3 = (x, y) => new THREE.Vector3(x, y, 0.16 * Math.sqrt(Math.max(0.05, 1 - (x / 0.18) ** 2 - ((y - 0.34) / 0.14) ** 2)) + 0.012);
+    [[0.06, 0.43], [0.035, 0.4], [0.05, 0.37], [0.015, 0.34], [0.03, 0.31], [-0.005, 0.28], [0.01, 0.25]].forEach(([x, y]) => cp.push(E3(x, y)));
+    const crack = M(body, new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cp, false, 'catmullrom', 0.1), 60, 0.0055, 6), new THREE.MeshStandardMaterial({ color: '#2A1A12', roughness: 0.6 })); crack.castShadow = false;
+    const crackN = crack.geometry.index.count; crack.geometry.setDrawRange(0, 0);
+    const f = face(body, [0, 0.335, 0.158], c, { gap: 0.07, r: 0.031, curve: 0.45, mouthY: -0.07, mouthZ: 0.012 }), an = antenna(body, [-0.02, 0.5, -0.02], c, 0.9);
+    return { group: g, cy: 0.3, body, chip: chipG, dentin, crack, crackN, face: f, antenna: an, enamel, animate(t) {
+      const w = Math.sin(t * 2.4); body.rotation.set(0, w * 0.05, w * 0.03); body.position.y = Math.abs(Math.sin(t * 2.4)) * 0.008; f.set({ lid: blinkAt(t, 17) }); an.rotation.z = D(w * 8);
+    } };
+  },
   cat(c) {
     const g = new THREE.Group(), mat = VINYL({ roughness: 0.5, clearcoat: 0.25, clearcoatRoughness: 0.4, sheen: 0.3 }), B = rgb(c.color), BL = rgb(c.belly), BD = rgb(c.dark);
     M(g, mesh((p) => {

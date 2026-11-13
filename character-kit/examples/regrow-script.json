@@ -1,0 +1,27 @@
+{
+  "title": "What Your Body Can Regrow, Ranked",
+  "voice": "am_michael",
+  "speed": 1.05,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "bed",
+  "sources": [
+    "Liver: Cleveland Clinic / NIH (Michalopoulos 2007, J Cell Physiol): after up to two-thirds of the liver is removed, it regrows to its original mass within weeks to a few months",
+    "Bone: NHS / AAOS OrthoInfo: most broken bones heal in about six to eight weeks",
+    "Skin: the epidermis renews itself roughly every four to eight weeks (Cleveland Clinic; Hoath & Leahy 2003)",
+    "Stomach lining: surface cells of the stomach lining are replaced every few days (about 3-5 days), constantly worn by acid (Cell Biology by the Numbers; Karam 1999)",
+    "Cornea: most corneal abrasions heal within one to three days (American Academy of Ophthalmology)",
+    "Tooth enamel: enamel has no living cells, so the body cannot regrow it once lost (NIDCR / American Dental Association)"
+  ],
+  "lines": [
+    { "text": "Your body can regrow almost anything,", "caps": "Your body | can *regrow | almost *anything" },
+    { "text": "except one part.", "caps": "Except | *one part" },
+    { "text": "Number five, your liver. Lose two thirds of it, and it grows back.", "caps": "Number *five | your *liver | Lose *two thirds | and it *grows back" },
+    { "text": "Four, a broken bone fuses back together in about six weeks.", "caps": "*Four | a *broken bone | *fuses back | in about *six weeks" },
+    { "text": "Three, your skin swaps out its whole outer layer every few weeks.", "caps": "*Three | your *skin | swaps its whole | *outer layer | every *few weeks" },
+    { "text": "Two, your stomach lining. Your own acid eats it, so it rebuilds every few days.", "caps": "*Two | your *stomach lining | your own *acid | *eats it | so it *rebuilds | every *few days" },
+    { "text": "And number one, a scratch on your eye heals in a day or two.", "caps": "And number *one | a *scratch | on your *eye | heals in | a *day or two" },
+    { "text": "But tooth enamel? Once it's gone, it's gone forever.", "caps": "But tooth *enamel? | Once it's *gone | it's gone *forever" }
+  ]
+}
