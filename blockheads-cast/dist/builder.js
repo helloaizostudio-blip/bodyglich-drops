@@ -400,7 +400,7 @@ function faceTexture(c,exprKey,opts){
   // eyes
   const iris=f.eyeColor||'#4a3022';
   const base=Object.assign({},{dot:{w:21,h:25},big:{w:25,h:33},tired:{w:22,h:21,lid:0.45},sharp:{w:29,h:17,almond:true}}[f.eyes]||{w:21,h:25});
-  if(AN){const D={dot:[45,35],big:[48,42],tired:[46,30],sharp:[48,26]}[f.eyes]||[38,30];base.w=D[0];base.h=D[1];base.anime=true;if(f.eyes==='tired')base.lid=0.42;if(f.eyes==='sharp')base.lid=0.35;}
+  if(AN){const D={dot:[45,35],big:[48,42],tired:[46,30],sharp:[48,26]}[f.eyes]||[38,30];base.w=D[0]*(f.eyeScale||1);base.h=D[1]*(f.eyeScale||1);base.anime=true;if(f.eyes==='tired')base.lid=0.42;if(f.eyes==='sharp')base.lid=0.35;}
   [-1,1].forEach(s=>{
     const x=cx+s*(AN?ANIME_CX:EYE_CX);
     if(f.eyepatch&&((f.eyepatch==='l'&&s<0)||(f.eyepatch==='r'&&s>0))){g.fillStyle='#141414';g.beginPath();g.ellipse(x,EYE_Y,32,28,0,0,Math.PI*2);g.fill();g.fillStyle='rgba(255,255,255,0.12)';ell(g,x-10,EYE_Y-10,10,6);g.fill();
@@ -844,7 +844,7 @@ function buildHair(c,grp){
       sideLocks(3,0.46,5.02);
       for(let i=0;i<14;i++){const a=Math.PI*0.55+i/13*Math.PI*0.9;grp.add(lock(r()<.3?dk:m,0.5+r()*0.15,0.2,0.1,V(Math.sin(a)*0.68,5.1,Math.cos(a)*0.68),V(Math.sin(a)*0.25,-1,Math.cos(a)*0.25),a));}
       backShell(grp,m,0.6,0);break;}
-    case 'messy':case 'emo':{crown(30,0.4,0.2,1.0,-0.12);fringe(8,-0.85,0.85,5.12,0.36,0.55);sideLocks(2,0.32,4.98);
+    case 'messy':case 'emo':{crown(34,0.4,0.24,0.7,-0.85);fringe(8,-0.85,0.85,5.12,0.36,0.55);sideLocks(2,0.32,4.98);
       backShell(grp,m,0.62,0);
       if(st==='emo'){const f=new THREE.Mesh(new THREE.CylinderGeometry(0.705,0.71,0.66,24,1,true,-0.15,0.95),m);f.position.y=4.83;grp.add(f);fringe(6,-0.1,0.75,5.15,0.55,0.15);}break;}
     case 'spiky':{for(let i=0;i<20;i++){const a=r()*Math.PI*2;const up=0.25+r()*0.7;const p=domePoint(a,up*0.8,0.58);const d=V(Math.sin(a)*(1-up*.6),up+0.4,Math.cos(a)*(1-up*.6));grp.add(lock(r()<.25?dk:m,0.55+r()*0.25,0.17,0.15,p,d,r()));}

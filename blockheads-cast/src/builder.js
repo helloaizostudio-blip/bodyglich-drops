@@ -399,7 +399,7 @@ function faceTexture(c,exprKey,opts){
   // eyes
   const iris=f.eyeColor||'#4a3022';
   const base=Object.assign({},{dot:{w:21,h:25},big:{w:25,h:33},tired:{w:22,h:21,lid:0.45},sharp:{w:29,h:17,almond:true}}[f.eyes]||{w:21,h:25});
-  if(AN){const D={dot:[45,35],big:[48,42],tired:[46,30],sharp:[48,26]}[f.eyes]||[38,30];base.w=D[0];base.h=D[1];base.anime=true;if(f.eyes==='tired')base.lid=0.42;if(f.eyes==='sharp')base.lid=0.35;}
+  if(AN){const D={dot:[45,35],big:[48,42],tired:[46,30],sharp:[48,26]}[f.eyes]||[38,30];base.w=D[0]*(f.eyeScale||1);base.h=D[1]*(f.eyeScale||1);base.anime=true;if(f.eyes==='tired')base.lid=0.42;if(f.eyes==='sharp')base.lid=0.35;}
   [-1,1].forEach(s=>{
     const x=cx+s*(AN?ANIME_CX:EYE_CX);
     if(f.eyepatch&&((f.eyepatch==='l'&&s<0)||(f.eyepatch==='r'&&s>0))){g.fillStyle='#141414';g.beginPath();g.ellipse(x,EYE_Y,32,28,0,0,Math.PI*2);g.fill();g.fillStyle='rgba(255,255,255,0.12)';ell(g,x-10,EYE_Y-10,10,6);g.fill();
