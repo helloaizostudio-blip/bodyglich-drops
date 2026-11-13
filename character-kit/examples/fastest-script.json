@@ -1,0 +1,26 @@
+{
+  "title": "The Fastest Thing In Your Body",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "bed",
+  "sources": [
+    "Nerve signals: the fastest myelinated nerve fibres conduct at up to about 120 m/s, roughly 268 mph (Purves et al., Neuroscience; Kandel, Principles of Neural Science)",
+    "Blood: peak velocity of blood leaving the heart through the aorta is about 1.0-1.7 m/s in healthy adults, roughly 2-4 mph (echocardiography reference ranges)",
+    "Sneeze: measured maximum sneeze airflow about 4.5 m/s, roughly 10 mph, far below the often quoted 100 mph (Tang et al. 2013, PLoS ONE)",
+    "Cough: air can leave the lungs at up to about 50 mph (American Lung Association; cough flow studies report peak velocities of 10-22 m/s)",
+    "Pain: slow, aching 'second pain' travels on unmyelinated C fibres at about 0.5-2 m/s, roughly 1-4 mph, so it arrives about a second after the sharp first pain (Purves et al., Neuroscience)"
+  ],
+  "lines": [
+    { "text": "Something in your body moves at two hundred and seventy miles an hour.", "caps": "*Something | in your body | moves | at *270 mph" },
+    { "text": "Can you guess what?", "caps": "Can you *guess | *what?" },
+    { "text": "Number four, your blood. It shoots out of your heart at about three miles an hour.", "caps": "Number *four | your *blood | It shoots out | of your *heart | at about | *three mph" },
+    { "text": "Three, a sneeze. Not a hundred like people say, more like ten.", "caps": "*Three | a *sneeze | Not a *hundred | like people say | more like *ten" },
+    { "text": "Two, a cough blasts air out at up to fifty.", "caps": "*Two | a *cough | blasts air out | at up to *fifty" },
+    { "text": "And number one, your nerve signals, up to two hundred and seventy miles an hour.", "caps": "And number *one | your *nerve signals | up to | two hundred *seventy | miles an *hour" },
+    { "text": "But deep, aching pain travels on slow nerves, at about two miles an hour,", "caps": "But deep | aching *pain | travels on | *slow nerves | at about | *two mph" },
+    { "text": "which is why you stub your toe, and the real hurt shows up a second later.", "caps": "which is why | you *stub | your toe | and the real *hurt | shows up | a second *later" }
+  ]
+}
