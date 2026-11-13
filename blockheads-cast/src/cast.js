@@ -11,7 +11,7 @@ const CAST = [
  /* ---------------------------- ORIGINALS (upgraded) ---------------------------- */
  {id:'leo',aliases:['zash'],name:'Zash',formerName:'Leo',role:'The Narrator',group:'Main',origin:'original',stories:['Every episode'],
   bio:'The "I" in every story. An ordinary kid who keeps ending up with strange rules and powers. Sarcastic, a little lazy, secretly kind. Has a crush on Somi he thinks nobody knows about (everyone knows).',
-  skin:'#e8b98f',hair:{style:'classic',color:'#4a2f1e'},
+  skin:'#e8b98f',hair:{style:'anime',color:'#2e1d14'},
   face:{eyes:'dot',eyeColor:'#5a3a22',brows:'normal',mouth:'smile',nose:'button'},
   torso:{inner:'#f2efe6',outer:{style:'hoodie',color:'#d9a23a',fabric:'fleece',strings:'#f4efe2'}},
   sleeves:{color:'#d9a23a',len:'full',cuff:'#c08d2c',fabric:'fleece'},pants:{color:'#3b5a80',fabric:'denim',jeans:true,shoes:'#efefef',accent:'#d9a23a'}},

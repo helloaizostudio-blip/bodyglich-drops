@@ -157,7 +157,8 @@ if (BH.Q == null) BH.Q = 1.5;              // face texture resolution multiplier
 if (BH.legacyFaces == null) BH.legacyFaces = false; // true = paint v1 faces
 if (BH.detail == null) BH.detail = 1;      // 0 = cheapest (no bump maps), 1 = full
 // v3 look: shorter, wider head + anime-style face (bigger eyes set lower, smaller mouth). Set BH.headShape=null / BH.anime=false for the v2 look.
-if (BH.headShape === undefined) BH.headShape = [1.22, 0.82, 1.1];
+if (BH.headShape === undefined) BH.headShape = [1.12, 1.0, 1.08];
+if (BH.roundHead == null) BH.roundHead = true;  // soft rounded 'pillow' head instead of a flat-edged cylinder
 if (BH.anime == null) BH.anime = true;
 
 /* ============================ UTIL ============================ */
@@ -882,6 +883,13 @@ function buildHair(c,grp){
     case 'undercut':{const top=rbox(1.0,0.26,1.06,0.1,tip);top.position.set(0.04,5.45,0.02);top.rotation.z=-0.08;grp.add(top);
       for(let i=0;i<9;i++){const a=-0.9+i*0.22;grp.add(lock(tip,0.55+r()*0.2,0.16,0.07,V(Math.sin(a)*0.45,5.52,Math.cos(a)*0.45),V(0.9,-0.35-r()*0.2,Math.cos(a)*0.2),0));}
       fringe(3,0.1,0.6,5.3,0.4,0.6,tip);break;}
+    case 'anime':{ // soft layered anime cut: locks fall down over the forehead and sides, a few tufts on the crown
+      crown(34,0.42,0.22,0.75,-0.55);
+      for(let i=0;i<5;i++){const a=(r()-.5)*1.6;grp.add(lock(r()<.4?dk:m,0.34+r()*0.12,0.18,0.1,domePoint(a,0.85,0.55),V(Math.sin(a)*0.5+(r()-.5)*0.4,0.9,Math.cos(a)*0.2-0.5),r()));}
+      fringe(11,-0.95,0.95,5.16,0.5,0.32);fringe(6,-0.6,0.6,5.2,0.42,0.42,dk);
+      sideLocks(3,0.46,5.02);
+      for(let i=0;i<14;i++){const a=Math.PI*0.55+i/13*Math.PI*0.9;grp.add(lock(r()<.3?dk:m,0.5+r()*0.15,0.2,0.1,V(Math.sin(a)*0.68,5.1,Math.cos(a)*0.68),V(Math.sin(a)*0.25,-1,Math.cos(a)*0.25),a));}
+      backShell(grp,m,0.6,0);break;}
     case 'messy':case 'emo':{crown(30,0.4,0.2,1.0,-0.12);fringe(8,-0.85,0.85,5.12,0.36,0.55);sideLocks(2,0.32,4.98);
       backShell(grp,m,0.62,0);
       if(st==='emo'){const f=new THREE.Mesh(new THREE.CylinderGeometry(0.705,0.71,0.66,24,1,true,-0.15,0.95),m);f.position.y=4.83;grp.add(f);fringe(6,-0.1,0.75,5.15,0.55,0.15);}break;}
@@ -1073,6 +1081,17 @@ function followLegs(mesh,P,side){
 }
 
 /* ============================ BUILDER ============================ */
+let _roundHeadGeo=null;
+function roundHeadGeo(){
+  // superellipse profile (rounded square) with a slightly narrower jaw; v mapped by height so the face texture lines up with the old cylinder
+  if(_roundHeadGeo)return _roundHeadGeo.clone();
+  const H=1.2,R=0.6,n=3.2,N=44,pts=[];
+  for(let i=0;i<=N;i++){const t=i/N;const y=t*H;const k=Math.abs(2*t-1);let r=R*Math.pow(Math.max(0,1-Math.pow(k,n)),1/n);
+    const jaw=0.9+0.1*Math.min(1,Math.max(0,(t-0.05)/0.45));r*=jaw;pts.push(new THREE.Vector2(Math.max(r,0.0001),y));}
+  const g=new THREE.LatheGeometry(pts,64,Math.PI,Math.PI*2);
+  const pos=g.attributes.position,uv=g.attributes.uv;
+  for(let i=0;i<uv.count;i++)uv.setY(i,pos.getY(i)/H);
+  uv.needsUpdate=true;g.computeVertexNormals();_roundHeadGeo=g;return g.clone();}
 function buildChar(c,expr='default'){
   const root=new THREE.Group();const P={root,char:c};
   const torsoG=new THREE.Group();root.add(torsoG);P.torso=torsoG;
@@ -1101,9 +1120,11 @@ function buildChar(c,expr='default'){
   P._faceCache={};
   const faceT=faceTexture(c,expr);P._faceCache[expr+'|0|0']=faceT;
   const headMat=[TM(faceT,0.62),MAT(c.skin,0.62),MAT(c.skin,0.62)];
-  const head=new THREE.Mesh(new THREE.CylinderGeometry(0.6,0.6,1.2,48,1,false,Math.PI,Math.PI*2),headMat);head.position.y=0.6;headG.add(head);P.headMesh=head;
-  // soft rounded top edge
-  const lip=new THREE.Mesh(new THREE.TorusGeometry(0.565,0.035,6,48),headMat[1]);lip.rotation.x=Math.PI/2;lip.position.y=1.165;headG.add(lip);
+  let head;
+  if(BH.roundHead&&!c.noRoundHead){head=new THREE.Mesh(roundHeadGeo(),headMat[0]);head.material=[headMat[0]];head.geometry.clearGroups();head.geometry.addGroup(0,Infinity,0);headG.add(head);}
+  else{head=new THREE.Mesh(new THREE.CylinderGeometry(0.6,0.6,1.2,48,1,false,Math.PI,Math.PI*2),headMat);head.position.y=0.6;headG.add(head);
+    const lip=new THREE.Mesh(new THREE.TorusGeometry(0.565,0.035,6,48),headMat[1]);lip.rotation.x=Math.PI/2;lip.position.y=1.165;headG.add(lip);}
+  P.headMesh=head;
   const neck=new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.46,0.12,24),MAT(shade(c.skin,-0.12),0.7));neck.position.y=0.02;headG.add(neck);
   // ears
   if(c.ears!==false){const em=MAT(shade(c.skin,-0.02),0.65);[-1,1].forEach(s=>{const e=rbox(0.1,0.28,0.24,0.045,em);e.position.set(s*0.62,0.6,0.0);headG.add(e);const ei=rbox(0.02,0.14,0.11,0.01,MAT(shade(c.skin,-0.2),0.7));ei.position.set(s*0.67,0.6,0.02);headG.add(ei);});}
@@ -1298,7 +1319,7 @@ const CAST = [
  /* ---------------------------- ORIGINALS (upgraded) ---------------------------- */
  {id:'leo',aliases:['zash'],name:'Zash',formerName:'Leo',role:'The Narrator',group:'Main',origin:'original',stories:['Every episode'],
   bio:'The "I" in every story. An ordinary kid who keeps ending up with strange rules and powers. Sarcastic, a little lazy, secretly kind. Has a crush on Somi he thinks nobody knows about (everyone knows).',
-  skin:'#e8b98f',hair:{style:'classic',color:'#4a2f1e'},
+  skin:'#e8b98f',hair:{style:'anime',color:'#2e1d14'},
   face:{eyes:'dot',eyeColor:'#5a3a22',brows:'normal',mouth:'smile',nose:'button'},
   torso:{inner:'#f2efe6',outer:{style:'hoodie',color:'#d9a23a',fabric:'fleece',strings:'#f4efe2'}},
   sleeves:{color:'#d9a23a',len:'full',cuff:'#c08d2c',fabric:'fleece'},pants:{color:'#3b5a80',fabric:'denim',jeans:true,shoes:'#efefef',accent:'#d9a23a'}},
