@@ -69,7 +69,7 @@ export function buildShots(E) {
   const HX = -0.25, BX = 0.33, BZ = 0.12;
 
   // ── times ─────────────────────────────────────────────────────────────────
-  const T_EXC = Wd('except', 1), T_TWO = Wd('two', 2), T_GROW = Wd('grows', 2), T_BRK = Wd('broken', 3), T_FUSE = Wd('fuses', 3);
+  const T_EXC = Wd('never', 0), T_TWO = Wd('two', 2), T_GROW = Wd('grows', 2), T_BRK = Wd('broken', 3), T_FUSE = Wd('fuses', 3);
   const T_SK = Wd('skin', 4), PEELS = [Wd('outer', 4) - 0.1, Wd('few', 4) - 0.05], T_ST = Wd('stomach', 5), T_ACID = Wd('acid', 5), T_EATS = Wd('eats', 5), T_REB = Wd('rebuilds', 5);
   const T_SCR = Wd('scratch', 6), T_HEAL = Wd('heals', 6), T_TOOTH = Wd('tooth', 7), T_GONE = Wd('gone', 7), T_FOREVER = Wd('forever', 7);
   const PLAN = [
@@ -86,7 +86,9 @@ export function buildShots(E) {
     { n: 5, name: 'LIVER', t: L(2) }, { n: 4, name: 'BONE', t: L(3) }, { n: 3, name: 'SKIN', t: L(4) },
     { n: 2, name: 'STOMACH', t: L(5) }, { n: 1, name: 'EYE', t: L(6) }, { n: 0, name: 'ENAMEL', t: Wd('enamel', 7) },
   ];
+  let QUIET = false;                                                // true while the cold open replays other shots
   function ladder(t) {
+    if (QUIET) return;
     const w = 166, h = 76, gap = 8, x0 = (W - (6 * w + 5 * gap)) / 2, y = 150;
     RANK.forEach((r, i) => {
       const on = t >= r.t - 0.04, last = r.n === 0, active = on && (i === 5 || t < RANK[i + 1].t - 0.04), k = on ? popIn(t - r.t + 0.04) : 1;
@@ -100,7 +102,7 @@ export function buildShots(E) {
     });
   }
   /** the big rank number for the current item */
-  const rankNo = (t, n, at) => pill(`#${n}`, 150, 330, popIn(t - at) * (1 + 0.06 * bump(seg(t, at, at + 0.35))), '#111', YEL, 96);
+  const rankNo = (t, n, at) => QUIET ? 0 : pill(`#${n}`, 150, 330, popIn(t - at) * (1 + 0.06 * bump(seg(t, at, at + 0.35))), '#111', YEL, 96);
   RANK.slice(0, 5).forEach((r) => cue(r.t - 0.02, 'pop', { gain: 0.8 }));
 
   // ── the host (only in the skin two-shot; idles politely everywhere else) ────────────
@@ -224,18 +226,17 @@ export function buildShots(E) {
 
   // ── the hook: every part that regrows ticks green, in time with the words ──
   const HOOK = [
-    { at: 0.25, p: () => XW(V3(-0.07, 0.2, 0.08)), m: () => [liverKeepM, liverGrowM] },                       // liver
-    { at: 0.5, p: () => EL.localToWorld(V3(0, -0.13, 0)), m: () => [boneM] },                                  // arm bone
-    { at: 0.75, p: () => XW(V3(0.17, 0.42, 0.06)), m: () => [] },                                            // skin (shoulder)
-    { at: 1.0, p: () => XW(V3(0.04, 0.17, 0.06)), m: () => [STO.material] },                                // stomach
-    { at: 1.25, p: () => XH.head.localToWorld(V3(0.045, 0.15, 0.1)), m: () => [] },                         // eye
+    { at: -9, p: () => XW(V3(-0.07, 0.2, 0.08)), m: () => [liverKeepM, liverGrowM] },                       // liver
+    { at: -9, p: () => EL.localToWorld(V3(0, -0.13, 0)), m: () => [boneM] },                                  // arm bone
+    { at: -9, p: () => XW(V3(0.17, 0.42, 0.06)), m: () => [] },                                            // skin (shoulder)
+    { at: -9, p: () => XW(V3(0.04, 0.17, 0.06)), m: () => [STO.material] },                                // stomach
+    { at: -9, p: () => XH.head.localToWorld(V3(0.045, 0.15, 0.1)), m: () => [] },                         // eye
   ];
   function hookGlow(t, f) {
     const off = 1 - eo(seg(t, T_EXC - 0.1, T_EXC + 0.3));
     HOOK.forEach((h) => { const k = bump(seg(t, h.at, h.at + 0.5)) * off; h.m().forEach((m) => { m.emissive.lerp(LIVERG, k); m.emissiveIntensity += 1.4 * k; }); });
     f.xm.uniforms.uS.value = 1.15 * (1 - 0.45 * eo(seg(t, T_EXC - 0.05, T_EXC + 0.3)));
   }
-  HOOK.forEach((h) => cue(h.at, 'pop', { gain: 0.45 }));
 
   // ── the tooth: enamel cracks, a chip flies off, it's gone for good ──
   function tooth(t, f) {
@@ -248,19 +249,24 @@ export function buildShots(E) {
     f.enamel.emissive.set('#FF3030'); f.enamel.emissiveIntensity = 0.02 + 0.22 * bump(seg(t, T_FOREVER - 0.05, T_FOREVER + 0.6));
   }
 
-  // 1 · hook: x-ray body, ticks; "except one part" → red ? at the mouth
-  add({ id: 'S01', at: 0, note: 'x-ray Blip-person full body; liver, arm bone, skin, stomach, eye tick green as he says "regrow almost anything"', draw(lt, d, t, blit) {
-    const s = show(t, { pos: lerpV(V3(BX + 0.12, 0.92, BZ + 3.05), V3(BX + 0.08, 0.9, BZ + 2.7), eio(lt / d)), at: V3(BX, 0.76, BZ), turn: 0, hook: true, noGut: true }); blit(); flash2d(s);
-    HOOK.forEach((h, i) => { const [x, y] = screen(h.p(), cam); tick(x + (i === 2 ? 30 : 0), y, eob(seg(t, h.at, h.at + 0.3))); });
-    ladder(t);
+  // 1 · cold open: three payoff moments in about 1.3 s (bone snaps, skin peels, liver regrows) under the promise, then the question
+  const M_END = T_EXC - 0.06, MONT = [['S03', T_BRK - 0.04, 3], ['S04', PEELS[0] + 0.12, 4], ['S02', T_GROW + 0.12, 2]];
+  function banner(t) {
+    pill('1 BODY PART', 540, 290, 1, '#111', YEL, 76); pill('NEVER GROWS BACK', 540, 425, 1 + 0.03 * Math.sin(t * 9), '#FFFFFF', 'rgba(190,16,24,0.95)', 76);
+  }
+  add({ id: 'S00', at: 0, note: 'cold open montage: bone snaps (CRACK!), skin peels, liver regrows; banner "1 BODY PART NEVER GROWS BACK" from frame one', draw(lt, d, t, blit) {
+    const step = M_END / 3, n = Math.min(2, Math.floor(t / step)), [id, t0, li] = MONT[n], sh = S.find((x) => x.id === id), tt = t0 + (t - n * step);
+    QUIET = true; sh.draw(tt - sh.at, cut(li + 1) - cut(li), tt, blit); QUIET = false;
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ladder(t); banner(t);
   } });
-  add({ id: 'S01b', at: cut(1), note: 'push in to the head: everything dims, red "?" pulses over the mouth', draw(lt, d, t, blit) {
+  add({ id: 'S01b', at: M_END, note: 'x-ray head: everything dims, red "?" pulses over the mouth; "CAN YOU GUESS?"', draw(lt, d, t, blit) {
     const s = show(t, { pos: lerpV(V3(BX + 0.1, 1.2, BZ + 1.45), V3(BX + 0.06, 1.2, BZ + 1.12), eio(lt / d)), at: V3(BX, 1.17, BZ), aim: () => ({ focus: XH.head.localToWorld(V3(0, 0.07, 0.1)) }), turn: 0, hook: true, noGut: true, look: { aperture: 0.0016 } }); blit(); flash2d(s);
     const [x, y] = screen(XH.head.localToWorld(V3(0, 0.07, 0.1)), cam); mystery(x, y, eob(seg(t, T_EXC - 0.05, T_EXC + 0.25)), t);
-    pill('NEVER GROWS BACK', 540, 1180, popIn(t - Wd('one', 1)), '#FFFFFF', 'rgba(150,16,24,0.9)', 58);
-    ladder(t);
+    pill('CAN YOU GUESS?', 540, 1180, popIn(t - Wd('guess', 1)), '#111', YEL, 62);
+    ladder(t); banner(t);
   } });
-  cue(T_EXC - 0.05, 'thud', { gain: 0.8 }); cue(Wd('one', 1), 'pop');
+  cue(0.02, 'slam', { gain: 0.9 }); cue(0.04, 'tock', { gain: 0.8 }); cue(M_END / 3, 'whoosh'); cue(M_END / 3 + 0.05, 'sparkle', { dur: 0.5, gain: 0.6 }); cue(M_END * 2 / 3, 'whoosh'); cue(M_END * 2 / 3 + 0.05, 'boing', { gain: 0.5 });
+  cue(M_END, 'thud', { gain: 0.8 }); cue(Wd('guess', 1), 'pop');
 
   // 2 · #5 liver
   add({ id: 'S02', at: cut(2), note: 'x-ray belly close: two thirds of the red liver shrink away on "two thirds", then grow back glowing green', draw(lt, d, t, blit) {

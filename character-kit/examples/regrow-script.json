@@ -15,8 +15,8 @@
     "Tooth enamel: enamel has no living cells, so the body cannot regrow it once lost (NIDCR / American Dental Association)"
   ],
   "lines": [
-    { "text": "Your body can regrow almost anything,", "caps": "Your body | can *regrow | almost *anything" },
-    { "text": "except one part.", "caps": "Except | *one part" },
+    { "text": "One part of your body can never grow back.", "caps": "*One part | of your body | can *never | grow back" },
+    { "text": "Can you guess which?", "caps": "Can you *guess | *which?" },
     { "text": "Number five, your liver. Lose two thirds of it, and it grows back.", "caps": "Number *five | your *liver | Lose *two thirds | and it *grows back" },
     { "text": "Four, a broken bone fuses back together in about six weeks.", "caps": "*Four | a *broken bone | *fuses back | in about *six weeks" },
     { "text": "Three, your skin swaps out its whole outer layer every few weeks.", "caps": "*Three | your *skin | swaps its whole | *outer layer | every *few weeks" },
