@@ -1,7 +1,7 @@
 """Episode 8: "I Ate The Worst Cursed Fruit" (mid format, ~60 s)
 
 Pirate adventure in an anime-adventure spirit, fully original: own world rule (cursed fruits, sink in the sea),
-own crew (Mako, Pip, Captain Gorr), own power (bubbles), own designs. No names, outfits, powers or places
+own crew (Mako, Pip, Basil the cook, Crate the strongman, Captain Gorr), own power (bubbles), own designs. No names, outfits, powers or places
 from any existing series.
 
 Structure (docs/competitor_breakdown_part1.md):
@@ -23,6 +23,7 @@ LINES = [
     ("mine",   "mako", "calm",    "Mine is three *coins*.",                                                                  ["poster_mako"]),
     ("pip1",   "pip",  "calm",    "Honestly? That's *generous*.",                                                             ["pip_deadpan"]),
     ("boat",   "mako", "calm",    "Our ship is a rowboat. With a *leak*.",                                                   ["rowboat_leak"]),
+    ("crew",   "mako", "calm",    "My crew? A cook who burns water. And Crate. Super strong. Wears a *box*.",              ["basil_burn", "crate_box"]),
     ("found",  "mako", "excited", "Then I found a cursed fruit. I ate the *whole* thing.",                                   ["fruit_find", "fruit_eat"]),
     ("power",  "mako", "excited", "My power? I can blow *bubbles*.",                                                         ["bubble_pop"]),
     ("laugh",  "mako", "sad",     "Pirates laughed so hard one fell off his *ship*.",                                        ["pirates_laugh", "pirate_falls"]),
@@ -38,7 +39,7 @@ LINES = [
     ("lift",   "mako", "excited", "He was right. But they can *lift* you.",                                                  ["gorr_bubbled", "gorr_lifts"]),
     ("sky",    "mako", "calm",    "Last I saw, he was floating somewhere above the *clouds*.",                               ["gorr_clouds"]),
     ("new",    "mako", "excited", "Next morning, my bounty was thirty *million*.",                                           ["poster_new"]),
-    ("pip3",   "pip",  "calm",    "Still the worst fruit?",                                                                  ["pip_smile"]),
+    ("pip3",   "pip",  "calm",    "Still the worst fruit?",                                                                  ["pip_smile", "crew_cheer"]),
     ("button", "mako", "excited", "Best *fruit*.",                                                                           ["mako_grin_end"]),
 ]
 
@@ -47,6 +48,6 @@ VOICES = {
     "pip":  dict(voice="af_bella", speed=1.05, pitch=1.04, expressive=True, smooth=True, gen_speed=1.0),
     "gorr": dict(voice="am_onyx", speed=0.95, pitch=0.86, expressive=True, smooth=True, gen_speed=1.0),
 }
-LONG_GAPS = {"mine": 0.3, "pip1": 0.25, "boat": 0.2, "laugh": 0.2, "pip2": 0.35, "gorr1": 0.3, "punch": 0.3, "idea": 0.45, "gorr2": 0.25, "sky": 0.35, "pip3": 0.35}
+LONG_GAPS = {"crew": 0.25, "mine": 0.3, "pip1": 0.25, "boat": 0.2, "laugh": 0.2, "pip2": 0.35, "gorr1": 0.3, "punch": 0.3, "idea": 0.45, "gorr2": 0.25, "sky": 0.35, "pip3": 0.35}
 TAIL = 1.2
 LEAD = 0.0
