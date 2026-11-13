@@ -1,4 +1,4 @@
-"""Episode 8 "I Ate The Worst Cursed Fruit": adventure score + SFX (all synthesized, original).
+"""Episode 8 "I Ate The Pirate's Fruit": adventure score + SFX (all synthesized, original).
 
 Score: bright island groove (plucky strings + bass + light drums) for the world and the crew, a comic drop for
 "bubbles", a dark low drone + drums when Gorr's ship arrives, near-silence on the idea, a heroic choir swell for the
@@ -53,67 +53,52 @@ def drone(d, f=46.0):
 def build(m, tl):
     seg = {s['id']: s for s in tl['segs']}; shots = tl['shots']
     def s_(i): return seg[i]['start']
-    def e_(i): return seg[i]['end']
     def shot(n): return next(x for x in shots if x['name'] == n)
-    def w_(sid, w):
-        for x in seg[sid]['words']:
-            if ''.join(c for c in x['w'].lower() if c.isalnum()) == w: return x['s']
-        return s_(sid)
     total = tl['dur']
     # ---- score
-    m.put(E2.hit(1.6), 0.0, 0.5, bus='music')
-    m.put(island(s_('then') - 0.0), 0.0, 0.5, bus='music')
-    m.put(waves(total), 0.0, 0.35, bus='music')
-    # the "bubbles" drop: music thins for a beat (comic)
-    m.put(E4.trombone(), w_('power', 'bubbles') + 0.3, 0.35, bus='music')
-    # Gorr: drone + war drums
-    gd = s_('idea') - s_('then')
+    m.put(drone(s_('plum') + 0.3, 44), 0.0, 0.55, bus='music')                         # ominous hook (Gorr hunting)
+    m.put(E2.hit(1.6), 0.0, 0.55, bus='music')
+    m.put(island(s_('rule') - s_('plum') + 0.3), s_('plum'), 0.5, bus='music')          # fun: the power montage
+    m.put(shimmer(2.0), s_('rule'), 0.35, bus='music')
+    gd = s_('sinking') - s_('then')                                                      # Gorr: drone + war drums
     m.put(drone(gd + 0.4), s_('then'), 0.6, bus='music')
-    m.put(E2.drums(96, gd, 'x..x..x.x.x.....', 60), s_('then'), 0.55, bus='music')
-    # idea: shimmer, then heroic choir through the rescue and the lift
-    m.put(shimmer(1.6), s_('idea'), 0.5, bus='music')
-    t = s_('save'); i = 0
-    while t < s_('sky'):
-        dd = min(1.6, s_('sky') - t); m.put(E2.choir([E2.C, E2.G, E2.Am, E2.F][i % 4], dd + 0.4, 0.9), t, 0.45, bus='music'); t += dd; i += 1
-    m.put(riser(s_('lift') - s_('gorr2')), s_('gorr2'), 0.45, bus='music')
-    m.put(E2.hit(2.2), s_('lift'), 0.7, bus='music')
-    # ending: island groove back, warm
-    m.put(island(total - s_('sky') + 0.5, 112, 1.0), s_('sky'), 0.5, bus='music')
+    m.put(E2.drums(104, gd, 'x..x..x.x.x.....', 60), s_('then'), 0.6, bus='music')
+    m.put(riser(s_('snap') - s_('punch')), s_('punch'), 0.45, bus='music')
+    m.put(drone(s_('pull') - s_('sinking') + 0.3, 38), s_('sinking'), 0.6, bus='music')   # the choice: dark, quiet
+    t = s_('reach'); i = 0                                                               # the rescue: choir swell
+    while t < s_('hat'):
+        dd = min(1.6, s_('hat') - t); m.put(E2.choir([E2.Am, E2.F, E2.C, E2.G][i % 4], dd + 0.4, 0.9), t, 0.45, bus='music'); t += dd; i += 1
+    m.put(E2.hit(2.0), s_('pull'), 0.6, bus='music')
+    m.put(E2.choir(E2.Am, total - s_('eyes') + 0.2, 0.5), s_('eyes'), 0.35, bus='music')  # the reveal
+    m.put(E2.hit(2.6), seg['what']['start'] + 0.35, 0.8, bus='music')
 
     # ---- SFX
     for s in shots[1:]:
         m.put(whoosh(0.28), s['s'] - 0.11, 0.1, pan=rng.uniform(-0.3, 0.3))
-    m.put(shimmer(1.4), 0.05, 0.4)
-    m.put(boom(1.6), shot('hero_power')['s'] + 1.2, 0.7)
-    for k in range(5): m.put(blub(), shot('sink_dark')['s'] + 0.2 + k * 0.28, 0.5)
-    m.put(clink(), w_('mine', 'coins'), 0.6); m.put(E4.bonk(), w_('mine', 'coins') + 0.05, 0.4)
-    rl = shot('rowboat_leak'); t = rl['s']
-    while t < rl['e']: m.put(blub(), t, 0.35, pan=0.3); t += 0.35
-    m.put(sizzle(shot('basil_burn')['e'] - shot('basil_burn')['s']), shot('basil_burn')['s'], 0.6)
-    m.put(E4.bonk(), shot('crate_box')['s'] + 0.6, 0.4)
-    m.put(gull(), 0.6, 0.6, pan=-0.5); m.put(gull(), shot('fruit_find')['s'] + 0.2, 0.6, pan=0.5)
-    m.put(power_up(), shot('fruit_find')['s'], 0.4)
-    for k in range(3): m.put(chomp(), shot('fruit_eat')['s'] + 0.5 + k * 0.22, 0.8)
-    m.put(pop(), shot('bubble_pop')['s'] + 1.45, 0.9)
-    m.put(E4.laugh(1.4), shot('pirates_laugh')['s'], 0.5)
-    m.put(splash(1.2), shot('pirate_falls')['s'] + 0.75, 0.8)
-    bf = shot('bubble_float')
-    for k in range(6): m.put(pop() * 0.4, bf['s'] + 0.3 + k * 0.35, 0.4, pan=rng.uniform(-0.6, 0.6))
+    m.put(waves(total), 0.0, 0.25)
+    m.put(boom(1.2), shot('gorr_silhouette')['s'] + 0.95, 0.5)
+    m.put(shimmer(1.4), shot('fruit_glow')['s'], 0.4)
+    for k in range(3): m.put(chomp(), shot('mako_bite')['s'] + 0.6 + k * 0.22, 0.8)
+    m.put(gull(), shot('fruit_find')['s'] + 0.2, 0.5, pan=0.5)
+    m.put(sweep(300, 1200, 0.8) * 0.3, shot('arm_stretch')['s'], 0.5)
+    m.put(E4.bonk(), shot('crate_punch')['s'] + 0.45, 0.7); m.put(sweep(200, 600, 0.3) * 0.4, shot('crate_punch')['s'] + 0.47, 0.5)
+    m.put(boom(1.0), shot('cannon_bounce')['s'] + 0.05, 0.4); m.put(E4.bonk(), shot('cannon_bounce')['s'] + 0.55, 0.7)
+    m.put(E4.bonk(), shot('basil_bounce')['s'] + 0.6, 0.6); m.put(E4.trombone(), shot('basil_bounce')['s'] + 0.8, 0.3)
+    for k in range(5): m.put(blub(), shot('sink_dark')['s'] + 0.3 + k * 0.4, 0.5)
     m.put(E2.giant_step(), shot('gorr_ship')['s'], 0.7)
     m.put(E2.hit(1.6), shot('gorr_reveal')['s'], 0.6)
-    m.put(whoosh(0.5), shot('iron_punch')['s'], 0.8)
-    m.put(boom(2.2), shot('boat_explode')['s'], 1.0); m.put(crack(), shot('boat_explode')['s'] + 0.02, 0.9); m.put(splash(1.4), shot('boat_explode')['s'] + 0.1, 0.8)
-    m.put(splash(1.2), shot('pip_sinking')['s'], 0.6)
-    m.put(power_up(), shot('giant_bubble')['s'], 0.5)
-    m.put(splash(0.8), shot('pip_rises')['s'] + 0.1, 0.5)
-    m.put(E4.laugh(1.6), shot('gorr_laughs')['s'] + 0.1, 0.35)
-    m.put(pop() * 1.2, shot('gorr_bubbled')['s'], 0.9); m.put(E2.gasp(), shot('gorr_bubbled')['s'] + 0.15, 0.5)
-    m.put(E4.zap(0.8) * 0.5, shot('gorr_lifts')['s'], 0.4)
-    m.put(E4.trombone(), shot('gorr_clouds')['s'] + 1.2, 0.35)
-    pn = shot('poster_new')
-    for k in range(10): m.put(clink(), pn['s'] + 0.1 + k * 0.13, 0.45, pan=rng.uniform(-0.6, 0.6))
-    m.put(E4.ding(), pn['s'] + 0.05, 0.6)
-    m.put(E4.ding(), shot('mako_grin_end')['s'] + 0.3, 0.5)
+    m.put(clink(), shot('poster_gorr')['s'] + 0.2, 0.5)
+    m.put(whoosh(0.5), shot('iron_punch')['s'] + 0.6, 0.8); m.put(boom(1.6), shot('iron_punch')['s'] + 1.2, 0.9)
+    m.put(sweep(500, 120, 1.2) * 0.4, shot('mako_stretch_far')['s'], 0.6)
+    m.put(sweep(150, 900, 0.9) * 0.4, shot('mako_slingshot')['s'], 0.6); m.put(whoosh(0.8), shot('mako_slingshot')['s'] + 0.8, 0.8)
+    m.put(boom(1.8), shot('mako_hits_gorr')['s'], 1.0); m.put(crack(), shot('mako_hits_gorr')['s'] + 0.02, 0.6)
+    m.put(splash(1.4), shot('gorr_falls')['s'] + 0.65, 0.9)
+    for k in range(6): m.put(blub(), shot('gorr_sinking')['s'] + 0.2 + k * 0.35, 0.5)
+    m.put(splash(1.0), shot('arm_into_sea')['s'] + 0.1, 0.6)
+    for k in range(4): m.put(blub(), shot('deep_grab')['s'] + 0.1 + k * 0.3, 0.4)
+    m.put(splash(1.4), shot('gorr_pulled')['s'], 0.9)
+    for k in range(3): m.put(splash(0.3) * 0.4, shot('gorr_coughs')['s'] + 0.2 + k * 0.4, 0.5)
+    m.put(E2.gasp(), shot('mako_shock_end')['s'] + 0.05, 0.4)
 
 
 def mix(tl_path, voice_path, out_path):

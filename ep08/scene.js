@@ -1,4 +1,4 @@
-/* Episode 8 "I Ate The Worst Cursed Fruit" (pirate adventure, narrator Mako). Bright tropical anime-adventure look:
+/* Episode 8 "I Ate The Pirate's Fruit" (pirate adventure, narrator Mako). Bright tropical anime-adventure look:
    saturated sea and sky, rim light, bloom, speed lines and impact frames. Original crew and designs.
    Entry points: SAMPLE.init(timeline, W, H, fontUrl), SAMPLE.frame(f)
    ep08/scene.js is generated from this file + cast_ep08.js by ep08/build_scene.py */
@@ -177,8 +177,12 @@ function buildFX(){
   world.bubbles=[];for(let i=0;i<24;i++){const s=sprite(world.T.bubble,1,scene);s.visible=false;world.bubbles.push(s);}
   world.splash=[];for(let i=0;i<40;i++){const s=sprite(world.T.drop,0.6,scene);s.visible=false;world.splash.push(s);}
   world.fistGlow=sprite(glowTex('rgba(255,120,60,0.9)'),3,scene);world.fistGlow.visible=false;
+  world.ball=cst(new THREE.Mesh(new THREE.SphereGeometry(0.6,20,14),SM({color:'#1a1a1e',roughness:0.35,metalness:0.6})));scene.add(world.ball);world.ball.visible=false;
+  world.pancake=cst(new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,0.15,20),SM({color:'#3a2a1a',roughness:0.9})));scene.add(world.pancake);world.pancake.visible=false;
+  world.longArm=cst(new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.42,1,14),SM({color:'#e3ad80',roughness:0.6})));scene.add(world.longArm);world.longArm.visible=false;
+  world.longHand=cst(new THREE.Mesh(new THREE.BoxGeometry(1,0.8,1),SM({color:'#e3ad80',roughness:0.6})));scene.add(world.longHand);world.longHand.visible=false;
 }
-function hideFX(){world.bubbles.forEach(b=>b.visible=false);world.splash.forEach(b=>b.visible=false);world.debris.forEach(b=>b.visible=false);world.fistGlow.visible=false;}
+function hideFX(){[world.ball,world.pancake,world.longArm,world.longHand].forEach(o=>o.visible=false);world.bubbles.forEach(b=>b.visible=false);world.splash.forEach(b=>b.visible=false);world.debris.forEach(b=>b.visible=false);world.fistGlow.visible=false;}
 function bubbleAt(i,p,s,op){const b=world.bubbles[i];b.visible=true;b.position.copy(p);b.scale.set(s,s,1);b.material.opacity=op==null?1:op;return b;}
 function splashAt(c,k,n,spread,h){for(let i=0;i<(n||40);i++){const s=world.splash[i];const a=i*2.39996,r=spread*(0.3+((i*37)%10)/14);const kk=clamp(k,0,1);s.visible=kk<1;
   s.position.set(c.x+Math.cos(a)*r*kk,c.y+Math.sin(kk*Math.PI)*h*(0.5+((i*13)%7)/7),c.z+Math.sin(a)*r*kk);const sc=0.4+((i*11)%6)*0.15;s.scale.set(sc,sc,1);s.material.opacity=1-kk*0.6;}}
@@ -187,12 +191,12 @@ function splashAt(c,k,n,spread,h){for(let i=0;i<(n||40);i++){const s=world.splas
 function buildChars(){
   const add=(id,spec,sc)=>{const g=buildChar(spec);if(sc)g.scale.setScalar(sc);scene.add(g);g.visible=false;chars[id]=g;return g;};
   ['mako','pip','basil','crate'].forEach(id=>add(id,BH.castById(id)));
-  add('gorr',BH.castById('gorr'),1.3);
+  add('gorr',BH.castById('gorr'),1.3);add('gorrnh',(()=>{const c=JSON.parse(JSON.stringify(BH.castById('gorr')));c.id='gorrnh';delete c.hat;return c;})(),1.3);
   const pir=(id,base,col,hair)=>add(id,(()=>{const c=JSON.parse(JSON.stringify(BH.castById(base)));c.id=id;c.hat={style:'bandana',color:col};c.extras=[];if(hair)c.hair=hair;return c;})());
   pir('p1','brick','#c0392b');pir('p2','rex','#2e6fb8');pir('p3','dave','#2f8f4a');pir('sinker','dave','#7a3ab8');
 }
 function showOnly(ids){Object.keys(chars).forEach(k=>chars[k].visible=ids.includes(k));}
-function reset(P){['armL','armR','legL','legR','head'].forEach(k=>P[k].rotation.set(0,0,0));P.torso.rotation.set(0,0,0);P.torso.position.y=0;P._anim=null;P.armL.position.set(-1.5,4,0);P.armR.position.set(1.5,4,0);}
+function reset(P){['armL','armR','legL','legR','head'].forEach(k=>P[k].rotation.set(0,0,0));P.torso.rotation.set(0,0,0);P.torso.position.y=0;P._anim=null;P.armL.position.set(-1.5,4,0);P.armR.position.set(1.5,4,0);P.armL.scale.set(1,1,1);P.armR.scale.set(1,1,1);P.torso.scale.set(1,1,1);}
 function st(id,x,y,z,ry,e){const c=chars[id];c.position.set(x,y,z);c.rotation.set(0,ry||0,0);c.visible=true;const P=c.userData.P;reset(P);if(e)P.setFace(e);return P;}
 function sit(P){P.legL.rotation.x=-1.5;P.legR.rotation.x=-1.5;}
 function mouth(P,who,t,e){const env=TL.mouth[who];const f=Math.round(t*TL.fps);const a=env?env[f]||0:0;P.setFace(e||P.expr||'default',{mouthOpen:a>0.12?Math.min(1,a*1.1):0});}
@@ -222,81 +226,68 @@ function talk(id,who,t,e){mouth(chars[id].userData.P,who,t,e);}
 
 /* ---------------- shots */
 const SH={
-  fruit_glow:(u,t)=>{mood('day');const f=world.fruit;f.rotation.y=t*0.8;f.position.y=2.2+Math.sin(t*2)*0.1;world.fruitL.intensity=1.5;world.fruitGlow.material.opacity=0.6+0.3*Math.sin(t*6);const p=lw0(f,V3(0,0,0));
+  gorr_silhouette:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.4),-60);const G=onDeck(g,'gorr',0,8,Math.PI,'smug');const hp=head('gorr');
+    camAt(hp.clone().add(V3(lerp(-4,-2.5,u),-6,-14)),hp.clone().add(V3(0,-1,0)),40);showOnly(['gorr']);S.tagBox={text:'10 YEARS HUNTING',col:'#ff6b5a'};if(lt>0.9&&lt<1.05)S.flash=0.5;S.dark=0.25;},
+  fruit_glow:(u,t)=>{mood('day');const f=world.fruit;f.rotation.y=t*0.8;f.position.y=2.7+Math.sin(t*2)*0.1;world.fruitL.intensity=1.5;world.fruitGlow.material.opacity=0.6+0.3*Math.sin(t*6);const p=lw0(f,V3(0,0,0));
     camAt(p.clone().add(V3(lerp(2.6,1.6,ease(u)),lerp(0.6,0.3,u),lerp(3.4,2.2,ease(u)))),p,34);showOnly([]);S.rays={x:0.5,y:0.42,k:1,col:'rgba(170,220,255,'};},
-  hero_power:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.4),-60);const G=onDeck(g,'gorr',0,8,Math.PI,'angry');G.armR.rotation.set(-2.9+easeIn(clamp(lt/1.2,0,1))*2.4,0,-0.2);
-    const fp=lw0(G.armR,V3(0,-2.1,0));world.fistGlow.visible=true;world.fistGlow.position.copy(fp);world.fistGlow.scale.setScalar(3+Math.sin(t*20)*0.4);
-    camAt(lw0(chars.gorr.userData.P.head,V3(2.5,-3,9)),fp.clone().add(V3(0,-1,0)),44);showOnly(['gorr']);if(lt>1.2){S.flash=clamp(1-(lt-1.2)/0.3,0,1)*0.7;S.shakeA=0.12;S.speed={k:1,col:'#ffe0c0'};}},
+  mako_bite:(u,t,lt)=>{mood('day');const M=st('mako',ISL+2,2.0,7.2,Math.PI,'happy');M.armR.rotation.set(-1.5,0,-0.3);const f=world.fruit;f.visible=lt<0.6;f.position.set(2,5.6,5.4);
+    const chew=Math.abs(Math.sin(lt*14));M.setFace(lt<0.6?'shocked':'happy',{mouthOpen:lt<0.6?0.9:chew});close('mako',lerp(3.6,3.0,u),-0.6,0.05,36);showOnly(['mako']);if(lt>0.6&&lt<0.72)S.zoomPunch=1;},
+  fruit_find:(u,t)=>{mood('day');const M=st('mako',ISL+2,2.0,7.2,Math.PI*0.9,'happy');M.armR.rotation.set(-0.6,0,-0.4);M.setFace('happy',{mouthOpen:Math.abs(Math.sin(t*12))*0.6});
+    camAt(V3(ISL+6.5,6.2,-1.5),V3(ISL+2,5.6,6),40);showOnly(['mako']);},
+  arm_stretch:(u,t,lt)=>{mood('day');const M=st('mako',ISL-6,2.0,4,0,'shocked');M.armR.rotation.set(0,0,1.57);const k=easeOut(clamp(lt/0.9,0,1));M.armR.scale.set(1,lerp(1,9,k),1);
+    camAt(V3(ISL-1,7,lerp(26,30,u)),V3(ISL-1,5,4),48);showOnly(['mako']);S.speed={k:0.6*(1-u),col:'#ffffff'};S.tagBox={text:'40 METERS',col:'#ffd23f'};},
+  pip_shock:(u,t)=>{mood('day');boatAt(0,0,t);const P=inBoat('pip',0,-3,0,'shocked');mouth(P,'pip',t,'shocked');P.armL.rotation.set(-2.6,0,0.4);P.armR.rotation.set(-2.6,0,-0.4);close('pip',lerp(4.0,3.4,u),0.3,0.05,38);showOnly(['pip']);S.zoomPunch=u<0.15?1-u/0.15:0;},
+  crate_punch:(u,t,lt)=>{mood('day');const M=st('mako',ISL+0,2.0,4,Math.PI/2,'happy');const hit=lt>0.45;const C=st('crate',ISL+(hit?3.4+easeOut((lt-0.45)/0.5)*4:lerp(7,3.4,lt/0.45)),2.0,4,-Math.PI/2,hit?'shocked':'angry');C.armR.rotation.set(-1.57,0,0);
+    M.torso.scale.set(1,1,hit&&lt<0.7?0.7:1);camAt(V3(ISL+2,6,24),V3(ISL+2.2,4.5,4),42);showOnly(['mako','crate']);if(hit&&lt<0.55)S.flash=0.25;S.tagBox=hit?{text:'BOING',col:'#ffd23f'}:null;},
+  cannon_bounce:(u,t,lt)=>{mood('day');const M=st('mako',ISL,2.0,4,0.3,'smug');const b=world.ball;b.visible=true;const k=lt/0.55;
+    if(k<1)b.position.set(ISL+lerp(-20,0,k),5,4+lerp(6,0.6,k));else{const q=(lt-0.55);b.position.set(ISL+q*8,5+q*22-q*q*20,4.6+q*4);}
+    M.torso.scale.set(1,1,k>=1&&k<1.4?0.75:1);camAt(V3(ISL+3,6,20),V3(ISL,6,4),44);showOnly(['mako']);if(k>=1&&k<1.25)S.flash=0.25;},
+  basil_bounce:(u,t,lt)=>{mood('day');const M=st('mako',ISL,2.0,4,0.6,'shocked');const B=st('basil',ISL+7,2.0,1,-1.0,'smug');B.armR.rotation.set(-1.5,0,0);const p=world.pancake;p.visible=true;const k=lt/0.6;const hp=head('mako');
+    if(k<1)p.position.set(lerp(ISL+6,hp.x,k),lerp(5.5,hp.y,k)+Math.sin(k*Math.PI)*1.5,lerp(1.6,hp.z,k));else{const q=lt-0.6;p.position.set(hp.x+q*6,hp.y+q*12-q*q*14,hp.z+q*3);}p.rotation.set(t*8,0,t*5);
+    camAt(V3(ISL+4,7,20),V3(ISL+3,5.5,3),44);showOnly(['mako','basil']);},
   sink_dark:(u,t)=>{mood('deep');const P=st('sinker',DEEP,lerp(2,-3,u),0,0.3,'shocked');P.armL.rotation.set(-2.6,0,0.4+Math.sin(t*5)*0.3);P.armR.rotation.set(-2.4,0,-0.4-Math.sin(t*5)*0.3);P.legL.rotation.x=Math.sin(t*4)*0.3;
     world.deepBubbles.forEach((b,i)=>{b.position.set(DEEP+Math.sin(i*1.7)*2.5,((t*2.2+i*0.9)%14)-2,Math.cos(i*2.3)*1.5+1);});
     world.rays.forEach((r,i)=>r.material.opacity=0.06+0.04*Math.sin(t*2+i));camAt(V3(DEEP+lerp(1,0,u),lerp(6,3,u),lerp(16,12,u)),V3(DEEP,lerp(4,0,u),0),44);showOnly(['sinker']);},
-  poster_gorr:(u,t)=>{mood('poster');const pg=world.posters.gorr;const G=st('gorr',pg.position.x,13.3-5.2*1.3,-2.2,0,'smug');G.head.rotation.x=0.05;chars.gorr.scale.setScalar(1.3);
-    camAt(V3(pg.position.x+lerp(0.6,0,u),12.2,lerp(15,11,ease(u))),V3(pg.position.x,12,0),40);showOnly(['gorr']);},
-  poster_mako:(u,t,lt)=>{mood('poster');const pg=world.posters.mako;st('mako',pg.position.x,12.3-5.0,-1.8,0,'happy');
-    const z=lerp(9,7.6,easeOut(lt/0.25));camAt(V3(pg.position.x,11.5,z),V3(pg.position.x,11.5,0),40);showOnly(['mako']);S.zoomPunch=lt<0.2?1-lt/0.2:0;},
-  pip_deadpan:(u,t)=>{mood('day');boatAt(0,0,t);const P=inBoat('pip',0,-3,0,'default');P.armL.rotation.set(-1.2,0,0.2);mouth(P,'pip',t,'smug');inBoat('mako',0,4,Math.PI,'default');
-    close('pip',lerp(4.2,3.8,u),-0.5,0.05,38);showOnly(['pip','mako']);},
-  rowboat_leak:(u,t)=>{mood('day');boatAt(0,0,t);const M=inBoat('mako',0.6,1.5,0.4,'shocked');M.armR.rotation.set(-1.4+Math.sin(t*9)*0.5,0,-0.2);M.armL.rotation.set(-1.2-Math.sin(t*9)*0.5,0,0.2);inBoat('pip',-0.6,-3,0,'smug');
-    world.leak.visible=true;world.leakDrops.forEach((d,i)=>{const k=((t*1.4+i/14)%1);d.position.set(Math.sin(i*2.1)*k*0.8,k*3.2-k*k*3.2+k*0.6,Math.cos(i*1.3)*k*0.8);d.scale.setScalar(0.25+0.2*(1-k));});
-    camAt(V3(lerp(14,11,u),lerp(9,7,u),lerp(14,11,u)),V3(0,1.5,0),40);showOnly(['mako','pip']);},
-  basil_burn:(u,t)=>{mood('day');boatAt(0,0,t);const B=inBoat('basil',-1.2,-3.0,0,'smug');B.legL.rotation.x=0;B.legR.rotation.x=0;chars.basil.position.y-=0;B.armR.rotation.set(-1.1+Math.sin(t*6)*0.3,0,0.1);
-    world.flame.scale.setScalar(1.2+Math.sin(t*17)*0.25);world.smoke.forEach((s,i)=>{const k=((t*0.8+i/10)%1);s.position.set(Math.sin(i)*0.3*k,1+k*4,0);s.scale.setScalar(0.6+k*2);s.material.opacity=0.75*(1-k);});
-    close('basil',lerp(4.6,4.0,u),0.6,0.0,40);showOnly(['basil']);S.tagBox={text:'ON FIRE (AGAIN)',col:'#ff9a3a'};},
-  crate_box:(u,t,lt)=>{mood('day');boatAt(0,0,t);world.boat.rotation.z=0.12*Math.sin(lt*3);const C=st('crate',0,1.6,1,Math.PI*0.95,'happy');const fl=Math.sin(clamp(lt*2,0,1)*Math.PI/2);C.armL.rotation.set(0,0,lerp(0,2.4,fl));C.armR.rotation.set(0,0,-lerp(0,2.4,fl));C.armL.rotation.x=-0.2;C.armR.rotation.x=-0.2;
-    camAt(V3(lerp(-3,-2,u),7,lerp(-12,-10.5,u)),V3(0,6.6,1),42);showOnly(['crate']);if(lt>0.5&&lt<0.7)S.flash=0.15;},
-  fruit_find:(u,t,lt)=>{mood('day');world.boat.visible=false;const M=st('mako',ISL+2,2.0,7.2,Math.PI,'shocked');M.armR.rotation.set(-0.7,0,-0.5);const f=world.fruit;f.position.set(2,lerp(3.4,5.4,ease(u)),4.9);world.fruitL.intensity=1.2;
-    camAt(V3(ISL+6.5,6.2,-1.5),V3(ISL+2,5.6,6),40);showOnly(['mako']);S.rays={x:0.6,y:0.4,k:0.6,col:'rgba(170,220,255,'};},
-  fruit_eat:(u,t,lt)=>{mood('day');const M=st('mako',ISL+2,2.0,7.2,Math.PI,'happy');M.armR.rotation.set(-1.5,0,-0.3);const f=world.fruit;f.visible=lt<0.5;f.position.set(2,5.6,5.4);
-    const chew=Math.abs(Math.sin(lt*14));M.setFace(lt<0.5?'shocked':'happy',{mouthOpen:lt<0.5?0.9:chew});close('mako',lerp(3.6,3.0,u),-0.6,0.05,36);showOnly(['mako']);if(lt>0.5&&lt<0.62)S.zoomPunch=1;},
-  bubble_pop:(u,t,lt)=>{mood('day');boatAt(0,0,t);const M=inBoat('mako',0,3,Math.PI,'default');M.setFace('default',{mouthOpen:0.35});const hp=lw0(M.head,V3(0,0.45,0.9));const k=easeOut(lt/1.3);
-    const pop=lt>1.45;if(!pop)bubbleAt(0,hp.clone().add(V3(0,0,k*0.8)),0.2+k*1.6);else{M.setFace('shocked');}
-    close('mako',lerp(3.8,3.4,u),0.6,0.05,38);showOnly(['mako']);if(pop&&lt<1.55)S.flash=0.2;},
-  pirates_laugh:(u,t)=>{mood('day');const g=world.lship;g.position.set(LAUGH,bob(t,0.4),0);['p1','p2','p3'].forEach((id,i)=>{const P=onDeck(g,id,-3+i*3,6,-0.3+i*0.3,'happy');P.torso.rotation.x=-0.25+Math.sin(t*12+i)*0.12;P.armL.rotation.set(-0.5,0,0.6+Math.sin(t*14+i)*0.3);P.armR.rotation.set(-0.5,0,-0.6-Math.sin(t*14+i)*0.3);});
-    camAt(V3(LAUGH+lerp(9,7,u),12,lerp(30,26,u)),V3(LAUGH,10.5,6),40);showOnly(['p1','p2','p3']);S.shakeA=0.02;},
-  pirate_falls:(u,t,lt)=>{mood('day');const g=world.lship;g.position.set(LAUGH,bob(t,0.4),0);onDeck(g,'p1',-3,6,0,'happy');onDeck(g,'p3',3,6,0,'happy');
-    const k=clamp(lt/0.8,0,1);const P=st('p2',LAUGH+7.5+k*2.5,g.userData.deck-k*k*(g.userData.deck+3),6,Math.PI/2,'shocked');chars.p2.rotation.z=-k*1.6;P.armL.rotation.set(-2.8,0,0.6);P.armR.rotation.set(-2.8,0,-0.6);
-    if(lt>0.75)splashAt(V3(LAUGH+10,0,6),(lt-0.75)/0.6,40,4,4);camAt(V3(LAUGH+27,4,9),V3(LAUGH+10,3.5,6),44);showOnly(['p1','p2','p3']);},
-  bubble_float:(u,t)=>{mood('day');boatAt(0,0,t);const M=inBoat('mako',0,3,Math.PI*0.9,'happy');M.head.rotation.x=-0.5;M.armR.rotation.set(-2.4,0,-0.3);inBoat('pip',0,-3,0,'smug');
-    for(let i=0;i<12;i++){const k=((u*0.9+i/12)%1);bubbleAt(i,V3(Math.sin(i*2.1)*3+Math.sin(t+i)*0.4,4+k*20,3+Math.cos(i*1.7)*3),0.8+(i%4)*0.4);}
-    camAt(V3(6,lerp(3,6,ease(u)),lerp(14,12,u)),V3(0,lerp(6,14,ease(u)),2),46);showOnly(['mako','pip']);S.sparkle=1;},
-  pip_useless:(u,t)=>{mood('day');boatAt(0,0,t);const P=inBoat('pip',0,-3,0,'smug');mouth(P,'pip',t,'smug');close('pip',lerp(3.6,3.3,u),0.4,0.05,36);showOnly(['pip']);},
   gorr_ship:(u,t)=>{mood('storm');boatAt(0,0,t);inBoat('mako',0,3,0.2,'shocked');inBoat('pip',0,-3,0.2,'shocked');const g=world.gship;g.position.set(0,bob(t,0.3),lerp(-90,-48,ease(u)));
     camAt(V3(-6,2.2,14),V3(0,10,-40),48);showOnly(['mako','pip']);S.shakeA=0.03;},
-  gorr_reveal:(u,t)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,Math.PI*0+Math.PI*0,'smug');chars.gorr.rotation.y=0;G.armL.rotation.set(0,0,0.5);G.armR.rotation.set(0,0,-0.5);
+  gorr_reveal:(u,t)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,0,'smug');G.armL.rotation.set(0,0,0.5);G.armR.rotation.set(0,0,-0.5);
     const hp=head('gorr');camAt(V3(hp.x+lerp(-3,-2,u),hp.y-9,hp.z+16),hp.clone().add(V3(0,-2,0)),40);showOnly(['gorr']);S.speed={k:0.7,col:'#ffffff'};},
-  gorr_close:(u,t)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,0,'smug');talk('gorr','gorr',t,'smug');close('gorr',lerp(3.8,3.2,u)*1.3,0.4,0.0,38);showOnly(['gorr']);},
-  iron_punch:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,0,'angry');G.armR.rotation.set(lerp(-2.8,-1.2,easeIn(u)),0,-0.1);
+  poster_gorr:(u,t)=>{mood('poster');const pg=world.posters.gorr;const G=st('gorr',pg.position.x,13.3-5.2*1.3,-2.2,0,'smug');
+    camAt(V3(pg.position.x+lerp(0.6,0,u),12.2,lerp(13,10.5,ease(u))),V3(pg.position.x,12,0),40);showOnly(['gorr']);},
+  gorr_close:(u,t)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);onDeck(g,'gorr',0,22,0,'angry');talk('gorr','gorr',t,'angry');close('gorr',lerp(3.8,3.2,u)*1.3,0.4,0.0,38);showOnly(['gorr']);},
+  iron_punch:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,0,'angry');G.armR.rotation.set(lerp(-2.8,-1.5,easeIn(u)),0,-0.1);
     const fp=lw0(G.armR,V3(0,-2.1,0));world.fistGlow.visible=true;world.fistGlow.position.copy(fp);world.fistGlow.scale.setScalar(5);camAt(fp.clone().add(V3(1.5,-1,7)),fp,lerp(50,38,u));showOnly(['gorr']);S.speed={k:1,col:'#ffd0a0'};S.shakeA=0.05;S.impact=u>0.75?1:0;},
-  boat_explode:(u,t,lt)=>{mood('storm');world.boat.visible=false;const k=easeOut(lt/0.8);world.debris.forEach((d,i)=>{d.visible=true;const a=i*2.39996;d.position.set(Math.cos(a)*k*(4+i%4*2),1+Math.sin(k*Math.PI)*(4+i%5*1.5)-k*2,Math.sin(a)*k*(4+i%3*2));d.rotation.set(k*(i+1)*1.3,k*i,k*(i%3)*2);});
-    splashAt(V3(0,0,0),k,40,8,7);camAt(V3(10,6,18),V3(0,2,0),46);showOnly([]);S.flash=lt<0.12?0.9:0;S.shakeA=0.25*(1-u);},
-  pip_sinking:(u,t,lt)=>{mood('storm');const P=st('pip',-2,lerp(-2.4,-3.6,u)+Math.sin(t*6)*0.2,2,0.3,'shocked');P.armL.rotation.set(-2.9,0,0.5+Math.sin(t*9)*0.4);P.armR.rotation.set(-2.9,0,-0.5-Math.sin(t*9)*0.4);
-    splashAt(V3(-2,0,2),(lt*1.4)%1,24,2,1.5);close('pip',4.4,0.3,0.4,40);showOnly(['pip']);},
-  mako_edge:(u,t)=>{mood('storm');const d=world.debris[0];d.visible=true;d.position.set(4,bob(t)+0.1,2);d.rotation.set(0,0.4,0);d.scale.set(5,1,2.4);const M=st('mako',4,bob(t)+0.3,2,-0.6,'shocked');M.armL.rotation.set(-1.3,0,0.4);M.armR.rotation.set(-1.3,0,-0.4);M.torso.rotation.x=0.25;
-    close('mako',lerp(4.2,3.6,u),-0.3,0.1,38);showOnly(['mako']);},
-  mako_idea:(u,t,lt)=>{mood('storm');const d=world.debris[0];d.visible=true;d.position.set(4,bob(t)+0.1,2);d.scale.set(5,1,2.4);const M=st('mako',4,bob(t)+0.3,2,-0.6,'default');M.setFace(lt<0.4?'default':'smug');
-    close('mako',lerp(3.4,2.6,ease(u)),0.1,0.05,34);showOnly(['mako']);S.dark=0.55;S.rays={x:0.5,y:0.38,k:0.8,col:'rgba(140,240,255,'};S.sparkle=lt>0.4?1:0;},
-  giant_bubble:(u,t,lt)=>{mood('storm');const d=world.debris[0];d.visible=true;d.position.set(4,bob(t)+0.1,2);d.scale.set(5,1,2.4);const M=st('mako',4,bob(t)+0.3,2,-0.9,'default');M.setFace('default',{mouthOpen:0.4});M.torso.rotation.x=-0.15;
-    const hp=lw0(M.head,V3(0,0.5,1));const k=easeOut(u);bubbleAt(0,V3(lerp(hp.x,-2,k),lerp(hp.y,2,k),lerp(hp.z,2,k)),0.3+k*9,0.95);camAt(V3(6,5,22),V3(1,3.5,2),46);showOnly(['mako']);S.speed={k:0.5,col:'#bff8ff'};},
-  pip_rises:(u,t,lt)=>{mood('day');const y=lerp(-2,6,ease(u));const P=st('pip',-2,y,2,0.2,'shocked');P.setFace(u>0.6?'happy':'shocked');P.armL.rotation.set(0,0,0.3);P.armR.rotation.set(0,0,-0.3);bubbleAt(0,V3(-2,y+3,2.6),9);
-    splashAt(V3(-2,0,2),clamp(lt/0.7,0,1),30,3,2);camAt(V3(5,3,17),V3(-2,lerp(3,8,ease(u)),2),44);showOnly(['pip']);S.sparkle=1;},
-  mako_bubble:(u,t)=>{mood('day');const y=lerp(0.3,7,ease(u));const M=st('mako',4,y,2,-0.3,'happy');M.armR.rotation.set(-2.6,0,-0.2);bubbleAt(0,V3(4,y+3,2.6),8.5);const P=st('pip',-2,8,2,0.4,'happy');bubbleAt(1,V3(-2,11,2.6),9);
-    camAt(V3(1,lerp(4,9,u),20),V3(1,lerp(6,10,u),2),44);showOnly(['mako','pip']);},
-  gorr_laughs:(u,t)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,0,'happy');talk('gorr','gorr',t,'happy');G.torso.rotation.x=-0.2+Math.sin(t*10)*0.06;G.armL.rotation.set(0,0,0.9);G.armR.rotation.set(0,0,-0.9);
-    const hp=head('gorr');camAt(V3(hp.x+3,hp.y-1.5,hp.z+13),hp.clone().add(V3(0,-1,0)),40);showOnly(['gorr']);S.shakeA=0.015;},
-  gorr_bubbled:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,0,'shocked');G.armL.rotation.set(-2.6,0,0.5);G.armR.rotation.set(-2.6,0,-0.5);const hp=head('gorr');
-    const k=easeOut(lt/0.25);bubbleAt(0,hp.clone().add(V3(0,-2.5,0.6)),lerp(26,11,k),k);camAt(V3(hp.x,hp.y-2,hp.z+18),hp.clone().add(V3(0,-2.5,0)),44);showOnly(['gorr']);S.impact=lt<0.1?1:0;S.speed={k:0.6,col:'#bff8ff'};},
-  gorr_lifts:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,0,'shocked');chars.gorr.position.y+=easeIn(u)*6;G.legL.rotation.x=Math.sin(t*14)*0.6;G.legR.rotation.x=-Math.sin(t*14)*0.6;G.armL.rotation.set(-2.6,0,0.5+Math.sin(t*12)*0.3);G.armR.rotation.set(-2.6,0,-0.5);
-    const hp=head('gorr');bubbleAt(0,hp.clone().add(V3(0,-2.5,0.6)),11);camAt(hp.clone().add(V3(4,-5-u*3,18)),hp.clone().add(V3(0,-1.5,0)),46);showOnly(['gorr']);},
-  gorr_clouds:(u,t)=>{mood('high');const y=SKYY+lerp(-10,8,u);const G=st('gorr',0,y,-30,0.3+t*0.3,'sad');chars.gorr.scale.setScalar(1.3);G.armL.rotation.set(-2.4,0,0.6);G.armR.rotation.set(-2.4,0,-0.6);G.legL.rotation.x=0.3;
-    bubbleAt(0,V3(0,y+3.5,-29.4),11);world.clouds.forEach((c,i)=>c.position.x+=0);camAt(V3(lerp(-5,5,u),SKYY+lerp(0,12,u),lerp(-2,6,u)),V3(0,y+2,-30),40);showOnly(['gorr']);},
-  poster_new:(u,t,lt)=>{mood('poster');const pg=world.posters.mako2;st('mako',pg.position.x,12.3-5.0,-1.8,0,'smug');const z=lerp(12,8.6,easeOut(lt/0.3));camAt(V3(pg.position.x+Math.sin(lt*1.5)*0.3,11.8,z),V3(pg.position.x,11.8,0),40);showOnly(['mako']);
-    S.zoomPunch=lt<0.25?1-lt/0.25:0;S.sparkle=1;S.coins=lt;},
-  pip_smile:(u,t)=>{mood('sunset');const P=st('pip',-2,8,2,0.4,'happy');mouth(P,'pip',t,'smug');bubbleAt(1,V3(-2,11,2.6),9);close('pip',3.8,0.4,0.05,36);showOnly(['pip']);},
-  crew_cheer:(u,t)=>{mood('sunset');const d=world.debris[1];d.visible=true;d.position.set(0,bob(t)+0.1,0);d.scale.set(8,1.5,3);d.rotation.set(0,0.2,0);const B=st('basil',-1.6,bob(t)+0.4,0,0.2,'happy');const C=st('crate',1.8,bob(t)+0.4,0,-0.2,'happy');
-    [B,C].forEach((P,i)=>{P.armL.rotation.set(-2.9,0,0.3+Math.sin(t*12+i)*0.2);P.armR.rotation.set(-2.9,0,-0.3-Math.sin(t*12+i)*0.2);});camAt(V3(0,5.5,15),V3(0,5,0),40);showOnly(['basil','crate']);},
-  mako_grin_end:(u,t,lt)=>{mood('sunset');const M=st('mako',4,7,2,-0.2,'happy');M.setFace('happy',{mouthOpen:lt<0.5?0.6:0});M.armR.rotation.set(-2.7,0,-0.3);bubbleAt(0,V3(4,10,2.6),8.5);
-    for(let i=1;i<10;i++){const k=((t*0.3+i/9)%1);bubbleAt(i,V3(4+Math.sin(i*2)*6,4+k*12,-2+Math.cos(i)*3),0.8+(i%3)*0.5);}
-    close('mako',lerp(4.4,3.8,u)*1.6,0.3,0.4,40);showOnly(['mako']);S.sparkle=1;S.black=clamp((lt-1.55)/0.45,0,1);},
+  mako_stretch_far:(u,t,lt)=>{mood('storm');boatAt(0,0,t);const d=lerp(6,46,easeOut(u));const M=st('mako',0,3.5,d,Math.PI,'shocked');chars.mako.rotation.x=-0.3;
+    [M.armL,M.armR].forEach((a,i)=>{a.rotation.set(-1.57,0,0);a.scale.set(1,(d-4)/2,1);});M.legL.rotation.x=0.6;M.legR.rotation.x=0.4;
+    camAt(V3(4,15,d+19),V3(0,3,d*0.5),50);showOnly(['mako']);S.speed={k:0.8,col:'#ffffff'};},
+  mako_slingshot:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const z=lerp(30,-6,easeIn(u));const M=st('mako',0,lerp(5,12,u),z,Math.PI,'angry');chars.mako.rotation.x=-1.2;
+    M.armL.rotation.set(2.9,0,0.2);M.armR.rotation.set(2.9,0,-0.2);camAt(V3(6,lerp(8,13,u),z+12),V3(0,lerp(6,12,u),z-6),48);showOnly(['mako']);S.speed={k:1,col:'#ffffff'};S.shakeA=0.04;},
+  mako_hits_gorr:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const G=onDeck(g,'gorr',0,22,0,'shocked');chars.gorr.position.z-=easeOut(lt/0.6)*6;chars.gorr.rotation.x=-easeOut(lt/0.6)*0.8;
+    const hp=head('gorr');const M=st('mako',0,hp.y-2.5,hp.z+3.2,Math.PI,'angry');chars.mako.rotation.x=-1.2;M.armL.rotation.set(2.9,0,0.2);M.armR.rotation.set(2.9,0,-0.2);
+    camAt(hp.clone().add(V3(9,-1,8)),hp.clone().add(V3(0,-2,1.5)),44);showOnly(['gorr','mako']);S.impact=lt<0.1?1:0;S.flash=lt<0.2?0.4:0;S.shakeA=0.2*(1-u);S.speed={k:0.8,col:'#ffd0a0'};},
+  gorr_falls:(u,t,lt)=>{mood('storm');const g=world.gship;g.position.set(0,bob(t,0.3),-40);const k=clamp(lt/0.7,0,1);const deck=g.userData.deck;const G=st('gorr',8+k*4,deck-k*k*(deck+4),-30,Math.PI/2,'shocked');chars.gorr.rotation.z=-k*1.8;G.armL.rotation.set(-2.8,0,0.6);G.armR.rotation.set(-2.8,0,-0.6);
+    if(lt>0.65)splashAt(V3(12,0,-30),(lt-0.65)/0.5,40,5,5);camAt(V3(24,4,-20),V3(11,3,-30),44);showOnly(['gorr']);},
+  gorr_sinking:(u,t)=>{mood('deep');const G=st('gorr',DEEP,lerp(1,-5,u),0,0.2,'shocked');chars.gorr.scale.setScalar(1.3);G.armL.rotation.set(-2.6,0,0.4+Math.sin(t*3)*0.2);G.armR.rotation.set(-2.6,0,-0.4);
+    world.deepBubbles.forEach((b,i)=>{b.position.set(DEEP+Math.sin(i*1.7)*3,((t*2.2+i*0.9)%14)-4,Math.cos(i*2.3)*1.5+1);});camAt(V3(DEEP+2,lerp(5,1,u),16),V3(DEEP,lerp(4,-1,u),0),44);showOnly(['gorr']);},
+  pip_serious:(u,t)=>{mood('storm');const d=world.debris[1];d.visible=true;d.position.set(-3,bob(t)+0.1,2);d.scale.set(7,1.5,3);const P=st('pip',-3,bob(t)+0.4,2,0.5,'angry');mouth(P,'pip',t,'angry');close('pip',lerp(4.0,3.5,u),0.4,0.05,38);showOnly(['pip']);},
+  mako_decide:(u,t,lt)=>{mood('storm');const d=world.debris[0];d.visible=true;d.position.set(4,bob(t)+0.1,2);d.scale.set(5,1,2.4);const M=st('mako',4,bob(t)+0.3,2,-0.6,'angry');
+    close('mako',lerp(3.6,2.8,ease(u)),0.1,0.05,34);showOnly(['mako']);S.dark=0.45;S.rays={x:0.5,y:0.38,k:0.6,col:'rgba(255,220,160,'};},
+  arm_into_sea:(u,t,lt)=>{mood('storm');const d=world.debris[0];d.visible=true;d.position.set(4,bob(t)+0.1,2);d.scale.set(5,1,2.4);const M=st('mako',4,bob(t)+0.3,3.0,0,'angry');M.torso.rotation.x=0.5;M.armR.rotation.set(-0.5,0,0);M.armR.scale.set(1,lerp(1,5,easeOut(u)),1);
+    splashAt(V3(5.5,0,6.5),(lt*1.5)%1,20,1.5,1);camAt(V3(18,5,8),V3(4,2,4),44);showOnly(['mako']);},
+  deep_grab:(u,t,lt)=>{mood('deep');const G=st('gorr',DEEP,-4,0,0.2,'sad');chars.gorr.scale.setScalar(1.3);G.armL.rotation.set(-2.9,0,0.2);const hp=head('gorr');const top=V3(DEEP+1.5,30,1);const reach=lerp(0.3,1,easeOut(u));const tip=top.clone().lerp(hp.clone().add(V3(1.5,1.5,0.5)),reach);
+    const L=world.longArm;L.visible=true;L.position.copy(top).add(tip).multiplyScalar(0.5);L.scale.set(1,top.distanceTo(tip),1);L.lookAt(tip);L.rotateX(Math.PI/2);world.longHand.visible=true;world.longHand.position.copy(tip);
+    world.deepBubbles.forEach((b,i)=>{b.position.set(DEEP+Math.sin(i*1.7)*3,((t*2.2+i*0.9)%14)-6,Math.cos(i*2.3)*1.5+1);});camAt(V3(DEEP+6,2,18),V3(DEEP+0.5,2,0),46);showOnly(['gorr']);},
+  mako_weak:(u,t)=>{mood('storm');const d=world.debris[0];d.visible=true;d.position.set(4,bob(t)+0.1,2);d.scale.set(5,1,2.4);const M=st('mako',4,bob(t)+0.3,3.0,0,'sad');M.torso.rotation.x=0.5;M.armR.rotation.set(-0.5,0,0);M.armR.scale.set(1,5,1);
+    close('mako',lerp(3.4,2.9,u),0.6,0.2,36);showOnly(['mako']);S.dark=0.2+0.3*u;S.shakeA=0.02;},
+  gorr_pulled:(u,t,lt)=>{mood('storm');const y=lerp(-6,10,easeOut(u));const G=st('gorr',-1,y,2,0.4,'shocked');G.armL.rotation.set(-2.9,0,0.3);splashAt(V3(-1,0,2),clamp(lt/0.8,0,1),40,5,5);
+    camAt(V3(8,4,22),V3(-1,lerp(3,9,u),2),46);showOnly(['gorr']);S.speed={k:0.6,col:'#ffffff'};if(lt<0.12)S.flash=0.3;},
+  gorr_coughs:(u,t,lt)=>{mood('sunset');boatAt(0,0,t);const G=inBoat('gorr',0,1,0.2,'sad');G.setFace('sad',{mouthOpen:Math.abs(Math.sin(t*10))*0.8});G.torso.rotation.x=0.2+Math.abs(Math.sin(t*10))*0.15;const M=inBoat('mako',0,5,Math.PI,'sad');
+    const hp=head('gorr');splashAt(hp.clone().add(V3(0,-0.5,1.5)),(lt*2)%1,14,1,0.8);camAt(hp.clone().add(V3(11,1,6)),hp.clone().add(V3(0,-1.5,1)),42);showOnly(['gorr','mako']);},
+  hat_off:(u,t,lt)=>{mood('sunset');boatAt(0,0,t);const off=lt>0.6;const id=off?'gorrnh':'gorr';const G=inBoat(id,0,1,0.2,'default');if(off){G.armR.rotation.set(-1.0,0,-0.3);}else G.armR.rotation.set(-2.8,0,-0.3);
+    close(id,lerp(4.4,3.8,u)*1.3,0.4,0.0,38);showOnly([id]);},
+  gorr_soft:(u,t)=>{mood('sunset');boatAt(0,0,t);const G=inBoat('gorrnh',0,1,0.2,'sad');G.armR.rotation.set(-1.0,0,-0.3);talk('gorrnh','gorr',t,'sad');close('gorrnh',lerp(3.6,3.1,u)*1.3,0.4,0.0,36);showOnly(['gorrnh']);},
+  mako_shock_end:(u,t,lt)=>{mood('sunset');boatAt(0,0,t);const M=inBoat('mako',0,5,Math.PI,'shocked');talk('mako','mako',t,'shocked');close('mako',lerp(3.6,2.6,easeOut(lt/0.4)),0.0,0.05,36);showOnly(['mako']);
+    S.zoomPunch=lt<0.2?1-lt/0.2:0;if(lt>1.0)S.part2=clamp((lt-1.0)/0.3,0,1);S.black=clamp((lt-2.2)/0.45,0,1)*0.85;},
 };
 
 /* ---------------- 2D overlays */
@@ -317,6 +308,7 @@ function drawOverlays(t){
   const vg=og.createRadialGradient(W/2,H*0.48,H*0.32,W/2,H/2,H*0.78);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,`rgba(0,0,0,${world.mood==='deep'||world.mood==='storm'?0.5:0.28})`);og.fillStyle=vg;og.fillRect(0,0,W,H);
   if(S.flash>0){og.fillStyle=`rgba(255,250,240,${S.flash})`;og.fillRect(0,0,W,H);}
   if(S.black>0){og.fillStyle=`rgba(0,0,0,${S.black})`;og.fillRect(0,0,W,H);}
+  if(S.part2){const k=easeOut(S.part2);og.save();og.translate(W/2,H*0.3);og.rotate(-0.06);og.scale(lerp(1.6,1,k),lerp(1.6,1,k));og.globalAlpha=k;T('PART 2?',0,0,W*0.16,'#ffd23f','#0a0a12',W*0.03);og.restore();}
 }
 function captionAt(t){for(const s of TL.segs){for(let i=0;i<s.words.length;i++){const w=s.words[i];const nx=s.words[i+1];const end=nx?nx.s:Math.min(w.e+0.25,s.end+0.25);if(t>=w.s&&t<end)return {w,since:t-w.s,who:s.who};}}return null;}
 function drawCaption(t){const c=captionAt(t);if(!c)return;const text=c.w.w.toUpperCase();const base=W*0.11*(text.length>8?8/text.length*1.05:1);const k=c.since<0.06?lerp(1.25,1,c.since/0.06):1;
@@ -330,16 +322,16 @@ S.init=async function(timeline,w,h,fontUrl){TL=timeline;W=w;H=h;SS=window.BH_SS|
   cam=new THREE.PerspectiveCamera(40,W/H,0.1,2000);
   buildWorld();buildChars();
   const [oc,o2]=cv(W,H);out=oc;og=o2;og.imageSmoothingEnabled=true;og.imageSmoothingQuality='high';scene.updateMatrixWorld(true);return true;};
-const KEYS=['flash','tagBox','black','shakeA','zoomPunch','speed','rays','sparkle','dark','impact','coins'];
+const KEYS=['part2','flash','tagBox','black','shakeA','zoomPunch','speed','rays','sparkle','dark','impact','coins'];
 S.frame=function(f,q){const t=f/TL.fps;const shot=TL.shots.find(s=>t>=s.s&&t<s.e)||TL.shots[TL.shots.length-1];
   KEYS.forEach(k=>S[k]=null);world.mood=null;
-  hideFX();world.boat.visible=false;world.leak.visible=false;world.fruit.visible=true;world.fruitL.intensity=0;world.fruit.position.set(2,2.2,4);world.debris.forEach(d=>d.scale.set(1,1,1));
+  hideFX();world.boat.visible=false;world.leak.visible=false;world.fruit.visible=['fruit_glow','mako_bite','fruit_find'].includes(shot.name);world.fruitL.intensity=0;world.fruit.position.set(2,2.2,4);world.debris.forEach(d=>d.scale.set(1,1,1));
   world.gship.position.set(0,0,-200);world.lship.position.set(LAUGH,0,0);world.flame.scale.setScalar(0.001);world.smoke.forEach(s=>s.material.opacity=0);chars.gorr.scale.setScalar(1.3);
   if(shot!==curShot){curShot=shot;showOnly([]);}
-  Object.values(chars).forEach(c=>{c.rotation.set(0,0,0);});
+  Object.values(chars).forEach(c=>{c.rotation.set(0,0,0);});chars.gorrnh.scale.setScalar(1.3);
   updateSea(t);
   const u=(t-shot.s)/(shot.e-shot.s),lt=t-shot.s;scene.updateMatrixWorld(true);
-  (SH[shot.name]||SH.mako_grin_end)(u,t,lt);
+  (SH[shot.name]||SH.mako_shock_end)(u,t,lt);
   if(S.shakeA)shake(S.shakeA,t);
   world.sun.target.position.copy(world.look);world.sun.position.copy(world.look).addScaledVector(world.sunDir,120);
   world.rim.target.position.copy(world.look);world.rim.position.copy(world.look).add(V3(-60,30,-80));

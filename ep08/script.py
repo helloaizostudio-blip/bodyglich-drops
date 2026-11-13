@@ -1,53 +1,42 @@
-"""Episode 8: "I Ate The Worst Cursed Fruit" (mid format, ~60 s)
+"""Episode 8: "I Ate The Pirate's Fruit" (mid format, ~60 s), v2
 
-Pirate adventure in an anime-adventure spirit, fully original: own world rule (cursed fruits, sink in the sea),
-own crew (Mako, Pip, Basil the cook, Crate the strongman, Captain Gorr), own power (bubbles), own designs. No names, outfits, powers or places
-from any existing series.
-
-Structure (docs/competitor_breakdown_part1.md):
-  rule + payoff image (0:00-0:03) -> bounty world joke with numbers -> Mako's flaw (3-coin bounty, leaky rowboat)
-  -> the "useless" power with a PLANT (bubbles float) -> "Then..." crisis (billion-coin captain, Pip in the sea,
-  Mako can't touch water) -> the plant becomes the solution twice (bubble saves Pip, bubble lifts Gorr into the sky)
-  -> bounty payoff -> 2-word callback.
-Art direction: bright tropical anime-adventure look (saturated sea + sky, bold rim light, speed lines on hits,
-big impact frames), a new look for the channel.
+Pirate adventure, fully original world and crew. Mako eats the Noodle Fruit (rubber/stretch body, a classic superpower
+trope with our own name and rules). Engagement beats: a stakes hook (the scariest pirate hunted this fruit for ten
+years), comic power montage with the crew, the sea-rule plant, a slingshot fight, a moral choice (save the man who tried
+to kill him), and a cliffhanger twist (Gorr is Mako's dad) that sets up Part 2.
 
 Format: (id, speaker, tag, text, shots). Words in *stars* get the highlighted caption word.
 """
-TITLE = "I Ate The Worst Cursed Fruit"
-SLUG = "ep08_bubble_fruit"
+TITLE = "I Ate The Pirate's Fruit"
+SLUG = "ep08_noodle_fruit"
 
 LINES = [
-    ("hook",   "mako", "tense",   "In my world, eat a cursed fruit and you get a *superpower*. But touch the sea, and you sink forever.", ["fruit_glow", "hero_power", "sink_dark"]),
-    ("bounty", "mako", "calm",    "Every pirate has a bounty. The scariest one is worth a *billion* coins.",              ["poster_gorr"]),
-    ("mine",   "mako", "calm",    "Mine is three *coins*.",                                                                  ["poster_mako"]),
-    ("pip1",   "pip",  "calm",    "Honestly? That's *generous*.",                                                             ["pip_deadpan"]),
-    ("boat",   "mako", "calm",    "Our ship is a rowboat. With a *leak*.",                                                   ["rowboat_leak"]),
-    ("crew",   "mako", "calm",    "My crew? A cook who burns water. And Crate. Super strong. Wears a *box*.",              ["basil_burn", "crate_box"]),
-    ("found",  "mako", "excited", "Then I found a cursed fruit. I ate the *whole* thing.",                                   ["fruit_find", "fruit_eat"]),
-    ("power",  "mako", "excited", "My power? I can blow *bubbles*.",                                                         ["bubble_pop"]),
-    ("laugh",  "mako", "sad",     "Pirates laughed so hard one fell off his *ship*.",                                        ["pirates_laugh", "pirate_falls"]),
-    ("float",  "mako", "calm",    "They don't pop. They just float. *Really* float.",                                       ["bubble_float"]),
-    ("pip2",   "pip",  "calm",    "So it's *useless*.",                                                                      ["pip_useless"]),
-    ("then",   "mako", "tense",   "Then the billion-coin captain found *us*.",                                               ["gorr_ship", "gorr_reveal"]),
-    ("gorr1",  "gorr", "angry",   "Cute *boat*.",                                                                            ["gorr_close"]),
-    ("punch",  "mako", "tense",   "One punch. No more *boat*.",                                                              ["iron_punch", "boat_explode"]),
-    ("sea",    "mako", "tense",   "Pip can't swim. And I can't touch the *sea*.",                                            ["pip_sinking", "mako_edge"]),
-    ("idea",   "mako", "whisper", "But bubbles *float*.",                                                                    ["mako_idea"]),
-    ("save",   "mako", "excited", "I blew the biggest bubble of my life. Pip floated up. Then I bubbled *myself*.",         ["giant_bubble", "pip_rises", "mako_bubble"]),
-    ("gorr2",  "gorr", "angry",   "Bubbles can't stop *me*!",                                                                ["gorr_laughs"]),
-    ("lift",   "mako", "excited", "He was right. But they can *lift* you.",                                                  ["gorr_bubbled", "gorr_lifts"]),
-    ("sky",    "mako", "calm",    "Last I saw, he was floating somewhere above the *clouds*.",                               ["gorr_clouds"]),
-    ("new",    "mako", "excited", "Next morning, my bounty was thirty *million*.",                                           ["poster_new"]),
-    ("pip3",   "pip",  "calm",    "Still the worst fruit?",                                                                  ["pip_smile", "crew_cheer"]),
-    ("button", "mako", "excited", "Best *fruit*.",                                                                           ["mako_grin_end"]),
+    ("hook",    "mako", "tense",   "The scariest pirate alive spent ten years hunting one cursed fruit. I ate it by *accident*.", ["gorr_silhouette", "fruit_glow", "mako_bite"]),
+    ("plum",    "mako", "excited", "I thought it was a weird plum. Then my arm stretched forty *meters*.",                       ["fruit_find", "arm_stretch"]),
+    ("pip1",    "pip",  "excited", "You ate the *Noodle* Fruit?!",                                                                 ["pip_shock"]),
+    ("bounce",  "mako", "excited", "My body turned to rubber. Punches bounce. Cannonballs bounce. Even Basil's cooking *bounces*.", ["crate_punch", "cannon_bounce", "basil_bounce"]),
+    ("rule",    "mako", "calm",    "Every cursed fruit has one catch. Touch the sea, and you *sink*.",                              ["sink_dark"]),
+    ("then",    "mako", "tense",   "Then his ship found us. Captain Gorr. Iron fists. A billion-coin *bounty*.",                    ["gorr_ship", "gorr_reveal", "poster_gorr"]),
+    ("mine",    "gorr", "angry",   "That fruit was *mine*.",                                                                        ["gorr_close"]),
+    ("punch",   "mako", "tense",   "He punched me so hard I stretched halfway across the *ocean*.",                                 ["iron_punch", "mako_stretch_far"]),
+    ("snap",    "mako", "excited", "And like any rubber band, I snapped *back*.",                                                   ["mako_slingshot"]),
+    ("into",    "mako", "excited", "Straight into Gorr. Straight off his own *ship*.",                                              ["mako_hits_gorr", "gorr_falls"]),
+    ("sinking", "mako", "tense",   "Gorr ate a cursed fruit too. And he was *sinking*.",                                            ["gorr_sinking"]),
+    ("pip2",    "pip",  "calm",    "Let him go. He tried to *kill* you.",                                                           ["pip_serious"]),
+    ("didnt",   "mako", "whisper", "I didn't let him go.",                                                                          ["mako_decide"]),
+    ("reach",   "mako", "tense",   "I stretched my arm into the sea. Every second down there drained me. But I didn't let *go*.",   ["arm_into_sea", "deep_grab", "mako_weak"]),
+    ("pull",    "mako", "excited", "I pulled him *out*.",                                                                           ["gorr_pulled"]),
+    ("hat",     "mako", "calm",    "He coughed up half the ocean. Then he took off his *hat*.",                                     ["gorr_coughs", "hat_off"]),
+    ("eyes",    "gorr", "sad",     "You have your mother's *eyes*.",                                                                ["gorr_soft"]),
+    ("what",    "mako", "whisper", "Wait. *What*?",                                                                                 ["mako_shock_end"]),
 ]
 
 VOICES = {
-    "mako": dict(voice="am_michael", speed=1.12, pitch=1.08, expressive=True),   # the Blaze-style voice the user picked, a touch younger
+    # Zash's original voice (am_liam, the one used in Ep 2-5), now through the smooth pipeline so it doesn't buzz
+    "mako": dict(voice="am_liam", speed=1.12, pitch=1.40, expressive=True, smooth=True, gen_speed=1.10),
     "pip":  dict(voice="af_bella", speed=1.05, pitch=1.04, expressive=True, smooth=True, gen_speed=1.0),
     "gorr": dict(voice="am_onyx", speed=0.95, pitch=0.86, expressive=True, smooth=True, gen_speed=1.0),
 }
-LONG_GAPS = {"crew": 0.25, "mine": 0.3, "pip1": 0.25, "boat": 0.2, "laugh": 0.2, "pip2": 0.35, "gorr1": 0.3, "punch": 0.3, "idea": 0.45, "gorr2": 0.25, "sky": 0.35, "pip3": 0.35}
-TAIL = 1.2
+LONG_GAPS = {"hook": 0.2, "pip1": 0.25, "rule": 0.3, "mine": 0.3, "snap": 0.15, "sinking": 0.35, "pip2": 0.35, "didnt": 0.45, "pull": 0.3, "hat": 0.45, "eyes": 0.6}
+TAIL = 1.8
 LEAD = 0.0
