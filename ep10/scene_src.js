@@ -139,8 +139,15 @@ function mood(m){if(world.mood===m)return;world.mood=m;
   world.dawnL.intensity=m==='dawn'?1.6:0;world.dawnWin.material.emissiveIntensity=m==='dawn'?1:0;world.lampL.intensity=m==='dawn'?0.2:0.45;}
 function eyesAt(p,sp){world.eyes.forEach((e,i)=>{e.visible=true;e.position.copy(p).add(V3((i?1:-1)*(sp||0.6),0,0));const k=0.35+0.05*Math.sin(Date.now());e.scale.setScalar(0.5);});}
 
+// hanging upside down from the ceiling, grinning face pointed down at the bed
+function hang(t){const P=wStand(IX-1.6,0,-5.5,0,t,{tilt:0.3+Math.sin(t*0.8)*0.08,headX:-1.1});world.walker.rotation.set(0,0,Math.PI);world.walker.position.y=27.8;
+  P.upL.rotation.set(0.5,0,-0.5);P.upR.rotation.set(0.5,0,0.5);P.foL.rotation.x=-1.2;P.foR.rotation.x=-1.2;curl(P.handL,0.7,0.2);curl(P.handR,0.7,0.2);return P;}
 /* ---------------- shots */
 const SH={
+  cold_up:(u,t,lt)=>{const d=1.0;if(lt<d){mood('inside');const L=leoBed('shocked');L.head.rotation.x=-lerp(0,0.8,ease(lt/d));close('leo',lerp(3.4,2.8,lt/d),0.1,0.05,36);showOnly(['leo']);S.dark=0.2;}
+    else{const P=st('leo',IX-1.6,0,-1,Math.PI,'shocked');P.head.rotation.x=-0.9;hang(t);const hp=wHead();world.creepL.position.copy(hp).add(V3(0,-2,3));world.creepL.intensity=1.5;
+      camAt(V3(IX-1.6,5.0,-0.6),hp.clone().add(V3(0,-1.6,0)),lerp(80,56,easeOut((lt-d)/0.3)));showOnly([]);S.zoomPunch=lt-d<0.15?1:0;S.flash=lt-d<0.06?0.6:0;S.shakeA=0.035;}},
+  cold_peep:(u,t,lt)=>SH.peephole_face(u,t,lt+1.6),
   cabin_night:(u,t)=>{mood('night');camAt(V3(lerp(10,6,u),lerp(6,5,u),lerp(42,34,ease(u))),V3(0,5,0),42);showOnly([]);},
   treeline_eyes:(u,t,lt)=>{mood('night');const P=wStand(4,0,58,Math.PI,t,{tilt:0.5});eyesAt(wHead().add(V3(0,0,0.3)),0.35);camAt(V3(1,5.5,lerp(16,20,u)),V3(3,lerp(8,13,u),56),40);showOnly([]);S.dark=0.15;},
   walker_legs:(u,t,lt)=>{mood('night');const z=lerp(50,44,u);const P=wStand(lerp(-14,-8,u),0,z,Math.PI*0.9,t);const k=Math.sin(lt*2.5);P.thL.rotation.x=-0.4*k;P.thR.rotation.x=0.4*k;P.shL.rotation.x=0.4+0.3*Math.max(0,k);P.shR.rotation.x=0.4+0.3*Math.max(0,-k);
@@ -165,8 +172,8 @@ const SH={
   dawn_kitchen:(u,t)=>{mood('dawn');const L=st('leo',IX-10.5,0.8,7.2,Math.PI*0.7,'sad');sit(L);mouth(L,'leo',t,'sad');const G=st('gpa',IX-7.4,0.8,5,-Math.PI*0.3,'default');sit(G);camAt(V3(IX-2,6.5,1),V3(IX-9,4,6),42);showOnly(['leo','gpa']);},
   grandpa_only:(u,t)=>{mood('dawn');const G=st('gpa',IX-7.4,0.8,5,-Math.PI*0.3,'sad');sit(G);mouth(G,'grandpa',t,'sad');close('gpa',lerp(4.2,3.6,u),0.4,0.05,38);showOnly(['gpa']);},
   bed_empty:(u,t,lt)=>{mood('dawn');world.sisBlanket.scale.y=0.4;const P=st('leo',IX-1.6,0,-1,Math.PI,'shocked');camAt(V3(IX-1.6,6.4,lerp(5,2,ease(u))),V3(IX+1.5,2.2,-5.8),40);showOnly(['leo']);},
-  ceiling_walker:(u,t,lt)=>{mood('inside');const P=st('leo',IX-1.6,0,-1,Math.PI,'shocked');P.head.rotation.x=-0.9;const W2=wCrawl(IX-1.6,15.0,-6,0,t*0.3);world.walker.rotation.z=Math.PI;world.walker.position.y=15.0;
-    const hp=wHead();world.creepL.position.copy(hp).add(V3(0,-3,2));world.creepL.intensity=2;camAt(V3(IX-1.2,3.2,1.5),hp.clone().lerp(V3(IX-1.6,11,-6),0.5),lerp(90,68,easeOut(lt/0.3)));showOnly(['leo']);S.zoomPunch=lt<0.15?1:0;S.flash=lt<0.06?0.5:0;S.shakeA=0.03;},
+  ceiling_walker:(u,t,lt)=>{mood('inside');const P=st('leo',IX-1.6,0,-1,Math.PI,'shocked');P.head.rotation.x=-0.9;hang(t);
+    const hp=wHead();world.creepL.position.copy(hp).add(V3(0,-2,3));world.creepL.intensity=1.5;camAt(V3(IX-1.6,5.0,-0.6),hp.clone().add(V3(0,-1.6,0)),lerp(80,56,easeOut(lt/0.3)));showOnly([]);S.zoomPunch=lt<0.15?1:0;S.flash=lt<0.06?0.5:0;S.shakeA=0.03;},
   grandpa_run:(u,t)=>{mood('dawn');const G=st('gpa',IX+lerp(6,1,u),0,lerp(4,0,u),-Math.PI*0.7,'shocked');walk(G,t,1.6,'shocked');const L=st('leo',IX-1.6,0,-1,Math.PI*0.7,'shocked');L.armL.rotation.set(-2.6,0,0.3);L.armR.rotation.set(-2.6,0,-0.3);camAt(V3(IX-6,6,6),V3(IX,4,0),44);showOnly(['gpa','leo']);},
   ceiling_empty:(u,t)=>{mood('dawn');camAt(V3(IX-1.2,4.6,-0.4),V3(IX-1.6,15,-6),48);showOnly([]);},
   walker_tall:(u,t)=>{mood('dawn');const P=wStand(2,0,40,Math.PI,t,{tilt:0.55});P.upR.rotation.set(-0.3,0,0.2);camAt(V3(lerp(-2,0,u),lerp(2,3,u),lerp(18,22,u)),V3(2,lerp(9,13,u),40),46);showOnly([]);S.fogBoost=1;},

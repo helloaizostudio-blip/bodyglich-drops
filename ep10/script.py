@@ -1,5 +1,7 @@
 """Episode 10: "Don't Answer The Skinwalker" (horror, narrator Leo, ~65 s)
 
+Cold open (v3): the two scariest moments flash first ("don't look up" + the peephole voice) so the first
+3 seconds give goosebumps, then "Three nights ago" starts the story. Pauses tightened ~45% for retention.
 Horror format from docs/competitor_breakdown_part2.md: one rule in the first line, numbered nights that escalate,
 a quiet PLANT that the viewer ignores (the little sister is "right here, smiling", never scared, never speaks), a
 twist that recontextualises every night (Leo is an only child: the thing was already inside), a ceiling jump scare, and a sting aimed
@@ -11,7 +13,9 @@ TITLE = "Don't Answer The Skinwalker"
 SLUG = "ep10_skinwalker"
 
 LINES = [
-    ("hook",   "leo",    "tense",   "Grandpa's cabin has one rule. If something calls your name from the trees, never *answer*.", ["cabin_night", "treeline_eyes"]),
+    ("cold1",  "leo",    "whisper", "Whatever you do, don't look *up*.",                                                         ["cold_up"]),
+    ("cold2",  "mimicg", "calm",    "Leo. Let me *in*.",                                                                         ["cold_peep"]),
+    ("hook",   "leo",    "tense",   "Three nights ago. Grandpa's cabin had one rule. If something calls your name from the trees, never *answer*.", ["treeline_eyes", "cabin_night"]),
     ("what",   "leo",    "whisper", "He says a skinwalker lives out there. Too tall. Too thin. And it copies *voices*.",          ["walker_legs", "walker_hand"]),
     ("invite", "leo",    "tense",   "It can't come inside. Unless somebody *invites* it.",                                        ["door_lock"]),
     ("n1",     "leo",    "whisper", "Night one. I heard my little sister screaming my name from the *woods*.",                   ["night1_card", "window_walker"]),
@@ -37,6 +41,6 @@ VOICES = {
     "mimicg":  dict(voice="bm_george", speed=0.82, pitch=0.9, expressive=True, filter=MIMIC),  # the creature using Grandpa's voice, wrong and slow
     "mimicl":  dict(voice="am_michael", speed=0.86, pitch=1.0, expressive=True, filter=MIMIC), # the creature using Leo's voice
 }
-LONG_GAPS = {"hook": 0.35, "what": 0.3, "invite": 0.5, "sis": 0.6, "n2": 0.2, "fake": 0.45, "chair": 0.5, "n3": 0.3, "giggle": 0.6, "dawn": 0.3, "only": 0.7, "empty": 0.5, "up": 0.6, "gone": 0.4, "trees": 0.5}
+LONG_GAPS = {'hook': 0.19, 'what': 0.17, 'invite': 0.28, 'sis': 0.33, 'n2': 0.11, 'fake': 0.25, 'chair': 0.28, 'n3': 0.17, 'giggle': 0.33, 'dawn': 0.17, 'only': 0.39, 'empty': 0.28, 'up': 0.33, 'gone': 0.22, 'trees': 0.28, 'cold1': 0.25, 'cold2': 0.35}
 TAIL = 2.2
 LEAD = 0.0

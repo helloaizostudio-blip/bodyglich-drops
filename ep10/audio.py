@@ -87,7 +87,10 @@ def build(m, tl):
     # ---- SFX
     for s in shots[1:]:
         m.put(whoosh(0.3), s['s'] - 0.12, 0.035, pan=rng.uniform(-0.3, 0.3))
-    m.put(E7.hit(1.8), 0.02, 0.45)
+    m.put(E7.riser(1.0) if hasattr(E7, 'riser') else riser(1.0), 0.0, 0.4, bus='music')
+    m.put(E7.hit(3.0), shot('cold_up')['s'] + 1.0, 1.0); m.put(E7.sting(), shot('cold_up')['s'] + 1.02, 0.8); m.put(scream_hit(), shot('cold_up')['s'] + 1.05, 0.45)
+    m.put(E7.hit(2.4), shot('cold_peep')['s'], 0.9); m.put(E7.sting(), shot('cold_peep')['s'] + 0.05, 0.6)
+    m.put(E7.hit(2.0), shot('treeline_eyes')['s'], 0.7)
     for n in ('night1_card', 'night2_card', 'night3_card'):
         m.put(E7.hit(2.2), shot(n)['s'], 0.8)
     m.put(E7.creak(0.6), shot('walker_legs')['s'] + 0.3, 0.5, pan=-0.4); m.put(E7.creak(0.6), shot('walker_legs')['s'] + 1.4, 0.5, pan=-0.2)
