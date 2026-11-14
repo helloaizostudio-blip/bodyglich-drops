@@ -1,6 +1,7 @@
 """Episode 10 "Don't Answer The Skinwalker": horror score + SFX (synthesized, original).
 
-Reuses the Ep 7 horror toolkit (drone, wind, knocks, creaks, hits, stings, heartbeat). Night cards get a low boom,
+Bed: a slow dark string-like pad, forest night air with crickets and an owl, low piano notes on each night and a
+detuned music-box lullaby under the "sister". Reuses the Ep 7 SFX (knocks, creaks, hits, stings). Night cards get a low boom,
 the peephole face and the ceiling get the biggest hits, sunrise goes quiet and cold, the final door gets a creak
 and a sting into black.
 """
@@ -32,20 +33,59 @@ def scream_hit(d=1.6):
     t = t_(d); return (np.tanh(np.sin(2 * np.pi * np.cumsum(500 + 200 * np.sin(2 * np.pi * 9 * t)) / SR) * 4) * 0.25 + hp_fast(noise(d), 1500) * 0.3) * np.exp(-t * 2.5)
 
 
+def dark_pad(d, root=55.0, bright=500):
+    """slow, detuned low strings-like pad (root, minor third, fifth) with a breathing filter"""
+    t = t_(d); x = np.zeros(len(t))
+    for f, g in ((root, 1.0), (root * 1.003, 0.8), (root * 2 * 1.189, 0.45), (root * 1.498, 0.55), (root * 2.997, 0.2)):
+        x += (2 * ((f * t + rng.random()) % 1) - 1) * g
+    x = lp_fast(x, bright) * (0.75 + 0.25 * np.sin(2 * np.pi * 0.07 * t))
+    return x * env(len(t), 2.0, 2.0) * 0.22
+def night_air(d):
+    """soft forest night: low air + crickets"""
+    t = t_(d); air = lp_fast(noise(d), 350) * 0.25 * (0.8 + 0.2 * np.sin(2 * np.pi * 0.05 * t))
+    cr = np.sin(2 * np.pi * 4600 * t) * (((t * 14) % 1) < 0.35) * (((t * 0.9) % 1) < 0.55) * 0.025
+    cr2 = np.sin(2 * np.pi * 5100 * t + 1) * ((((t + 0.37) * 12) % 1) < 0.3) * ((((t + 0.2) * 0.7) % 1) < 0.5) * 0.018
+    return (air + cr + cr2) * env(len(t), 1.5, 1.5)
+def owl():
+    out = np.zeros(int(1.6 * SR))
+    for k, (st, dd) in enumerate(((0.0, 0.35), (0.5, 0.6))):
+        t = t_(dd); h = np.sin(2 * np.pi * (370 + 15 * np.sin(2 * np.pi * 5 * t)) * t) * env(len(t), 0.05, 0.2) * 0.12
+        a = int(st * SR); out[a:a + len(h)] += h
+    return lp_fast(out, 1200)
+def low_piano(f, d=3.0):
+    t = t_(d); return (np.sin(2 * np.pi * f * t) + 0.5 * np.sin(4 * np.pi * f * t) + 0.25 * np.sin(6 * np.pi * f * t + 0.3)) * np.exp(-t * 1.3) * 0.28
+def lullaby(d):
+    """slightly detuned music-box lullaby for the 'sister'"""
+    notes = [659.3, 587.3, 523.3, 587.3, 659.3, 659.3, 659.3, 0, 587.3, 587.3, 587.3, 0, 659.3, 784.0, 784.0, 0]
+    x = np.zeros(int(d * SR) + SR); tt = 0; k = 0
+    while tt < d:
+        f = notes[k % len(notes)]
+        if f:
+            n = t_(1.2); h = (np.sin(2 * np.pi * f * 1.012 * n) + 0.3 * np.sin(2 * np.pi * f * 2.03 * n)) * np.exp(-n * 4) * 0.16
+            a = int(tt * SR); x[a:a + len(h)] += h[:len(x) - a]
+        tt += 0.32; k += 1
+    return x[:int(d * SR)]
+
+
 def build(m, tl):
     seg = {s['id']: s for s in tl['segs']}; shots = tl['shots']
     def s_(i): return seg[i]['start']
     def shot(n): return next(x for x in shots if x['name'] == n)
     total = tl['dur']
-    # ---- beds
-    m.put(E7.drone(s_('dawn') + 0.5, 50), 0.0, 0.55, bus='music')
-    m.put(E7.wind(s_('dawn')), 0.0, 0.4, bus='music')
-    m.put(E7.drone(total - s_('dawn'), 41), s_('dawn'), 0.4, bus='music')
-    m.put(E7.wind(total - s_('trees')), s_('trees'), 0.4, bus='music')
-    m.put(E7.hb_seq(s_('dawn') - s_('n3'), 80, 130), s_('n3'), 0.55, bus='music')
-    m.put(E7.hb_seq(s_('up') - s_('empty'), 90, 150), s_('empty'), 0.7, bus='music')
-    m.put(riser(s_('up') - s_('only')), s_('only'), 0.5, bus='music')
-    m.put(E7.hb_seq(total - s_('sting') - 0.8, 70, 55), s_('sting'), 0.8, bus='music')
+    # ---- beds: dark pad + night air instead of the old drone/wind
+    m.put(night_air(s_('dawn') + 1.0), 0.0, 0.9, bus='music')
+    m.put(dark_pad(s_('n2') + 1.0, 55.0, 420), 0.0, 0.8, bus='music')
+    m.put(dark_pad(s_('dawn') - s_('n2') + 1.0, 49.0, 520), s_('n2'), 0.85, bus='music')
+    m.put(dark_pad(total - s_('dawn'), 41.2, 380), s_('dawn'), 0.7, bus='music')
+    m.put(owl(), 3.0, 0.8, pan=-0.6); m.put(owl(), s_('n3') + 0.8, 0.7, pan=0.6)
+    for sid, f in (('n1', 82.4), ('n2', 73.4), ('n3', 65.4), ('only', 55.0)):
+        m.put(low_piano(f, 3.5), s_(sid), 0.8, bus='music')
+    m.put(lullaby(s_('n2') - s_('sis')), s_('sis'), 0.7, bus='music')
+    m.put(lullaby(s_('dawn') - s_('giggle')), s_('giggle'), 0.75, bus='music')
+    m.put(riser(s_('up') - s_('empty')), s_('empty'), 0.5, bus='music')
+    m.put(E7.hb_seq(s_('up') - s_('empty'), 80, 120), s_('empty'), 0.35, bus='music')
+    m.put(night_air(total - s_('trees')), s_('trees'), 0.8, bus='music')
+
     # ---- SFX
     for s in shots[1:]:
         m.put(whoosh(0.3), s['s'] - 0.12, 0.07, pan=rng.uniform(-0.3, 0.3))
