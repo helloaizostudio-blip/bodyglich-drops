@@ -30,7 +30,7 @@ LINES = [
 ]
 
 VOICES = {
-    "zash": dict(voice="am_michael", speed=1.1, pitch=1.06, expressive=True),    # the Blaze voice the user picked for Zash
+    "zash": dict(voice="am_fenrir", speed=1.05, pitch=1.0, expressive=True),     # the Fenrir voice the user picked (used for Mako in Ep 8)
     "lady": dict(voice="af_nicole", speed=0.98, pitch=1.0, expressive=True),
     "max":  dict(voice="af_sky", speed=1.10, pitch=1.22, expressive=True, smooth=True, gen_speed=1.0),
     "dad":  dict(voice="am_onyx", speed=1.0, pitch=0.95, expressive=True),

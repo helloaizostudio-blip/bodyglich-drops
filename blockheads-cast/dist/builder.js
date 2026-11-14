@@ -180,7 +180,7 @@ function resolveFace(c,exprKey){
   for(const k in ex){
     if(k==='eyes'&&(base.eyes==='shades'||base.eyes==='closed'))continue;
     if(k==='brows'&&base.brows==='none')continue;
-    if(base.mask&&(k==='mouth'))continue;
+    if((base.mask||base.mouth==='none')&&(k==='mouth'))continue;
     f[k]=ex[k];
   }
   f._baseBrows=base.brows||'normal';
@@ -372,7 +372,7 @@ function faceTexture(c,exprKey,opts){
   opts=opts||{};
   const Q=BH.Q;const [cnv,g]=cv(Math.round(1024*Q),Math.round(328*Q));g.scale(Q,Q);const cx=512;
   const f=resolveFace(c,exprKey);
-  if(opts.mouthOpen>0.05&&!f.mask)f.mouth='talk',f.mouthOpen=opts.mouthOpen;
+  if(opts.mouthOpen>0.05&&!f.mask&&f.mouth!=='none')f.mouth='talk',f.mouthOpen=opts.mouthOpen;
   const blink=opts.blink&&!['shades','closed','happy'].includes(f.eyes);
   const skin=c.skin;
   // skin + soft modelling
@@ -420,7 +420,7 @@ function faceTexture(c,exprKey,opts){
   // brows
   if(f.brows!=='none'){if(AN){g.save();g.translate(cx,-26);g.scale(1.2,1);g.translate(-cx,0);}[-1,1].forEach(s=>drawBrowV2(g,cx,s,f.brows,AN?(f._baseBrows==='bushy'||f._baseBrows==='thick'?'normal':'arched'):f._baseBrows,AN?'#1e1718':browC,c.id||''));if(AN)g.restore();}
   if(f.unibrow){g.fillStyle=browC;rr(g,cx-36,96,72,8,4);g.fill();}
-  if(AN){g.save();g.translate(cx,214);g.scale(0.58,0.58);g.translate(-cx,-214);}drawMouthV2(g,cx,f);if(AN)g.restore();
+  if(f.mouth!=='none'){if(AN){g.save();g.translate(cx,214);g.scale(0.58,0.58);g.translate(-cx,-214);}drawMouthV2(g,cx,f);if(AN)g.restore();}
   drawMustache(g,cx,f,beardC);
   // marks
   if(f.scar){const s=f.scar==='l'?-1:1;g.strokeStyle=rgba(shade(skin,-0.3),0.9);g.lineWidth=4;g.lineCap='round';g.beginPath();g.moveTo(cx+s*44,84);g.lineTo(cx+s*76,168);g.stroke();g.lineWidth=2;for(let k=0;k<4;k++){const t=0.15+k*0.22;const x=lerp(cx+s*44,cx+s*76,t),y=lerp(84,168,t);g.beginPath();g.moveTo(x-7,y+2);g.lineTo(x+7,y-2);g.stroke();}}
