@@ -167,7 +167,7 @@ const SH={
   window_walker:(u,t)=>{mood('night');const P=wStand(-3,0,62,Math.PI,t,{tilt:0.7});P.upR.rotation.set(-0.4,0,0.3);camAt(V3(-5,4.6,7.2),V3(-3,lerp(9,11,u),62),lerp(34,26,ease(u)));showOnly([]);S.windowFrame=1;},
   sis_bed:(u,t)=>{mood('inside');const L=leoBed('shocked');L.head.rotation.y=-0.6;const s=sisBed('smug');s.setFace('happy');camAt(V3(IX-1.6,6.5,lerp(9,7,u)),V3(IX-1.6,3.4,-5.6),50);showOnly(['leo','sis']);},
   night2_card:(u,t)=>{mood('night');camAt(V3(6,5,lerp(30,28,u)),V3(0,4,6),42);showOnly([]);S.card={text:'NIGHT 2',k:u};},
-  door_leo:(u,t)=>{mood('inside');const P=st('leo',IX+13.2,0,5,Math.PI/2,'shocked');P.torso.rotation.z=-0.1;close('leo',lerp(4,3.4,u),-0.6,0.05,38);showOnly(['leo']);},
+  door_leo:(u,t)=>{mood('inside');const P=st('leo',IX+13.2,0,5,-0.8,'shocked');P.armL.rotation.set(-1.2,0,0.2);const hp=head('leo');world.creepL.position.copy(hp).add(V3(-3,1,3));world.creepL.intensity=0.8;camAt(V3(IX+lerp(10.4,10.9,u),hp.y+0.2,lerp(8.2,7.7,u)),hp.clone().add(V3(0,-0.15,0)),40);showOnly(['leo']);},
   peephole_body:(u,t)=>{mood('night');world.porchGlow.visible=false;const P=wStand(0,0,9.5,Math.PI,t,{tilt:0.2});camAt(V3(0,5.2,6.4),V3(0,lerp(9,11,u),12),60);showOnly([]);S.peep=1;},
   peephole_face:(u,t,lt)=>{mood('night');world.porchGlow.visible=false;const P=wStand(0,0,lerp(14.5,12.8,ease(lt/1.2)),Math.PI,t,{tilt:lerp(0.1,0.5,ease(lt/1.5)),headX:0});world.walker.position.y=-13.0;
     const hp=wHead();world.creepL.position.copy(hp).add(V3(0,2.5,-2.5));world.creepL.intensity=1.6;camAt(V3(0,5.2,6.4),hp.clone().add(V3(0,-0.2,0)),lerp(58,48,ease(u)));showOnly([]);S.peep=1;S.breath=1;},
