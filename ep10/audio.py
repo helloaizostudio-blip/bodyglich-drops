@@ -1,6 +1,6 @@
 """Episode 10 "Don't Answer The Skinwalker": horror score + SFX (synthesized, original).
 
-Bed: a slow dark string-like pad, forest night air with crickets and an owl, low piano notes on each night and a
+Bed: a slow dark string-like pad (no noise bed, no rain/wind hiss), an owl, low piano notes on each night and a
 detuned music-box lullaby under the "sister". Reuses the Ep 7 SFX (knocks, creaks, hits, stings). Night cards get a low boom,
 the peephole face and the ceiling get the biggest hits, sunrise goes quiet and cold, the final door gets a creak
 and a sting into black.
@@ -38,8 +38,8 @@ def dark_pad(d, root=55.0, bright=500):
     t = t_(d); x = np.zeros(len(t))
     for f, g in ((root, 1.0), (root * 1.003, 0.8), (root * 2 * 1.189, 0.45), (root * 1.498, 0.55), (root * 2.997, 0.2)):
         x += (2 * ((f * t + rng.random()) % 1) - 1) * g
-    x = lp_fast(x, bright) * (0.75 + 0.25 * np.sin(2 * np.pi * 0.07 * t))
-    return x * env(len(t), 2.0, 2.0) * 0.22
+    x = lp_fast(lp_fast(lp_fast(x, bright), bright), bright) * (0.75 + 0.25 * np.sin(2 * np.pi * 0.07 * t))
+    return x * env(len(t), 2.0, 2.0) * 0.4
 def night_air(d):
     """soft forest night: low air + crickets"""
     t = t_(d); air = lp_fast(noise(d), 350) * 0.25 * (0.8 + 0.2 * np.sin(2 * np.pi * 0.05 * t))
@@ -73,7 +73,6 @@ def build(m, tl):
     def shot(n): return next(x for x in shots if x['name'] == n)
     total = tl['dur']
     # ---- beds: dark pad + night air instead of the old drone/wind
-    m.put(night_air(s_('dawn') + 1.0), 0.0, 0.9, bus='music')
     m.put(dark_pad(s_('n2') + 1.0, 55.0, 420), 0.0, 0.8, bus='music')
     m.put(dark_pad(s_('dawn') - s_('n2') + 1.0, 49.0, 520), s_('n2'), 0.85, bus='music')
     m.put(dark_pad(total - s_('dawn'), 41.2, 380), s_('dawn'), 0.7, bus='music')
@@ -84,11 +83,10 @@ def build(m, tl):
     m.put(lullaby(s_('dawn') - s_('giggle')), s_('giggle'), 0.75, bus='music')
     m.put(riser(s_('up') - s_('empty')), s_('empty'), 0.5, bus='music')
     m.put(E7.hb_seq(s_('up') - s_('empty'), 80, 120), s_('empty'), 0.35, bus='music')
-    m.put(night_air(total - s_('trees')), s_('trees'), 0.8, bus='music')
 
     # ---- SFX
     for s in shots[1:]:
-        m.put(whoosh(0.3), s['s'] - 0.12, 0.07, pan=rng.uniform(-0.3, 0.3))
+        m.put(whoosh(0.3), s['s'] - 0.12, 0.035, pan=rng.uniform(-0.3, 0.3))
     m.put(E7.hit(1.8), 0.02, 0.45)
     for n in ('night1_card', 'night2_card', 'night3_card'):
         m.put(E7.hit(2.2), shot(n)['s'], 0.8)
