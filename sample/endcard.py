@@ -20,7 +20,10 @@ W, H, FPS = 1080, 1920, 30
 def voice(args):
     import voice_lab as VL
     k = VL.load_kokoro()
-    y, sr = k.create(LINE, voice=args.voice, speed=args.speed, lang='en-us')
+    v = args.voice
+    if ':' in v:   # weighted blend, e.g. "am_adam:0.65,af_bella:0.35"
+        v = VL.style(k, tuple((n, float(w)) for n, w in (p.split(':') for p in v.split(','))))
+    y, sr = k.create(LINE, voice=v, speed=args.speed, lang='en-us')
     y = VL.trim(y)
     if abs(args.pitch - 1) > 0.001: y = VL.pitch_shift(y, args.pitch)
     return y, VL.SR

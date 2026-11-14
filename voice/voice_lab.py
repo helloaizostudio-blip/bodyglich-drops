@@ -60,7 +60,10 @@ def load_kokoro():
 
 
 def style(k, voice):
+    """('a', 'b') = equal blend; (('a', 0.65), ('b', 0.35)) = weighted blend; a plain name is used as is."""
     if isinstance(voice, tuple):
+        if voice and isinstance(voice[0], (tuple, list)):
+            return sum(w * k.get_voice_style(v) for v, w in voice)
         return np.mean([k.get_voice_style(v) for v in voice], axis=0)
     return voice
 
