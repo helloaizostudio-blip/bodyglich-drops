@@ -10,7 +10,7 @@ import { camera } from './core/engine.js';
 import { Host } from './core/host.js';
 import { Shifter } from './core/shift.js';
 import { studio } from './core/studio.js';
-import { bump, popIn } from './core/motion.js';
+import { bump, popIn, track, drag, alive, addPose, mouthFor, breathe as hostBreathe } from './core/motion.js';
 import { pill, label } from './core/look2d.js';
 
 const V3 = (x, y, z) => new THREE.Vector3(x, y, z);
@@ -96,6 +96,19 @@ export function buildShots(E) {
   };
   const fromMarrow = () => [HIP.localToWorld(V3(0, -0.28, 0.0)), HIP.localToWorld(V3(0, -0.15, 0.0)), HIP.localToWorld(V3(0, -0.02, 0.02)), XW(V3(0, 0.05, 0.08)), XW(V3(0.01, 0.2, 0.08)), XW(V3(0.025, 0.36, 0.06))];
 
+  // ── the host: talks to camera, points at Blip on every rank, shrugs on the question, shocked at the twist ──
+  const REST = { shL: [4, 0, 9], shR: [4, 0, 9], elL: 16, elR: 16, smile: 0.6 };
+  const POINT = { ...REST, shR: [62, -12, 48], elR: 14, head: [0, 22, 0], smile: 0.8, brow: [0.4, 0] };
+  const keys = [{ t: 0, pose: REST }, { t: L(1) - 0.05, d: 0.35, pose: { ...REST, shL: [24, 0, 38], shR: [24, 0, 38], elL: 75, elR: 75, brow: [0.9, 0], smile: 0.3, head: [-4, 0, 6] } }];
+  [2, 3, 4, 5].forEach((i) => { keys.push({ t: L(i) - 0.05, d: 0.3, pose: POINT }); keys.push({ t: L(i) + 1.0, d: 0.45, pose: { ...REST, head: [0, 18, 0] } }); });
+  keys.push({ t: L(6) - 0.05, d: 0.35, pose: { ...POINT, shR: [40, -10, 40] } });
+  keys.push({ t: Wd('million', 6) - 0.25, d: 0.3, pose: { ...REST, shL: [62, 0, 22], shR: [62, 0, 22], elL: 122, elR: 122, brow: [1, 0], lid: -0.3, mouth: 0.45, smile: -0.2, spine: [-6, 0, 0], head: [-6, 0, 0] } });
+  keys.push({ t: L(7) - 0.05, d: 0.35, pose: { ...REST, shR: [84, 0, 6], elR: 4, smile: 0.9, brow: [0.5, 0], head: [2, 0, 0] } });
+  const act = track(keys);
+  function hostAct(t) {
+    const p = drag(act, t), pz = alive(p, t, { seed: 6, talk: mouthFor(t) }); host.pose(pz); hostBreathe(host, t); host.belly(0); host.group.position.set(-0.25, 0, 0);
+  }
+
   // per-shot animation of the x-ray body
   const ph = (u, f0, f1, d) => 2 * Math.PI * (f0 * u + (f1 - f0) * u * u / (2 * d));               // phase of a rhythm that speeds up from f0 to f1 Hz over d s
   function swallow(t, f) {
@@ -140,7 +153,7 @@ export function buildShots(E) {
       if (o.fx === 'marrow' || o.fx === 'body') { marrow.visible = true; marrowM.opacity = 0.6 + 0.35 * Math.sin(t * 9); heart(t, f, 0, 1.4, 1.4, 1); }
       blip.group.updateMatrixWorld(true);
     }
-    ST.setMood(s.xray);
+    ST.setMood(s.xray * (o.wide ? 0.62 : 1)); hostAct(t);
     if (o.aim) Object.assign(o, o.aim());
     const at = o.at.clone(), pos = o.pos.clone(), tgt = V3(BX, f.cy * 1.25, BZ), shake = s.kick + (o.shake || 0);
     pos.lerp(tgt, s.kick * 0.08); at.lerp(tgt, s.kick * 0.3);
@@ -149,48 +162,49 @@ export function buildShots(E) {
     E.render(ST.scene, cam, { ...LOOK, focus: pos.distanceTo(o.focus || at), bloom: LOOK.bloom + s.flash * 0.2 + s.xray * 0.2, bloomThreshold: lerp(0.8, 0.5, s.xray), ...(o.look || {}) });
     return s;
   }
+  const WIDE = (k) => ({ pos: lerpV(V3(0.03, 1.02, 4.45), V3(0.06, 1.0, 4.1), k), at: V3(0.04, 0.9, 0), focus: V3(0.04, 0.9, 0.05), wide: true, dim: 1.35, look: { aperture: 0.0016 } });
   const FULL = (k) => ({ pos: lerpV(V3(BX + 0.12, 0.92, BZ + 3.05), V3(BX + 0.08, 0.9, BZ + 2.7), k), at: V3(BX, 0.76, BZ) });
 
   // 1 · cold open: the racing heart, a blink storm, the marrow pouring cells, under the promise; then the question
   const M_END = L(1) - 0.12, MONT = [['S05', T_100 + 0.2, 5], ['S03', T_15, 3], ['S06', T_2M, 6]], NM = MONT.length;
-  function banner(t) { pill('200 BILLION', 540, 300, 1 + 0.03 * Math.sin(t * 9), '#111', YEL, 104); pill('TIMES A DAY', 540, 445, 1, '#FFFFFF', 'rgba(190,16,24,0.95)', 70); }
+  function banner(t, sm = 1) { pill('200 BILLION', 540, 300 - 50 * (1 - sm), sm * (1 + 0.03 * Math.sin(t * 9)), '#111', YEL, 104); pill('TIMES A DAY', 540, 445 - 105 * (1 - sm), sm, '#FFFFFF', 'rgba(190,16,24,0.95)', 70); }
   add({ id: 'S00', at: 0, note: 'cold open: heart racing, Blip blinking at time-lapse speed, marrow pouring red cells; banner "200 BILLION TIMES A DAY" from frame one', draw(lt, d, t, blit) {
     const step = M_END / NM, n = Math.min(NM - 1, Math.floor(t / step)), [id, t0, li] = MONT[n], sh = S.find((x) => x.id === id), tt = t0 + (t - n * step);
     QUIET = true; sh.draw(tt - sh.at, cut(li + 1) - cut(li), tt, blit); QUIET = false;
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ladder(t); banner(t);
   } });
   add({ id: 'S01', at: M_END, note: 'x-ray body dims, red "?" over the chest; "CAN YOU GUESS?"', draw(lt, d, t, blit) {
-    show(t, { pos: lerpV(V3(BX + 0.1, 0.98, BZ + 2.5), V3(BX + 0.06, 0.98, BZ + 2.1), eio(lt / d)), at: V3(BX, 0.84, BZ), dim: 0.6 }); blit();
+    show(t, { ...WIDE(eio(lt / d)), dim: 0.6 }); blit();
     const [x, y] = screen(XW(V3(0, 0.3, 0.1)), cam); mystery(x, y, eob(seg(t, M_END, M_END + 0.3)), t);
     pill('CAN YOU GUESS?', 540, 1185, popIn(t - Wd('guess', 1)), '#111', YEL, 66);
-    ladder(t); banner(t);
+    ladder(t); banner(t, 0.72);
   } });
   cue(0.02, 'heartbeat', { dur: M_END / NM, gain: 0.9 }); cue(M_END / NM, 'whoosh'); cue(M_END / NM + 0.05, 'tock', { gain: 0.5 }); cue(M_END * 2 / NM, 'whoosh'); cue(M_END * 2 / NM + 0.05, 'bubbles', { dur: M_END / NM, gain: 0.6 });
   cue(M_END, 'thud', { gain: 0.8 }); cue(Wd('guess', 1), 'pop');
 
   // 2 · #4 swallow
-  add({ id: 'S02', at: cut(2), note: 'x-ray head and chest from the side: a glowing bite slides down the throat into the stomach, again and again; counter to 600', draw(lt, d, t, blit) {
+  add({ id: 'S02', at: L(2) + 1.75, note: 'x-ray head and chest from the side: a glowing bite slides down the throat into the stomach, again and again; counter to 600', draw(lt, d, t, blit) {
     show(t, { fx: 'swallow', pos: lerpV(V3(BX + 0.8, 1.16, BZ + 1.05), V3(BX + 0.64, 1.14, BZ + 0.88), eio(lt / d)), at: V3(BX + 0.04, 1.08, BZ + 0.04), focus: V3(BX, 1.0, BZ), turn: 0.75, flashK: 0.3, look: { aperture: 0.0016 } }); blit();
     rankNo(t, 4, RANK[0].t); counter(t, 600, T_SW, Le(2) - 0.1); ladder(t);
   } });
   cue(cut(2), 'whoosh'); [T_SW - 0.05, T_SW + 0.85, T_SW + 1.6, Le(2) - 0.35].forEach((g) => cue(g + 0.05, 'gulp', { gain: 0.9 }));
 
   // 3 · #3 blink
-  add({ id: 'S03', at: cut(3), note: 'Blip himself, close: he blinks faster and faster (time-lapse), counter rolls to 15,000', draw(lt, d, t, blit) {
+  add({ id: 'S03', at: L(3) + 1.2, note: 'Blip himself, close: he blinks faster and faster (time-lapse), counter rolls to 15,000', draw(lt, d, t, blit) {
     show(t, { blink: true, pos: lerpV(V3(BX + 0.1, 0.42, BZ + 1.35), V3(BX + 0.06, 0.4, BZ + 1.1), eio(lt / d)), at: V3(BX, 0.33, BZ), focus: V3(BX, 0.33, BZ + 0.2), flashK: 0.15, look: { aperture: 0.0035 } }); blit();
     rankNo(t, 3, RANK[1].t); counter(t, 15000, T_BL, Le(3) - 0.1); ladder(t);
   } });
   for (let i = 0; i < 9; i++) cue(Wd('blink', 3) + i * (0.22 - i * 0.015), 'tock', { gain: 0.35 });
 
   // 4 · #2 breathe
-  add({ id: 'S04', at: cut(4), note: 'x-ray chest: the lungs fill and empty faster and faster, air streams in and out; counter to 20,000', draw(lt, d, t, blit) {
+  add({ id: 'S04', at: L(4) + 1.3, note: 'x-ray chest: the lungs fill and empty faster and faster, air streams in and out; counter to 20,000', draw(lt, d, t, blit) {
     const k = eio(lt / d); show(t, { fx: 'breathe', flashK: 0.25, aim: () => { const c0 = XW(V3(0, 0.4, 0.0)); return { pos: lerpV(c0.clone().add(V3(0.2, 0.12, 1.15)), c0.clone().add(V3(0.13, 0.08, 0.92)), k), at: c0, focus: c0 }; }, look: { aperture: 0.0016 } }); blit();
     rankNo(t, 2, RANK[2].t); counter(t, 20000, T_BR, Le(4) - 0.1); ladder(t);
   } });
   cue(cut(4), 'whoosh'); cue(T_BR - 0.1, 'inhale', { dur: 1.0, gain: 0.7 }); cue(T_BR + 1.1, 'inhale', { dur: 0.6, gain: 0.5 });
 
   // 5 · #1 heartbeat
-  add({ id: 'S05', at: cut(5), note: 'x-ray chest close on the heart: it beats faster and faster, counter to 100,000', draw(lt, d, t, blit) {
+  add({ id: 'S05', at: L(5) + 1.6, note: 'x-ray chest close on the heart: it beats faster and faster, counter to 100,000', draw(lt, d, t, blit) {
     const k = eio(lt / d); show(t, { fx: 'heart', aim: () => { const c0 = XW(V3(0.025, 0.36, 0.03)); return { pos: lerpV(c0.clone().add(V3(0.18, 0.08, 0.85)), c0.clone().add(V3(0.1, 0.05, 0.62)), k), at: c0, focus: c0 }; }, look: { aperture: 0.0016 } }); blit();
     rankNo(t, 1, RANK[3].t);
     const [x, y] = screen(XW(V3(0.03, 0.38, 0.07)), cam); label('HEART', 800, 520, x, y, eob(seg(t, T_HT - 0.15, T_HT + 0.15)));
@@ -210,12 +224,26 @@ export function buildShots(E) {
 
   // 7 · the live counter: how many you've made since the video started (loops into the hook)
   add({ id: 'S07', at: cut(7), note: 'x-ray full body: red cells stream everywhere; a live counter of cells made since the video started (2 million per second of runtime)', draw(lt, d, t, blit) {
-    show(t, { fx: 'body', cells: 'body', ...FULL(eio(lt / d)) }); blit();
+    show(t, { fx: 'body', cells: 'body', ...WIDE(eio(lt / d)) }); blit();
     pill('MADE SINCE YOU STARTED WATCHING', 540, 1040, popIn(t - L(7)), '#111', YEL, 38);
     pill(fmt(2e6 * t), 540, 1150, popIn(t - L(7)) * (1 + 0.04 * bump(seg(t, T_50, T_50 + 0.35))), RED, DARK, 104);
     ladder(t);
   } });
   cue(cut(7), 'whoosh'); cue(T_50, 'pop');
+
+  // two-shots: the host announces each rank and points while Blip does it next to him; then a short close-up
+  const wideShot = (id, i, rank, n, extra) => add({ id, at: cut(i), note: `two-shot: host points at Blip and says #${n}; Blip acts it out`, draw(lt, d, t, blit) {
+    show(t, { ...WIDE(eio(lt / d)), ...extra }); blit(); rankNo(t, n, RANK[rank].t); ladder(t);
+    if (extra.count) counter(t, ...extra.count);
+  } });
+  wideShot('S02w', 2, 0, 4, { fx: 'swallow', count: [600, T_SW, Le(2) - 0.1] });
+  wideShot('S03w', 3, 1, 3, { blink: true, flashK: 0.4, count: [15000, T_BL, Le(3) - 0.1] });
+  wideShot('S04w', 4, 2, 2, { fx: 'breathe', count: [20000, T_BR, Le(4) - 0.1] });
+  wideShot('S05w', 5, 3, 1, { fx: 'heart', count: [100000, T_HT, Le(5) - 0.1, YEL] });
+  add({ id: 'S06w', at: T_2M - 0.15, note: 'two-shot: host grabs his head in shock; x-ray Blip with cells pouring from the thigh; "2,000,000 EVERY SECOND"', draw(lt, d, t, blit) {
+    show(t, { ...WIDE(eio(lt / d)), fx: 'marrow', cells: 'marrow' }); blit();
+    pill('2,000,000', 540, 1150, popIn(t - T_2M + 0.1), RED, DARK, 104); pill('EVERY SECOND', 540, 1270, popIn(t - T_2M + 0.1), '#111', YEL, 40); ladder(t);
+  } });
 
   return { shots: S, cues: CUES };
 }
