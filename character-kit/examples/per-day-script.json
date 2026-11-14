@@ -1,0 +1,26 @@
+{
+  "title": "What Your Body Does 200 Billion Times A Day",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "bed",
+  "sources": [
+    "Swallowing: healthy adults swallow roughly 500-700 times a day, about 585 on average (Lear et al. 1965, Archives of Oral Biology)",
+    "Blinking: about 15-20 blinks a minute while awake, roughly 14,000-19,000 a day (Bentivoglio et al. 1997, Movement Disorders; American Academy of Ophthalmology)",
+    "Breathing: 12-16 breaths a minute at rest, roughly 17,000-23,000 a day (Cleveland Clinic, vital signs)",
+    "Heartbeat: about 70 beats a minute, roughly 100,000 a day (American Heart Association)",
+    "Red blood cells: the bone marrow makes about 2 million new red blood cells every second, roughly 200 billion a day (Dzierzak & Philipsen 2013, Cold Spring Harbor Perspectives in Medicine; Higgins 2015)"
+  ],
+  "lines": [
+    { "text": "Your body does one thing two hundred billion times a day.", "caps": "Your body | does *one thing | *200 billion | times a *day" },
+    { "text": "Can you guess what?", "caps": "Can you *guess | *what?" },
+    { "text": "Number four, you swallow about six hundred times a day.", "caps": "Number *four | you *swallow | about *600 | times a day" },
+    { "text": "Three, you blink around fifteen thousand times.", "caps": "*Three | you *blink | around | *15,000 times" },
+    { "text": "Two, you breathe in about twenty thousand times.", "caps": "*Two | you *breathe in | about | *20,000 times" },
+    { "text": "And number one, your heart beats about a hundred thousand times.", "caps": "And number *one | your *heart beats | about a | *100,000 times" },
+    { "text": "But your bone marrow makes two hundred billion new red blood cells a day. That's two million every second,", "caps": "But your | *bone marrow | makes | *200 billion | new *red blood cells | a day | That's *2 million | every *second" },
+    { "text": "so you've made about fifty million just watching this.", "caps": "so you've made | about *50 million | just *watching this" }
+  ]
+}
