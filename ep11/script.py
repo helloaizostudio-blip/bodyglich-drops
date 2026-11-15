@@ -28,7 +28,7 @@ LINES = [
 ]
 
 VOICES = {
-    "leo": dict(voice="am_echo", speed=1.22, pitch=1.28, expressive=True, resample=True, gain_db=2.5),   # user pick: option V ("6"), a little louder and faster
+    "leo": dict(voice="am_echo", speed=1.10, pitch=1.28, expressive=True, resample=True, gain_db=2.5),   # user pick: option V ("6"), a little louder and faster
     "mom": dict(voice="af_heart", speed=1.05, pitch=1.0, expressive=True, smooth=True, gen_speed=1.0),
 }
 LONG_GAPS = {"cold": 0.3, "hook": 0.15, "max": 0.15, "rule": 0.25, "morning": 0.3, "safe": 0.15, "fridge": 0.25, "clock": 0.25, "drag": 0.3, "lawn": 0.3, "changed": 0.25, "mom2": 0.45}   # deliberate beats; everything else runs tight
