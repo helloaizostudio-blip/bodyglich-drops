@@ -23,9 +23,13 @@ def voice(args):
     v = args.voice
     if ':' in v:   # weighted blend, e.g. "am_adam:0.65,af_bella:0.35"
         v = VL.style(k, tuple((n, float(w)) for n, w in (p.split(':') for p in v.split(','))))
-    y, sr = k.create(LINE, voice=v, speed=args.speed, lang='en-us')
-    y = VL.trim(y)
-    if abs(args.pitch - 1) > 0.001: y = VL.pitch_shift(y, args.pitch)
+    if args.resample:   # high kid voices: generate slower, plain resample up (pitch + pace together)
+        y, sr = k.create(LINE, voice=v, speed=args.speed / args.pitch, lang='en-us')
+        y = VL.ffmpeg_filter(VL.trim(y), f"asetrate={VL.SR}*{args.pitch:.4f},aresample={VL.SR}")
+    else:
+        y, sr = k.create(LINE, voice=v, speed=args.speed, lang='en-us')
+        y = VL.trim(y)
+        if abs(args.pitch - 1) > 0.001: y = VL.pitch_shift(y, args.pitch)
     return y, VL.SR
 
 
@@ -81,7 +85,7 @@ def frame(bg, t, dur, accent):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('ep'); ap.add_argument('inp'); ap.add_argument('out')
     ap.add_argument('--voice', default='am_michael'); ap.add_argument('--speed', type=float, default=1.1); ap.add_argument('--pitch', type=float, default=1.06)
-    ap.add_argument('--bg'); ap.add_argument('--accent', default='#ff2e2e'); a = ap.parse_args()
+    ap.add_argument('--bg'); ap.add_argument('--resample', action='store_true'); ap.add_argument('--accent', default='#ff2e2e'); a = ap.parse_args()
     y, sr = voice(a); dur = len(y) / sr + 1.2
     tmp = tempfile.mkdtemp(dir=os.path.join(a.ep, 'out'))
     pad = np.zeros(int(0.35 * sr)); yy = np.concatenate([pad, y, np.zeros(int(0.85 * sr))])

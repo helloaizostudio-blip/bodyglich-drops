@@ -43,13 +43,16 @@ def stage_voice():
             gen = V.get('gen_speed', 1.10)
             y, sr = k.create(clean, voice=voice, speed=gen * T['speed'], lang='en-us')
             y = VL.smooth_shift(VL.trim(y), pf, sp / (gen * T['speed']))
+        elif V.get('resample'):  # high kid voices: generate slower, then plain resample so pitch + pace rise together (no stretch artifacts)
+            y, sr = k.create(clean, voice=voice, speed=sp / pf, lang='en-us')
+            y = VL.ffmpeg_filter(VL.trim(y), f"asetrate={SR}*{pf:.4f},aresample={SR}")
         else:
             y, sr = k.create(clean, voice=voice, speed=sp, lang='en-us')
             y = VL.trim(y)
             y = VL.pitch_shift(y, pf)
         sents = re.findall(r'[^.!?]+[.!?]*', clean)
         end = 1.6 if clean.rstrip().endswith('?') else T['drop']
-        y = VL.contour(y, end) * 10 ** (T['gain'] / 20)
+        y = VL.contour(y, end) * 10 ** ((T['gain'] + V.get('gain_db', 0)) / 20)
         if tag == 'whisper':
             y = VL.ffmpeg_filter(y, 'highpass=f=300,treble=g=4')
         if V.get('filter'):      # e.g. a phone-call voice
