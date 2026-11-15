@@ -16,24 +16,24 @@ an emotional line from the brother, and a "the dead gem glowed" cliffhanger.
 TITLE = "The Cursed Grimoire"
 SLUG = "ep12_cursed_grimoire"
 
-LINES = [
-    ("cold",    "zash",  "tense",   "A fire knight from the monster realm is about to burn my mom alive! And I'm the only person in this world with *zero* magic.", ["cold_fire", "cold_zash"]),
-    ("intro",   "zash",  "excited", "I'm Zash. In my world, everyone gets a grimoire when they turn eighteen. A magic *book*!",              ["zash_intro", "grimoire_wall"]),
-    ("born",    "zash",  "sad",     "I was born without a drop of magic. Kids used me for target *practice*.",                              ["bully_blast", "zash_down"]),
-    ("train",   "zash",  "excited", "So I trained my body instead! Six years! Every single *day*!",                                         ["train_pushups", "train_boulder", "train_buff"]),
-    ("day",     "zash",  "tense",   "Then the day came. The whole city was watching. The books choose *you*.",                              ["ceremony_wide", "books_float"]),
-    ("fire",    "zash",  "excited", "A fire grimoire chose the fire kid! A storm grimoire chose my brother Kai! Blessed by the *gods*!",     ["book_fire", "book_storm", "kai_blessed"]),
-    ("mine",    "zash",  "sad",     "Mine was grey. Dull. With a black sun on the cover. The mark of the *cursed*.",                         ["book_grey", "black_sun"]),
-    ("brick",   "brick", "excited", "A cursed book for a cursed *boy*!",                                                                    ["brick_laugh"]),
-    ("night",   "zash",  "tense",   "That night, a fire knight walked out of the monster *realm*.",                                         ["portal_open", "knight_reveal"]),
-    ("kai",     "zash",  "tense",   "My brother fought him first. The blessed one. He lost in ten *seconds*.",                              ["kai_attacks", "kai_falls"]),
-    ("me",      "zash",  "sad",     "Then I tried. He broke me with one *hit*.",                                                            ["zash_charge", "zash_thrown"]),
-    ("mom",     "zash",  "tense",   "Then he turned to my *mom*.",                                                                          ["knight_mom"]),
-    ("shake",   "zash",  "whisper", "And my grimoire started to *shake*.",                                                                  ["book_shakes"]),
-    ("sword",   "zash",  "excited", "A black katana rose out of the pages! Heavy as a boulder. Good thing I lift *boulders*!",              ["katana_rises", "zash_lifts"]),
-    ("deflect", "zash",  "excited", "He threw everything he had. My sword sent it right back at *him*!",                                    ["fire_blast", "deflect"]),
-    ("done",    "zash",  "calm",    "One swing. *Done*.",                                                                                   ["one_swing"]),
-    ("glow",    "zash",  "whisper", "Then the black sun on my book began to *glow*.",                                                       ["sun_glow"]),
+LINES = [   # v5: the user's own script, word for word
+    ("cold",    "zash",  "tense",   "A fire knight just came out of the monster realm, and he's about to burn my mother alive! And the worst part? I'm the only person in this world who can't use *magic*.", ["cold_fire", "cold_zash"]),
+    ("intro",   "zash",  "excited", "My name is Zash. In this world, everyone receives a grimoire when they turn eighteen. A magical book that determines their power, and their *destiny*.", ["zash_intro", "grimoire_wall"]),
+    ("born",    "zash",  "sad",     "Everyone has magic. Except me. I was born with absolutely *zero* mana. No spells. No abilities. Nothing. Growing up, I was everyone's favourite punching *bag*.", ["bully_blast", "zash_down"]),
+    ("train",   "zash",  "excited", "But I refused to stay weak. If I couldn't train my magic, I'd train my *body*. Six years. Every single day. No *excuses*.", ["train_pushups", "train_boulder", "train_buff"]),
+    ("day",     "zash",  "tense",   "Then came the day of the Grimoire Ceremony. The entire city gathered to witness our destinies. One by one, the books *descended*.", ["ceremony_wide", "books_float"]),
+    ("fire",    "zash",  "excited", "A *fire* grimoire chose the fire kid. A *storm* grimoire chose my prodigy brother, Kai. The crowd went wild. The gods had clearly *blessed* them.", ["book_fire", "book_storm", "kai_blessed"]),
+    ("mine",    "zash",  "sad",     "And then, it was my turn. A grey book floated towards me. No shine. No aura. Just a dull cover, with a *black sun* stamped right in the middle. The crowd went *silent*.", ["book_grey", "black_sun"]),
+    ("brick",   "brick", "excited", "Ha ha! Even the books know you're *cursed*!", ["brick_laugh"]),
+    ("night",   "zash",  "tense",   "And things got *much* worse that night. A fire knight emerged from the monster *realm*.", ["portal_open", "knight_reveal"]),
+    ("kai",     "zash",  "tense",   "My brother Kai stepped forward first. The chosen one. The storm prodigy. He lasted ten *seconds*.", ["kai_attacks", "kai_falls"]),
+    ("me",      "zash",  "sad",     "Then it was my turn. I charged at the knight. One hit. I was on the ground. Completely *helpless*.", ["zash_charge", "zash_thrown"]),
+    ("mom",     "zash",  "tense",   "And then, he turned towards my *mother*. I couldn't let that happen.", ["knight_mom"]),
+    ("shake",   "zash",  "whisper", "That's when my grimoire started *shaking*. Its pages began flipping on their own.", ["book_shakes"]),
+    ("sword",   "zash",  "excited", "And suddenly, a *black katana* emerged from the book! It was insanely heavy. Good thing I'd spent six years lifting *boulders*.", ["katana_rises", "zash_lifts"]),
+    ("deflect", "zash",  "excited", "The fire knight unleashed everything he had. But instead of burning me, my sword sent his own attack straight back at *him*!", ["fire_blast", "deflect"]),
+    ("done",    "zash",  "calm",    "One swing. Silence. The fire knight was *defeated*.", ["one_swing"]),
+    ("glow",    "zash",  "whisper", "But before I could even understand what had happened, the black sun on my grimoire began to *glow*. And something was waking up inside it.", ["sun_glow"]),
 ]
 
 VOICES = {
