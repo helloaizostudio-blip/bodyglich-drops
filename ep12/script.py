@@ -37,7 +37,7 @@ LINES = [
 ]
 
 VOICES = {
-    "zash":  dict(voice="am_echo", speed=1.10, pitch=1.28, expressive=True, resample=True, gain_db=2.5, energy=True),   # narrator voice the user picked (option V), exciting mode
+    "zash":  dict(voice="am_echo", speed=1.10, pitch=1.28, expressive=True, resample=True, gain_db=2.0, polish=True, tag_amt=0.5),   # narrator voice the user picked (option V), exciting mode
     "brick": dict(voice="am_fenrir", speed=1.08, pitch=1.0, expressive=True),
 }
 LONG_GAPS = {"cold": 0.25, "intro": 0.15, "born": 0.2, "train": 0.15, "day": 0.2, "fire": 0.2, "mine": 0.35, "brick": 0.25, "night": 0.2, "kai": 0.25, "me": 0.3, "mom": 0.4, "shake": 0.5, "sword": 0.2, "deflect": 0.3, "done": 0.5}

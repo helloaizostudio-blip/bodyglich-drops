@@ -38,7 +38,8 @@ def stage_voice():
         V = S.VOICES[who]; T = VL.TAGS.get(tag, VL.TAGS['calm'])
         clean = text.replace('*', '')
         voice = VL.style(k, V['voice']) if isinstance(V['voice'], tuple) else V['voice']
-        sp = V['speed'] * T['speed']; pf = V['pitch'] * 2 ** (T['semi'] / 12)
+        ta = V.get('tag_amt', 1.0)   # how strongly the emotion tag changes pace/pitch (1 = full)
+        sp = V['speed'] * (1 + (T['speed'] - 1) * ta); pf = V['pitch'] * 2 ** (T['semi'] * ta / 12)
         if V.get('smooth'):      # generate at a calmer speed, then speed up + pitch with rubberband (no buzz)
             gen = V.get('gen_speed', 1.10)
             y, sr = k.create(clean, voice=voice, speed=gen * T['speed'], lang='en-us')
@@ -57,18 +58,21 @@ def stage_voice():
             y = VL.ffmpeg_filter(y, 'highpass=f=300,treble=g=4')
         if V.get('filter'):      # e.g. a phone-call voice
             y = VL.ffmpeg_filter(y, V['filter'])
-        if V.get('energy'):      # brighter, punchier delivery: presence lift + light compression
+        if V.get('polish'):      # studio-style chain: warmth, presence, tamed harshness, air, de-ess, smooth compression, limiter
+            y = VL.ffmpeg_filter(y, 'highpass=f=90,equalizer=f=240:t=q:w=1.0:g=2,equalizer=f=3000:t=q:w=1.2:g=2.5,equalizer=f=7200:t=q:w=2.0:g=-2.5,'
+                                    'treble=g=2:f=11000,deesser=i=0.5:m=0.5:f=0.5,acompressor=threshold=-20dB:ratio=3:attack=8:release=120:makeup=2.5,alimiter=limit=0.9')
+        elif V.get('energy'):    # brighter, punchier delivery: presence lift + light compression
             y = VL.ffmpeg_filter(y, 'equalizer=f=3200:t=q:w=1.0:g=3.5,equalizer=f=180:t=q:w=1.0:g=-1.5,acompressor=threshold=-22dB:ratio=3:attack=4:release=70:makeup=3')
         dur = len(y) / SR
         words = align_words(y, text, t)
-        if V.get('energy'):      # punch the *starred* words (the same ones the captions highlight)
+        if V.get('energy') or V.get('polish'):      # punch the *starred* words (the same ones the captions highlight)
             y = y.astype(np.float32).copy(); g = np.ones(len(y), np.float32); r = int(0.03 * SR)
             for w in words:
                 if not w.get('red'): continue
                 a0, b0 = max(0, int((w['s'] - t) * SR)), min(len(y), int((w['e'] - t) * SR))
                 if b0 - a0 < 2 * r: continue
-                bump = np.ones(b0 - a0, np.float32) * 1.4; bump[:r] = np.linspace(1, 1.4, r); bump[-r:] = np.linspace(1.4, 1, r); g[a0:b0] = bump
-            y = np.tanh(y * g * 1.0)
+                amt = 1.22 if V.get('polish') else 1.4; bump = np.ones(b0 - a0, np.float32) * amt; bump[:r] = np.linspace(1, amt, r); bump[-r:] = np.linspace(amt, 1, r); g[a0:b0] = bump
+            y = np.clip(y * g, -0.98, 0.98) if V.get('polish') else np.tanh(y * g)
         segs.append(dict(id=sid, who=who, tag=tag, text=clean, start=t, end=t + dur, words=words, shots=shots))
         clips.append(y.astype(np.float32)); t += dur
         gap = getattr(S, 'LONG_GAPS', {}).get(sid, 0.12)   # longer beats before reveals
