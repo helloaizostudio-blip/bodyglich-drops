@@ -57,8 +57,18 @@ def stage_voice():
             y = VL.ffmpeg_filter(y, 'highpass=f=300,treble=g=4')
         if V.get('filter'):      # e.g. a phone-call voice
             y = VL.ffmpeg_filter(y, V['filter'])
+        if V.get('energy'):      # brighter, punchier delivery: presence lift + light compression
+            y = VL.ffmpeg_filter(y, 'equalizer=f=3200:t=q:w=1.0:g=3.5,equalizer=f=180:t=q:w=1.0:g=-1.5,acompressor=threshold=-22dB:ratio=3:attack=4:release=70:makeup=3')
         dur = len(y) / SR
         words = align_words(y, text, t)
+        if V.get('energy'):      # punch the *starred* words (the same ones the captions highlight)
+            y = y.astype(np.float32).copy(); g = np.ones(len(y), np.float32); r = int(0.03 * SR)
+            for w in words:
+                if not w.get('red'): continue
+                a0, b0 = max(0, int((w['s'] - t) * SR)), min(len(y), int((w['e'] - t) * SR))
+                if b0 - a0 < 2 * r: continue
+                bump = np.ones(b0 - a0, np.float32) * 1.4; bump[:r] = np.linspace(1, 1.4, r); bump[-r:] = np.linspace(1.4, 1, r); g[a0:b0] = bump
+            y = np.tanh(y * g * 1.0)
         segs.append(dict(id=sid, who=who, tag=tag, text=clean, start=t, end=t + dur, words=words, shots=shots))
         clips.append(y.astype(np.float32)); t += dur
         gap = getattr(S, 'LONG_GAPS', {}).get(sid, 0.12)   # longer beats before reveals
