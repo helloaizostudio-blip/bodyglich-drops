@@ -35,9 +35,9 @@ LINES = [   # v6: tightened cut (~50 s) of the user's script; full version kept 
 ]
 
 VOICES = {
-    "zash":  dict(voice="am_echo", speed=1.10, pitch=1.28, expressive=True, resample=True, gain_db=2.0, polish=True, tag_amt=0.5),   # narrator voice the user picked (option V), exciting mode
-    "brick": dict(voice="am_fenrir", speed=1.08, pitch=1.0, expressive=True),
+    "zash":  dict(voice="am_echo", speed=1.21, pitch=1.28, expressive=True, resample=True, gain_db=2.0, polish=True, tag_amt=0.5),   # narrator voice the user picked (option V), exciting mode
+    "brick": dict(voice="am_fenrir", speed=1.19, pitch=1.0, expressive=True),
 }
-LONG_GAPS = {"cold": 0.2, "born": 0.1, "mine": 0.25, "brick": 0.15, "kai": 0.2, "mom": 0.3, "shake": 0.35, "deflect": 0.2, "done": 0.35}
+LONG_GAPS = {"cold": 0.18, "born": 0.09, "mine": 0.22, "brick": 0.14, "kai": 0.18, "mom": 0.27, "shake": 0.32, "deflect": 0.18, "done": 0.32}
 TAIL = 1.6
 LEAD = 0.0
