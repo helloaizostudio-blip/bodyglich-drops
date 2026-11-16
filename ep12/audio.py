@@ -93,7 +93,7 @@ def build(m, tl):
     cold_e = shot('cold_zash')['e']
     m.put(fade(bed(cold_e, 0.0, 99)[1], 0.05, 0.6), 0.0, 0.7, bus='music')
     m.put(riser(1.6), sword_t - 1.6, 0.35, bus='music')
-    m.put(E2.choir([A2 * 2, C3 * 2, E3 * 2], total - shot('aftermath')['s'] - 0.3, 0.9), shot('aftermath')['s'], 0.35, bus='music')
+    m.put(E2.choir([A2 * 2, C3 * 2, E3 * 2], total - shot('sun_glow')['s'] - 0.3, 0.9), shot('sun_glow')['s'], 0.35, bus='music')
     # ---- SFX
     for s in shots[1:]:
         m.put(whoosh(0.26), s['s'] - 0.1, 0.08, pan=rng.uniform(-0.3, 0.3))
@@ -101,7 +101,6 @@ def build(m, tl):
     m.put(E7.sting(), shot('cold_zash')['s'], 0.35)
     for k in range(3): m.put(zap(0.25), shot('bully_blast')['s'] + 0.3 + k * 0.55, 0.35, pan=0.3)
     for n in ('train_pushups', 'train_boulder', 'train_buff'): m.put(thud(), shot(n)['s'] + 0.02, 0.6)
-    m.put(shimmer(1.4), shot('books_float')['s'], 0.4)
     m.put(fire_whoosh(0.9), shot('book_fire')['s'] + 0.4, 0.5)
     m.put(zap(0.7), shot('book_storm')['s'] + 0.6, 0.6); m.put(E7.hit(1.4), shot('book_storm')['s'] + 0.6, 0.45)
     m.put(shimmer(1.2), shot('kai_blessed')['s'], 0.4)
@@ -115,13 +114,12 @@ def build(m, tl):
     bs = shot('book_shakes'); m.put(hum(bs['e'] - bs['s'] + 0.3), bs['s'], 0.6)
     m.put(shimmer(2.0), sword_t + 0.3, 0.5); m.put(E7.hit(2.6), sword_t + 0.3, 0.8)
     m.put(boom(1.4), shot('zash_lifts')['s'] + 0.25, 0.7)
-    m.put(fire_whoosh(1.7), shot('fire_blast')['s'], 0.8)
+    m.put(fire_whoosh(1.7), shot('zash_guard')['s'], 0.8)
     m.put(slash(), shot('deflect')['s'], 0.7); m.put(boom(1.8), shot('deflect')['s'] + 0.45, 0.9)
     m.put(slash(), shot('one_swing')['s'] + 0.15, 0.9); m.put(E7.hit(2.4), shot('one_swing')['s'] + 0.25, 0.8)
     m.put(hum(shot('awake')['e'] - shot('sun_glow')['s']), shot('sun_glow')['s'], 0.5)
     m.put(E7.hit(3.0), shot('awake')['s'] + 0.5, 0.9); m.put(E7.sting(), shot('awake')['s'] + 0.55, 0.5)
     for k in range(3): m.put(slash(0.3), shot('pages_flip')['s'] + 0.2 + k * 0.35, 0.3)
-    m.put(boom(1.4), shot('night_village')['e'] - 0.4, 0.5)
 
 
 def mix(tl_path, voice_path, out_path):
