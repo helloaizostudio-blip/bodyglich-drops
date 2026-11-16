@@ -1,0 +1,27 @@
+{
+  "title": "What Lightning Actually Does To Your Body",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "tension",
+  "sources": [
+    "Roy Sullivan, a US park ranger at Shenandoah National Park, was struck by lightning seven times between 1942 and 1977 and survived all of them (Guinness World Records)",
+    "Lightning can heat the air around it to about 50,000 degrees Fahrenheit, roughly five times hotter than the surface of the sun (US National Weather Service)",
+    "Much of a lightning current can flow over the outside of the body (the flashover effect), which is one reason most victims survive (NWS; Cooper, 'Lightning injuries', Medscape)",
+    "About 90 percent of people struck by lightning survive (US National Weather Service, CDC)",
+    "Cardiac arrest is the main cause of death from lightning: the current can stop the heart (Cooper 1980, Annals of Emergency Medicine; CDC)",
+    "Lichtenberg figures: fern-like red marks on the skin of some lightning survivors, appearing within an hour and usually fading within a day or two (Cherington et al. 2007, NEJM images)"
+  ],
+  "lines": [
+    { "text": "This man got struck by lightning seven times, and lived.", "caps": "This *man | got *struck | by lightning | *seven times | and *lived" },
+    { "text": "So what does lightning actually do to you?", "caps": "So what does | *lightning | actually | *do to you?" },
+    { "text": "The bolt is five times hotter than the surface of the sun,", "caps": "The bolt is | *five times | *hotter | than the | surface of | the *sun" },
+    { "text": "but it's so fast, most of it flashes over your skin instead of through you.", "caps": "but it's | so *fast | most of it | *flashes over | your *skin | instead of | *through you" },
+    { "text": "That's why about ninety percent of people survive.", "caps": "That's why | about *90% | of people | *survive" },
+    { "text": "The real danger is your heart. The shock can stop it cold.", "caps": "The real *danger | is your *heart | The *shock | can *stop it | *cold" },
+    { "text": "And some survivors get these, fern shaped scars called Lichtenberg figures.", "caps": "And some | *survivors | get *these | *fern shaped | scars called | *Lichtenberg | figures" },
+    { "text": "His name was Roy Sullivan, a park ranger, and lightning hit him seven times.", "caps": "His name was | *Roy Sullivan | a park *ranger | and *lightning | hit him | *seven times" }
+  ]
+}
