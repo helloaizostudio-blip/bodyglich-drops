@@ -1,0 +1,27 @@
+{
+  "title": "The Man Who Survived an Iron Rod Through His Skull",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "tension",
+  "sources": [
+    "Phineas Gage, a railroad construction foreman in Cavendish, Vermont, was injured on 13 September 1848 while blasting rock for the Rutland and Burlington Railroad (Harlow 1848, 1868; Macmillan, 'An Odd Kind of Fame', 2000)",
+    "The tamping iron was 3 feet 7 inches (about 1.1 m) long, 1.25 inches across, and weighed 13.25 lb (about 6 kg) (Harlow 1868; Warren Anatomical Museum)",
+    "It entered under his left cheekbone, passed behind the left eye, and exited through the top of the skull; it landed some 25 m (about 80 feet) away (Harlow 1868; Van Horn et al. 2012, PLoS ONE)",
+    "Gage was conscious and speaking within minutes of the accident (Harlow 1848)",
+    "The iron destroyed much of his left frontal lobe; friends said he was 'no longer Gage' (Harlow 1868; Damasio et al. 1994, Science)",
+    "He lived about 12 more years, dying in 1860; his skull and the tamping iron are on display at Harvard's Warren Anatomical Museum"
+  ],
+  "lines": [
+    { "text": "This man got an iron rod shot straight through his skull, and stood up.", "caps": "This *man | got an *iron rod | *shot straight | through his *skull | and *stood up" },
+    { "text": "It was eighteen forty eight. Phineas Gage was blasting rock for a railroad.", "caps": "It was *1848 | *Phineas Gage | was *blasting rock | for a *railroad" },
+    { "text": "The iron rod was over a meter long, and weighed six kilos.", "caps": "The *iron rod | was *over a meter | *long | and *weighed | *six kilos" },
+    { "text": "It went in under his cheek, and out the top of his head.", "caps": "It went *in | under his *cheek | and *out | the *top | of his *head" },
+    { "text": "It landed twenty five meters away. And he was talking within minutes.", "caps": "It *landed | *25 meters | *away | And he was | *talking | within *minutes" },
+    { "text": "But it tore through his frontal lobe, the part that controls who you are.", "caps": "But it *tore | through his | *frontal lobe | the part that | *controls | *who you are" },
+    { "text": "His friends said he was no longer Gage. His whole personality changed.", "caps": "His *friends | said he was | *no longer | *Gage | His whole | *personality | *changed" },
+    { "text": "He lived twelve more years, and his skull is in a museum today.", "caps": "He *lived | *twelve more years | and his *skull | is in a *museum | *today" }
+  ]
+}
