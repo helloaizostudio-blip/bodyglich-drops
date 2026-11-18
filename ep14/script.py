@@ -9,7 +9,7 @@ TITLE = "Aisle 7"
 SLUG = "ep14_aisle_7"
 
 LINES = [
-    ("hook",   "pa",   "calm",    "Attention shoppers. The last customer in the store... do *not* turn around.", ["lights_on"]),
+    ("hook",   "pa",   "calm",    "Attention shoppers. The last customer in the store... do *not* turn around.", ["black_intercom", "lights_on", "zash_frozen_wide"]),
     ("last",   "zash", "whisper", "I was the last *customer*.", ["zash_frozen"]),
     ("milk",   "zash", "calm",    "Mom sent me for milk. The store closes at *midnight*. Easy.", ["clock", "basket_walk"]),
     ("music",  "zash", "whisper", "Then the music *stopped*.", ["empty_checkouts"]),
@@ -17,9 +17,9 @@ LINES = [
     ("closed", "pa",   "calm",    "Aisle seven is now *closed*.", ["cart_rolls"]),
     ("in7",    "zash", "whisper", "I was in Aisle *seven*.", ["aisle_sign", "lights_dying"]),
     ("tag",    "zash", "tense",   "It put something in my basket. A name tag. With *my* name.", ["breath_shoulder", "gray_hand", "name_tag"]),
-    ("walk",   "pa",   "calm",    "Keep walking. Don't *run*.", ["stiff_walk"]),
+    ("walk",   "pa",   "calm",    "Keep walking. Don't *run*.", ["stiff_walk", "doors_shut"]),
     ("likes",  "pa",   "whisper", "It likes it when you *run*.", ["hand_closer"]),
-    ("days",   "zash", "whisper", "Three... *days*?", ["doors_shut", "mom_text"]),
+    ("days",   "zash", "whisper", "Three... *days*?", ["mom_text"]),
     ("thanks", "pa",   "calm",    "Thank you for shopping with us...", ["zash_face"]),
     ("shift",  "pa",   "calm",    "...and welcome to your first *shift*.", ["tilt_uniform", "doors_open"]),
     ("copy",   "zashpa", "calm",  "Attention shoppers...", ["zash_mouth"]),
