@@ -22,16 +22,18 @@ LINES = [
     ("fit",    "zash",  "calm", "Finally. I fit *in*.", ["mia_heart"]),
     ("forgot", "zash",  "sad",     "Then I remembered... Theo flipped too. And I only wished myself *back*.", ["cafeteria_pan", "theo_alone"]),
     ("theo2",  "theo",  "sad",     "Bro... where's *my* stone?", ["theo_eyes"]),
-    ("cta",    "zash",  "calm",    "The problem was never who we liked. It was the people *laughing*.", ["sit_together", "freeze_tag"]),
+    ("cta",    "zash",  "calm",    "The problem was never who we liked. It was the people *laughing*.", ["sit_together"]),
+    ("cta2",   "zash",  "calm",    "Send this to your friend who likes the same gender... and tell them you'd never forget *them*.", ["freeze_tag"]),
 ]
 
-CROWD = "aecho=0.8:0.75:23|41|67:0.55|0.45|0.35,equalizer=f=2500:t=q:w=1.2:g=2,volume=1.3"
-VOICES = {
-    "zash":  dict(voice="am_echo", speed=1.21, pitch=1.28, expressive=True, resample=True, gain_db=2.0, polish=True, tag_amt=0.5),
-    "theo":  dict(voice="am_puck", speed=1.12, pitch=1.18, expressive=True, resample=True, gain_db=1.0, polish=True, tag_amt=0.5),
-    "bully": dict(voice="am_liam", speed=1.15, pitch=1.15, expressive=True, resample=True, tag_amt=0.6, filter=CROWD),   # a laughing group
+CLEAR = "highpass=f=85,equalizer=f=320:t=q:w=1.0:g=-2.5,equalizer=f=3200:t=q:w=1.4:g=2.0,acompressor=threshold=-20dB:ratio=2.5:attack=10:release=150:makeup=2,alimiter=limit=0.9"
+CROWD = "aecho=0.8:0.5:18|31:0.35|0.25," + CLEAR
+VOICES = {   # clearer than the usual chain: less speed, smaller pitch lift, no treble/air boost (it added hiss)
+    "zash":  dict(voice="am_echo", speed=1.10, pitch=1.20, expressive=True, resample=True, gain_db=2.0, tag_amt=0.3, filter=CLEAR),
+    "theo":  dict(voice="am_puck", speed=1.05, pitch=1.12, expressive=True, resample=True, gain_db=1.0, tag_amt=0.3, filter=CLEAR),
+    "bully": dict(voice="am_liam", speed=1.08, pitch=1.10, expressive=True, resample=True, tag_amt=0.4, filter=CROWD),   # a laughing group
 }
 LONG_GAPS = {"hook": 0.1, "laugh1": 0.3, "jokes": 0.25, "theo1": 0.35, "stone": 0.3, "worked": 0.5, "nothing": 0.45, "me": 0.2,
-             "laugh2": 0.15, "kidding": 0.4, "wish2": 0.3, "fit": 0.5, "forgot": 0.25, "theo2": 0.5}
+             "laugh2": 0.15, "kidding": 0.4, "wish2": 0.3, "fit": 0.5, "forgot": 0.25, "theo2": 0.5, "cta": 0.3}
 TAIL = 1.8
 LEAD = 0.0
