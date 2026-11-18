@@ -1,0 +1,26 @@
+{
+  "title": "Your Heart Doesn't Need Your Brain",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "tension",
+  "sources": [
+    "The sinoatrial (SA) node is the heart's natural pacemaker: its cells depolarize on their own (automaticity) and start every heartbeat without a signal from the brain (StatPearls, 'Physiology, Sinoatrial Node')",
+    "A normal resting heart rate is about 60 to 100 beats per minute, roughly one beat per second (American Heart Association)",
+    "The electrical impulse spreads from the SA node across the atria and through the AV node to the ventricles, making the heart contract (StatPearls, 'Physiology, Cardiac Conduction System')",
+    "The brain only adjusts the rate through the autonomic nerves: sympathetic nerves speed it up, the vagus nerve slows it down; a transplanted (denervated) heart still beats (StatPearls)",
+    "Donor hearts can be transported warm and beating in organ care systems such as the TransMedics OCS Heart ('heart in a box'), FDA approved 2021",
+    "The embryonic heart begins beating around day 22 after conception, before the brain controls it (Tan & Lewandowski, 'The Transitional Heart', 2020)"
+  ],
+  "lines": [
+    { "text": "Your heart doesn't need your brain to beat. It can even beat outside your body.", "caps": "Your *heart | doesn't need | your *brain | to *beat | It can even beat | *outside your body" },
+    { "text": "That's because it has its own spark plug, a tiny patch of cells called the S. A. node.", "caps": "That's because | it has its own | *spark plug | a *tiny patch | of cells | called the *SA node" },
+    { "text": "About once every second, it fires an electric spark.", "caps": "About *once | every *second | it *fires | an *electric spark" },
+    { "text": "The spark spreads across the heart, and the whole thing squeezes.", "caps": "The spark *spreads | across the heart | and the whole thing | *squeezes" },
+    { "text": "Your brain can only speed it up or slow it down. It doesn't start the beat.", "caps": "Your brain can only | *speed it up | or *slow it down | It *doesn't start | the beat" },
+    { "text": "So doctors can carry a donor heart in a machine, still warm and beating.", "caps": "So doctors | can *carry | a *donor heart | in a *machine | still *warm | and *beating" },
+    { "text": "And yours has been beating on its own since before you were even born.", "caps": "And *yours | has been beating | on its *own | since *before | you were even *born" }
+  ]
+}
