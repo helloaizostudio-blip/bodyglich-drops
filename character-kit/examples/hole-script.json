@@ -1,0 +1,27 @@
+{
+  "title": "The Man With a Hole in His Stomach",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "tension",
+  "sources": [
+    "Alexis St. Martin, a young fur-company voyageur, was accidentally shot in the left side of the abdomen at close range at Fort Mackinac, Michigan, on 6 June 1822 (Beaumont 1833; Myer, 'Life and Letters of Dr. William Beaumont', 1912)",
+    "The wound healed but left a permanent opening (gastric fistula) into his stomach (Beaumont 1833)",
+    "US Army surgeon William Beaumont tied pieces of food to silk string, put them into the stomach through the opening and pulled them out at intervals to see how far they had digested (Beaumont 1833, 'Experiments and Observations on the Gastric Juice and the Physiology of Digestion')",
+    "Beaumont showed digestion is a chemical process driven by acidic gastric juice, not just mechanical grinding (Beaumont 1833; Rosen, 'Alexis St. Martin', 2016 summaries)",
+    "Beaumont reported 238 experiments on St. Martin between 1825 and 1833 (Beaumont 1833)",
+    "Beaumont died in 1853; St. Martin died in 1880, about 27 years later"
+  ],
+  "lines": [
+    { "text": "This man had a hole in his stomach, and his doctor dropped food straight into it.", "caps": "This *man | had a *hole | in his *stomach | and his *doctor | *dropped food | *straight into it" },
+    { "text": "In eighteen twenty two, Alexis St. Martin got shot in the gut by accident.", "caps": "In *1822 | *Alexis | St. Martin | got *shot | in the *gut | by *accident" },
+    { "text": "He survived, but the wound never closed. It left a hole into his stomach.", "caps": "He *survived | but the wound | *never closed | It left a *hole | into his *stomach" },
+    { "text": "So his doctor, William Beaumont, tied food to a string and lowered it in.", "caps": "So his *doctor | William *Beaumont | tied *food | to a *string | and *lowered it in" },
+    { "text": "Hours later, he pulled it out to see how much had been digested.", "caps": "*Hours later | he *pulled it out | to see | how much | had been *digested" },
+    { "text": "That's how we learned your stomach melts food with acid, not just by squeezing it.", "caps": "That's how | we *learned | your stomach | *melts food | with *acid | not just by | *squeezing it" },
+    { "text": "He ran over two hundred experiments on him.", "caps": "He ran *over | *two hundred | *experiments | on him" },
+    { "text": "And the man with the hole outlived his doctor by twenty seven years.", "caps": "And the man | with the *hole | *outlived | his *doctor | by *27 years" }
+  ]
+}
