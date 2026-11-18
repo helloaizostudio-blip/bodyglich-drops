@@ -1,0 +1,26 @@
+{
+  "title": "You're Taller in the Morning",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "tension",
+  "sources": [
+    "Adults lose roughly 1 cm (often 1-2 cm) of standing height over the course of a day, mostly within the first hours after getting up (Tyrrell, Reilly & Troup 1985, Spine; Reilly et al. 1984)",
+    "The loss comes from the intervertebral discs: compressive load during upright activity squeezes fluid out of the discs, so they get thinner (Adams et al. 1987; McGill 1996)",
+    "Lying down unloads the spine and the discs re-absorb fluid overnight, restoring height by morning (Tyrrell et al. 1985)",
+    "Astronauts can grow up to 3% taller in microgravity as the spine lengthens (NASA, 'Bigger in Space'; Young & Rajulu 2011 NASA study)",
+    "After returning to Earth, astronauts return to their normal height within months (NASA)"
+  ],
+  "lines": [
+    { "text": "Right now, you're shorter than you were when you woke up this morning.", "caps": "Right *now | you're *shorter | than you were | when you *woke up | this *morning" },
+    { "text": "Your spine is a stack of bones, with soft, squishy discs in between.", "caps": "Your *spine | is a stack | of *bones | with soft | *squishy discs | in between" },
+    { "text": "All day long, gravity squeezes those discs and pushes water out of them.", "caps": "All day long | *gravity | *squeezes | those discs | and pushes | *water out" },
+    { "text": "By night, you can lose about a centimeter of height.", "caps": "By *night | you can *lose | about a | *centimeter | of height" },
+    { "text": "Then you lie down to sleep, and the discs soak the water back up.", "caps": "Then you | lie down | to *sleep | and the discs | *soak the water | back *up" },
+    { "text": "So every morning, you wake up taller again.", "caps": "So every | *morning | you wake up | *taller | again" },
+    { "text": "In space, with no gravity, astronauts grow up to three percent taller.", "caps": "In *space | with *no gravity | *astronauts | grow up to | *3% taller" },
+    { "text": "Then they come back to Earth, and shrink right back down.", "caps": "Then they | come back | to *Earth | and *shrink | right back *down" }
+  ]
+}
