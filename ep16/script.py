@@ -22,7 +22,7 @@ LINES = [
     ("brick1", "brick", "excited", "I can't bully anyone! I have *customers*!", ["brick_lemonade"]),
     ("busy",   "zash",  "calm",    "Nobody laughed at Tobi again. They were too *busy*.", ["shop_cuts", "two_straws"]),
     ("turn",   "brick", "whisper", "My *turn*.", ["zash_sniff", "brick_stone"]),
-    ("cta",    "zash",  "calm",    "Send this to your friend who likes the same gender... and tell them to mind their own *business*. Follow, before Brick makes his wish.", ["end_card"]),
+    ("cta",    "zash",  "calm",    "Send this to your friend who likes the same gender... and tell them to mind their own *business*.", ["end_card"]),
 ]
 
 CLEAR = "highpass=f=85,equalizer=f=320:t=q:w=1.0:g=-2.5,equalizer=f=3200:t=q:w=1.4:g=2.0,acompressor=threshold=-20dB:ratio=2.5:attack=10:release=150:makeup=2,alimiter=limit=0.9"
