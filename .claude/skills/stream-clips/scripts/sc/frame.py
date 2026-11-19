@@ -148,8 +148,33 @@ def blur_graph(cfg, info):
             f"[bg1][fg1]overlay=0:(H-h)/2,format=yuv420p[framed]")
 
 
+def corner_graph(cfg, info, cam):
+    """Gameplay fills the 9:16 frame; the facecam is a small bordered box in a top corner."""
+    W, H = cfg["width"], cfg["height"]
+    sw, sh = info["width"], info["height"]
+    x, y, w, h = cam
+    gw = min(sw, sh * W / H)
+    gx = (sw - gw) / 2
+    if gx < x + w and gx + gw > x:            # keep the original cam out of the gameplay crop
+        gx = min(sw - gw, x + w) if x + w / 2 < sw / 2 else max(0.0, x - gw)
+    pw = even(W * cfg["corner_width"])
+    ph = even(pw * h / w)
+    b = 6
+    px = 36 if cfg["corner_side"] == "left" else W - pw - 2 * b - 36
+    py = even(H * cfg["corner_y"])
+    return (f"[0:v]split=2[c0][g0];"
+            f"[g0]crop={even(gw)}:{even(sh)}:{even(gx)}:0,"
+            f"scale={W}:{H}:flags=lanczos,setsar=1[g1];"
+            f"[c0]crop={even(w)}:{even(h)}:{even(x)}:{even(y)},"
+            f"scale={pw}:{ph}:flags=lanczos,setsar=1,"
+            f"pad={pw + 2 * b}:{ph + 2 * b}:{b}:{b}:white[c1];"
+            f"[g1][c1]overlay={px}:{py},format=yuv420p[framed]"), None
+
+
 def stack_graph(cfg, info, cam):
     """Facecam panel on top, gameplay panel below. `cam` in source pixels."""
+    if cfg.get("cam_style") == "corner":
+        return corner_graph(cfg, info, cam)
     W, H = cfg["width"], cfg["height"]
     top = even(H * cfg["cam_share"])
     low = H - top
