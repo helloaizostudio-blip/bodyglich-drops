@@ -9,9 +9,10 @@ SLUG = "ep16_stinky_stone"
 
 LINES = [
     ("hook",   "zash",  "excited", "My best friend is the only guy in this world who likes *guys*.", ["caf_couples", "tobi_heart"]),
-    ("laugh1", "bully", "excited", "Odd one out!", ["bullies_point"]),
-    ("flash",  "zash",  "calm",    "Long story. Magic stone. My *fault*.", ["flashback_stone", "flashback_wave"]),
-    ("found",  "zash",  "tense",   "Then I found another one. In the school *toilet*.", ["toilet_glow", "zash_horror"]),
+    ("bullied","zash",  "sad",     "So everyone started bullying *him*.", ["bullies_point"]),
+    ("flash",  "zash",  "calm",    "And it was kind of my *fault*.", ["flashback_stone", "flashback_wave"]),
+    ("search", "zash",  "tense",   "I felt bad. So I searched everywhere for another magic *stone*.", ["search_puddle", "search_bin"]),
+    ("found",  "zash",  "tense",   "I found one. In the school *toilet*.", ["toilet_glow", "zash_horror"]),
     ("worst",  "zash",  "sad",     "Worst day of my life. But a wish is a *wish*.", ["fish_out", "fly_dies"]),
     ("offer",  "zash",  "excited", "One wish, bro. Flip yourself *back*.", ["stone_tray", "guy_waves"]),
     ("nah",    "tobi",  "calm",    "Nah. I'm *good*.", ["tobi_shrug"]),
@@ -29,10 +30,9 @@ CROWD = "aecho=0.8:0.5:18|31:0.35|0.25," + CLEAR
 VOICES = {   # same clear chain as Ep 15
     "zash":  dict(voice="am_echo", speed=1.10, pitch=1.20, expressive=True, resample=True, gain_db=2.0, tag_amt=0.3, filter=CLEAR),
     "tobi":  dict(voice="am_puck", speed=1.05, pitch=1.12, expressive=True, resample=True, gain_db=1.0, tag_amt=0.3, filter=CLEAR),
-    "bully": dict(voice="am_liam", speed=1.08, pitch=1.10, expressive=True, resample=True, tag_amt=0.4, filter=CROWD),
     "brick": dict(voice="am_fenrir", speed=1.08, pitch=1.0, expressive=True, gain_db=1.0, tag_amt=0.4, filter=CLEAR),
 }
-LONG_GAPS = {"hook": 0.1, "laugh1": 0.25, "flash": 0.3, "found": 0.3, "worst": 0.3, "offer": 0.45, "nah": 0.35, "toilet": 0.3,
+LONG_GAPS = {"hook": 0.15, "bullied": 0.3, "flash": 0.3, "search": 0.25, "found": 0.3, "worst": 0.3, "offer": 0.45, "nah": 0.35, "toilet": 0.3,
              "wish": 0.6, "literal": 0.2, "brick1": 0.25, "busy": 0.5, "turn": 0.5}
 TAIL = 1.6
 LEAD = 0.0
