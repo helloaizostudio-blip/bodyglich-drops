@@ -80,7 +80,7 @@ def audio(url, args, work, live=False):
     for old in work.glob("audio.*"):
         old.unlink(missing_ok=True)
     say("downloading the audio track (video comes later, only for the clips)...", "step")
-    if "twitch.tv" in url and not live:
+    if "twitch.tv" in url:
         dest = hls_slice(url, args, "Audio_Only/audio_only/worst", 0, 1e9, work / "audio.m4a")
         say(f"audio ready ({dest.stat().st_size / 1e6:.0f} MB)", "good")
         return dest
