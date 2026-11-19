@@ -5,5 +5,5 @@
 # Add a topic after a | to only check that creator for that topic:
 #   twitch:tarik | valorant
 # Lines starting with # are ignored. Only recent videos whose title matches the topic are used.
-youtube:@KreekCraft | GTA 6
+youtube:@Kreek | GTA 6
 twitch:kreekcraft | GTA 6
