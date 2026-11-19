@@ -57,7 +57,7 @@ def faces(frames):
                 x, y, fw, fh = [float(v) for v in row[:4]]
                 if fw > 6 and fh > 6:
                     out.append((i, x, y, fw, fh))
-    else:
+    elif hasattr(cv2, "CascadeClassifier"):
         cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
         for i, f in enumerate(frames):
             gray = cv2.equalizeHist(cv2.cvtColor(f, cv2.COLOR_BGR2GRAY))

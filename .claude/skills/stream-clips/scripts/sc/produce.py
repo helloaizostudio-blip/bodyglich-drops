@@ -154,6 +154,8 @@ def make(index, pick, ctx, cfg, memory):
     say(f"  saved {dest.name} ({look})", "good")
     caption = (pick.get("caption") or "").strip()
     if cfg.get("caption_prefix"):
+        if caption and caption[-1] not in ".!?":
+            caption += "."
         caption = f"{caption} {cfg['caption_prefix']}".strip()
     tags = list(cfg.get("required_hashtags") or [])
     tags += [t for t in pick.get("hashtags", []) if t.lower() not in {x.lower() for x in tags}]

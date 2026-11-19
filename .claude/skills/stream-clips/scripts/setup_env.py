@@ -122,10 +122,15 @@ def download_models():
     good("Whisper models (tiny = scanning the stream, base = captions)")
     face = MODELS / "face_yunet.onnx"
     if not face.exists() or face.stat().st_size < 10000:
-        try:
-            urllib.request.urlretrieve(FACE_MODEL_URL, face)
-        except Exception as exc:  # noqa: BLE001
-            print(f"  [note] face model download failed ({exc}); a simpler face finder will be used")
+        for url in (FACE_MODEL_URL, FACE_MODEL_URL.replace(
+                "github.com/opencv/opencv_zoo/raw/main",
+                "media.githubusercontent.com/media/opencv/opencv_zoo/main")):
+            try:
+                urllib.request.urlretrieve(url, face)
+                if face.stat().st_size > 10000:
+                    break
+            except Exception as exc:  # noqa: BLE001
+                print(f"  [note] face model download failed ({exc})")
     if face.exists() and face.stat().st_size > 10000:
         good("face finder (OpenCV YuNet)")
 
