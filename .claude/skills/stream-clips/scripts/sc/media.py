@@ -1,8 +1,11 @@
 """yt-dlp wrappers. A stream is fetched as audio first; video only for the seconds that
 become clips, so a 6-hour stream costs a few hundred MB instead of many GB."""
 
+import concurrent.futures
 import shutil
 import time
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 from .common import Problem, read_json, run, say, write_json
@@ -77,6 +80,10 @@ def audio(url, args, work, live=False):
     for old in work.glob("audio.*"):
         old.unlink(missing_ok=True)
     say("downloading the audio track (video comes later, only for the clips)...", "step")
+    if "twitch.tv" in url and not live:
+        dest = hls_slice(url, args, "Audio_Only/audio_only/worst", 0, 1e9, work / "audio.m4a")
+        say(f"audio ready ({dest.stat().st_size / 1e6:.0f} MB)", "good")
+        return dest
     extra = ["--live-from-start"] if live and "youtu" in url else []
     try:
         run(["yt-dlp", *args, *extra, "-f", "ba/b", "-N", "4",
@@ -90,10 +97,59 @@ def audio(url, args, work, live=False):
     return have[0]
 
 
+def _get(u, tries=4):
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(u, timeout=60) as r:
+                return r.read()
+        except OSError:
+            if i == tries - 1:
+                raise
+            time.sleep(2 * (i + 1))
+
+
+def hls_slice(url, args, fmt, start, end, dest: Path):
+    """[start, end] seconds of an HLS VOD (Twitch), fetched segment by segment in Python and
+    joined locally. Used because ffmpeg can't read HTTPS through some proxies."""
+    m3u8 = run(["yt-dlp", *args, "-f", fmt, "-g", url], timeout=240).strip().splitlines()[0]
+    text = _get(m3u8).decode()
+    init, segs, t = None, [], 0.0
+    dur = None
+    for line in text.splitlines():
+        line = line.strip()
+        if line.startswith("#EXT-X-MAP:"):
+            init = line.split('URI="', 1)[1].split('"', 1)[0]
+        elif line.startswith("#EXTINF:"):
+            dur = float(line[8:].split(",", 1)[0])
+        elif line and not line.startswith("#") and dur is not None:
+            if t + dur > start and t < end:
+                segs.append((t, line))
+            t += dur
+            dur = None
+    if not segs:
+        raise Problem(f"no segments for {start:.0f}-{end:.0f}s")
+    urls = [urllib.parse.urljoin(m3u8, u) for _, u in segs]
+    raw = dest.with_suffix(".raw.mp4" if init or segs[0][1].endswith(".mp4") else ".raw.ts")
+    with open(raw, "wb") as f, concurrent.futures.ThreadPoolExecutor(8) as pool:
+        if init:
+            f.write(_get(urllib.parse.urljoin(m3u8, init)))
+        for i in range(0, len(urls), 64):          # in batches, written in order
+            for b in pool.map(_get, urls[i:i + 64]):
+                f.write(b)
+    run(["ffmpeg", "-y", "-v", "error", "-nostdin", "-ss", f"{max(0.0, start - segs[0][0]):.2f}",
+         "-i", str(raw), "-t", f"{end - start:.2f}", "-c", "copy", "-movflags", "+faststart",
+         str(dest)], timeout=900)
+    raw.unlink(missing_ok=True)
+    return dest
+
+
 def video_slice(url, args, start, end, dest: Path, max_height):
     """Only [start, end] seconds of the video, as an mp4."""
     if dest.exists() and dest.stat().st_size > 50_000:
         return dest
+    if "twitch.tv" in url:
+        h = "1080p60" if max_height >= 1080 else "720p60"
+        return hls_slice(url, args, f"{h}/720p60/best", max(0, start), end, dest)
     for old in dest.parent.glob(dest.stem + ".*"):
         old.unlink(missing_ok=True)
     fmt = (f"bv*[height<={max_height}][vcodec^=avc1]+ba/bv*[height<={max_height}]+ba/"
