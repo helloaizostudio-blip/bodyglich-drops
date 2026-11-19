@@ -1,0 +1,12 @@
+{
+  "logo_file": "kreekcraft-logo.png",
+  "logo_width": 0.72,
+  "logo_y": 0.775,
+  "cap_y": 0.62,
+  "clips": 4,
+  "max_len": 45,
+  "min_score": 45,
+  "caption_prefix": "Watch KreekCraft on YouTube and Twitch!",
+  "required_hashtags": ["#GTA6", "#KreekCraft", "#GrandTheftAutoVI"],
+  "campaign_focus": "KreekCraft's own reactions and personality in GTA 6: him laughing, screaming, getting scared, raging, or reacting to something unexpected; wild police chases, explosions and ridiculous encounters; funny fails; unexpected discoveries in Vice City. The first 1-2 seconds must hook. Titles and captions must describe exactly what happened: no misleading clickbait, no invented context. Captions must not contain links or URLs. Skip giveaway reading, sponsor segments, AFK or quiet driving."
+}

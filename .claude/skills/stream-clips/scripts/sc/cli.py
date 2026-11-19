@@ -16,6 +16,8 @@ def _common(p):
     p.add_argument("--keywords", help="comma-separated words a title must contain (default: the topic)")
     p.add_argument("--cookies", choices=["chrome", "edge", "firefox", "brave", "safari", "opera", "vivaldi"],
                    help="use this browser's login (age-restricted YouTube, Kick, sub-only VODs)")
+    p.add_argument("--campaign", help="clipping-campaign preset from campaigns/<name> "
+                   "(logo overlay, caption text, hashtags), e.g. kreekcraft-gta6")
 
 
 def parser():
@@ -95,7 +97,9 @@ def main(argv):
         cfg = settings.load({
             "search_when": getattr(opts, "when", None), "clips": getattr(opts, "clips", None),
             "layout": getattr(opts, "layout", None), "min_len": getattr(opts, "min_len", None),
-            "max_len": getattr(opts, "max_len", None), "language": getattr(opts, "language", None)})
+            "max_len": getattr(opts, "max_len", None), "language": getattr(opts, "language", None)}, getattr(opts, "campaign", None))
+        if getattr(opts, "focus", "missing") is None and cfg["campaign_focus"]:
+            opts.focus = cfg["campaign_focus"]
         words = keywords_for(opts.topic, opts.keywords)
 
         if opts.command == "find":

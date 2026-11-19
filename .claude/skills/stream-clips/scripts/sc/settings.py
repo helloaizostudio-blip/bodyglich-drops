@@ -1,5 +1,7 @@
 """Every knob in one place. Override any of them in ~/StreamClips/settings.json."""
 
+from pathlib import Path
+
 from .common import DATA, Problem, read_json
 
 DEFAULTS = {
@@ -58,11 +60,41 @@ DEFAULTS = {
     "x264_preset": "fast",
     "loudness": -14,                 # LUFS; None to leave the audio as it is
     "audio_kbps": 192,
+
+    # campaign (clipping programs): logo overlay, required caption text and hashtags
+    "logo_file": None,               # transparent PNG shown for the whole clip
+    "logo_width": 0.70,              # share of the frame width
+    "logo_y": 0.84,                  # vertical position of the logo's top edge (0 top, 1 bottom)
+    "caption_prefix": "",            # text every post caption must start with
+    "required_hashtags": [],         # hashtags every post must include
+    "campaign_focus": "",            # default --focus for the picker
 }
 
+CAMPAIGNS = Path(__file__).resolve().parents[2] / "campaigns"
 
-def load(cli=None):
+
+def _campaign(name):
+    folder = CAMPAIGNS / name
+    path = folder / "settings.json"
+    if not path.exists():
+        found = sorted(p.name for p in CAMPAIGNS.iterdir() if p.is_dir()) if CAMPAIGNS.exists() else []
+        raise Problem(f"no campaign '{name}'. Available: {', '.join(found) or 'none'}")
+    data = read_json(path)
+    unknown = set(data) - set(DEFAULTS)
+    if unknown:
+        raise Problem(f"{path}: unknown setting(s) {', '.join(sorted(unknown))}")
+    if data.get("logo_file"):
+        logo = (folder / data["logo_file"]).resolve()
+        if not logo.exists():
+            raise Problem(f"campaign logo missing: {logo}")
+        data["logo_file"] = str(logo)
+    return data
+
+
+def load(cli=None, campaign=None):
     cfg = dict(DEFAULTS)
+    if campaign:
+        cfg.update(_campaign(campaign))
     user = DATA / "settings.json"
     if user.exists():
         data = read_json(user)

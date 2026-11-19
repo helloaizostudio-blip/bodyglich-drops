@@ -113,6 +113,16 @@ each clip, so streamers who switch languages are handled.
 - **Hinglish** (Hindi mixed with English): add `--language en`. Captions then come out in Roman letters, the way Indian Shorts are usually captioned. Pure Hindi in Devanagari: `--language hi`.
 - **Garbled transcript:** if the transcript in a prompt file looks garbled, the scan model is too small for that language. Set `"scan_model": "base"` in settings.json. It's about 2× slower but much more accurate for non-English speech.
 
+## 3b. Clipping campaigns (`--campaign`)
+
+Paid clipping programs have rules: a logo overlay on every frame, set caption text and hashtags, and only that creator's streams. Presets live in `campaigns/<name>/` (a `settings.json`, the logo PNG and a README with the rules). `--campaign <name>` burns the logo in for the whole clip, adds the required caption text and hashtags to POSTING.md, and steers the picker with the campaign's focus.
+
+- `kreekcraft-gta6`: KreekCraft GTA 6 (ClipLaunch). Clip only KreekCraft's own streams:
+  `streamclips clip --find --topic "GTA 6" --keywords "gta 6,gta vi,gta6" --campaign kreekcraft-gta6 --when week --count 3`
+  With `--find`, keep only the results from KreekCraft's own channels and drop the rest. Read `campaigns/kreekcraft-gta6/README.md` and remind the user of the rules there that the tool can't enforce.
+
+To add a campaign, copy that folder, swap in the new logo, and change the settings.
+
 ## 4. Finding streams
 
 `find` uses no keys and checks two sources:

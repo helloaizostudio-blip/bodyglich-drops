@@ -121,6 +121,14 @@ def make(index, pick, ctx, cfg, memory):
             out_label = "titled"
         except (OSError, ValueError) as exc:
             say(f"  title bar skipped ({exc})", "warn")
+    if cfg.get("logo_file"):
+        idx = inputs.count("-i")
+        inputs += ["-i", str(cfg["logo_file"])]
+        lw = int(cfg["width"] * cfg["logo_width"])
+        ly = int(cfg["height"] * cfg["logo_y"])
+        chain += (f";[{idx}:v]scale={lw}:-1[logo];[{out_label}][logo]overlay=(W-w)/2:{ly}"
+                  f":eof_action=repeat[logoed]")
+        out_label = "logoed"
     if cfg["loudness"] is not None:
         chain += f";[0:a]loudnorm=I={cfg['loudness']}:TP=-1.5:LRA=11,aresample=48000[aud]"
     else:
@@ -144,8 +152,13 @@ def make(index, pick, ctx, cfg, memory):
         pass
     part.unlink(missing_ok=True)
     say(f"  saved {dest.name} ({look})", "good")
+    caption = (pick.get("caption") or "").strip()
+    if cfg.get("caption_prefix"):
+        caption = f"{caption} {cfg['caption_prefix']}".strip()
+    tags = list(cfg.get("required_hashtags") or [])
+    tags += [t for t in pick.get("hashtags", []) if t.lower() not in {x.lower() for x in tags}]
     return {"file": dest.name, "type": pick.get("type"), "title": title,
-            "caption": pick.get("caption"), "hashtags": pick.get("hashtags", []),
+            "caption": caption, "hashtags": tags[:6],
             "score": pick.get("score"), "why": pick.get("why"), "look": look,
             "start": round(start, 1), "end": round(end, 1), "seconds": round(length, 1),
             "sync": round(conf, 2)}
