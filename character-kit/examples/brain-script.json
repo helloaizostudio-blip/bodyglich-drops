@@ -1,0 +1,25 @@
+{
+  "title": "Your Brain Can't Feel Pain",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "tension",
+  "sources": [
+    "Brain tissue (parenchyma) has no nociceptors (pain receptors), so touching or cutting it does not hurt (StatPearls, 'Awake Craniotomy'; Penfield & Boldrey 1937)",
+    "In awake craniotomy, the scalp and skull covering are numbed with local anaesthetic; the patient stays awake so surgeons can map speech and movement areas (StatPearls, 'Awake Craniotomy')",
+    "Patients have talked, sung and played instruments such as guitar and violin during awake brain surgery (e.g. King's College Hospital 2020, violinist Dagmar Turner; Abdullah, guitar, Bengaluru 2021 reports)",
+    "Electrical stimulation of a language area during mapping can make the patient stop speaking (speech arrest), marking tissue to avoid (Ojemann et al. 1989)",
+    "Headache pain comes from pain-sensitive structures around the brain: the meninges, blood vessels and nerves, not the brain tissue itself (Ray & Wolff 1940; NIH)"
+  ],
+  "lines": [
+    { "text": "Doctors can poke your brain while you're awake, and it doesn't hurt at all.", "caps": "Doctors can *poke | your *brain | while you're *awake | and it doesn't | *hurt at all" },
+    { "text": "That's because your brain has zero pain sensors of its own.", "caps": "That's because | your brain has | *zero | *pain sensors | of its own" },
+    { "text": "It feels every pain in your body, but it can't feel itself.", "caps": "It feels *every pain | in your *body | but it *can't | *feel itself" },
+    { "text": "So surgeons just numb the skin and skull, then open it up.", "caps": "So surgeons | just *numb | the skin and *skull | then *open it up" },
+    { "text": "And the patient stays awake, talking, or even playing guitar.", "caps": "And the patient | stays *awake | *talking | or even | playing *guitar" },
+    { "text": "If they touch a spot and the patient stops talking, they stay away from it.", "caps": "If they *touch | a spot | and the patient | *stops talking | they *stay away | from it" },
+    { "text": "And headaches? Those come from the nerves around your brain, not the brain itself.", "caps": "And *headaches? | Those come from | the *nerves | *around your brain | *not the brain | itself" }
+  ]
+}
