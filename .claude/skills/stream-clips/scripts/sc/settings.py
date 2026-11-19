@@ -38,7 +38,7 @@ DEFAULTS = {
     "big_face": 0.13,
     "cam_style": "corner",           # corner = full-screen gameplay + small facecam box; stack = split screen
     "corner_width": 0.36,            # facecam box width as a share of the frame width
-    "corner_y": 0.15,                # top edge of the facecam box (below the title bar)
+    "corner_y": 0.19,                # top edge of the facecam box (below the title bar)
     "corner_side": "left",           # left | right                # face wider than this share of the frame = talking head
 
     # title bar

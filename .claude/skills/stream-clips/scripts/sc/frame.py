@@ -157,7 +157,10 @@ def corner_graph(cfg, info, cam):
     gx = (sw - gw) / 2
     if gx < x + w and gx + gw > x:            # keep the original cam out of the gameplay crop
         gx = min(sw - gw, x + w) if x + w / 2 < sw / 2 else max(0.0, x - gw)
-    pw = even(W * cfg["corner_width"])
+    pw = W * cfg["corner_width"]
+    if pw * h / w < H * 0.13:                 # wide, short cams: grow so the face stays readable
+        pw = min(W * 0.62, H * 0.13 * w / h)
+    pw = even(pw)
     ph = even(pw * h / w)
     b = 6
     px = 36 if cfg["corner_side"] == "left" else W - pw - 2 * b - 36
