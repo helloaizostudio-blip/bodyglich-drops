@@ -1,0 +1,24 @@
+{
+  "title": "Why You Can't Hold Your Breath Forever",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.12,
+  "outro": 0.35,
+  "gap": 0.18,
+  "music": "tension",
+  "sources": [
+    "Croatian freediver Budimir Šobat set the Guinness World Record for the longest breath held voluntarily (male): 24 min 37.36 s, Sisak, Croatia, 27 March 2021, after pre-breathing pure oxygen (Guinness World Records)",
+    "The urge to breathe is driven mainly by rising carbon dioxide (and falling pH) in the blood, sensed by chemoreceptors in the brainstem, not mainly by low oxygen (StatPearls, 'Physiology, Respiratory Drive'; Parkes 2006, Experimental Physiology)",
+    "During a long breath-hold, involuntary diaphragm contractions begin (the 'struggle phase') (Lindholm & Lundgren 2009, J Appl Physiol)",
+    "If a breath-hold continues, the person loses consciousness (hypoxic blackout); the brainstem then restarts automatic breathing, which is why holding your breath on land can't kill you but blackout underwater can drown you (Lindholm & Lundgren 2009; Divers Alert Network)"
+  ],
+  "lines": [
+    { "text": "This man held his breath for twenty four minutes. But you can't hold yours forever.", "caps": "This man held | his *breath | for *24 minutes | But you *can't | hold yours *forever" },
+    { "text": "Budimir Shobat set the world record in twenty twenty one, after breathing pure oxygen first.", "caps": "*Budimir Šobat | set the *world record | in *2021 | after breathing | *pure oxygen first" },
+    { "text": "When you hold your breath, it's not a lack of oxygen that makes you gasp.", "caps": "When you *hold | your breath | it's *not | a lack of *oxygen | that makes you *gasp" },
+    { "text": "It's carbon dioxide building up in your blood.", "caps": "It's *carbon dioxide | *building up | in your *blood" },
+    { "text": "Your brain senses it, and your diaphragm starts to twitch.", "caps": "Your *brain | *senses it | and your *diaphragm | starts to *twitch" },
+    { "text": "Keep holding, and you'll pass out.", "caps": "Keep *holding | and you'll | *pass out" },
+    { "text": "And the second you do, your brain takes over, and you start breathing again.", "caps": "And the *second | you do | your brain | *takes over | and you start | *breathing again" }
+  ]
+}
