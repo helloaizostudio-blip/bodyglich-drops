@@ -18,6 +18,8 @@ META_KEYS = ("id", "title", "channel", "uploader", "duration", "view_count", "li
 def ytdlp_args(url, cookies=None):
     """Options every yt-dlp call for this URL needs."""
     args = ["--no-playlist", "--no-warnings"]
+    if url.startswith("file://"):
+        args.append("--enable-file-urls")
     youtube = "youtu" in url
     if youtube and not shutil.which("deno"):
         for runtime in ("node", "bun"):

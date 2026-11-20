@@ -1,6 +1,7 @@
 """Command line: find / clip / doctor."""
 
 import argparse
+from pathlib import Path
 import shutil
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -121,6 +122,7 @@ def main(argv):
             urls += [s["url"] for s in found]
         if not urls:
             raise Problem("give one or more links, or use --find --topic \"...\"")
+        urls = [Path(u).resolve().as_uri() if Path(u).exists() else u for u in urls]
         opts.cam_box = None
         if opts.cam:
             try:

@@ -2,7 +2,11 @@
   "clips": 5,
   "max_len": 45,
   "min_score": 45,
-  "caption_prefix": "",
-  "required_hashtags": ["#CuteCarrotTop", "#pumpfun", "#crypto"],
-  "campaign_focus": "Carrot must be in every clip. Look for: Carrot onboarding people to Pump.fun, good interactions between Carrot and other people, funny or memorable moments, strong reactions and quotable lines. Never portray Carrot in a negative light. Titles and captions must describe exactly what happened, in English only (no Japanese). Do not promise profits or give financial advice in titles or captions. Skip long silent chart-watching, wallet addresses, giveaway reading and menus."
+  "caption_prefix": "Carrot",
+  "required_hashtags": [
+    "#CuteCryptoCarrot",
+    "#CuteCarrotTop",
+    "#pumpfun"
+  ],
+  "campaign_focus": "Carrot must be the primary focus of every clip and the title must name Carrot. Look for: Carrot onboarding people to Pump.fun, good interactions between Carrot and other people, funny or memorable moments, strong reactions and quotable lines. Never portray Carrot in a negative light. Titles and captions must describe exactly what happened, in English only (no Japanese). Do not promise profits or give financial advice in titles or captions. Skip long silent chart-watching, wallet addresses, giveaway reading and menus."
 }
