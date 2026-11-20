@@ -2,7 +2,7 @@
   "clips": 5,
   "max_len": 45,
   "min_score": 45,
-  "caption_prefix": "Carrot",
+  "caption_prefix": "",
   "required_hashtags": [
     "#CuteCryptoCarrot",
     "#CuteCarrotTop",

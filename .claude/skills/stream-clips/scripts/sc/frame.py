@@ -252,6 +252,16 @@ def plan(part, start, length, info, cfg, memory, forced_cam=None):
         if big[0]["presence"] >= 0.5:
             say("  look: crop (follows the face)")
             return crop_graph(cfg, info, big[0], len(frames), scale), "crop", None
+    if want == "crop":                        # forced crop: follow any face, else centre
+        pool = sorted(live or found, key=lambda t: (t["presence"], t["size"]), reverse=True)
+        if pool:
+            say("  look: crop (follows the face)")
+            return crop_graph(cfg, info, pool[0], len(frames), scale), "crop", None
+        cw = even(min(sw, sh * cfg["width"] / cfg["height"]))
+        say("  look: crop (centre, no face found)")
+        return (f"[0:v]crop={cw}:{even(sh)}:{even((sw - cw) / 2)}:0,"
+                f"scale={cfg['width']}:{cfg['height']}:flags=lanczos,setsar=1,format=yuv420p[framed]"
+                ), "crop", None
     if want == "auto" and len(big) >= 2:
         say("  look: blur (more than one big face on screen)")
         return blur_graph(cfg, info), "blur", None
