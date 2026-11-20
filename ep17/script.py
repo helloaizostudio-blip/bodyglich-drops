@@ -20,8 +20,8 @@ LINES = [
     ("crowd",   "crowd",  "excited", "Come back! He'll steal your *job*!", ["crowd_windows"]),
     ("nojob",   "zash",   "calm",    "He can't steal my job... because I don't *have* one.", ["magnify_search", "zash_shrug"]),
     ("yinyang", "zash",   "calm",    "Me with no job. Him who takes every job. We're yin and yang. We complete each *other*.", ["high_five", "yin_yang"]),
-    ("twist",   "zash",   "excited", "Then he stole my *unemployment*.", ["couch_robert", "zash_barista"]),
-    ("cta",     "zash",   "calm",    "Send this to your unemployed friend... they're *safe*.", ["end_card"]),
+    ("twist",   "zash",   "excited", "Then he stole my *unemployment*.", ["couch_robert", "scroll_reels"]),
+    ("cta",     "zash",   "calm",    "Send this to your unemployed friend... they're *safe*.", ["zash_barista", "end_card"]),
 ]
 
 CLEAR = "highpass=f=85,equalizer=f=320:t=q:w=1.0:g=-2.5,equalizer=f=3200:t=q:w=1.4:g=2.0,acompressor=threshold=-20dB:ratio=2.5:attack=10:release=150:makeup=2,alimiter=limit=0.9"
@@ -32,6 +32,6 @@ VOICES = {
     "crowd":  dict(voice="am_liam", speed=1.10, pitch=1.10, expressive=True, resample=True, tag_amt=0.4, filter=CROWD),
 }
 LONG_GAPS = {"hook": 0.3, "ball": 0.15, "cafe": 0.25, "honey": 0.45, "wife": 0.4, "magic": 0.1, "vamp": 0.15, "bat": 0.15,
-             "detect": 0.5, "but": 0.2, "crowd": 0.25, "nojob": 0.5, "yinyang": 0.5, "twist": 0.4}
+             "detect": 0.5, "but": 0.2, "crowd": 0.25, "nojob": 0.5, "yinyang": 0.5, "twist": 2.6}
 TAIL = 1.6
 LEAD = 0.0

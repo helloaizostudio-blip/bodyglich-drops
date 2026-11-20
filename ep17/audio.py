@@ -65,6 +65,12 @@ def punch():
     t = t_(0.3); return (np.sin(2 * np.pi * np.cumsum(140 * np.exp(-t * 25) + 45) / SR) * 1.3 + hp_fast(noise(0.3), 1500) * 0.5 * np.exp(-t * 30)) * np.exp(-t * 10)
 
 
+def huss():
+    t = t_(0.32); hh = lp_fast(hp_fast(noise(0.32), 700), 3500) * np.exp(-((t - 0.05) / 0.04) ** 2) * 0.8
+    ss = hp_fast(noise(0.32), 5000) * np.exp(-((t - 0.17) / 0.07) ** 2) * 0.9
+    return (hh + ss) * env(len(t), 0.01, 0.05)
+
+
 def build(m, tl):
     shots = tl['shots']; total = tl['dur']
     def shot(n): return next(x for x in shots if x['name'] == n)
@@ -89,6 +95,9 @@ def build(m, tl):
     hf = shot('high_five'); m.put(riser(1.3), hf['s'], 0.3, bus='music'); m.put(punch(), hf['s'] + 1.3, 0.55); m.put(E7.hit(1.8), hf['s'] + 1.3, 0.4)
     m.put(shimmer(2.0), shot('yin_yang')['s'], 0.4)
     m.put(scratch(), shot('couch_robert')['s'], 0.5)
+    sr = shot('scroll_reels'); tt = sr['s'] + 0.5
+    while tt < sr['e'] - 0.1:
+        m.put(huss(), tt, 0.7, pan=rng.uniform(-0.2, 0.2)); tt += 0.42
     m.put(ding(), shot('end_card')['s'] + 0.2, 0.3)
 
 
