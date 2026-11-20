@@ -21,7 +21,7 @@ LINES = [
     ("nojob",   "zash",   "calm",    "He can't steal my job... because I don't *have* one.", ["magnify_search", "zash_shrug"]),
     ("yinyang", "zash",   "calm",    "Me with no job. Him who takes every job. We're yin and yang. We complete each *other*.", ["high_five", "yin_yang"]),
     ("twist",   "zash",   "excited", "Then he stole my *unemployment*.", ["couch_robert", "zash_barista"]),
-    ("cta",     "zash",   "calm",    "Send this to your friend who has no job... they're *safe*.", ["end_card"]),
+    ("cta",     "zash",   "calm",    "Send this to your unemployed friend... they're *safe*.", ["end_card"]),
 ]
 
 CLEAR = "highpass=f=85,equalizer=f=320:t=q:w=1.0:g=-2.5,equalizer=f=3200:t=q:w=1.4:g=2.0,acompressor=threshold=-20dB:ratio=2.5:attack=10:release=150:makeup=2,alimiter=limit=0.9"
