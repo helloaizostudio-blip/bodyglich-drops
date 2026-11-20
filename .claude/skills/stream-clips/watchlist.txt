@@ -6,4 +6,5 @@
 #   twitch:tarik | valorant
 # Lines starting with # are ignored. Only recent videos whose title matches the topic are used.
 youtube:@Kreek | GTA 6
+twitch:laurenhamdenn | GTA 6
 twitch:kreekcraft | GTA 6
