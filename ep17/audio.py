@@ -71,7 +71,8 @@ def build(m, tl):
     m.put(song(total), 0.0, SONG_GAIN, bus='music')
     for s in shots[1:]:
         m.put(whoosh(0.22), s['s'] - 0.08, 0.06, pan=rng.uniform(-0.3, 0.3))
-    m.put(wind(shot('robert_walks')['e']), 0.0, 0.5)
+    m.put(wind(shot('robert_walks')['e']), 0.0, 0.5); m.put(E7.hit(1.6), 0.0, 0.6); m.put(laughs(1.4, 4) * 0.0, 0.0, 0.0)
+    m.put(punch(), 1.6, 0.6); m.put(scratch(), 1.62, 0.25)
     for k in range(6): m.put(slamdoor(), 0.25 + k * 0.28, 0.45, pan=(-0.5 if k % 2 else 0.5))
     for k in range(4): m.put(slamdoor(), shot('robert_arrives')['s'] + 0.1 + k * 0.18, 0.4, pan=(-0.5 if k % 2 else 0.5))
     m.put(E7.hit(1.6), shot('robert_walks')['s'], 0.4)
