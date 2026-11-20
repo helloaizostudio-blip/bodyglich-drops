@@ -1,0 +1,25 @@
+{
+  "title": "Do You Have This Muscle?",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.05,
+  "outro": 0.35,
+  "gap": 0.14,
+  "music": "tension",
+  "sources": [
+    "The palmaris longus tendon shows in the middle of the wrist when you touch the thumb to the little finger and flex the wrist (Schaeffer's test) (Thompson, Mockford & Cooper 2001, J Hand Surg Br)",
+    "Palmaris longus is absent in roughly 14% of people in European populations (about 1 in 7), varying widely by population (Thompson et al. 2001; Sebastin et al. 2005; Ioannis et al. 2015 meta-analysis)",
+    "It is considered a vestigial muscle, thought to be a remnant from primate ancestors that used it in climbing/hanging (Fowlie et al. 2012; National Geographic/UCSF summaries)",
+    "Because it is expendable, its tendon is commonly harvested as a graft for tendon and ligament reconstruction (Wehbé 1992, J Hand Surg)",
+    "Absence is often unilateral: some people have it on only one arm (Thompson et al. 2001)"
+  ],
+  "lines": [
+    { "text": "Touch your thumb to your pinky and bend your wrist. See that cord pop up?", "caps": "Touch your *thumb | to your *pinky | and *bend your wrist | See that *cord | *pop up?" },
+    { "text": "That's a muscle called the palmaris longus.", "caps": "That's a *muscle | called the | *palmaris longus" },
+    { "text": "And about one in seven people don't have it at all.", "caps": "And about | *1 in 7 people | *don't have it | at *all" },
+    { "text": "Scientists think it's left over from ancestors who climbed trees.", "caps": "Scientists think | it's *left over | from *ancestors | who *climbed trees" },
+    { "text": "Today it's so useless, surgeons take it out to fix other tendons.", "caps": "Today it's so *useless | *surgeons | take it out | to *fix other tendons" },
+    { "text": "Check both arms. Some people only have it on one side.", "caps": "Check *both arms | Some people | only have it | on *one side" },
+    { "text": "So do you have it? Tell me in the comments.", "caps": "So do *you | *have it? | Tell me in | the *comments" }
+  ]
+}
