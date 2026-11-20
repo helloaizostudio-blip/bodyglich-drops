@@ -263,12 +263,12 @@ const SH={
   couch_robert:(u,t,lt)=>{mood('liv');world.tv.material.emissiveIntensity=0.8+0.4*Math.sin(t*13);const R=st('rhood',LIV,0.65,-5.6,0,'smug');sit(R);R.armR.rotation.set(-1.3-Math.max(0,Math.sin(lt*7))*0.6,0,0.3);R.armL.rotation.set(-0.9,0,-0.2);R._noIdle=true;
     world.chips.visible=true;world.chips.position.copy(handOf('rhood','armL').add(V3(0,0.4,0.2)));camAt(V3(LIV+1,5.6,8),V3(LIV,4.2,-5.6),44);showOnly(['rhood']);},
   scroll_reels:(u,t,lt)=>{mood('liv');world.tv.material.emissiveIntensity=0.5;const R=st('rhood',LIV,0.65,-5.6,0,'default',{blink:false});sit(R);R.torso.rotation.x=-0.18;R._noIdle=true;
-    const sw=Math.max(0,lt-0.5),n=Math.floor(sw/0.42),f=(sw%0.42)/0.42,flick=lt>0.5&&f<0.25?Math.sin(f/0.25*Math.PI):0;
-    R.armR.rotation.set(-1.75-flick*0.12,0,0.42);R.armL.rotation.set(-1.75,0,-0.42);R.head.rotation.x=0.12;
+    const sw=Math.max(0,lt-0.5),n=Math.floor(sw/0.72),f=(sw%0.72)/0.72,flick=lt>0.5&&f<0.25?Math.sin(f/0.25*Math.PI):0;
+    R.armR.rotation.set(-1.75-flick*0.12,0,0.42);if(lt>0.5&&f<0.6)face(R,'default',{blink:false,mouthOpen:0.25+0.5*Math.abs(Math.sin(f/0.6*Math.PI))});R.armL.rotation.set(-1.75,0,-0.42);R.head.rotation.x=0.12;
     const hp=head('rhood');world.phone.visible=true;world.phone.scale.setScalar(0.55);world.phone.position.copy(hp.clone().add(V3(0,-1.75,1.35)));world.phoneL.position.copy(hp.clone().add(V3(0,-0.6,1.6)));world.phoneL.intensity=1.4;world.phoneL.color.copy(world.phoneScr.material.emissive);world.phone.lookAt(hp);world.phone.rotateY(Math.PI);world.phoneScr.material.emissive.setHSL(((n*0.23)%1),0.7,0.5);
     if(lt<1.45){camAt(hp.clone().add(V3(0.6,0.0,5.6)),hp.clone().add(V3(0,-0.7,0)),40);showOnly(['rhood']);S.vign=0.65;}
     else{camAt(hp.clone().add(V3(0.6,0.6,4.5)),hp.clone().add(V3(0,-0.8,0)),42);showOnly(['rhood']);S.focus=null;S.dim=0.55;S.phone={n,f,lt};}
-    if(lt>0.5&&f<0.35)S.huss={n,k:f/0.35};},
+    if(lt>0.5&&f<0.5)S.huss={n,k:f/0.5};},
   zash_barista:(u,t)=>{mood('cafe');const Z=st('za',CAFE,0,-4.6,0,'sad');Z.armR.rotation.set(-1.4,0,0.15);world.cup.visible=true;world.cup.position.copy(handOf('za').add(V3(0,0.45,0.25)));world.cup.rotation.x=0;
     dolly(V3(CAFE+0.4,6.2,8),V3(CAFE+0.3,6.1,6.6),V3(CAFE,5.2,-4.6),V3(CAFE,5.4,-4.6),u,42,38);showOnly(['za']);},
   end_card:(u,t,lt)=>{mood('cafe');const Z=st('za',CAFE,0,-4.6,0,'smug');Z._talk='zash';Z.armR.rotation.set(-1.4,0,0.15);world.cup.visible=true;world.cup.position.copy(handOf('za').add(V3(0,0.45,0.25)));
@@ -303,7 +303,7 @@ function drawOverlays(t){
   if(S.era){og.save();og.translate(W/2,H*0.09);og.fillStyle='rgba(30,18,8,0.8)';RR(-W*0.36,-H*0.028,W*0.72,H*0.056,H*0.012);og.fill();T(S.era,0,H*0.003,W*0.06,'#f4e2b8');og.restore();}
   if(S.phone){const P=S.phone,pw=W*0.62,phh=pw*2.05,px=W/2-pw/2,py=H*0.1;og.save();og.fillStyle='#0c0c10';RR(px-W*0.02,py-W*0.02,pw+W*0.04,phh+W*0.04,W*0.06);og.fill();
     og.beginPath();RR(px,py,pw,phh,W*0.04);og.clip();const CARDS=[['#ff5a7a','LOL'],['#5ab0ff','POV:'],['#ffd23f','OMG'],['#7ad86a','XD'],['#b07aff','WAIT'],['#ff9a3a','NO WAY'],['#3ad8c8','BRUH'],['#ff6ad0','LMAO']];
-    const sl=easeOut(Math.min(1,P.f/0.3));for(let k=0;k<2;k++){const idx=(P.n+k)%CARDS.length,c=CARDS[idx],y=py+phh*(k-sl*(P.lt>0.5?1:0))+phh*(P.lt>0.5?1:0)*0;const yy=py+phh*k-phh*sl;og.fillStyle=c[0];og.fillRect(px,yy,pw,phh);
+    const sl=easeOut(Math.min(1,P.f/0.22));for(let k=0;k<2;k++){const idx=(P.n+k)%CARDS.length,c=CARDS[idx],y=py+phh*(k-sl*(P.lt>0.5?1:0))+phh*(P.lt>0.5?1:0)*0;const yy=py+phh*k-phh*sl;og.fillStyle=c[0];og.fillRect(px,yy,pw,phh);
       og.fillStyle='rgba(255,255,255,0.18)';og.beginPath();og.arc(px+pw/2,yy+phh*0.4,pw*0.3,0,7);og.fill();T(c[1],px+pw/2,yy+phh*0.42,pw*0.2,'#ffffff','#1a1a22',pw*0.03);
       og.fillStyle='rgba(255,255,255,0.9)';[0.62,0.72,0.82].forEach((q,i)=>{og.beginPath();og.arc(px+pw*0.88,yy+phh*q,pw*0.045,0,7);og.fill();});og.fillStyle='rgba(255,255,255,0.75)';og.fillRect(px+pw*0.06,yy+phh*0.9,pw*0.5,phh*0.02);}
     og.restore();const ty=py+phh*lerp(0.78,0.45,P.f<0.3?easeOut(P.f/0.3):1)*(P.lt>0.5?1:0)+(P.lt>0.5?0:phh*0.78);og.fillStyle='#ecd4bc';og.strokeStyle='#5a4030';og.lineWidth=W*0.006;RR(W/2+pw*0.26,ty+phh*0.12,pw*0.18,pw*0.42,pw*0.09);og.fill();og.stroke();}

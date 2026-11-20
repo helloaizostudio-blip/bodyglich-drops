@@ -71,6 +71,13 @@ def huss():
     return (hh + ss) * env(len(t), 0.01, 0.05)
 
 
+def say_huss(k):
+    """Robert saying "huss" (stock voice, generated into ep17/sfx/huss_*.wav)."""
+    import soundfile as sf
+    y, sr = sf.read(os.path.join(HERE, 'sfx', f'huss_{k % 3}.wav'))
+    return np.interp(np.arange(int(len(y) * SR / sr)) * sr / SR, np.arange(len(y)), y)
+
+
 def build(m, tl):
     shots = tl['shots']; total = tl['dur']
     def shot(n): return next(x for x in shots if x['name'] == n)
@@ -95,9 +102,9 @@ def build(m, tl):
     hf = shot('high_five'); m.put(riser(1.3), hf['s'], 0.3, bus='music'); m.put(punch(), hf['s'] + 1.3, 0.55); m.put(E7.hit(1.8), hf['s'] + 1.3, 0.4)
     m.put(shimmer(2.0), shot('yin_yang')['s'], 0.4)
     m.put(scratch(), shot('couch_robert')['s'], 0.5)
-    sr = shot('scroll_reels'); tt = sr['s'] + 0.5
+    sr = shot('scroll_reels'); tt = sr['s'] + 0.5; k = 0
     while tt < sr['e'] - 0.1:
-        m.put(huss(), tt, 0.7, pan=rng.uniform(-0.2, 0.2)); tt += 0.42
+        m.put(say_huss(k), tt + 0.02, 1.0); m.put(huss(), tt, 0.35, pan=rng.uniform(-0.2, 0.2)); tt += 0.72; k += 1
     m.put(ding(), shot('end_card')['s'] + 0.2, 0.3)
 
 
