@@ -1,0 +1,25 @@
+{
+  "title": "You're Glowing Right Now",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.05,
+  "outro": 0.35,
+  "gap": 0.14,
+  "music": "tension",
+  "sources": [
+    "The human body emits visible light (ultra-weak photon emission) about 1,000 times weaker than the naked eye can detect, imaged in total darkness with cooled ultra-sensitive CCD cameras (Kobayashi, Kikuchi & Okamura 2009, PLoS ONE 4(7): e6256, Tohoku Institute of Technology / Kyoto University)",
+    "The emission is linked to metabolism: free-radical reactions in cells produce excited molecules that release photons (Kobayashi et al. 2009)",
+    "The face glowed more than the body, with the cheeks brightest (Kobayashi et al. 2009)",
+    "Emission follows a daily rhythm: lowest around 10 a.m., highest around 4 p.m., then dimming (Kobayashi et al. 2009)"
+  ],
+  "lines": [
+    { "text": "You are glowing in the dark right now. You just can't see it.", "caps": "You are *glowing | in the *dark | *right now | You just | *can't see it" },
+    { "text": "Your body actually gives off real, visible light.", "caps": "Your body | actually gives off | real, *visible light" },
+    { "text": "But it's about a thousand times too weak for your eyes.", "caps": "But it's about | a *thousand times | too *weak | for your eyes" },
+    { "text": "Japanese scientists filmed it in total darkness with super sensitive cameras.", "caps": "Japanese *scientists | *filmed it | in total *darkness | with super | *sensitive cameras" },
+    { "text": "The light comes from chemical reactions inside your cells.", "caps": "The light | comes from | *chemical reactions | inside your *cells" },
+    { "text": "But here's the twist. The brightest part of you is your face.", "caps": "But here's | the *twist | The *brightest part | of you | is your *face" },
+    { "text": "And you glow the most at around four p.m.", "caps": "And you glow | the *most | at around | *4 PM" },
+    { "text": "So right now, you're literally glowing. Did you know? Tell me below.", "caps": "So right now | you're *literally glowing | Did you *know? | Tell me *below" }
+  ]
+}
