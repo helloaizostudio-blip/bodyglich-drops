@@ -65,6 +65,7 @@ with the same title/description/tags, `categoryId` "20", and `paidProductPlaceme
 = the channel's `paid` value. When every upload is done: `git rm -r uploads`, commit, push.
 
 ## 5. Limits
+- Zapier throttles bursts of uploads ("throttled without retry"). Upload one Short at a time, wait 5 minutes between uploads, and on a throttle error wait 30 minutes, then 60, before retrying. Keep the clip in uploads/ until its upload succeeded.
 - At most 1 Short per channel per run, and stop posting if Zapier reports the task limit.
 - Never post the same clip to two channels.
 - If a step fails for a channel, skip that channel and continue with the others.
