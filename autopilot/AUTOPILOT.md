@@ -16,6 +16,12 @@ python3 ~/.claude/skills/stream-clips/scripts/streamclips.py setup      # wait f
 Only Twitch works from the cloud (YouTube blocks cloud downloads). Twitch audio and clip video are
 fetched segment by segment by the skill, so this is normal.
 
+## 0b. Pending clips first
+Read `autopilot/pending.json` (from the branch). Those clips are already cut and sit in `uploads/` on branch
+ccr-5b710d78-d8tir0; their raw URL is `https://raw.githubusercontent.com/helloaizostudio-blip/bodyglich-drops/ccr-5b710d78-d8tir0/<file>`.
+Post them (same upload steps as section 4, using the stored title/description/tags). A channel with a pending clip
+gets that clip this run instead of a new one.
+
 ## 1. What each channel already has (free, no Zapier tasks)
 For every channel in `autopilot/channels.json`, read its public feed:
 `curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=<channel_id>"`
@@ -65,6 +71,7 @@ with the same title/description/tags, `categoryId` "20", and `paidProductPlaceme
 = the channel's `paid` value. When every upload is done: `git rm -r uploads`, commit, push.
 
 ## 5. Limits
+- **Daily cap: at most 5 uploads per run** (Zapier/YouTube stops new channels after about 5 a day). Always include the 3 `paid: true` channels; fill the other 2 slots with pending clips first, then the non-paid channels that went longest without a Short. Channels left out wait for the next run.
 - Zapier throttles bursts of uploads ("throttled without retry"). Upload one Short at a time, wait 5 minutes between uploads, and on a throttle error wait 30 minutes, then 60, before retrying. Keep the clip in uploads/ until its upload succeeded.
 - At most 1 Short per channel per run, and stop posting if Zapier reports the task limit.
 - Never post the same clip to two channels.
