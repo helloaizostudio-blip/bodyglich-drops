@@ -21,6 +21,8 @@ For every channel in `autopilot/channels.json`, read its public feed:
 `curl -s "https://www.youtube.com/feeds/videos.xml?channel_id=<channel_id>"`
 Each Short's description contains a line `Source: <creator> on Twitch, VOD <vod_id> at <h:mm:ss>`.
 Collect those (vod_id, seconds) pairs: never clip within 2 minutes of one of them again.
+Also treat every section in `autopilot/state.json` → `covered` as already clipped (those were cut before
+the autopilot existed).
 Skip a channel that already got a Short in the last 20 hours.
 
 ## 2. Find footage for each channel's creator
