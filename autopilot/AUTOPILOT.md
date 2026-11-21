@@ -48,6 +48,9 @@ visible (corner box or crop), captions inside the frame, title correct. Drop any
 Campaign `kreekcraft-gta6` must show the KreekCraft logo the whole time (the preset adds it).
 
 ## 4. Post (one Short per channel per run)
+**Order matters:** cut and check every clip first. Post the channels with `paid: false` first, then the
+`paid: true` channels last, back to back, and send the report (step 6) straight away. The owner has to
+submit paid links in Content Rewards within 30 minutes of posting, and the report is how they find out.
 Pick the best remaining clip for the channel. Host it briefly in this public repo (the owner approved this):
 copy it to `uploads/<short-name>.mp4`, `git add -f`, commit, push to **your session branch**, and check
 `https://raw.githubusercontent.com/helloaizostudio-blip/bodyglich-drops/<your-branch>/uploads/<short-name>.mp4` returns 200.
@@ -66,6 +69,6 @@ with the same title/description/tags, `categoryId` "20", and `paidProductPlaceme
 - Never post the same clip to two channels.
 - If a step fails for a channel, skip that channel and continue with the others.
 
-## 6. Report (last message)
-A table: channel, creator, Short title, link, paid campaign yes/no. Under it: "Submit these in Content
+## 6. Report (last message, right after the paid posts)
+Start with "SUBMIT NOW (30-min window):" and the paid links, one per line with its campaign name. Then a table: channel, creator, Short title, link, paid yes/no. Under it: "Submit these in Content
 Rewards: ..." listing only links for channels with `paid: true`, plus anything that went wrong.
