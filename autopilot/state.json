@@ -1,0 +1,7 @@
+{"_note": "Per Twitch VOD id: list of [start_s, end_s] sections already clipped. The autopilot appends here after each run so it never clips the same part twice.",
+ "covered": {
+   "2932147800": [[3600, 25200]],
+   "2932305259": [[3600, 14400], [36000, 46800]],
+   "2933231152": [[900, 11700]]
+ },
+ "posted_clips": ["kreek-shark", "kai-cigarette", "aj-michael"]}

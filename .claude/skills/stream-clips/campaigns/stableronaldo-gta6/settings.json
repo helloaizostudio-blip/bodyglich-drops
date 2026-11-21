@@ -1,0 +1,12 @@
+{
+  "clips": 3,
+  "max_len": 45,
+  "min_score": 55,
+  "caption_prefix": "Credit: StableRonaldo on Twitch.",
+  "required_hashtags": [
+    "#StableRonaldo",
+    "#GTA6",
+    "#GrandTheftAutoVI"
+  ],
+  "campaign_focus": "StableRonaldo playing GTA 6 must be the focus: his biggest reactions, screaming, laughing fits, rage, shock, chaos, fails and discoveries. Titles and captions must describe exactly what happened and name StableRonaldo. Never portray him negatively, no drama or rage-bait framing. Skip just-chatting, sponsor reads, donations, menus, quiet driving, nudity, drug talk and slurs."
+}
