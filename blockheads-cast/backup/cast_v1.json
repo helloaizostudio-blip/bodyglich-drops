@@ -1,0 +1,935 @@
+{
+ "CAST": [
+  {
+   "id": "leo",
+   "name": "Leo",
+   "role": "The Narrator",
+   "group": "Main",
+   "stories": [
+    "All 5 stories"
+   ],
+   "bio": "The \"I\" in every story. An ordinary kid who keeps ending up with strange rules and powers. Readable and friendly, so viewers see themselves in him.",
+   "skin": "#e8b98f",
+   "hair": {
+    "style": "messy",
+    "color": "#4a2f1e"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "normal",
+    "mouth": "smile"
+   },
+   "torso": {
+    "inner": "#d9a23a",
+    "outer": {
+     "style": "hoodie",
+     "color": "#d9a23a"
+    }
+   },
+   "sleeves": {
+    "color": "#d9a23a",
+    "len": "full",
+    "cuff": "#c08d2c"
+   },
+   "pants": {
+    "color": "#3b5a80",
+    "shoes": "#efefef"
+   }
+  },
+  {
+   "id": "mia",
+   "name": "Mia",
+   "role": "The Rich Girl",
+   "group": "Main",
+   "stories": [
+    "Compliment Money"
+   ],
+   "bio": "The richest kid at school whom nobody talks to. Quiet, a bit guarded, with a secret mirror routine.",
+   "skin": "#c68a5e",
+   "hair": {
+    "style": "long",
+    "color": "#1b1414"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "normal",
+    "mouth": "smirk",
+    "blush": true,
+    "lashes": true,
+    "lips": "#c0476b"
+   },
+   "torso": {
+    "inner": "#9b8ee0",
+    "graphic": {
+     "shape": "heart",
+     "color": "#f2f0ea"
+    },
+    "outer": {
+     "style": "open",
+     "color": "#2f8f8a"
+    }
+   },
+   "sleeves": {
+    "color": "#2f8f8a",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#7b5aa6",
+    "style": "skirt",
+    "shoes": "#e05a5a"
+   },
+   "extras": [
+    "earrings:#d4af37",
+    "bow:#ff6fa5"
+   ]
+  },
+  {
+   "id": "mom",
+   "name": "Mom",
+   "role": "Leo's Mom",
+   "group": "Family",
+   "stories": [
+    "The Lie Counter"
+   ],
+   "bio": "Warm and observant. She can tell when \"I'm fine\" isn't true, even without a counter.",
+   "skin": "#f0c8a0",
+   "hair": {
+    "style": "long",
+    "color": "#5b3a24"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "normal",
+    "mouth": "smile",
+    "lashes": true,
+    "lips": "#b8384a"
+   },
+   "torso": {
+    "inner": "#efe4cf",
+    "outer": {
+     "style": "cardigan",
+     "color": "#b5545c"
+    }
+   },
+   "sleeves": {
+    "color": "#b5545c",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#4b4f63",
+    "style": "skirt",
+    "shoes": "#3a2a22"
+   },
+   "extras": [
+    "earrings:#d4af37"
+   ]
+  },
+  {
+   "id": "dad",
+   "name": "Dad",
+   "role": "Leo's Dad",
+   "group": "Family",
+   "stories": [
+    "The Lie Counter"
+   ],
+   "bio": "Big beard, bigger lie counter (3,000 and counting). Mostly harmless \"I'll be there in 5 minutes\" lies.",
+   "skin": "#d9a27a",
+   "hair": {
+    "style": "swept",
+    "color": "#2a2220"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "thick",
+    "mouth": "smile",
+    "beard": "full",
+    "glasses": "rect"
+   },
+   "torso": {
+    "inner": "#8a3b32",
+    "pattern": "check",
+    "patternColor": "#5e231d",
+    "belt": "#3a2416"
+   },
+   "sleeves": {
+    "color": "#8a3b32",
+    "len": "full",
+    "pattern": "check",
+    "patternColor": "#5e231d"
+   },
+   "pants": {
+    "color": "#2f3d55",
+    "shoes": "#4a3020"
+   }
+  },
+  {
+   "id": "max",
+   "name": "Max",
+   "role": "Little Brother",
+   "group": "Family",
+   "stories": [
+    "The Lie Counter"
+   ],
+   "bio": "Six years old, 212 lies. Most of them about who ate the cookies.",
+   "skin": "#e8b98f",
+   "hair": {
+    "style": "spiky",
+    "color": "#4a2f1e"
+   },
+   "face": {
+    "eyes": "big",
+    "brows": "raised",
+    "mouth": "grin"
+   },
+   "torso": {
+    "inner": "#5aa05a",
+    "graphic": {
+     "shape": "star",
+     "color": "#ffe066"
+    }
+   },
+   "sleeves": {
+    "color": "#5aa05a",
+    "len": "short"
+   },
+   "pants": {
+    "color": "#c9a77a",
+    "style": "shorts",
+    "shoes": "#d84a4a"
+   }
+  },
+  {
+   "id": "ezra",
+   "name": "Old Ezra",
+   "role": "Wish Store Owner",
+   "group": "Main",
+   "stories": [
+    "The Wish Store"
+   ],
+   "bio": "Keeps the receipts for every wish ever sold. Never looks up from the counter.",
+   "skin": "#e0b48c",
+   "hair": {
+    "style": "sides",
+    "color": "#e6e6e6"
+   },
+   "face": {
+    "eyes": "tired",
+    "brows": "thick",
+    "browColor": "#e6e6e6",
+    "mouth": "flat",
+    "beard": "longwhite",
+    "glasses": "round"
+   },
+   "torso": {
+    "inner": "#f1ede4",
+    "tie": {
+     "color": "#c9a24a",
+     "style": "bow"
+    },
+    "outer": {
+     "style": "waistcoat",
+     "color": "#5a2f4f"
+    }
+   },
+   "sleeves": {
+    "color": "#f1ede4",
+    "len": "full",
+    "cuff": "#d8d2c4"
+   },
+   "pants": {
+    "color": "#3a3030",
+    "shoes": "#20160f"
+   }
+  },
+  {
+   "id": "nova",
+   "name": "Nova",
+   "role": "The New Girl",
+   "group": "Main",
+   "stories": [
+    "5 Seconds Ahead"
+   ],
+   "bio": "Transferred mid-year. Calm, sharp and one second ahead of everyone.",
+   "skin": "#f2d2b0",
+   "hair": {
+    "style": "long",
+    "color": "#121218"
+   },
+   "face": {
+    "eyes": "sharp",
+    "brows": "normal",
+    "mouth": "smirk",
+    "lashes": true,
+    "lips": "#9e2f45"
+   },
+   "torso": {
+    "inner": "#c0392b",
+    "outer": {
+     "style": "open",
+     "color": "#1d1d24"
+    }
+   },
+   "sleeves": {
+    "color": "#1d1d24",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#22222a",
+    "shoes": "#f5f5f5"
+   },
+   "extras": [
+    "earrings:#c9ccd2"
+   ]
+  },
+  {
+   "id": "grimm",
+   "name": "Ms. Grimm",
+   "role": "Strict Teacher",
+   "group": "School",
+   "stories": [
+    "Extras"
+   ],
+   "bio": "Has not smiled since 2009. Gives surprise tests that Leo is never surprised by.",
+   "skin": "#efe6dd",
+   "hair": {
+    "style": "bun",
+    "color": "#16161a"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "angry",
+    "mouth": "frown",
+    "glasses": "round",
+    "lashes": true,
+    "lips": "#8a2c3c"
+   },
+   "torso": {
+    "inner": "#f3f3f3",
+    "ruffle": true
+   },
+   "sleeves": {
+    "color": "#f3f3f3",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#2a2a30",
+    "pattern": "pinstripe",
+    "style": "skirt",
+    "shoes": "#111"
+   },
+   "extras": [
+    "earrings:#f4efe6"
+   ]
+  },
+  {
+   "id": "rao",
+   "name": "Dr. Rao",
+   "role": "Doctor",
+   "group": "Town",
+   "stories": [
+    "Extras"
+   ],
+   "bio": "Overworked, kind and always in a mask. Good for any hospital or lab scene.",
+   "skin": "#b07850",
+   "hair": {
+    "style": "messy",
+    "color": "#141414"
+   },
+   "face": {
+    "eyes": "tired",
+    "brows": "normal",
+    "mouth": "flat",
+    "mask": "#7fc4e8"
+   },
+   "torso": {
+    "inner": "#3f7fc0",
+    "stetho": true,
+    "outer": {
+     "style": "labcoat",
+     "color": "#f4f4f4"
+    }
+   },
+   "sleeves": {
+    "color": "#f4f4f4",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#3f7fc0",
+    "shoes": "#222"
+   }
+  },
+  {
+   "id": "detective",
+   "name": "Shade",
+   "role": "The Detective",
+   "group": "Town",
+   "stories": [
+    "Extras"
+   ],
+   "bio": "Fedora, dark glasses, all black. He shows up whenever a story needs a mystery.",
+   "skin": "#e6c09a",
+   "hair": {
+    "style": "slick",
+    "color": "#111"
+   },
+   "hat": {
+    "style": "fedora",
+    "color": "#141414",
+    "band": "#2c2c2c"
+   },
+   "face": {
+    "eyes": "shades",
+    "brows": "none",
+    "mouth": "frown"
+   },
+   "torso": {
+    "inner": "#1a1a1a",
+    "outer": {
+     "style": "coat2",
+     "color": "#1c1c1e",
+     "btn": "#3a3a3a"
+    },
+    "belt": "#0e0e0e"
+   },
+   "sleeves": {
+    "color": "#1c1c1e",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#151515",
+    "shoes": "#0b0b0b"
+   }
+  },
+  {
+   "id": "goldbank",
+   "name": "Mr. Goldbank",
+   "role": "The Tycoon",
+   "group": "Town",
+   "stories": [
+    "Compliment Money"
+   ],
+   "bio": "The richest man in town. Has never paid anyone a compliment. Use him for anything about money.",
+   "skin": "#f0cfaa",
+   "hair": {
+    "style": "swept",
+    "color": "#d8b37a"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "angry",
+    "browColor": "#b8925a",
+    "mouth": "flat",
+    "beard": "handlebar",
+    "beardColor": "#c9a26a"
+   },
+   "torso": {
+    "inner": "#f2f0ea",
+    "tie": {
+     "color": "#7a2a2e"
+    },
+    "outer": {
+     "style": "suit",
+     "color": "#b49a7a"
+    }
+   },
+   "sleeves": {
+    "color": "#b49a7a",
+    "len": "full",
+    "cuff": "#9a8264"
+   },
+   "pants": {
+    "color": "#1c1c1f",
+    "shoes": "#0f0f0f"
+   },
+   "extras": [
+    "fur:#cdb89c",
+    "briefcase:#6a2328",
+    "watch"
+   ]
+  },
+  {
+   "id": "reyes",
+   "name": "Captain Reyes",
+   "role": "Ship Captain",
+   "group": "Town",
+   "stories": [
+    "Extras"
+   ],
+   "bio": "Cheerful captain with a ring of keys to every door on the ship. Good for travel or sea stories.",
+   "skin": "#a86d45",
+   "hair": {
+    "style": "long",
+    "color": "#6b4a33"
+   },
+   "hat": {
+    "style": "captain",
+    "color": "#14161c",
+    "band": "#14161c",
+    "badge": "#d4af37"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "normal",
+    "mouth": "smile",
+    "glasses": "round",
+    "glassColor": "#b8963c",
+    "lashes": true,
+    "lips": "#a23b44"
+   },
+   "torso": {
+    "inner": "#14161c",
+    "outer": {
+     "style": "coat2",
+     "color": "#16181f",
+     "btn": "#d4af37"
+    }
+   },
+   "sleeves": {
+    "color": "#16181f",
+    "len": "full",
+    "cuff": "#d4af37"
+   },
+   "pants": {
+    "color": "#16181f",
+    "shoes": "#0b0b0b"
+   },
+   "extras": [
+    "fur:#2b2d38",
+    "keys",
+    "earrings:#d4af37"
+   ]
+  },
+  {
+   "id": "agent",
+   "name": "Agent K",
+   "role": "Man in a Suit",
+   "group": "Town",
+   "stories": [
+    "Pause Button"
+   ],
+   "bio": "Black suit and a thin tie. Nobody knows who he works for. Use him for a \"they're watching\" twist.",
+   "skin": "#c48a60",
+   "hair": {
+    "style": "slick",
+    "color": "#0f0f12"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "normal",
+    "mouth": "smirk"
+   },
+   "torso": {
+    "inner": "#f4f4f4",
+    "tie": {
+     "color": "#0c0c0c",
+     "style": "thin"
+    },
+    "outer": {
+     "style": "suit",
+     "color": "#151518"
+    }
+   },
+   "sleeves": {
+    "color": "#151518",
+    "len": "full",
+    "cuff": "#f4f4f4"
+   },
+   "pants": {
+    "color": "#151518",
+    "shoes": "#090909"
+   }
+  },
+  {
+   "id": "dave",
+   "name": "Dave",
+   "role": "Tired Office Guy",
+   "group": "Town",
+   "stories": [
+    "Pause Button"
+   ],
+   "bio": "Has been \"almost done\" with one spreadsheet for three years. Glasses, stubble and a plaster on his cheek.",
+   "skin": "#e3b58c",
+   "hair": {
+    "style": "spiky",
+    "color": "#3d2a1c"
+   },
+   "face": {
+    "eyes": "tired",
+    "brows": "sad",
+    "mouth": "flat",
+    "beard": "stubble",
+    "glasses": "rect",
+    "bandage": true
+   },
+   "torso": {
+    "inner": "#f2f2f2",
+    "tie": {
+     "color": "#5d5f70"
+    },
+    "outer": {
+     "style": "suit",
+     "color": "#17171a"
+    },
+    "belt": "#0b0b0b"
+   },
+   "sleeves": {
+    "color": "#17171a",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#17171a",
+    "shoes": "#0b0b0b"
+   }
+  },
+  {
+   "id": "rex",
+   "name": "Rex",
+   "role": "Tough Guy",
+   "group": "Town",
+   "stories": [
+    "Extras"
+   ],
+   "bio": "Leather jacket, goatee and a permanent squint. Looks scary but cries at movies.",
+   "skin": "#c99a76",
+   "hair": {
+    "style": "messy",
+    "color": "#121212"
+   },
+   "face": {
+    "eyes": "tired",
+    "brows": "angry",
+    "mouth": "gritted",
+    "beard": "goatee",
+    "glasses": "rect"
+   },
+   "torso": {
+    "inner": "#ececec",
+    "chain": true,
+    "outer": {
+     "style": "open",
+     "color": "#4a3a32"
+    },
+    "belt": "#8a8178"
+   },
+   "sleeves": {
+    "color": "#4a3a32",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#25252d",
+    "shoes": "#7a1f1f"
+   }
+  },
+  {
+   "id": "kip",
+   "name": "Kip",
+   "role": "Lost Survivor",
+   "group": "Extras",
+   "stories": [
+    "Pause Button"
+   ],
+   "bio": "Torn clothes and no shoes. Has been stuck somewhere for a very long time. Good for a \"paused for years\" ending.",
+   "skin": "#d9a46c",
+   "hair": {
+    "style": "spiky",
+    "color": "#151515"
+   },
+   "face": {
+    "eyes": "tired",
+    "brows": "normal",
+    "mouth": "flat"
+   },
+   "torso": {
+    "inner": "#6b4528",
+    "torn": true,
+    "belt": "#3e2814"
+   },
+   "sleeves": {
+    "len": "none"
+   },
+   "pants": {
+    "color": "#6b4528",
+    "style": "torn",
+    "shoes": "#d9a46c"
+   }
+  },
+  {
+   "id": "benny",
+   "name": "Benny",
+   "role": "The Nerd",
+   "group": "School",
+   "stories": [
+    "5 Seconds Ahead"
+   ],
+   "bio": "Overexcited, with glasses and a hoodie. Always has a theory about what is really going on.",
+   "skin": "#f1d9b5",
+   "hair": {
+    "style": "spiky",
+    "color": "#121212"
+   },
+   "face": {
+    "eyes": "big",
+    "brows": "raised",
+    "mouth": "teeth",
+    "glasses": "rect",
+    "beard": "stubble"
+   },
+   "torso": {
+    "inner": "#f2f2f2",
+    "outer": {
+     "style": "open",
+     "color": "#8c8c8c"
+    },
+    "strap": true
+   },
+   "sleeves": {
+    "color": "#8c8c8c",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#161616",
+    "shoes": "#eaeaea"
+   },
+   "extras": [
+    "backpack:#2f3a4a"
+   ]
+  },
+  {
+   "id": "sora",
+   "name": "Sora",
+   "role": "The Traveler",
+   "group": "Extras",
+   "stories": [
+    "The Wish Store"
+   ],
+   "bio": "Hair over the eyes, a scarf and a duffel bag. Always arriving or leaving. Good for a mysterious stranger.",
+   "skin": "#e9dccf",
+   "hair": {
+    "style": "emo",
+    "color": "#2b2622"
+   },
+   "face": {
+    "eyes": "closed",
+    "brows": "none",
+    "mouth": "flat"
+   },
+   "torso": {
+    "inner": "#3a4c78",
+    "pattern": "pinstripe",
+    "patternColor": "#8fa0c8",
+    "tie": {
+     "color": "#2a2a2a",
+     "style": "normal"
+    },
+    "belt": "#1a1a1a"
+   },
+   "sleeves": {
+    "color": "#3a4c78",
+    "len": "full",
+    "pattern": "pinstripe",
+    "patternColor": "#8fa0c8"
+   },
+   "pants": {
+    "color": "#8a8a86",
+    "shoes": "#222"
+   },
+   "extras": [
+    "scarf:#7a6650",
+    "duffel:#1c1c1f"
+   ]
+  },
+  {
+   "id": "theo",
+   "name": "Theo",
+   "role": "The Bookworm",
+   "group": "School",
+   "stories": [
+    "The Lie Counter"
+   ],
+   "bio": "Always carrying a stack of books and always polite. His lie counter might be the second lowest in town.",
+   "skin": "#f3dcc4",
+   "hair": {
+    "style": "swept",
+    "color": "#2a1f1a"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "normal",
+    "mouth": "smile"
+   },
+   "torso": {
+    "inner": "#f5f5f7",
+    "tie": {
+     "color": "#6a1f22"
+    },
+    "collar": true
+   },
+   "sleeves": {
+    "color": "#f5f5f7",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#1d1d22",
+    "shoes": "#111"
+   },
+   "extras": [
+    "books"
+   ]
+  },
+  {
+   "id": "gus",
+   "name": "Gus",
+   "role": "School Janitor",
+   "group": "School",
+   "stories": [
+    "Compliment Money"
+   ],
+   "bio": "Knows every secret in the building. The first person Leo compliments.",
+   "skin": "#8d5a3b",
+   "hair": {
+    "style": "buzz",
+    "color": "#9a9a9a"
+   },
+   "hat": {
+    "style": "beanie",
+    "color": "#4b5563"
+   },
+   "face": {
+    "eyes": "dot",
+    "brows": "thick",
+    "browColor": "#9a9a9a",
+    "mouth": "smile",
+    "beard": "mustache",
+    "beardColor": "#b5b5b5"
+   },
+   "torso": {
+    "inner": "#8a8f98",
+    "outer": {
+     "style": "overalls",
+     "color": "#3f5f8a"
+    }
+   },
+   "sleeves": {
+    "color": "#8a8f98",
+    "len": "short"
+   },
+   "pants": {
+    "color": "#3f5f8a",
+    "shoes": "#3a2a1e"
+   },
+   "extras": [
+    "keys"
+   ]
+  },
+  {
+   "id": "brick",
+   "name": "Brick",
+   "role": "The Bully",
+   "group": "School",
+   "stories": [
+    "Compliment Money"
+   ],
+   "bio": "Wears his cap backwards and smirks a lot. Broke, because he only ever says mean things.",
+   "skin": "#e2b48a",
+   "hair": {
+    "style": "buzz",
+    "color": "#6b4a2e"
+   },
+   "hat": {
+    "style": "backcap",
+    "color": "#c0392b"
+   },
+   "face": {
+    "eyes": "tired",
+    "brows": "angry",
+    "mouth": "smirk"
+   },
+   "torso": {
+    "inner": "#1b1b1f",
+    "graphic": {
+     "shape": "bolt",
+     "color": "#ffcf4a"
+    }
+   },
+   "sleeves": {
+    "color": "#1b1b1f",
+    "len": "short"
+   },
+   "pants": {
+    "color": "#5b6340",
+    "shoes": "#e8e8e8"
+   }
+  },
+  {
+   "id": "nana",
+   "name": "Nana June",
+   "role": "Grandma",
+   "group": "Family",
+   "stories": [
+    "The Wish Store"
+   ],
+   "bio": "Remembers everything, which is rare in a world where memories buy wishes.",
+   "skin": "#efd0b5",
+   "hair": {
+    "style": "bun",
+    "color": "#cfcfcf"
+   },
+   "face": {
+    "eyes": "happy",
+    "brows": "normal",
+    "browColor": "#bdbdbd",
+    "mouth": "smile",
+    "glasses": "round",
+    "blush": true,
+    "lashes": true,
+    "lips": "#b0506a"
+   },
+   "torso": {
+    "inner": "#d98aa0",
+    "pattern": "floral",
+    "patternColor": "#f6d4dc",
+    "outer": {
+     "style": "cardigan",
+     "color": "#9b8cc4"
+    }
+   },
+   "sleeves": {
+    "color": "#9b8cc4",
+    "len": "full"
+   },
+   "pants": {
+    "color": "#d98aa0",
+    "style": "dress",
+    "shoes": "#6b4a33"
+   },
+   "extras": [
+    "earrings:#f4efe6"
+   ]
+  }
+ ],
+ "EXPR": {
+  "default": {},
+  "happy": {
+   "eyes": "happy",
+   "mouth": "grin",
+   "brows": "raised"
+  },
+  "sad": {
+   "mouth": "frown",
+   "brows": "sad"
+  },
+  "shocked": {
+   "eyes": "big",
+   "mouth": "o",
+   "brows": "raised"
+  },
+  "angry": {
+   "mouth": "frown",
+   "brows": "angry"
+  },
+  "smug": {
+   "mouth": "smirk",
+   "brows": "normal"
+  }
+ }
+}
