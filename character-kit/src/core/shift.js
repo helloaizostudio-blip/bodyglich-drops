@@ -55,7 +55,20 @@ export const FORMS = {
   human(c) {
     const h = new Human({ skin: c.belly, shirt: c.color, pants: c.dark, shoes: c.darker, face: false, scale: 0.6 });
     const f = face(h.head, [0, 0.152, 0.106], c, { gap: 0.043, r: 0.021, curve: 0.38, mouthY: -0.062, mouthZ: 0.004 }), an = antenna(h.head, [0, 0.275, 0], c, 0.8);
-    return { group: h.group, cy: 0.62, human: h, face: f, antenna: an, animate(t) {
+    an.visible = false;                                                                                  // a human head: no antenna
+    // human head: hair (hairline high at the front, low at the back, a soft swept fringe), ears and a nose
+    const hairM = new THREE.MeshStandardMaterial({ color: c.hair || '#3A2618', roughness: 0.55, envMapIntensity: 0.4 });
+    const hair = M(h.head, mesh((p) => {
+      let d = ellipsoid(p, [0, 0.165, -0.012], [0.116, 0.136, 0.127]);
+      for (let i = 0; i < 5; i++) d = smin(d, ellipsoid(p, [-0.06 + i * 0.03, 0.255 - Math.abs(i - 2) * 0.006, 0.07 - Math.abs(i - 2) * 0.008], [0.03, 0.022, 0.03]), 0.02);   // fringe tufts
+      d = smin(d, ellipsoid(p, [0.035, 0.23, 0.095], [0.065, 0.028, 0.032]), 0.025);                    // swept front
+      const z = Math.max(-1, Math.min(1, p[2] / 0.12)), line = 0.185 + 0.045 * z + 0.015 * Math.abs(p[0]) / 0.12;   // hairline
+      return smax(d, -(p[1] - line), 0.012);
+    }, [[-0.16, 0.0, -0.17], [0.16, 0.32, 0.16]], 0.0042), hairM); hair.castShadow = true;
+    const skinM = new THREE.MeshStandardMaterial({ color: c.belly, roughness: 0.5 });
+    for (const s of [-1, 1]) { const ear = M(h.head, new THREE.SphereGeometry(1, 18, 12), skinM); ear.scale.set(0.014, 0.028, 0.02); ear.position.set(s * 0.109, 0.128, -0.004); }
+    const nose = M(h.head, new THREE.SphereGeometry(1, 18, 12), skinM); nose.scale.set(0.011, 0.014, 0.012); nose.position.set(0, 0.118, 0.118);
+    return { group: h.group, cy: 0.62, human: h, face: f, antenna: an, hair, nose, animate(t) {
       const w = Math.sin(t * 2.2);
       h.pose({ spine: [0, w * 3, 0], head: [-3, w * 4, w * 2], shL: [6, 0, 12 + w * 2], shR: [6, 0, 12 - w * 2], elL: 24, elR: 24 }); f.set({ lid: blinkAt(t, 3) }); an.rotation.z = D(w * 6);
     } };

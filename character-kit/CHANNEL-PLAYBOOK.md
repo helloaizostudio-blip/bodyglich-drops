@@ -40,3 +40,10 @@ Analysis date: 20 Nov 2026. Data: YouTube Analytics API (1–20 Nov) for @bodygl
 - Views above 3,000 → it graduated; follow up on the same topic within 3 days.
 
 First Short in the new format: "Do You Have This Muscle?" (palmaris longus, `examples/tendon-*`).
+
+## Character rules (added 21 Nov)
+
+- **Show the real Blip.** Every Short starts or ends with Blip as the little creature (the `blip` form). Don't begin the plan with him already human (`{ t: -5, form: 'human' }` hides him for the whole video).
+- **Show the transformation.** Use the normal Shifter charge (glow-up, flash, ring, sparks). Don't pass `flashK` or a tiny `charge`, which made changes invisible. To avoid white-outs, scale `blip.light.intensity` down (~0.45×) and transform in medium or wide shots, not in extreme close-ups.
+- **The human form has a human head:** hair, ears and a nose, with no antenna (see `src/core/shift.js`, `FORMS.human`).
+- **Give every Short a twist:** a "But here's the twist…" reveal near the end, before the comment question.
