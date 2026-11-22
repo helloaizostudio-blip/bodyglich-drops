@@ -1,14 +1,86 @@
 {
-  "_note": "One GTA 6 creator per YouTube channel. zapier_connection = Zapier YouTube connection id for that channel. campaign = preset in .claude/skills/stream-clips/campaigns/.",
-  "channels": [
-    {"channel": "vicecityHQclip",  "channel_id": "UCS5ybMYlj1cV4XBlXTRH-cg", "zapier_connection": "0245e81d-e5cb-885f-8552-495a3abe5f10", "creator": "KreekCraft",    "twitch": "kreekcraft",     "campaign": "kreekcraft-gta6", "paid": true},
-    {"channel": "clipboygta6",     "channel_id": "UCvSwjht_iDoOgAVO7vHXoQw", "zapier_connection": "029634c4-d296-86a7-98bf-69e305c44264", "creator": "Kai Cenat",     "twitch": "kaicenat",       "campaign": "kaicenat-gta6",   "paid": true},
-    {"channel": "clipnoir_gta6",   "channel_id": "UCRT54Fx719BwCBg4c_nen-w", "zapier_connection": "027cbdee-518f-8234-ad78-79c1305f794f", "creator": "AsianJeff",     "twitch": "asianjeff",      "campaign": "asianjeff-gta6",  "paid": true},
-    {"channel": "clipgta6no3",     "channel_id": "UCl4FTOpenxG7m-evKlK5vwg", "zapier_connection": "021e9e4c-a429-850e-8eac-a2583308bc32", "creator": "IShowSpeed",    "twitch": "ishowspeed",     "campaign": "speed-gta6",      "paid": false},
-    {"channel": "clipgta6no4",     "channel_id": "UCnBdVRbPl6wIbSbOBw8sGsQ", "zapier_connection": "023e6c17-a90c-8e21-918f-7b8df41b8768", "creator": "xQc",           "twitch": "xqc",            "campaign": "xqc-gta6",        "paid": false},
-    {"channel": "gta9clipsstream", "channel_id": "UCh9KOXoMM1nD_kOt7P9xerA", "zapier_connection": "02da9ebd-7095-85cb-a1ed-f9a25e05ca19", "creator": "Lacy",          "twitch": "lacy",           "campaign": "lacy-gta6",       "paid": false},
-    {"channel": "Vicegta609",      "channel_id": "UCX6ww16POLGatPbmWpMIDKg", "zapier_connection": "025b4883-9fb9-8ad0-83aa-96f0ddb2d6b4", "creator": "summit1g",      "twitch": "summit1g",       "campaign": "summit1g-gta6",   "paid": false},
-    {"channel": "usa_gta6gamin77", "channel_id": "UCDhajLeKPbq7rJ5ZINTUbLQ", "zapier_connection": "029dc39d-a7d9-88c0-b3a9-fffc885802e9", "creator": "StableRonaldo", "twitch": "stableronaldo",  "campaign": "stableronaldo-gta6", "paid": false},
-    {"channel": "Clipnourgta6",    "channel_id": "UCs99P2prnEoNmBUOs9vSnDw", "zapier_connection": "029d17ae-730f-8074-b183-87c041baf3a7", "creator": "Zack (Asmongold)", "twitch": "zackrawrr",   "campaign": "zackrawrr-gta6",  "paid": false}
-  ]
+ "_note": "One GTA 6 creator per YouTube channel. zapier_connection = Zapier YouTube connection id for that channel. campaign = preset in .claude/skills/stream-clips/campaigns/.",
+ "channels": [
+  {
+   "channel": "vicecityHQclip",
+   "channel_id": "UCS5ybMYlj1cV4XBlXTRH-cg",
+   "zapier_connection": "0245e81d-e5cb-885f-8552-495a3abe5f10",
+   "creator": "KreekCraft",
+   "twitch": "kreekcraft",
+   "campaign": "kreekcraft-gta6",
+   "paid": false
+  },
+  {
+   "channel": "clipboygta6",
+   "channel_id": "UCvSwjht_iDoOgAVO7vHXoQw",
+   "zapier_connection": "029634c4-d296-86a7-98bf-69e305c44264",
+   "creator": "Kai Cenat",
+   "twitch": "kaicenat",
+   "campaign": "kaicenat-gta6",
+   "paid": true
+  },
+  {
+   "channel": "clipnoir_gta6",
+   "channel_id": "UCRT54Fx719BwCBg4c_nen-w",
+   "zapier_connection": "027cbdee-518f-8234-ad78-79c1305f794f",
+   "creator": "AsianJeff",
+   "twitch": "asianjeff",
+   "campaign": "asianjeff-gta6",
+   "paid": true
+  },
+  {
+   "channel": "clipgta6no3",
+   "channel_id": "UCl4FTOpenxG7m-evKlK5vwg",
+   "zapier_connection": "021e9e4c-a429-850e-8eac-a2583308bc32",
+   "creator": "IShowSpeed",
+   "twitch": "ishowspeed",
+   "campaign": "speed-gta6",
+   "paid": false
+  },
+  {
+   "channel": "clipgta6no4",
+   "channel_id": "UCnBdVRbPl6wIbSbOBw8sGsQ",
+   "zapier_connection": "023e6c17-a90c-8e21-918f-7b8df41b8768",
+   "creator": "xQc",
+   "twitch": "xqc",
+   "campaign": "xqc-gta6",
+   "paid": false
+  },
+  {
+   "channel": "gta9clipsstream",
+   "channel_id": "UCh9KOXoMM1nD_kOt7P9xerA",
+   "zapier_connection": "02da9ebd-7095-85cb-a1ed-f9a25e05ca19",
+   "creator": "Lacy",
+   "twitch": "lacy",
+   "campaign": "lacy-gta6",
+   "paid": false
+  },
+  {
+   "channel": "Vicegta609",
+   "channel_id": "UCX6ww16POLGatPbmWpMIDKg",
+   "zapier_connection": "025b4883-9fb9-8ad0-83aa-96f0ddb2d6b4",
+   "creator": "summit1g",
+   "twitch": "summit1g",
+   "campaign": "summit1g-gta6",
+   "paid": false
+  },
+  {
+   "channel": "usa_gta6gamin77",
+   "channel_id": "UCDhajLeKPbq7rJ5ZINTUbLQ",
+   "zapier_connection": "029dc39d-a7d9-88c0-b3a9-fffc885802e9",
+   "creator": "StableRonaldo",
+   "twitch": "stableronaldo",
+   "campaign": "stableronaldo-gta6",
+   "paid": false
+  },
+  {
+   "channel": "Clipnourgta6",
+   "channel_id": "UCs99P2prnEoNmBUOs9vSnDw",
+   "zapier_connection": "029d17ae-730f-8074-b183-87c041baf3a7",
+   "creator": "Zack (Asmongold)",
+   "twitch": "zackrawrr",
+   "campaign": "zackrawrr-gta6",
+   "paid": false
+  }
+ ]
 }

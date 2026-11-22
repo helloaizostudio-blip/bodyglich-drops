@@ -17,3 +17,5 @@ Rules the tool can't enforce. You have to do these yourself:
 - Engagement: at least 0.8%. No story boosting, bought views or engagement manipulation.
 - Don't post the same or a nearly identical clip more than 5 times.
 - Pay: $1 CPM, up to $300 per clip. Submit clips at contentrewards.com.
+
+**Update 2026-11-22: the KreekCraft campaign has ended.** The channel continues as a fan-clip channel: no logo overlay, no paid-promotion label, credit KreekCraft in every caption.
