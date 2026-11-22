@@ -6,3 +6,7 @@
 | 2026-11-21 | clipnoir_gta6 | AsianJeff spots Michael | https://youtube.com/shorts/A0Rb61-eLu4 | ☐ AsianJeff |
 | 2026-11-21 | clipgta6no3 | IShowSpeed betrayed in final mission | https://youtube.com/shorts/UFWKUdE972c | (no campaign) |
 | 2026-11-21 | clipgta6no4 | xQc shopping spree wasted | https://youtube.com/shorts/Nx73NSooQqE | (no campaign) |
+| 2026-11-22 | usa_gta6gamin77 | StableRonaldo hits the vault | https://youtube.com/shorts/DZPHUiQ4Phs | (no campaign) |
+| 2026-11-22 | Vicegta609 | summit1g goes full John Wick | https://youtube.com/shorts/S9FT6Che96s | (no campaign) |
+| 2026-11-22 | gta9clipsstream | Lacy perfect run then redo | https://youtube.com/shorts/bAqCHAoc3xU | (no campaign) |
+| 2026-11-22 | Clipnourgta6 | Asmongold Call of Duty plan | https://youtube.com/shorts/KBAV21HJWFc | (no campaign) |
