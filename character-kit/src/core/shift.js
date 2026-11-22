@@ -66,9 +66,9 @@ export const FORMS = {
       return smax(d, -(p[1] - line), 0.012);
     }, [[-0.16, 0.0, -0.17], [0.16, 0.32, 0.16]], 0.0042), hairM); hair.castShadow = true;
     const skinM = new THREE.MeshStandardMaterial({ color: c.belly, roughness: 0.5 });
-    for (const s of [-1, 1]) { const ear = M(h.head, new THREE.SphereGeometry(1, 18, 12), skinM); ear.scale.set(0.014, 0.028, 0.02); ear.position.set(s * 0.109, 0.128, -0.004); }
+    const ears = [-1, 1].map((s) => { const ear = M(h.head, new THREE.SphereGeometry(1, 18, 12), skinM); ear.scale.set(0.014, 0.028, 0.02); ear.position.set(s * 0.109, 0.128, -0.004); return ear; });
     const nose = M(h.head, new THREE.SphereGeometry(1, 18, 12), skinM); nose.scale.set(0.011, 0.014, 0.012); nose.position.set(0, 0.118, 0.118);
-    return { group: h.group, cy: 0.62, human: h, face: f, antenna: an, hair, nose, animate(t) {
+    return { group: h.group, cy: 0.62, human: h, face: f, antenna: an, hair, nose, ears, animate(t) {
       const w = Math.sin(t * 2.2);
       h.pose({ spine: [0, w * 3, 0], head: [-3, w * 4, w * 2], shL: [6, 0, 12 + w * 2], shR: [6, 0, 12 - w * 2], elL: 24, elR: 24 }); f.set({ lid: blinkAt(t, 3) }); an.rotation.z = D(w * 6);
     } };
