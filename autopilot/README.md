@@ -28,7 +28,7 @@ It is built for a steady, sustainable affiliate operation, not a spam bot: 1–3
 
 ## Quick start (local)
 
-Requirements: Node.js 20.9+ (22 recommended).
+Requirements: Node.js 22.
 
 ```bash
 cd autopilot
