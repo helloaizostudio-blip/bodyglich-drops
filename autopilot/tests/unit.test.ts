@@ -31,6 +31,9 @@ describe("affiliate links", () => {
   it("rejects a link to a different ASIN", () => {
     expect(checkAffiliateLink("https://www.amazon.in/dp/B0ZZZZZZZZ?tag=mytag-21", TAG, "B0ABCDEFGH").valid).toBe(false);
   });
+  it("accepts the newer link.amazon short links", () => {
+    expect(checkAffiliateLink("https://link.amazon/B04R8u9lQ", TAG).kind).toBe("short");
+  });
   it("accepts SiteStripe short links but flags them", () => {
     const r = checkAffiliateLink("https://amzn.to/3abcDEF", TAG);
     expect(r.valid).toBe(true);

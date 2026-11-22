@@ -4,7 +4,7 @@
  * pasted from Associates Central / SiteStripe.
  */
 const AMAZON_IN_HOSTS = new Set(["amazon.in", "www.amazon.in", "m.amazon.in"]);
-const SHORT_HOSTS = new Set(["amzn.to", "amzn.in", "amzn.eu"]);
+const SHORT_HOSTS = new Set(["amzn.to", "amzn.in", "amzn.eu", "link.amazon"]);
 const ASIN_RE = /^[A-Z0-9]{10}$/;
 
 export interface LinkCheck {
