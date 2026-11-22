@@ -134,6 +134,16 @@ npm run start            # web (PORT env to change port)
 npm run worker           # worker, as a separate process/service
 ```
 
+`npm start` runs **both** the dashboard and the worker (`scripts/start-all.mjs`), which suits single-service hosts. Use `npm run start:web` + `npm run worker` if you prefer two processes on one machine.
+
+### Railway (recommended)
+1. New Project → **Deploy from GitHub repo** → pick this repository and the branch with the app.
+2. Service **Settings → Source → Root Directory**: `autopilot`.
+3. **Add a Volume** to the service, mounted at `/data`.
+4. **Variables**: `DATA_DIR=/data`, `SQLITE_PATH=/data/autopilot.db`, `APP_TIMEZONE=Asia/Kolkata`, plus your keys (`AMAZON_PARTNER_TAG`, `DASHBOARD_PASSWORD`, `APP_SECRET`, `ZAPIER_WEBHOOK_URL`, …).
+5. **Settings → Networking → Generate Domain**, then set `PUBLIC_BASE_URL` to that `https://…up.railway.app` address and redeploy.
+6. Optional: Settings → Deploy → Healthcheck path `/api/health`.
+
 Keep `.env` out of git (it is in `.gitignore`); use your host's secret manager.
 
 ### PostgreSQL
