@@ -55,7 +55,7 @@ const SETUP: Record<string, React.ReactNode> = {
       </li>
       <li>Send one pin so Zapier learns the fields: approve a pin, then press <em>Send now</em> on the Schedule page. While the Zap is off, Zapier only records the sample and creates no pin.</li>
       <li>
-        <strong>Action:</strong> Pinterest → <em>Create Pin</em>. Map: Board → <em>Custom value</em> <code>board_id</code> · Title → <code>title</code> · Description → <code>description</code> · Link → <code>link</code> · Image URL → <code>image_url</code> · Alt text → <code>alt_text</code>.
+        <strong>Action:</strong> Pinterest → <em>Create Pin</em>. Map: Board → <em>Custom value</em> <code>board_id</code> · Title → <code>title</code> · Description → <code>description</code> · Link → <code>link</code> · Image → <code>image_url</code>.
       </li>
       <li>
         <strong>Optional, recommended:</strong> add Webhooks by Zapier → <em>POST</em> to <code>callback_url</code> with JSON data <code>pin_id</code>, <code>callback_token</code> (both from step 1) and <code>pinterest_pin_id</code> (the ID from the Create Pin step). The app then marks the pin as published.

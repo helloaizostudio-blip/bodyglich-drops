@@ -89,7 +89,7 @@ Zapier downloads each image from `PUBLIC_BASE_URL/api/media/<file>.png`, so the 
      "alt_text": "…", "keywords": "…", "callback_url": "https://…/api/zapier/callback", "callback_token": "…"
    }
    ```
-3. **Action:** *Pinterest → Create Pin*. Map Board → *Custom value* `board_id`, Title → `title`, Description → `description`, Link → `link`, Image URL → `image_url`, Alt text → `alt_text`.
+3. **Action:** *Pinterest → Create Pin*. Map Board → *Custom value* `board_id`, Title → `title`, Description → `description`, Link → `link`, Image → `image_url`. (Zapier's Create Pin has no alt-text field; `alt_text` is in the payload if you later post through the Pinterest API.)
 4. **Recommended:** *Webhooks by Zapier → POST* to `callback_url` with data `pin_id`, `callback_token` and `pinterest_pin_id` (from the Create Pin step). The token is a per-pin HMAC, so forged callbacks are rejected.
 5. Board IDs: create the boards on Pinterest, then either connect the Pinterest API and click **Match board IDs from Pinterest**, or copy IDs from Zapier's Board dropdown into Settings → Pinterest boards.
 
