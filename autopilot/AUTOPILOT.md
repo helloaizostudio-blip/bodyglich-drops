@@ -50,7 +50,7 @@ read it, write only the JSON array to the matching `.answer.json`. Rules on top 
   real-world violence talk, donation/sub reading, anything that makes the creator look bad, drama framing.
 - Be strict: score 60+ only for clips that hook in the first 2 seconds.
 Run the exact same command again to cut. Then look at every `checks/*.jpg`: the creator's face must be
-visible (corner box or crop), captions inside the frame, title correct. Drop any clip that fails.
+visible (corner box or crop), captions inside the frame, title correct. Drop any clip that fails. The 3-frame check images can miss blurry stretches (some streams blur the screen during loading or spoilers), so also sample a frame every 2 seconds of the gameplay area (rows 30%-85%) with OpenCV Laplacian variance: if the first seconds are blurry, trim them off with ffmpeg (-ss); if a blurry stretch sits in the middle, drop the clip.
 Campaign `kreekcraft-gta6` must show the KreekCraft logo the whole time (the preset adds it).
 
 ## 4. Post (one Short per channel per run)
