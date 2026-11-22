@@ -71,7 +71,7 @@ with the same title/description/tags, `categoryId` "20", and `paidProductPlaceme
 = the channel's `paid` value. When every upload is done: `git rm -r uploads`, commit, push.
 
 ## 5. Limits
-- **Daily cap: at most 5 uploads per run** (Zapier/YouTube stops new channels after about 5 a day). Always include the 3 `paid: true` channels; fill the other 2 slots with pending clips first, then the non-paid channels that went longest without a Short. Channels left out wait for the next run.
+- **Daily cap: Zapier allows only about 4-5 uploads per day in total** (more get "throttled without retry" for many hours). **At most 4 uploads per run** (Zapier/YouTube stops new channels after about 5 a day). Always include the 3 `paid: true` channels; fill the other 2 slots with pending clips first, then the non-paid channels that went longest without a Short. Channels left out wait for the next run.
 - Zapier throttles bursts of uploads ("throttled without retry"). Upload one Short at a time, wait 5 minutes between uploads, and on a throttle error wait 30 minutes, then 60, before retrying. Keep the clip in uploads/ until its upload succeeded.
 - At most 1 Short per channel per run, and stop posting if Zapier reports the task limit.
 - Never post the same clip to two channels.

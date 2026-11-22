@@ -1,4 +1,51 @@
 {
  "_note": "Finished clips already in uploads/ on branch ccr-5b710d78-d8tir0, waiting to be posted (Zapier daily cap hit). Post these before cutting new clips for the same channel, then remove the entry and the file.",
- "pending": []
+ "pending": [
+  {
+   "file": "uploads/aj-l3.mp4",
+   "channel": "clipnoir_gta6",
+   "zapier_connection": "027cbdee-518f-8234-ad78-79c1305f794f",
+   "paid": true,
+   "title": "AsianJeff Can't Find L3 on His CONTROLLER \ud83c\udfae #Shorts",
+   "description": "AsianJeff brags he has the best setup, then asks chat where L3 is. Who else had to learn this?\n\n#AsianJeff #GTA6 #GrandTheftAutoVI #gaming\n\nSource: AsianJeff on Twitch, VOD 2933231152\n#Shorts",
+   "tags": [
+    "AsianJeff",
+    "GTA6",
+    "GTA 6",
+    "Grand Theft Auto VI",
+    "Shorts"
+   ]
+  },
+  {
+   "file": "uploads/kreek-alligator.mp4",
+   "channel": "vicecityHQclip",
+   "zapier_connection": "0245e81d-e5cb-885f-8552-495a3abe5f10",
+   "paid": true,
+   "title": "KreekCraft Tries to PET an Alligator in GTA 6 \ud83d\udc0a #Shorts",
+   "description": "KreekCraft knew petting Gary the alligator was a bad idea and did it anyway. Would you pet Gary? Watch KreekCraft on YouTube and Twitch!\n\n#GTA6 #KreekCraft #GrandTheftAutoVI #gaming\n\nSource: KreekCraft on Twitch, VOD 2932147800\n#Shorts",
+   "tags": [
+    "KreekCraft",
+    "GTA6",
+    "GTA 6",
+    "Grand Theft Auto VI",
+    "Shorts"
+   ]
+  },
+  {
+   "file": "uploads/kai-rent.mp4",
+   "channel": "clipboygta6",
+   "zapier_connection": "029634c4-d296-86a7-98bf-69e305c44264",
+   "paid": true,
+   "title": "Kai Cenat Goes OFF Collecting Rent in GTA 6 #Shorts",
+   "description": "Kai Cenat shows up to collect rent in GTA 6 and starts yelling for the bag. Would you have paid up?\n\n#KaiCenat #GTA6 #GrandTheftAutoVI #gaming\n\nSource: Kai Cenat on Twitch, VOD 2932305259\n#Shorts",
+   "tags": [
+    "KaiCenat",
+    "Kai Cenat",
+    "GTA6",
+    "GTA 6",
+    "Grand Theft Auto VI",
+    "Shorts"
+   ]
+  }
+ ]
 }
