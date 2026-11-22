@@ -1,0 +1,10 @@
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+# Local data: database, generated pin images, imported reports
+data/
+# Secrets
+.env
+.env.*
+!.env.example
