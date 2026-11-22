@@ -150,7 +150,10 @@ describe("full workflow", () => {
 
     expect(r.summary).toMatch(/sent 1/);
     expect(calls).toHaveLength(1);
-    expect(calls[0].url).toBe(process.env.ZAPIER_WEBHOOK_URL);
+    expect(calls[0].url.startsWith(process.env.ZAPIER_WEBHOOK_URL!)).toBe(true);
+    const qs = new URL(calls[0].url).searchParams;
+    expect(qs.get("title")).toBe(pin.title);
+    expect(qs.get("link")).toBe("https://www.amazon.in/dp/B0TESTAAAA?tag=mytag-21");
     const body = calls[0].body;
     expect(body.pin_id).toBe(pin.id);
     expect(body.image_url).toMatch(/^https:\/\/pins\.example\.com\/api\/media\/.+\.png$/);

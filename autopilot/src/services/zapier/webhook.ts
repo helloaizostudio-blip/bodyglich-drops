@@ -85,7 +85,13 @@ export async function sendToZapier(payload: ZapierPinPayload): Promise<ZapierSen
     return { ok: false, status: 0, requestId: null, error: "ZAPIER_WEBHOOK_URL must be a https://hooks.zapier.com/ Catch Hook URL" };
   }
   try {
-    const res = await fetchWithRetry(url, {
+    // The same fields go in the query string too, so a Zap whose fields were mapped from a
+    // browser-sent sample ("Querystring Title", "Querystring Link", …) gets the same values.
+    const target = new URL(url);
+    for (const [k, v] of Object.entries(payload)) {
+      if (v !== null && v !== undefined) target.searchParams.set(k, String(v));
+    }
+    const res = await fetchWithRetry(target.toString(), {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload),
