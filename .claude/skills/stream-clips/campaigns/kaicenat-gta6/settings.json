@@ -3,6 +3,10 @@
   "max_len": 45,
   "min_score": 45,
   "caption_prefix": "",
-  "required_hashtags": ["#KaiCenat", "#GTA6", "#GrandTheftAutoVI"],
-  "campaign_focus": "Kai Cenat playing GTA 6 must be the main focus of every clip: his loud reactions, screaming, laughing fits, rage, shock, chaotic chases, fails and first-time discoveries in Vice City. The first 1-2 seconds must hook. Titles and captions must describe exactly what happened, with no misleading clickbait. Skip just-chatting segments, guests talking without Kai, donation/sub reading, menus and quiet driving."
+  "required_hashtags": [
+    "#KaiCenat",
+    "#GTA6",
+    "#GrandTheftAutoVI"
+  ],
+  "campaign_focus": "Kai Cenat playing GTA 6 must be the main focus of every clip: his loud reactions, screaming, laughing fits, rage, shock, chaotic chases, fails and first-time discoveries in Vice City. The first 1-2 seconds must hook. Titles and captions must describe exactly what happened, with no misleading clickbait. Skip just-chatting segments, guests talking without Kai, donation/sub reading, menus and quiet driving. Also prioritise: funny GAME BUGS and glitches (NPCs or physics breaking, cars flying), big STORY moments and twists (with the streamer's reaction, no long cutscenes), the streamer's biggest REACTIONS, and moments where CHAT EXPLODES (<<CHAT Nx>> spikes)."
 }

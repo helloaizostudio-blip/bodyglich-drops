@@ -3,6 +3,10 @@
   "max_len": 45,
   "min_score": 45,
   "caption_prefix": "",
-  "required_hashtags": ["#AsianJeff", "#GTA6", "#GrandTheftAutoVI"],
-  "campaign_focus": "AsianJeff must be the main focus: funny moments, memorable quotes and big reactions from his GTA 6 playthrough. Never portray AsianJeff in a negative light. No hate farming, rage-bait or drama framing in titles or captions. Titles and captions must describe exactly what happened. Skip Fortnite talk, donation/sub reading, menus and quiet driving."
+  "required_hashtags": [
+    "#AsianJeff",
+    "#GTA6",
+    "#GrandTheftAutoVI"
+  ],
+  "campaign_focus": "AsianJeff must be the main focus: funny moments, memorable quotes and big reactions from his GTA 6 playthrough. Never portray AsianJeff in a negative light. No hate farming, rage-bait or drama framing in titles or captions. Titles and captions must describe exactly what happened. Skip Fortnite talk, donation/sub reading, menus and quiet driving. Also prioritise: funny GAME BUGS and glitches (NPCs or physics breaking, cars flying), big STORY moments and twists (with the streamer's reaction, no long cutscenes), the streamer's biggest REACTIONS, and moments where CHAT EXPLODES (<<CHAT Nx>> spikes)."
 }
