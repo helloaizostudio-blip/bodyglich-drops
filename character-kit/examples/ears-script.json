@@ -1,0 +1,24 @@
+{
+  "title": "Can You Wiggle Your Ears?",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.05,
+  "outro": 0.35,
+  "gap": 0.14,
+  "music": "tension",
+  "sources": [
+    "Humans still have three auricular (ear) muscles; most people cannot move their ears voluntarily, only a minority can wiggle them (Hackley 2015, Psychophysiology; Strauss et al. 2020)",
+    "Many mammals such as cats and dogs use these muscles to swivel their ears (pinnae) toward sounds (Hackley 2015)",
+    "Our lineage lost functional ear-orienting about 25 million years ago (Hackley 2015, 'Evidence for a vestigial pinna-orienting system in humans')",
+    "The vestigial ear muscles still activate in the direction of sounds the brain attends to, producing tiny movements too small to see without sensors (Strauss, Corneil, Hackley, et al. 2020, eLife 9:e54536)"
+  ],
+  "lines": [
+    { "text": "Try to wiggle your ears right now. Can you?", "caps": "Try to *wiggle | your *ears | *right now | Can you?" },
+    { "text": "Most people can't, but the muscles are still there.", "caps": "Most people *can't | but the *muscles | are still *there" },
+    { "text": "Cats and dogs use them to turn their ears toward sounds.", "caps": "*Cats and dogs | use them | to *turn their ears | toward *sounds" },
+    { "text": "Our ancestors lost that skill about twenty five million years ago.", "caps": "Our *ancestors | *lost that skill | about | *25 million years ago" },
+    { "text": "But here's the twist. Your ear muscles still try to move.", "caps": "But here's | the *twist | Your ear muscles | still *try to move" },
+    { "text": "When you hear a sudden sound, they twitch toward it. Just too small to see.", "caps": "When you hear | a *sudden sound | they *twitch | toward it | Just too *small to see" },
+    { "text": "So, can you wiggle yours? Tell me in the comments.", "caps": "So can you | *wiggle yours? | Tell me in | the *comments" }
+  ]
+}
