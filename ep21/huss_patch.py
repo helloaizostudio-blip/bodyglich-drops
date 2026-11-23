@@ -11,7 +11,7 @@ OUT = os.path.join(HERE, 'out'); SR = VL.SR
 HITS = [sf.read(os.path.join(HERE, 'sfx', f'hus_rec_{i}.wav'))[0] for i in range(6)]
 v, sr = sf.read(os.path.join(OUT, 'voice_raw.wav')); tl = json.load(open(os.path.join(OUT, 'timeline.json')))
 for s in tl['segs']:
-    if s['id'] not in ('w1', 'w2', 'w3', 'w4'): continue
+    if s['id'] not in ('w1', 'w2', 'w3'): continue
     a, b = int(s['start'] * sr), int(s['end'] * sr); v[a:b] = 0
     hits = [0.0, 0.22, 0.42] + ([0.96, 1.20, 1.38] if s['id'] == 'w1' else [])
     words = []
