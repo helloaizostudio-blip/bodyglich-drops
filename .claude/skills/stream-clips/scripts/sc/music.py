@@ -83,7 +83,7 @@ def beat(seconds, seed=None, style=None):
     if seed is not None and not isinstance(seed, int):
         seed = int(hashlib.sha1(str(seed).encode()).hexdigest()[:12], 16)
     rng = np.random.default_rng(seed)
-    r = random.Random(seed)
+    r = random.Random(f"beat:{seed}")              # str seeds are sha512-hashed: well mixed
     style = style or r.choice(STYLES)
     bpm = {"trap": r.choice((140, 145, 150)), "lofi": r.choice((80, 85, 90)),
            "hype": r.choice((122, 126, 128))}[style]
