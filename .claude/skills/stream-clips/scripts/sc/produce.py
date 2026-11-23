@@ -129,10 +129,19 @@ def make(index, pick, ctx, cfg, memory):
         chain += (f";[{idx}:v]scale={lw}:-1[logo];[{out_label}][logo]overlay=(W-w)/2:{ly}"
                   f":eof_action=repeat[logoed]")
         out_label = "logoed"
+    voice = "aud" if not cfg.get("bg_music") else "voice"
     if cfg["loudness"] is not None:
-        chain += f";[0:a]loudnorm=I={cfg['loudness']}:TP=-1.5:LRA=11,aresample=48000[aud]"
+        chain += f";[0:a]loudnorm=I={cfg['loudness']}:TP=-1.5:LRA=11,aresample=48000[{voice}]"
     else:
-        chain += ";[0:a]aresample=48000[aud]"
+        chain += f";[0:a]aresample=48000[{voice}]"
+    if cfg.get("bg_music"):
+        from . import music
+        wav, style, bpm = music.write(clips_dir / f"{name}.bgm.wav", length + 1,
+                                      seed=f"{ctx['url']}|{start}", style=cfg.get("bg_music_style"))
+        idx = inputs.count("-i")
+        inputs += ["-i", str(wav)]
+        chain += ";" + music.mix_filter(voice, f"{idx}:a", cfg["bg_music_db"])
+        say(f"  background beat: {style} {bpm} bpm", "info")
 
     ctx["outdir"].mkdir(parents=True, exist_ok=True)
     dest = ctx["outdir"] / f"{name}.mp4"

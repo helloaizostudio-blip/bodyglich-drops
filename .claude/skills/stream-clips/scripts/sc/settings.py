@@ -64,6 +64,9 @@ DEFAULTS = {
     "x264_preset": "fast",
     "loudness": -14,                 # LUFS; None to leave the audio as it is
     "audio_kbps": 192,
+    "bg_music": True,                # lay a synthesized (copyright-free) beat under the clip
+    "bg_music_style": None,          # trap | lofi | hype; None = pick per clip
+    "bg_music_db": -10,              # beat volume; it also ducks further while people talk
 
     # campaign (clipping programs): logo overlay, required caption text and hashtags
     "logo_file": None,               # transparent PNG shown for the whole clip
