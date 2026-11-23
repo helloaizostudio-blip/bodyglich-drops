@@ -16,3 +16,4 @@
 | 2026-11-23 | clipboygta6 | Kai Cenat collecting rent | https://youtube.com/shorts/EXrNvvgMES4 | Kai Cenat |
 | 2026-11-23 | Clipnourgta6 | Asmongold frees a bear | https://youtube.com/shorts/fCbsneUw7VE | (no campaign) |
 | 2026-11-23 | clipgta6no4 | xQc heist cut | https://youtube.com/shorts/rLCuIn0SoUc | (no campaign) |
+| 2026-11-23 | Clipnourgta6 | Boeshi shark rescue (posted by hand) | — | Boeshi |
