@@ -10,3 +10,9 @@
 | 2026-11-22 | Vicegta609 | summit1g goes full John Wick | https://youtube.com/shorts/S9FT6Che96s | (no campaign) |
 | 2026-11-22 | gta9clipsstream | Lacy perfect run then redo | https://youtube.com/shorts/bAqCHAoc3xU | (no campaign) |
 | 2026-11-22 | Clipnourgta6 | Asmongold Call of Duty plan | https://youtube.com/shorts/KBAV21HJWFc | (no campaign) |
+| 2026-11-22 | vicecityHQclip | KreekCraft sees Niko Bellic (posted by hand) | — | (campaign ended) |
+| 2026-11-22 | clipboygta6 | Kai Cenat sees Niko Bellic (posted by hand) | — | Kai Cenat |
+| 2026-11-23 | clipnoir_gta6 | AsianJeff can't find L3 | https://youtube.com/shorts/08E5BL9t4mY | AsianJeff |
+| 2026-11-23 | clipboygta6 | Kai Cenat collecting rent | https://youtube.com/shorts/EXrNvvgMES4 | Kai Cenat |
+| 2026-11-23 | Clipnourgta6 | Asmongold frees a bear | https://youtube.com/shorts/fCbsneUw7VE | (no campaign) |
+| 2026-11-23 | clipgta6no4 | xQc heist cut | https://youtube.com/shorts/rLCuIn0SoUc | (no campaign) |
