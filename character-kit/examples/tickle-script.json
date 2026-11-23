@@ -1,0 +1,23 @@
+{
+  "title": "Why You Can't Tickle Yourself",
+  "voice": "am_michael",
+  "speed": 1.1,
+  "lead": 0.05,
+  "outro": 0.35,
+  "gap": 0.14,
+  "music": "tension",
+  "sources": [
+    "Self-produced touch feels less ticklish because the brain (cerebellum) predicts the sensory consequences of your own movement and attenuates them (Blakemore, Wolpert & Frith 1998, Nature Neuroscience 1:635; Blakemore, Wolpert & Frith 2000, NeuroReport)",
+    "The same touch delivered by someone else is rated as more ticklish (Weiskrantz, Elliott & Darlington 1971, Nature; Blakemore et al. 1998)",
+    "Using a robot interface, adding a delay of 200 ms between the person's own movement and the touch made it feel significantly more ticklish (Blakemore, Frith & Wolpert 1999, J Cogn Neurosci 11:551)"
+  ],
+  "lines": [
+    { "text": "Try to tickle yourself right now. It doesn't work, does it?", "caps": "Try to *tickle | *yourself | right now | It doesn't *work | does it?" },
+    { "text": "Your brain predicts every move your own hand makes.", "caps": "Your *brain | *predicts | every move | your own *hand makes" },
+    { "text": "So it cancels the feeling before it even arrives.", "caps": "So it *cancels | the feeling | before it | even *arrives" },
+    { "text": "That's why someone else's tickle hits so much harder.", "caps": "That's why | *someone else's | tickle hits | so much *harder" },
+    { "text": "But here's the twist. Scientists built a tickle robot to trick the brain.", "caps": "But here's | the *twist | Scientists built | a *tickle robot | to *trick the brain" },
+    { "text": "Add a delay of just a fifth of a second, and your own tickle starts to work.", "caps": "Add a *delay | of just | a *fifth of a second | and your own tickle | starts to *work" },
+    { "text": "So, are you ticklish? Tell me in the comments.", "caps": "So are you | *ticklish? | Tell me in | the *comments" }
+  ]
+}
