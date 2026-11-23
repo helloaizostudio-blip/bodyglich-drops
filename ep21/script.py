@@ -9,7 +9,7 @@ TITLE = "Everyone's Playing"
 SLUG = "ep21_everyones_playing"
 
 LINES = [
-    ("hook",   "zash",  "excited", "In my world, GTA six finally came out... and *everyone* started living like it.", ["car_flies", "parachute"]),
+    ("hook",   "zash",  "excited", "In this town, GTA six finally came out... and *everyone* started living like it.", ["car_flies", "parachute"]),
     ("chaos",  "zash",  "excited", "My mom stole a car. Brick stole a helicopter. Even the principal joined the *cops*.", ["mom_car", "brick_heli", "principal_cop"]),
     ("except", "zash",  "calm",    "Everyone was playing. Except *me*.", ["zash_bench"]),
     ("w1",     "zfast", "calm",    "Huss huss huss. Huss huss huss.", ["thumb_blur"]),
