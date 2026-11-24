@@ -18,3 +18,4 @@
 | 2026-11-23 | clipgta6no4 | xQc heist cut | https://youtube.com/shorts/rLCuIn0SoUc | (no campaign) |
 | 2026-11-23 | Clipnourgta6 | Boeshi shark rescue (posted by hand) | — | Boeshi |
 | 2026-11-24 | clipgta6no4 | Boeshi watching paint dry (posted by hand) | — | Boeshi |
+| 2026-11-24 | Vicegta609 | Boeshi vs Mandy's infinite apples (posted by hand) | — | Boeshi |
