@@ -25,3 +25,4 @@
 | 2026-11-24 | vicecityHQclip | Boeshi's guns stop working (posted by hand) | — | Boeshi |
 | 2026-11-24 | clipgta6no3 | KreekCraft pets an alligator (posted by hand) | — | (no campaign) |
 | 2026-11-24 | gta9clipsstream | KreekCraft's bank account frozen (posted by hand) | — | (no campaign) |
+| 2026-11-24 | usa_gta6gamin77 | KreekCraft finds his friend (posted by hand) | — | (no campaign) |
