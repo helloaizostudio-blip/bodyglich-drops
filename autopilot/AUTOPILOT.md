@@ -79,6 +79,13 @@ Buffer `create_post` (schedulingType automatic, mode shareNow, assets [{video:{u
 (the video id). Buffer has no paid-promotion flag: set it afterwards with the Zapier API PUT above (an update, not an upload).
 Use Buffer for those channels first and keep Zapier's daily uploads for the others. Never post to the Instagram channel in Buffer.
 
+## 4c. Third route: Make (separate limit)
+Channels with a `make_connection` in channels.json are posted by running Make scenario 8773043 ("GTA Shorts uploader")
+with `scenarios_run` (responsive true) and data {channel: exact channel name, video_url: raw GitHub URL, title, description}.
+It downloads the file, routes by channel name and uploads it (category Gaming, public, not for kids). Find the new video id
+with the Zapier "Make API GET Request" on playlistItems (playlistId = "UU" + channel_id without the leading "UC"),
+then set paid promotion with the Zapier PUT. Make free plan: about 1,000 operations a month (3 per upload).
+
 ## 5. Limits
 - **Daily cap: Zapier allows only about 4-5 uploads per day in total** (more get "throttled without retry" for many hours). **At most 4 uploads per run** (Zapier/YouTube stops new channels after about 5 a day). Always include the 3 `paid: true` channels; fill the other 2 slots with pending clips first, then the non-paid channels that went longest without a Short. Channels left out wait for the next run.
 - Zapier throttles bursts of uploads ("throttled without retry"). Upload one Short at a time, wait 5 minutes between uploads, and on a throttle error wait 30 minutes, then 60, before retrying. Keep the clip in uploads/ until its upload succeeded.

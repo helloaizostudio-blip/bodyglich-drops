@@ -27,7 +27,8 @@
    "creator": "AsianJeff",
    "twitch": "asianjeff",
    "campaign": "asianjeff-gta6",
-   "paid": true
+   "paid": true,
+   "make_connection": 13363005
   },
   {
    "channel": "clipgta6no3",
@@ -64,7 +65,8 @@
    "creator": "summit1g",
    "twitch": "summit1g",
    "campaign": "summit1g-gta6",
-   "paid": false
+   "paid": false,
+   "make_connection": 13362958
   },
   {
    "channel": "usa_gta6gamin77",
@@ -82,7 +84,14 @@
    "creator": "Zack (Asmongold)",
    "twitch": "zackrawrr",
    "campaign": "zackrawrr-gta6",
-   "paid": false
+   "paid": false,
+   "make_connection": 13362887
   }
- ]
+ ],
+ "make": {
+  "organization": 9732345,
+  "team": 3754458,
+  "scenario_id": 8773043,
+  "inputs": "channel (exact channel name), video_url, title, description"
+ }
 }
