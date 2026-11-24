@@ -23,7 +23,7 @@ DEFAULTS = {
     # picking
     "clips": 3,                      # clips per stream
     "min_len": 15,
-    "max_len": 59,                   # stays under the 60 s Shorts limit
+    "max_len": 30,                   # short clips keep viewers to the end (Shorts limit is 60)
     "part_minutes": 10,              # transcript window sent to the AI per call
     "part_overlap": 20,              # seconds shared by neighbouring windows
     "picks_per_part": 3,
