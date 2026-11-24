@@ -22,3 +22,4 @@
 | 2026-11-24 | Clipnourgta6 | Boeshi waited 13 years for house chores (posted by hand) | — | Boeshi |
 | 2026-11-24 | clipnoir_gta6 | AsianJeff watches a car vanish (posted by hand) | — | AsianJeff |
 | 2026-11-24 | clipboygta6 | Kai Cenat gets a mega mansion (posted by hand) | — | Kai Cenat |
+| 2026-11-24 | vicecityHQclip | Boeshi's guns stop working (posted by hand) | — | Boeshi |
