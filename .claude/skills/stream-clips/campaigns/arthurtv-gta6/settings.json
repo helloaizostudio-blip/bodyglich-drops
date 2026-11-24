@@ -1,6 +1,6 @@
 {
   "clips": 6,
-  "max_len": 45,
+  "max_len": 30,
   "min_score": 50,
   "caption_prefix": "@arthurtv",
   "required_hashtags": ["#ArthurTV", "#GTA6", "#GrandTheftAutoVI"],

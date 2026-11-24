@@ -3,7 +3,7 @@
   "logo_y": 0.775,
   "cap_y": 0.62,
   "clips": 4,
-  "max_len": 45,
+  "max_len": 30,
   "min_score": 45,
   "caption_prefix": "Credit: KreekCraft on YouTube and Twitch.",
   "required_hashtags": [

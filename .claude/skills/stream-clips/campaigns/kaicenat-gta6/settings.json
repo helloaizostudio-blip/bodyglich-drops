@@ -1,6 +1,6 @@
 {
   "clips": 5,
-  "max_len": 45,
+  "max_len": 30,
   "min_score": 45,
   "caption_prefix": "",
   "required_hashtags": [

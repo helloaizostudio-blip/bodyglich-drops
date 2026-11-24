@@ -1,6 +1,6 @@
 {
   "clips": 6,
-  "max_len": 45,
+  "max_len": 30,
   "min_score": 50,
   "caption_prefix": "Full stream at twitch.tv/darealboeshi",
   "required_hashtags": [
