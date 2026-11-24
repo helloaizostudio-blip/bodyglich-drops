@@ -47,3 +47,25 @@ First Short in the new format: "Do You Have This Muscle?" (palmaris longus, `exa
 - **Show the transformation.** Use the normal Shifter charge (glow-up, flash, ring, sparks). Don't pass `flashK` or a tiny `charge`, which made changes invisible. To avoid white-outs, scale `blip.light.intensity` down (~0.45×) and transform in medium or wide shots, not in extreme close-ups.
 - **The human form has a human head:** hair, ears and a nose, with no antenna (see `src/core/shift.js`, `FORMS.human`).
 - **Give every Short a twist:** a "But here's the twist…" reveal near the end, before the comment question.
+
+## Check-in: 24 Nov (27 Shorts, 38.4k views, 46 subscribers)
+
+| Signal | Old format | New format (tendon, glow, ears, tickle) | Verdict |
+|---|---|---|---|
+| Views per Short | 1,000–1,450 | 1,000–2,000 ("Do You Have This Muscle?": 1,990, best since the 7 Nov organ video) | Slightly better; still capped at YouTube's first test batch |
+| Stayed to watch (engaged ÷ views) | ~50% | ~54% | **Still the bottleneck**: about half swipe away in the first second |
+| Stayed to watch on phones only | — | 48% (TV 73%, tablet 53%) | The feed on phones is where the first frame loses people |
+| Comments | ~0–2 per Short | 6 on the tendon Short ("I have 2", "I only have 1", "I don't have") | **Participation questions work**; keep them |
+| Average view percentage | 55–108% | 79–108% | People who stay watch it all; content is fine |
+| Subscriber conversion | | 46 subs / 38k views = 0.12% | Very low; no reason given to follow |
+| Audience | | 70% US; ages 13–17 at 28%, 25–44 at 51% | |
+
+What viewers say: "Pet is cute", "The blue guy name is 'bilp'". **Viewers notice and like Blip.**
+
+### Changes from now on
+1. **Frame 1 = Blip doing something already.** He's mid-transformation, or the payoff is already happening. Never a static studio shot, never Blip just bouncing. The tickle Short starts with a flash at 0.4 s; use that as the template.
+2. **Faster voice energy:** `speed` 1.15, and try `am_puck` (lively) for the next three Shorts against `am_michael`. Compare stayed-to-watch between the two.
+3. **Shorter:** aim for 18–24 s.
+4. **Follow line:** the last caption pill shows "FOLLOW FOR DAILY GLITCHES 💙" for the final 1.5 s, small, under the ✅/❌ question.
+5. **Reply to comments** on each new Short within 24 h, as the channel, short and friendly (done for the tendon and ears Shorts on 24 Nov).
+6. **Post at 7:30 AM IST.** Evening uploads have been blocked by Zapier every night since 21 Nov, while morning uploads work. 7:30 AM IST is also 9 PM in New York, US prime time.
