@@ -28,3 +28,4 @@
 | 2026-11-24 | usa_gta6gamin77 | KreekCraft finds his friend (posted by hand) | — | (no campaign) |
 | 2026-11-24 | clipgta6no4 | Boeshi tries to pet an animal (posted by hand) | — | Boeshi |
 | 2026-11-24 | Lauren Instagram | Lauren crocodile water (posted by hand) | https://www.instagram.com/reel/DgHOF0zS9n6/ | Lauren Hamden |
+| 2026-11-24 | clipnoir_gta6 | AsianJeff gives away a rare watch (Zapier) | https://youtube.com/shorts/r6H595Yx9iw | AsianJeff |

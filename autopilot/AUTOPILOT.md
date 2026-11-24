@@ -70,7 +70,7 @@ Then Zapier → YouTube "Upload Video" (`upload_video`) with `connection_id` = t
   default_language en; default_audio_language en
 Then Zapier "Make API Mutating Request": PUT `https://www.googleapis.com/youtube/v3/videos?part=snippet,paidProductPlacementDetails`
 with the same title/description/tags, `categoryId` "20", and `paidProductPlacementDetails.hasPaidProductPlacement`
-= the channel's `paid` value. When every upload is done: `git rm -r uploads`, commit, push.
+= the channel's `paid` value. Put `part` in the `querystring` field (`{"part": "snippet,paidProductPlacementDetails"}`), not in the URL (a comma in the URL gives `unexpectedPart`), set header Content-Type application/json and `fail_on_errors` false. A `429 Too Many Requests` on upload means the throttle: wait and retry later. When every upload is done: `git rm -r uploads`, commit, push.
 
 ## 5. Limits
 - **Daily cap: Zapier allows only about 4-5 uploads per day in total** (more get "throttled without retry" for many hours). **At most 4 uploads per run** (Zapier/YouTube stops new channels after about 5 a day). Always include the 3 `paid: true` channels; fill the other 2 slots with pending clips first, then the non-paid channels that went longest without a Short. Channels left out wait for the next run.
