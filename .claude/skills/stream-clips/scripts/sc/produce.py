@@ -112,6 +112,10 @@ def make(index, pick, ctx, cfg, memory):
     chain = f"{graph};[framed]ass={ass.name}[subbed]"
     out_label = "subbed"
     title = pick.get("title")
+    hooks = cfg.get("title_hooks") or []
+    if title and hooks:
+        import zlib
+        title = hooks[zlib.crc32(f"{ctx['url']}|{start}".encode()) % len(hooks)]
     if title:
         try:
             png, _, th = titlecard.render(title, cfg, clips_dir / f"{name}.title.png")

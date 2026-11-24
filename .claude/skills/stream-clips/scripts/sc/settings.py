@@ -75,6 +75,9 @@ DEFAULTS = {
     "caption_prefix": "",            # text every post caption must start with
     "required_hashtags": [],         # hashtags every post must include
     "campaign_focus": "",            # default --focus for the picker
+    # on-video title bar: a short generic hook instead of the clip's own title (the post title stays specific)
+    "title_hooks": ["This happened in GTA 6 😱", "Nobody expected this in GTA 6 😳",
+                    "GTA 6 is actually crazy 😭", "Wait for it... 😱"],
 }
 
 CAMPAIGNS = Path(__file__).resolve().parents[2] / "campaigns"
