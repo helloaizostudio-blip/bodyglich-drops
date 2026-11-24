@@ -1,0 +1,23 @@
+{
+  "title": "Can You Roll Your Tongue?",
+  "voice": "am_puck",
+  "speed": 1.15,
+  "lead": 0.05,
+  "outro": 0.4,
+  "gap": 0.12,
+  "music": "tension",
+  "sources": [
+    "Sturtevant (1940, PNAS) reported tongue rolling in about 65% of people and proposed it was a simple dominant single-gene trait; later surveys give roughly 65–81%",
+    "Identical twins are often discordant for tongue rolling (Matlock 1952, J Heredity; Reedy et al. 1971; Martin 1975, Nature), so it is not a simple one-gene trait; Sturtevant later called it 'embarrassing' that it was still taught as Mendelian (Sturtevant 1965)",
+    "The ability can change with age and some people report learning it (Komai 1951; McDonald, 'Myths of Human Genetics', University of Delaware, 2011)"
+  ],
+  "lines": [
+    { "text": "Try to roll your tongue into a tube. Can you?", "caps": "Try to *roll | your *tongue | into a *tube | Can you?" },
+    { "text": "About two out of three people can.", "caps": "About | *2 out of 3 | people *can" },
+    { "text": "For decades, schools taught it came from one single gene.", "caps": "For *decades | schools taught | it came from | *one single gene" },
+    { "text": "But here's the twist. That's a myth.", "caps": "But here's | the *twist | That's a *myth" },
+    { "text": "Identical twins have the same DNA, and one can roll while the other can't.", "caps": "Identical *twins | have the *same DNA | and one *can | while the other *can't" },
+    { "text": "Some people even learn it with practice.", "caps": "Some people | even *learn it | with *practice" },
+    { "text": "So, can you roll yours? Tell me below.", "caps": "So can you | *roll yours? | Tell me *below" }
+  ]
+}
