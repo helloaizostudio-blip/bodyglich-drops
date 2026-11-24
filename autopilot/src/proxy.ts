@@ -5,7 +5,7 @@ import { SESSION_COOKIE, verifySessionToken } from "@/utils/session";
  * Protects the dashboard. Public routes (each with its own auth where needed): login, the token-protected import API, pin images (Zapier must fetch them),
  * the Zapier callback (verified by its own HMAC token) and the health check.
  */
-const PUBLIC = [/^\/login$/, /^\/api\/auth\/login$/, /^\/api\/import$/, /^\/api\/media\//, /^\/api\/zapier\/callback$/, /^\/api\/health$/];
+const PUBLIC = [/^\/login$/, /^\/api\/auth\/login$/, /^\/api\/import$/, /^\/api\/admin\/requeue$/, /^\/api\/media\//, /^\/api\/zapier\/callback$/, /^\/api\/health$/];
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 
 export async function proxy(req: NextRequest) {

@@ -288,3 +288,19 @@ export async function handleZapierCallback(body: ZapierCallback): Promise<{ ok: 
   });
   return { ok: true, message: "recorded", httpStatus: 200 };
 }
+
+/**
+ * Puts pins that were delivered to Zapier but never confirmed back in the queue so they are
+ * sent again. Used to recover pins after a Zap problem; only pins sent before `sentBefore`
+ * are affected, so later (working) sends are never duplicated.
+ */
+export async function requeueUnconfirmed(sentBefore: string, actor: "user" | "worker" = "worker") {
+  const cutoff = new Date(sentBefore);
+  if (Number.isNaN(cutoff.getTime())) throw new Error("sentBefore must be an ISO date");
+  const pins = (await listPins({ status: "sent", limit: 500 })).filter((p) => p.sent_at && new Date(p.sent_at) < cutoff);
+  for (const p of pins) {
+    await transitionPin(p.id, ["sent"], "scheduled", { scheduled_for: nowIso(), sent_at: null, attempts: 0, last_error: null });
+    await audit("warn", actor, "pin.requeue", `Re-queued pin ${p.id} (sent ${p.sent_at}, never confirmed by Zapier)`, { entityType: "pin", entityId: p.id });
+  }
+  return { requeued: pins.map((p) => p.id) };
+}

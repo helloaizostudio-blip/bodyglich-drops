@@ -3,7 +3,7 @@ import { z } from "zod";
 import { importManualProduct } from "@/services/amazon/manual-import";
 import { generatePinsForProduct } from "@/services/content-generation/pipeline";
 import { listPins } from "@/database/repositories";
-import { safeEqual } from "@/utils/crypto";
+import { checkApiToken } from "@/utils/api-token";
 import { audit } from "@/utils/audit";
 
 /**
@@ -24,11 +24,9 @@ const Body = z.object({
 });
 
 export async function POST(req: Request) {
-  const token = process.env.IMPORT_API_TOKEN?.trim();
-  if (!token || token.length < 24) return NextResponse.json({ error: "import API disabled" }, { status: 404 });
-  const auth = req.headers.get("authorization") ?? "";
-  const given = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
-  if (!given || !safeEqual(given, token)) {
+  const auth = checkApiToken(req);
+  if (auth === "disabled") return NextResponse.json({ error: "import API disabled" }, { status: 404 });
+  if (auth === "denied") {
     await audit("warn", "system", "import_api.denied", "Rejected import API call with a bad token");
     return NextResponse.json({ error: "unauthorised" }, { status: 401 });
   }

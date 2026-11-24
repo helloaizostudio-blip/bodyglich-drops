@@ -85,19 +85,15 @@ export async function sendToZapier(payload: ZapierPinPayload): Promise<ZapierSen
     return { ok: false, status: 0, requestId: null, error: "ZAPIER_WEBHOOK_URL must be a https://hooks.zapier.com/ Catch Hook URL" };
   }
   try {
-    // The same fields go in the query string too, so a Zap whose fields were mapped from a
-    // browser-sent sample ("Querystring Title", "Querystring Link", …) gets the same values.
+    // Sent as a GET with every field in the query string. Zapier exposes these as
+    // "Querystring Title", "Querystring Link", … — the same fields a browser-sent sample
+    // produces — so the Zap mapping is identical however the Zap was set up.
+    // (Mixing a JSON body with a query string left the "Querystring" fields empty.)
     const target = new URL(url);
     for (const [k, v] of Object.entries(payload)) {
       if (v !== null && v !== undefined) target.searchParams.set(k, String(v));
     }
-    const res = await fetchWithRetry(target.toString(), {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
-      retries: 1,
-      timeoutMs: 30_000,
-    });
+    const res = await fetchWithRetry(target.toString(), { method: "GET", retries: 1, timeoutMs: 30_000 });
     const text = await res.text();
     let requestId: string | null = null;
     try {

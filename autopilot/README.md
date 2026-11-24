@@ -80,7 +80,7 @@ Zapier downloads each image from `PUBLIC_BASE_URL/api/media/<file>.png`, so the 
 
 ### 7. Zapier → Pinterest (required for publishing)
 1. Create a Zap. **Trigger:** *Webhooks by Zapier → Catch Hook*. Put the URL in `ZAPIER_WEBHOOK_URL`.
-2. Send one pin (approve one, then **Send now** on the Schedule page) so Zapier sees the payload:
+2. Send one pin (approve one, then **Send now** on the Schedule page) so Zapier sees the fields. The app sends a **GET request with every field in the query string**, so in Zapier they appear as *Querystring Title*, *Querystring Link*, etc.:
    ```json
    {
      "event": "create_pin", "pin_id": "pin_…", "board_name": "Christmas Gift Ideas", "board_id": "1234…",
@@ -89,7 +89,7 @@ Zapier downloads each image from `PUBLIC_BASE_URL/api/media/<file>.png`, so the 
      "alt_text": "…", "keywords": "…", "callback_url": "https://…/api/zapier/callback", "callback_token": "…"
    }
    ```
-3. **Action:** *Pinterest → Create Pin*. Map Board → *Custom value* `board_id`, Title → `title`, Description → `description`, Link → `link`, Image → `image_url`. (Zapier's Create Pin has no alt-text field; `alt_text` is in the payload if you later post through the Pinterest API.)
+3. **Action:** *Pinterest → Create Pin*. Map Board → *Custom value* Querystring Board Id (or pick a fixed board), Title → Querystring Title, Description → Querystring Description, Link → Querystring Link, Image → Querystring Image Url. (Zapier's Create Pin has no alt-text field; `alt_text` is in the payload if you later post through the Pinterest API.)
 4. **Recommended:** *Webhooks by Zapier → POST* to `callback_url` with data `pin_id`, `callback_token` and `pinterest_pin_id` (from the Create Pin step). The token is a per-pin HMAC, so forged callbacks are rejected.
 5. Board IDs: create the boards on Pinterest, then either connect the Pinterest API and click **Match board IDs from Pinterest**, or copy IDs from Zapier's Board dropdown into Settings → Pinterest boards.
 

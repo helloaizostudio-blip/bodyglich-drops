@@ -142,7 +142,7 @@ describe("full workflow", () => {
     const calls: { url: string; body: Record<string, unknown> }[] = [];
     const realFetch = globalThis.fetch;
     vi.stubGlobal("fetch", async (url: string, init: RequestInit) => {
-      calls.push({ url, body: JSON.parse(String(init.body)) });
+      calls.push({ url, body: Object.fromEntries(new URL(url).searchParams) });
       return new Response(JSON.stringify({ status: "success", request_id: "req_1" }), { status: 200 });
     });
     const r = await publishDuePins("worker");
