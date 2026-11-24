@@ -52,6 +52,7 @@ read it, write only the JSON array to the matching `.answer.json`. Rules on top 
 Run the exact same command again to cut. Then look at every `checks/*.jpg`: the creator's face must be
 visible (corner box or crop), captions inside the frame, title correct. Drop any clip that fails. The 3-frame check images can miss blurry stretches (some streams blur the screen during loading or spoilers), so also sample a frame every 2 seconds of the gameplay area (rows 30%-85%) with OpenCV Laplacian variance: if the first seconds are blurry, trim them off with ffmpeg (-ss); if a blurry stretch sits in the middle, drop the clip.
 Every clip gets a quiet synthesized background beat (copyright-free, ducks under speech; preset `bg_music`). For clips cut before that, run `python3 ~/.claude/skills/stream-clips/scripts/add_music.py <clips>`.
+Each pick should carry 1-3 meme sound effects in its `sfx` list (boom, scratch, airhorn, whoosh, ding, bonk, boing, dundun, sadtrombone, riser) timed on the punchline/reaction; they are synthesized (copyright-free) and mixed in automatically. For an already-cut clip: `~/.streamclips/venv/bin/python ~/.claude/skills/stream-clips/scripts/add_sfx.py --words clip.mp4` to get word times, then `... add_sfx.py clip.mp4 "boom@8.8,scratch@16.3"`.
 Campaign `kreekcraft-gta6` must show the KreekCraft logo the whole time (the preset adds it).
 
 ## 4. Post (one Short per channel per run)

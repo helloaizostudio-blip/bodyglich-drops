@@ -47,12 +47,19 @@ nothing is strong.
 
 Reply with a JSON array and nothing else (no prose, no markdown fence). Example shape:
 [{"start": 1204.0, "end": 1239.5, "type": "reaction", "title": "...", "caption": "...", \
-"hashtags": ["#..."], "score": 72, "why": "..."}]
+"hashtags": ["#..."], "sfx": [{"at": 1221.3, "sound": "boom"}], "score": 72, "why": "..."}]
 
 title: the text bar shown over the clip. 3-10 words, names the creator, CAPITALS on the 1-3 \
 words that carry the drama, teases the payoff without giving it away, at most one emoji.
 caption: the post text, under 140 characters, ending with a question or a nudge to comment.
 hashtags: 3-6 tags: the topic, the creator, one broad tag.
+sfx: 1-3 funny meme sound effects that fit the moment, like a TikTok editor would add. "at" is the \
+transcript time it should hit (on the punchline word, the shocked reaction, the fail). Sounds: \
+boom (vine boom: punchline, shock, absurd line), scratch (record scratch: "wait what", plan \
+falls apart), airhorn (big win, hype), whoosh (fast move), ding (aha, money, correct), bonk \
+(someone hit or crashes), boing (jump, silly physics), dundun (dramatic reveal, betrayal), \
+sadtrombone (fail, loss), riser (tension building into the reveal). Never over the creator's \
+key sentence, never in the first second; [] if nothing fits.
 score: 1-100, how likely a viewer watches to the end. Be strict: 80+ only for clips you \
 would bet money on.
 why: one short sentence.
@@ -193,6 +200,15 @@ def tidy(pick, words, cfg):
     out["caption"] = str(pick.get("caption") or "").strip()
     tags = pick.get("hashtags") or []
     out["hashtags"] = [t if str(t).startswith("#") else f"#{t}" for t in tags if str(t).strip()][:6]
+    cues = []
+    for c in pick.get("sfx") or []:
+        try:
+            rel = float(c.get("at", c.get("t"))) - out["start"]
+        except (TypeError, ValueError, AttributeError):
+            continue
+        if 0.8 <= rel <= out["end"] - out["start"] - 0.3:
+            cues.append({"t": round(rel, 2), "sound": str(c.get("sound", ""))})
+    out["sfx"] = cues[:3]
     return out
 
 
