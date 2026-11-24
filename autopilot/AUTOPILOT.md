@@ -72,6 +72,13 @@ Then Zapier "Make API Mutating Request": PUT `https://www.googleapis.com/youtube
 with the same title/description/tags, `categoryId` "20", and `paidProductPlacementDetails.hasPaidProductPlacement`
 = the channel's `paid` value. Put `part` in the `querystring` field (`{"part": "snippet,paidProductPlacementDetails"}`), not in the URL (a comma in the URL gives `unexpectedPart`), set header Content-Type application/json and `fail_on_errors` false. A `429 Too Many Requests` on upload means the throttle: wait and retry later. When every upload is done: `git rm -r uploads`, commit, push.
 
+## 4b. Second route: Buffer (separate limit from Zapier)
+Channels with a `buffer_channel` id in channels.json (Buffer organization 6b052a0c8a5fd59d43924b1a) can be posted with
+Buffer `create_post` (schedulingType automatic, mode shareNow, assets [{video:{url: raw GitHub URL}}], metadata.youtube
+{title, categoryId "20", madeForKids false, privacy public}, text = description). Then `get_post` gives `externalLink`
+(the video id). Buffer has no paid-promotion flag: set it afterwards with the Zapier API PUT above (an update, not an upload).
+Use Buffer for those channels first and keep Zapier's daily uploads for the others. Never post to the Instagram channel in Buffer.
+
 ## 5. Limits
 - **Daily cap: Zapier allows only about 4-5 uploads per day in total** (more get "throttled without retry" for many hours). **At most 4 uploads per run** (Zapier/YouTube stops new channels after about 5 a day). Always include the 3 `paid: true` channels; fill the other 2 slots with pending clips first, then the non-paid channels that went longest without a Short. Channels left out wait for the next run.
 - Zapier throttles bursts of uploads ("throttled without retry"). Upload one Short at a time, wait 5 minutes between uploads, and on a throttle error wait 30 minutes, then 60, before retrying. Keep the clip in uploads/ until its upload succeeded.

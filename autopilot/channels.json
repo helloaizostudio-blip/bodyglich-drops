@@ -17,7 +17,8 @@
    "creator": "Kai Cenat",
    "twitch": "kaicenat",
    "campaign": "kaicenat-gta6",
-   "paid": true
+   "paid": true,
+   "buffer_channel": "6b05547a8541f09ecb86f9b7"
   },
   {
    "channel": "clipnoir_gta6",
@@ -44,7 +45,8 @@
    "creator": "xQc",
    "twitch": "xqc",
    "campaign": "xqc-gta6",
-   "paid": false
+   "paid": false,
+   "buffer_channel": "6b0555098541f09ecb870059"
   },
   {
    "channel": "gta9clipsstream",
