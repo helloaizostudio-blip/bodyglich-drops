@@ -33,3 +33,6 @@
 | 2026-11-24 | clipboygta6 | Kai Cenat loses it over supercar garage (Buffer) | https://youtube.com/shorts/_Fd8okcenYo | Kai Cenat |
 | 2026-11-24 | clipgta6no4 | Boeshi almost hits the bridge dodging a yacht (Buffer) | https://youtube.com/shorts/4P1IS_yh1J0 | Boeshi |
 | 2026-11-24 | Clipnourgta6 | Boeshi brags about driving, gets shot at (Make) | https://youtube.com/shorts/mY6CTYfln9U | Boeshi |
+| 2026-11-25 | clipboygta6 | Kai Cenat hunts for his house, finds a jet (Buffer) | https://youtube.com/shorts/AuJYBJebtRk | Kai Cenat |
+| 2026-11-25 | clipgta6no4 | xQc watches a bird die by itself (Buffer) | https://youtube.com/shorts/GAoKaay_ggQ | (no campaign) |
+| 2026-11-25 | Vicegta609 | xQc freaks out as the station gets attacked (Make) | https://youtube.com/shorts/YrFWaCpJbpo | (no campaign) |
