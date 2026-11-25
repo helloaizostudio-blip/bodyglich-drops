@@ -2,53 +2,6 @@
  "_note": "Finished clips already in uploads/ on branch ccr-5b710d78-d8tir0, waiting to be posted (Zapier daily cap hit). Post these before cutting new clips for the same channel, then remove the entry and the file.",
  "pending": [
   {
-   "file": "uploads/xqc-score.mp4",
-   "channel": "clipgta6no4",
-   "zapier_connection": "023e6c17-a90c-8e21-918f-7b8df41b8768",
-   "paid": false,
-   "title": "xQc Gives His FINAL Score for GTA 6 #Shorts",
-   "description": "xQc rated GTA 6 right after beating it. Too high or too low? Credit: xQc on Twitch.\n#xQc #GTA6 #GrandTheftAutoVI #gaming #gamereview\n\nSource: xQc on Twitch, VOD 2937629817 at 10:09:46\n#Shorts",
-   "tags": [
-    "xQc",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ],
-   "buffer_channel": "6b0555098541f09ecb870059",
-   "scheduled": "Buffer 6b056b5df58b414a3733b1a0 at 2026-11-25 13:00 IST"
-  },
-  {
-   "file": "uploads/xqc-ending.mp4",
-   "channel": "clipgta6no3",
-   "zapier_connection": "021e9e4c-a429-850e-8eac-a2583308bc32",
-   "paid": false,
-   "title": "xQc's Reaction to the GTA 6 ENDING #Shorts",
-   "description": "xQc just finished GTA 6 and had thoughts on that ending. Did you like it? Credit: xQc on Twitch.\n#xQc #GTA6 #GrandTheftAutoVI #gaming #twitch\n\nSource: xQc on Twitch, VOD 2937629817 at 10:06:51\n#Shorts",
-   "tags": [
-    "xQc",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ]
-  },
-  {
-   "file": "uploads/lacy-lucia.mp4",
-   "channel": "gta9clipsstream",
-   "zapier_connection": "02da9ebd-7095-85cb-a1ed-f9a25e05ca19",
-   "paid": false,
-   "title": "Lacy LOSES IT at Lucia's AI in GTA 6 #Shorts",
-   "description": "Lacy can't believe Lucia just runs into the cops. Is the AI partner that bad? Credit: Lacy on Twitch.\n#Lacy #GTA6 #GrandTheftAutoVI #gaming #shorts\n\nSource: Lacy on Twitch, VOD 2937465519 at 3:56:23\n#Shorts",
-   "tags": [
-    "Lacy",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ]
-  },
-  {
    "file": "uploads/lacy-beats.mp4",
    "channel": "gta9clipsstream",
    "zapier_connection": "02da9ebd-7095-85cb-a1ed-f9a25e05ca19",
@@ -57,21 +10,6 @@
    "description": "After the whole marathon, Lacy finally did it. How long did it take you? Credit: Lacy on Twitch.\n#Lacy #GTA6 #GrandTheftAutoVI #gaming #shorts\n\nSource: Lacy on Twitch, VOD 2937465519 at 5:18:45\n#Shorts",
    "tags": [
     "Lacy",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ]
-  },
-  {
-   "file": "uploads/stable-mandy.mp4",
-   "channel": "usa_gta6gamin77",
-   "zapier_connection": "029dc39d-a7d9-88c0-b3a9-fffc885802e9",
-   "paid": false,
-   "title": "StableRonaldo Breaks The NEWS About Mandy #Shorts",
-   "description": "StableRonaldo had to tell chat what happened to Mandy in GTA 6. Will she really be in GTA 7? Credit: StableRonaldo on Twitch.\n#StableRonaldo #GTA6 #GrandTheftAutoVI #Gaming #Funny\n\nSource: StableRonaldo on Twitch, VOD 2936324446 at 4:58:37\n#Shorts",
-   "tags": [
-    "StableRonaldo",
     "GTA6",
     "GTA 6",
     "Grand Theft Auto VI",

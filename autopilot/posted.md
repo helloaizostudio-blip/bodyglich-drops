@@ -38,3 +38,7 @@
 | 2026-11-25 | Vicegta609 | xQc freaks out as the station gets attacked (Make) | https://youtube.com/shorts/YrFWaCpJbpo | (no campaign) |
 | 2026-11-25 | Clipnourgta6 | Asmongold finds a car full of cash (Make) | https://youtube.com/shorts/xc2Q96vY3Bc | (no campaign) |
 | 2026-11-25 | prodcatclipai | Patricia: Are junior employees being replaced by AI? (Make) | https://youtube.com/shorts/JoNH2CNQIH4 | Patricia |
+| 2026-11-25 | clipgta6no4 | xQc gives his final score for GTA 6 (Buffer, scheduled) | see clipgta6no4 feed | (no campaign) |
+| 2026-11-25 | clipgta6no3 | xQc's reaction to the GTA 6 ending (Make) | https://youtube.com/shorts/7YDGiw0hVrc | (no campaign) |
+| 2026-11-25 | gta9clipsstream | Lacy loses it at Lucia's AI (Make) | https://youtube.com/shorts/WIVojk4YPZU | (no campaign) |
+| 2026-11-25 | usa_gta6gamin77 | StableRonaldo breaks the news about Mandy (Make) | see usa_gta6gamin77 feed | (no campaign) |
