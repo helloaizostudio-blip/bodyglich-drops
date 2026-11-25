@@ -69,3 +69,13 @@ What viewers say: "Pet is cute", "The blue guy name is 'bilp'". **Viewers notice
 4. **Follow line:** the last caption pill shows "FOLLOW FOR DAILY GLITCHES 💙" for the final 1.5 s, small, under the ✅/❌ question.
 5. **Reply to comments** on each new Short within 24 h, as the channel, short and friendly (done for the tendon and ears Shorts on 24 Nov).
 6. **Post at 7:30 AM IST.** Evening uploads have been blocked by Zapier every night since 21 Nov, while morning uploads work. 7:30 AM IST is also 9 PM in New York, US prime time.
+
+## 25 Nov: high-stakes direction (the user asked for more views)
+
+The gentler "try this" hooks raised comments but not the stay-to-watch rate (still ~50%). The best performer remains the organ countdown (2,956 views). So:
+- **Stakes first.** Open on life or death, extreme numbers or real records ("You can survive 3 minutes without air…"), not a mild prompt.
+- **Dark, dramatic first second:** dark stage, coloured vignette (red/blue/orange), a huge on-screen number or timer that moves.
+- **Fast list or countdown** in the first 5 s (a new number every ~1.2 s), then the twist, a real person or record with a big counter.
+- **Visual payoff the viewer can see change** (e.g. a body slimming as the day counter runs).
+- Keep: Blip transformations, the "🤯 THE TWIST" card, the ✅/❌ or "how long could you last?" question, the follow line, a safety pill when relevant.
+- First Short in this style: "The Man Who Didn't Eat for 382 Days" (`examples/survive-*`).
