@@ -130,7 +130,8 @@ def make(index, pick, ctx, cfg, memory):
         inputs += ["-i", str(cfg["logo_file"])]
         lw = int(cfg["width"] * cfg["logo_width"])
         ly = int(cfg["height"] * cfg["logo_y"])
-        chain += (f";[{idx}:v]scale={lw}:-1[logo];[{out_label}][logo]overlay=(W-w)/2:{ly}"
+        lx = {"left": "40", "right": "W-w-40"}.get(cfg.get("logo_x"), "(W-w)/2")
+        chain += (f";[{idx}:v]scale={lw}:-1[logo];[{out_label}][logo]overlay={lx}:{ly}"
                   f":eof_action=repeat[logoed]")
         out_label = "logoed"
     voice = "premix" if not cfg.get("bg_music") else "voice"
@@ -167,6 +168,21 @@ def make(index, pick, ctx, cfg, memory):
          "-movflags", "+faststart", dest.name], timeout=3600, cwd=str(clips_dir))
     # ffmpeg ran inside clips_dir (so the .ass path needs no escaping); move the result out
     produced = clips_dir / dest.name
+    if cfg.get("outro_file"):
+        secs = float(cfg.get("outro_seconds") or 2.0)
+        W, H = cfg["width"], cfg["height"]
+        with_outro = clips_dir / f"{name}.outro.mp4"
+        run(["ffmpeg", "-y", "-v", "error", "-nostdin", "-i", str(produced),
+             "-loop", "1", "-t", f"{secs}", "-i", str(cfg["outro_file"]),
+             "-f", "lavfi", "-t", f"{secs}", "-i", "anullsrc=r=48000:cl=stereo",
+             "-filter_complex",
+             f"[1:v]scale={W}:{H}:force_original_aspect_ratio=decrease,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=black,"
+             f"setsar=1,fps={min(60.0, info['fps']):.3f},format=yuv420p[ov];"
+             f"[0:v]setsar=1,format=yuv420p[mv];[0:a]aformat=sample_rates=48000:channel_layouts=stereo[ma];"
+             f"[mv][ma][ov][2:a]concat=n=2:v=1:a=1[v][a]",
+             "-map", "[v]", "-map", "[a]", *_encode_args(enc, cfg), "-c:a", "aac",
+             "-b:a", f"{cfg['audio_kbps']}k", "-movflags", "+faststart", str(with_outro)], timeout=3600)
+        with_outro.replace(produced)
     produced.replace(dest)
     checks = ctx["outdir"] / "checks"
     checks.mkdir(exist_ok=True)

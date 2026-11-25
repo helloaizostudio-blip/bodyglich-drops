@@ -72,6 +72,9 @@ DEFAULTS = {
     "logo_file": None,               # transparent PNG shown for the whole clip
     "logo_width": 0.70,              # share of the frame width
     "logo_y": 0.84,                  # vertical position of the logo's top edge (0 top, 1 bottom)
+    "logo_x": "center",              # center | left | right (corner logos use left/right with logo_y near 0)
+    "outro_file": None,              # image shown full-screen for outro_seconds at the very end
+    "outro_seconds": 2.0,
     "caption_prefix": "",            # text every post caption must start with
     "required_hashtags": [],         # hashtags every post must include
     "campaign_focus": "",            # default --focus for the picker
@@ -98,6 +101,11 @@ def _campaign(name):
         if not logo.exists():
             raise Problem(f"campaign logo missing: {logo}")
         data["logo_file"] = str(logo)
+    if data.get("outro_file"):
+        outro = (folder / data["outro_file"]).resolve()
+        if not outro.exists():
+            raise Problem(f"campaign outro missing: {outro}")
+        data["outro_file"] = str(outro)
     return data
 
 

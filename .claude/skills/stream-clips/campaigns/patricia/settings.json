@@ -1,0 +1,14 @@
+{
+  "min_len": 15,
+  "max_len": 45,
+  "logo_file": "patricia-logo.png",
+  "logo_width": 0.30,
+  "logo_y": 0.03,
+  "logo_x": "right",
+  "outro_file": "patricia-outro.png",
+  "outro_seconds": 2.0,
+  "title_hooks": [],
+  "caption_prefix": "Patricia is the AI coworker for agencies, inside Slack and Teams.",
+  "required_hashtags": ["#ai", "#podcast", "#business", "#patricia"],
+  "campaign_focus": "Podcast with Ricardo Ghekiere (founder of Patricia) and agency coach Chris Out. Pick moments about AI employees, AI replacing jobs, vibe coding, building vs buying AI tools, agency pricing and growth, making money with AI, the future of work. Best: strong opinions, surprising numbers attributed to the speaker, stories, valuable advice, controversy. Never: private conversations, customer names, personal health stories, misleading claims about Patricia or other AI companies, statements out of context, estimates presented as facts."
+}
