@@ -165,13 +165,14 @@ def corner_graph(cfg, info, cam):
     b = 6
     px = 36 if cfg["corner_side"] == "left" else W - pw - 2 * b - 36
     py = even(H * cfg["corner_y"])
+    slot = {"x": px + pw + 2 * b, "y": py, "h": ph + 2 * b, "side": cfg["corner_side"]}
     return (f"[0:v]split=2[c0][g0];"
             f"[g0]crop={even(gw)}:{even(sh)}:{even(gx)}:0,"
-            f"scale={W}:{H}:flags=lanczos,setsar=1[g1];"
+            f"scale={W}:{H}:flags=lanczos,unsharp=5:5:0.6,setsar=1[g1];"
             f"[c0]crop={even(w)}:{even(h)}:{even(x)}:{even(y)},"
-            f"scale={pw}:{ph}:flags=lanczos,setsar=1,"
+            f"scale={pw}:{ph}:flags=lanczos,unsharp=3:3:0.5,setsar=1,"
             f"pad={pw + 2 * b}:{ph + 2 * b}:{b}:{b}:white[c1];"
-            f"[g1][c1]overlay={px}:{py},format=yuv420p[framed]"), None
+            f"[g1][c1]overlay={px}:{py},format=yuv420p[framed]"), slot
 
 
 def stack_graph(cfg, info, cam):

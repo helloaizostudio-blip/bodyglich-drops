@@ -38,7 +38,7 @@ DEFAULTS = {
     "big_face": 0.13,
     "cam_style": "corner",           # corner = full-screen gameplay + small facecam box; stack = split screen
     "corner_width": 0.36,            # facecam box width as a share of the frame width
-    "corner_y": 0.19,                # top edge of the facecam box (below the title bar)
+    "corner_y": 0.045,               # top edge of the facecam box (hook title sits beside it)
     "corner_side": "left",           # left | right                # face wider than this share of the frame = talking head
 
     # title bar
@@ -60,8 +60,8 @@ DEFAULTS = {
 
     # output
     "video_height": 1080,
-    "crf": 21,
-    "x264_preset": "fast",
+    "crf": 17,
+    "x264_preset": "slow",
     "loudness": -14,                 # LUFS; None to leave the audio as it is
     "audio_kbps": 192,
     "bg_music": True,                # lay a synthesized (copyright-free) beat under the clip

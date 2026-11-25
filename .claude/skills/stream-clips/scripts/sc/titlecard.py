@@ -86,7 +86,7 @@ def _tokens(text):
     return out
 
 
-def render(text, cfg, path):
+def render(text, cfg, path, max_width=None):
     """Write the title bar PNG. Returns (path, width, height)."""
     size = cfg["title_size"]
     font_path = font_file("bold", cfg.get("title_font_file"))
@@ -105,7 +105,7 @@ def render(text, cfg, path):
     words = _tokens(text)
     space = font.getlength(" ")
     pad_x, pad_y, line_h = int(size * 0.6), int(size * 0.38), int(size * 1.28)
-    limit = cfg["width"] - 2 * int(cfg["width"] * 0.11) - 2 * pad_x
+    limit = (max_width or cfg["width"] - 2 * int(cfg["width"] * 0.11)) - 2 * pad_x
     lines, cur, cur_w = [], [], 0.0
     for word in words:
         w = sum(piece_width(k, v) for k, v in word)

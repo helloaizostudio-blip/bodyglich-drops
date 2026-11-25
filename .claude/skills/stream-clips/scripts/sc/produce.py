@@ -58,7 +58,7 @@ def _encode_args(enc, cfg):
     if enc == "libx264":
         return ["-c:v", "libx264", "-crf", str(cfg["crf"]), "-preset", cfg["x264_preset"],
                 "-profile:v", "high", "-pix_fmt", "yuv420p"]
-    return ["-c:v", enc, "-b:v", "10M", "-maxrate", "14M", "-bufsize", "20M", "-pix_fmt", "yuv420p"]
+    return ["-c:v", enc, "-b:v", "16M", "-maxrate", "20M", "-bufsize", "30M", "-pix_fmt", "yuv420p"]
 
 
 def check_image(clip, length, dest):
@@ -118,10 +118,22 @@ def make(index, pick, ctx, cfg, memory):
         title = hooks[zlib.crc32(f"{ctx['url']}|{start}".encode()) % len(hooks)]
     if title:
         try:
-            png, _, th = titlecard.render(title, cfg, clips_dir / f"{name}.title.png")
-            y = int(seam - th / 2) if seam else int(cfg["height"] * cfg["title_top"])
+            if isinstance(seam, dict):            # corner facecam: hook sits beside it
+                W = cfg["width"]
+                gap = 22
+                left = seam["x"] + gap if seam["side"] == "left" else 30
+                room = (W - left - 30) if seam["side"] == "left" else (W - seam["x"] - gap - 30)
+                png, tw, th = titlecard.render(title, cfg, clips_dir / f"{name}.title.png", max_width=room)
+                tx = left if seam["side"] == "left" else 30
+                tx = int(tx + max(0, (room - tw) / 2))
+                y = int(seam["y"] + (seam["h"] - th) / 2)
+            else:
+                png, _, th = titlecard.render(title, cfg, clips_dir / f"{name}.title.png")
+                tx = None
+                y = int(seam - th / 2) if seam else int(cfg["height"] * cfg["title_top"])
             inputs += ["-i", str(png)]
-            chain += f";[subbed][1:v]overlay=(W-w)/2:{max(0, y)}[titled]"
+            xs = "(W-w)/2" if tx is None else str(tx)
+            chain += f";[subbed][1:v]overlay={xs}:{max(0, y)}[titled]"
             out_label = "titled"
         except (OSError, ValueError) as exc:
             say(f"  title bar skipped ({exc})", "warn")
