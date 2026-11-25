@@ -86,6 +86,12 @@ It downloads the file, routes by channel name and uploads it (category Gaming, p
 with the Zapier "Make API GET Request" on playlistItems (playlistId = "UU" + channel_id without the leading "UC"),
 then set paid promotion with the Zapier PUT. Make free plan: about 1,000 operations a month (3 per upload).
 
+## 4d. Make data budget (shared with other projects)
+Make's free 512 MB/month transfer is shared with other projects of the owner. This project's share until the monthly reset:
+Patricia (paid) about 60 MB, unpaid GTA at most about 90 MB. Compress every Make upload to 10 MB or less
+(ffmpeg -crf 24 -maxrate 3500k -bufsize 7000k, aac 128k). Use Make first for Patricia and paid clips; post unpaid GTA clips
+with Zapier whenever it is not throttled, Buffer for clipgta6no4/clipboygta6, and Make only as a fallback.
+
 ## 5. Limits
 - **Daily cap: Zapier allows only about 4-5 uploads per day in total** (more get "throttled without retry" for many hours). **At most 4 uploads per run** (Zapier/YouTube stops new channels after about 5 a day). Always include the 3 `paid: true` channels; fill the other 2 slots with pending clips first, then the non-paid channels that went longest without a Short. Channels left out wait for the next run.
 - Zapier throttles bursts of uploads ("throttled without retry"). Upload one Short at a time, wait 5 minutes between uploads, and on a throttle error wait 30 minutes, then 60, before retrying. Keep the clip in uploads/ until its upload succeeded.
