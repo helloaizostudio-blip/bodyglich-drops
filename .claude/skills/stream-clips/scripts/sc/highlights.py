@@ -47,10 +47,18 @@ nothing is strong.
 
 Reply with a JSON array and nothing else (no prose, no markdown fence). Example shape:
 [{"start": 1204.0, "end": 1239.5, "type": "reaction", "title": "...", "caption": "...", \
-"hashtags": ["#..."], "sfx": [{"at": 1221.3, "sound": "boom"}], "score": 72, "why": "..."}]
+"hashtags": ["#..."], "hook": "...", "payoff_at": 1231.0, "sfx": [{"at": 1221.3, "sound": "boom"}], \
+"score": 72, "why": "..."}]
 
 title: the text bar shown over the clip. 3-10 words, names the creator, CAPITALS on the 1-3 \
 words that carry the drama, teases the payoff without giving it away, at most one emoji.
+hook: the short on-screen text beside the facecam (2-6 words, max one emoji). It must fit THIS \
+clip and be honest about what happens: tease the payoff without spoiling it ("He did NOT expect \
+this 😳", "The bird just... died 💀", "Watch his face 😂", "This mission broke him 😭"). Use \
+"Wait for it..." ONLY if the big moment lands in the last third of the clip. No generic hooks \
+that would fit any clip.
+payoff_at: the transcript time of the single biggest moment (the reveal, the fail, the punchline, \
+the scream). The video punches in on it, so it must be the real moment, inside the clip.
 caption: the post text, under 140 characters, ending with a question or a nudge to comment.
 hashtags: 3-6 tags: the topic, the creator, one broad tag.
 sfx: 1-3 funny meme sound effects that fit the moment, like a TikTok editor would add. "at" is the \
@@ -209,6 +217,12 @@ def tidy(pick, words, cfg):
         if 0.8 <= rel <= out["end"] - out["start"] - 0.3:
             cues.append({"t": round(rel, 2), "sound": str(c.get("sound", ""))})
     out["sfx"] = cues[:3]
+    out["hook"] = str(pick.get("hook") or "").strip()
+    try:
+        pay = float(pick.get("payoff_at")) - out["start"]
+        out["payoff"] = round(pay, 2) if 0.8 <= pay <= out["end"] - out["start"] - 0.3 else None
+    except (TypeError, ValueError):
+        out["payoff"] = None
     return out
 
 

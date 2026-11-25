@@ -109,11 +109,24 @@ def make(index, pick, ctx, cfg, memory):
     graph, look, seam = frame.plan(part, offset, length, info, cfg, memory, ctx.get("cam"))
 
     inputs = ["-ss", f"{offset:.3f}", "-t", f"{length:.3f}", "-i", str(part)]
+    pay = pick.get("payoff")
+    if pay and cfg.get("payoff_zoom", True):     # punch in on the big moment, then settle back
+        W, H = cfg["width"], cfg["height"]
+        a, b = pay - 0.15, pay + 1.1
+        z = f"if(between(t,{a:.2f},{b:.2f}),1+0.14*min(1,(t-{a:.2f})/0.12),1)"
+        zoom = (f"scale=w='trunc({W}*{z}/2)*2':h='trunc({H}*{z}/2)*2':eval=frame,"
+                f"crop={W}:{H}:(in_w-{W})/2:(in_h-{H})/2")
+        if "[g1][c1]overlay" in graph:           # corner layout: zoom the gameplay, keep the cam still
+            graph = graph.replace("[g1][c1]overlay", "[g1z][c1]overlay") + f";[g1]{zoom}[g1z]"
+        else:
+            graph = graph.replace("[framed]", "[prezoom]") + f";[prezoom]{zoom}[framed]"
     chain = f"{graph};[framed]ass={ass.name}[subbed]"
     out_label = "subbed"
     title = pick.get("title")
-    hooks = cfg.get("title_hooks") or []
-    if title and hooks:
+    hooks = [h for h in (cfg.get("title_hooks") or []) if "wait for it" not in h.lower()]
+    if pick.get("hook"):
+        title = pick["hook"]                     # hook written for this clip by the picker
+    elif title and hooks:
         import zlib
         title = hooks[zlib.crc32(f"{ctx['url']}|{start}".encode()) % len(hooks)]
     if title:
