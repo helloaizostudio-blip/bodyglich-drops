@@ -13,7 +13,9 @@ os.makedirs(tmp, exist_ok=True)
 def get(i):
     p = f"{tmp}/{i:05d}"
     if os.path.exists(p) and os.path.getsize(p) > 0:
-        return os.path.getsize(p)
+        with open(p, "rb") as f:
+            if not f.read(64).lstrip().lower().startswith(b"<!doctype"):
+                return os.path.getsize(p)
     for _ in range(4):
         r = subprocess.run(["curl", "-sL", "-r", f"{i*CH}-{(i+1)*CH-1}", "-o", p, "-w", "%{http_code}",
                             "--max-time", "300", url], capture_output=True, text=True)
