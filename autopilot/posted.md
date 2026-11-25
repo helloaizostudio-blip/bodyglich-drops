@@ -37,3 +37,4 @@
 | 2026-11-25 | clipgta6no4 | xQc watches a bird die by itself (Buffer) | https://youtube.com/shorts/GAoKaay_ggQ | (no campaign) |
 | 2026-11-25 | Vicegta609 | xQc freaks out as the station gets attacked (Make) | https://youtube.com/shorts/YrFWaCpJbpo | (no campaign) |
 | 2026-11-25 | Clipnourgta6 | Asmongold finds a car full of cash (Make) | https://youtube.com/shorts/xc2Q96vY3Bc | (no campaign) |
+| 2026-11-25 | prodcatclipai | Patricia: Are junior employees being replaced by AI? (Make) | https://youtube.com/shorts/JoNH2CNQIH4 | Patricia |
