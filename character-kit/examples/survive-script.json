@@ -1,0 +1,22 @@
+{
+  "title": "The Man Who Didn't Eat for 382 Days",
+  "voice": "am_puck",
+  "speed": 1.12,
+  "lead": 0.05,
+  "outro": 0.45,
+  "gap": 0.12,
+  "music": "tension",
+  "sources": [
+    "Survival 'rule of threes' (about 3 minutes without air, 3 days without water, 3 weeks without food) is a common rough guideline; actual limits vary widely with conditions (e.g. Wilderness Medical Society guidance; Piper 2014 overview)",
+    "Angus Barbieri, a 27-year-old from Tayport, Scotland, fasted for 382 days (June 1965 – July 1966) under medical supervision at Maryhill Hospital, Glasgow, taking only water, tea, coffee, soda water and vitamin/mineral supplements; his weight fell from 456 lb (207 kg) to 180 lb (82 kg), a loss of about 125 kg (Stewart & Fleming 1973, Postgraduate Medical Journal 49:203–209; Guinness World Records)"
+  ],
+  "lines": [
+    { "text": "You can survive three minutes without air.", "caps": "You can survive | *3 minutes | without *air" },
+    { "text": "Three days without water.", "caps": "*3 days | without *water" },
+    { "text": "And about three weeks without food.", "caps": "And about | *3 weeks | without *food" },
+    { "text": "But here's the twist.", "caps": "But here's | the *twist" },
+    { "text": "In nineteen sixty five, a man in Scotland went three hundred and eighty two days without eating.", "caps": "In *1965 | a man in *Scotland | went | *382 days | without *eating" },
+    { "text": "Doctors watched him the whole time. He only had water, tea, and vitamins.", "caps": "*Doctors | watched him | the whole time | He only had | *water, tea | and *vitamins" },
+    { "text": "He lost a hundred and twenty five kilos. How long could you last?", "caps": "He lost | *125 kilos | How long | could *you last?" }
+  ]
+}
