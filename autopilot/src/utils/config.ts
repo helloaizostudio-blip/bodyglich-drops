@@ -93,8 +93,9 @@ export const config = {
     },
   },
   zapier: {
+    /** PIN_WEBHOOK_URL (Make or Zapier) takes precedence over the older ZAPIER_WEBHOOK_URL. */
     get webhookUrl() {
-      return env("ZAPIER_WEBHOOK_URL");
+      return env("PIN_WEBHOOK_URL") ?? env("ZAPIER_WEBHOOK_URL");
     },
     get callbackSecret() {
       return env("ZAPIER_CALLBACK_SECRET");

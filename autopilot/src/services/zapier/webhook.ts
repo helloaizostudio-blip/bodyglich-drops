@@ -76,13 +76,19 @@ export interface ZapierSendResult {
   status: number;
   requestId: string | null;
   error: string | null;
+  /** Set when the automation answers with the created pin (e.g. a Make "Webhook response"). */
+  pinterestPinId?: string | null;
+  pinterestUrl?: string | null;
 }
+
+/** Zapier Catch Hooks and Make custom webhooks (hook.<region>.make.com). */
+export const ALLOWED_HOOK = /^https:\/\/(hooks\.zapier\.com|hook\.[a-z0-9-]+\.make\.com)\//;
 
 export async function sendToZapier(payload: ZapierPinPayload): Promise<ZapierSendResult> {
   const url = config.zapier.webhookUrl;
   if (!url) return { ok: false, status: 0, requestId: null, error: "ZAPIER_WEBHOOK_URL is not configured" };
-  if (!/^https:\/\/hooks\.zapier\.com\//.test(url)) {
-    return { ok: false, status: 0, requestId: null, error: "ZAPIER_WEBHOOK_URL must be a https://hooks.zapier.com/ Catch Hook URL" };
+  if (!ALLOWED_HOOK.test(url)) {
+    return { ok: false, status: 0, requestId: null, error: "Webhook URL must be a Zapier (hooks.zapier.com) or Make (hook.<region>.make.com) URL" };
   }
   try {
     // Sent as a GET with every field in the query string. Zapier exposes these as
@@ -96,14 +102,22 @@ export async function sendToZapier(payload: ZapierPinPayload): Promise<ZapierSen
     const res = await fetchWithRetry(target.toString(), { method: "GET", retries: 1, timeoutMs: 30_000 });
     const text = await res.text();
     let requestId: string | null = null;
+    let pinterestPinId: string | null = null;
+    let pinterestUrl: string | null = null;
     try {
-      const j = JSON.parse(text) as { request_id?: string; id?: string; status?: string };
-      requestId = j.request_id ?? j.id ?? null;
+      const j = JSON.parse(text) as { request_id?: string; id?: string; pinterest_pin_id?: string | number; pinterest_url?: string };
+      requestId = j.request_id ?? (j.pinterest_pin_id ? null : j.id) ?? null;
+      const pid = j.pinterest_pin_id?.toString().replace(/[^0-9]/g, "");
+      pinterestPinId = pid || null;
+      pinterestUrl = j.pinterest_url ?? (pinterestPinId ? `https://www.pinterest.com/pin/${pinterestPinId}/` : null);
     } catch {
-      /* non-JSON body is fine */
+      /* non-JSON body (e.g. Make's plain "Accepted") is fine */
+    }
+    if (res.ok && /make\.com/.test(url) && !pinterestPinId && /error|fail/i.test(text)) {
+      return { ok: false, status: res.status, requestId, error: `Make reported: ${text.slice(0, 300)}` };
     }
     return res.ok
-      ? { ok: true, status: res.status, requestId, error: null }
+      ? { ok: true, status: res.status, requestId, error: null, pinterestPinId, pinterestUrl }
       : { ok: false, status: res.status, requestId, error: `Zapier returned HTTP ${res.status}: ${text.slice(0, 300)}` };
   } catch (err) {
     return { ok: false, status: 0, requestId: null, error: `Could not reach Zapier: ${(err as Error).message}` };

@@ -143,6 +143,22 @@ async function sendOne(pin: Pin, actor: "user" | "worker"): Promise<"sent" | "fa
   const board = settings.boards.find((b) => b.name === pin.board);
   const payload = buildPayload(pin, board);
   const res = await sendToZapier(payload);
+  if (res.ok && res.pinterestPinId) {
+    // The automation answered with the created pin: it is confirmed live.
+    await transitionPin(pin.id, ["sending"], "published", {
+      sent_at: nowIso(),
+      published_at: nowIso(),
+      pinterest_pin_id: res.pinterestPinId,
+      pinterest_url: res.pinterestUrl ?? null,
+      last_error: null,
+    });
+    await audit("info", actor, "pin.published", `Pin ${pin.id} is live on Pinterest (${res.pinterestPinId})`, {
+      entityType: "pin",
+      entityId: pin.id,
+      details: { image_url: payload.image_url },
+    });
+    return "sent";
+  }
   if (res.ok) {
     await transitionPin(pin.id, ["sending"], "sent", { sent_at: nowIso(), last_error: null });
     await audit("info", actor, "pin.publish", `Sent pin ${pin.id} to Zapier (board "${pin.board}")`, {

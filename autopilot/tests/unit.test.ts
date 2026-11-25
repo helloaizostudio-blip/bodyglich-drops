@@ -229,3 +229,33 @@ describe("utilities", () => {
     expect(toPgPlaceholders("SELECT * FROM t WHERE a = ? AND b IN (?, ?)")).toBe("SELECT * FROM t WHERE a = $1 AND b IN ($2, $3)");
   });
 });
+
+describe("pin webhook (Make / Zapier)", () => {
+  it("accepts Make hooks and reads the created pin ID from the webhook response", async () => {
+    const { sendToZapier } = await import("@/services/zapier/webhook");
+    const { vi } = await import("vitest");
+    process.env.PIN_WEBHOOK_URL = "https://hook.eu2.make.com/abc123";
+    let calledUrl = "";
+    vi.stubGlobal("fetch", async (url: string) => {
+      calledUrl = url;
+      return new Response(JSON.stringify({ pinterest_pin_id: "1100989440199999999" }), { status: 200 });
+    });
+    const r = await sendToZapier({
+      event: "create_pin", pin_id: "pin_x", board_name: "b", board_id: "1", title: "t", description: "#ad d",
+      link: "https://www.amazon.in/dp/B0ABCDEFGH?tag=mytag-21", image_url: "https://x/a.png", alt_text: "a",
+      keywords: "k", callback_url: "https://x/cb", callback_token: "tok", sent_at: "now",
+    });
+    vi.unstubAllGlobals();
+    delete process.env.PIN_WEBHOOK_URL;
+    expect(calledUrl.startsWith("https://hook.eu2.make.com/abc123?")).toBe(true);
+    expect(new URL(calledUrl).searchParams.get("title")).toBe("t");
+    expect(r.ok).toBe(true);
+    expect(r.pinterestPinId).toBe("1100989440199999999");
+    expect(r.pinterestUrl).toBe("https://www.pinterest.com/pin/1100989440199999999/");
+  });
+  it("rejects other webhook hosts", async () => {
+    const { ALLOWED_HOOK } = await import("@/services/zapier/webhook");
+    expect(ALLOWED_HOOK.test("https://evil.example.com/hook")).toBe(false);
+    expect(ALLOWED_HOOK.test("https://hooks.zapier.com/hooks/catch/1/a/")).toBe(true);
+  });
+});
