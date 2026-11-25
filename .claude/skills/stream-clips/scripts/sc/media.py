@@ -149,6 +149,12 @@ def video_slice(url, args, start, end, dest: Path, max_height):
     """Only [start, end] seconds of the video, as an mp4."""
     if dest.exists() and dest.stat().st_size > 50_000:
         return dest
+    if url.startswith("file://") or Path(url).exists():
+        from urllib.parse import unquote, urlparse
+        src = unquote(urlparse(url).path) if url.startswith("file://") else url
+        run(["ffmpeg", "-y", "-v", "error", "-nostdin", "-ss", f"{max(0, start):.3f}", "-to", f"{end:.3f}",
+             "-i", src, "-c", "copy", "-avoid_negative_ts", "make_zero", str(dest)], timeout=1800)
+        return dest
     if "twitch.tv" in url:
         h = "1080p60" if max_height >= 1080 else "720p60"
         return hls_slice(url, args, f"{h}/720p60/best", max(0, start), end, dest)
