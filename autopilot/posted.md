@@ -42,3 +42,4 @@
 | 2026-11-25 | clipgta6no3 | xQc's reaction to the GTA 6 ending (Make) | https://youtube.com/shorts/7YDGiw0hVrc | (no campaign) |
 | 2026-11-25 | gta9clipsstream | Lacy loses it at Lucia's AI (Make) | https://youtube.com/shorts/WIVojk4YPZU | (no campaign) |
 | 2026-11-25 | usa_gta6gamin77 | StableRonaldo breaks the news about Mandy (Make) | see usa_gta6gamin77 feed | (no campaign) |
+| 2026-11-26 | prodcatclipai | Patricia: What AI still can't do for agencies (Make) | link: see channel (feed lag) | Patricia |
