@@ -18,9 +18,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "unauthorised" }, { status: 401 });
   }
   try {
-    const body = (await req.json()) as { sentBefore?: string };
+    const body = (await req.json()) as { sentBefore?: string; pinIds?: string[] };
     if (!body.sentBefore) return NextResponse.json({ error: "sentBefore is required" }, { status: 400 });
-    return NextResponse.json(await requeueUnconfirmed(body.sentBefore, "worker"));
+    const ids = Array.isArray(body.pinIds) && body.pinIds.length ? body.pinIds.map(String) : undefined;
+    return NextResponse.json(await requeueUnconfirmed(body.sentBefore, "worker", ids));
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 400 });
   }

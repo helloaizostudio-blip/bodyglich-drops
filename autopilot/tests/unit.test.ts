@@ -259,3 +259,22 @@ describe("pin webhook (Make / Zapier)", () => {
     expect(ALLOWED_HOOK.test("https://hooks.zapier.com/hooks/catch/1/a/")).toBe(true);
   });
 });
+
+describe("publishing blackout", () => {
+  it("detects the 20:15–20:50 IST window and keeps slots out of it", async () => {
+    const { inBlackout, assignSlots } = await import("@/services/scheduler/slots");
+    const b = [{ start: "20:15", end: "20:50" }];
+    expect(inBlackout(new Date("2026-11-26T14:45:00Z"), b, "Asia/Kolkata")).toBe(true); // 20:15 IST
+    expect(inBlackout(new Date("2026-11-26T15:20:00Z"), b, "Asia/Kolkata")).toBe(false); // 20:50 IST
+    const out = assignSlots(
+      [{ id: "a", productId: "A", style: "x" }],
+      [],
+      { paused: false, pinsPerDay: 2, postingTimes: ["20:30", "21:00"], minGapMinutes: 60, productCooldownDays: 1 },
+      new Date("2026-11-26T05:00:00Z"),
+      "Asia/Kolkata",
+      90,
+      b,
+    );
+    expect(out[0].at.toISOString()).toBe("2026-11-26T15:30:00.000Z"); // 21:00 IST, not 20:30
+  });
+});

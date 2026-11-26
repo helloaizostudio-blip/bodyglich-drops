@@ -11,7 +11,7 @@ import { applyCompliance, validateForPublishing } from "@/services/content-gener
 import { CATEGORIES } from "@/services/product-research/categories";
 import { readMedia } from "@/services/image-generation/renderer";
 import { buildPayload, sendToZapier, verifyCallbackToken } from "@/services/zapier/webhook";
-import { assignSlots, type OccupiedSlot } from "./slots";
+import { assignSlots, inBlackout, type OccupiedSlot } from "./slots";
 
 const MAX_ATTEMPTS = 3;
 const MAX_SENDS_PER_RUN = 2;
@@ -106,6 +106,8 @@ export async function scheduleApprovedPins(actor: "user" | "worker" = "worker") 
     settings.schedule,
     new Date(),
     config.timezone,
+    90,
+    config.publishBlackouts,
   );
   for (const a of assignments) {
     await transitionPin(a.pinId, ["approved"], "scheduled", { scheduled_for: a.at.toISOString() });
@@ -187,7 +189,10 @@ async function sendOne(pin: Pin, actor: "user" | "worker"): Promise<"sent" | "fa
 export async function publishDuePins(actor: "user" | "worker" = "worker") {
   const settings = await getSettings();
   if (settings.schedule.paused) return { summary: "skipped: publishing is paused" };
-  if (!config.zapier.configured) return { summary: "skipped: Zapier webhook not configured" };
+  if (!config.zapier.configured) return { summary: "skipped: pin webhook not configured" };
+  if (inBlackout(new Date(), config.publishBlackouts, config.timezone)) {
+    return { summary: "skipped: inside a publishing blackout window" };
+  }
 
   // Recover pins stuck in "sending" (e.g. process crashed mid-request) after 15 minutes.
   for (const p of await listPins({ status: "sending", limit: 50 })) {
@@ -310,10 +315,12 @@ export async function handleZapierCallback(body: ZapierCallback): Promise<{ ok: 
  * sent again. Used to recover pins after a Zap problem; only pins sent before `sentBefore`
  * are affected, so later (working) sends are never duplicated.
  */
-export async function requeueUnconfirmed(sentBefore: string, actor: "user" | "worker" = "worker") {
+export async function requeueUnconfirmed(sentBefore: string, actor: "user" | "worker" = "worker", pinIds?: string[]) {
   const cutoff = new Date(sentBefore);
   if (Number.isNaN(cutoff.getTime())) throw new Error("sentBefore must be an ISO date");
-  const pins = (await listPins({ status: "sent", limit: 500 })).filter((p) => p.sent_at && new Date(p.sent_at) < cutoff);
+  const pins = (await listPins({ status: "sent", limit: 500 })).filter(
+    (p) => p.sent_at && new Date(p.sent_at) < cutoff && (!pinIds || pinIds.includes(p.id)),
+  );
   for (const p of pins) {
     await transitionPin(p.id, ["sent"], "scheduled", { scheduled_for: nowIso(), sent_at: null, attempts: 0, last_error: null });
     await audit("warn", actor, "pin.requeue", `Re-queued pin ${p.id} (sent ${p.sent_at}, never confirmed by Zapier)`, { entityType: "pin", entityId: p.id });

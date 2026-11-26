@@ -1,5 +1,18 @@
 import type { AppSettings } from "@/database/types";
-import { addDaysKey, zonedDateKey, zonedTimeToUtc } from "@/utils/time";
+import { addDaysKey, zonedDateKey, zonedParts, zonedTimeToUtc } from "@/utils/time";
+
+export interface Blackout {
+  start: string; // "HH:MM" in tz
+  end: string;
+}
+
+/** True when `at` (wall clock in tz) falls inside any blackout window (start inclusive, end exclusive). */
+export function inBlackout(at: Date, blackouts: Blackout[], tz: string): boolean {
+  if (!blackouts.length) return false;
+  const p = zonedParts(at, tz);
+  const hm = `${String(p.hour).padStart(2, "0")}:${String(p.minute).padStart(2, "0")}`;
+  return blackouts.some((b) => (b.start <= b.end ? hm >= b.start && hm < b.end : hm >= b.start || hm < b.end));
+}
 
 /** A pin already occupying the calendar (scheduled, sending, sent or published). */
 export interface OccupiedSlot {
@@ -37,6 +50,7 @@ export function assignSlots(
   now: Date,
   tz: string,
   horizonDays = 90,
+  blackouts: Blackout[] = [],
 ): Assignment[] {
   const times = [...schedule.postingTimes].filter((t) => /^\d{2}:\d{2}$/.test(t)).sort();
   if (!times.length || schedule.pinsPerDay <= 0) return [];
@@ -61,7 +75,7 @@ export function assignSlots(
       if (!queue.length) break;
       if (perDay(dayKey) >= schedule.pinsPerDay) break;
       const at = zonedTimeToUtc(dayKey, time, tz);
-      if (at.getTime() < earliest || !gapOk(at)) continue;
+      if (at.getTime() < earliest || !gapOk(at) || inBlackout(at, blackouts, tz)) continue;
       const prev = previousStyle(at);
       const eligible = queue.filter((p) => productOk(p.productId, at));
       const pick = eligible.find((p) => p.style !== prev) ?? eligible[0];

@@ -35,6 +35,14 @@ export const config = {
   get timezone() {
     return env("APP_TIMEZONE") ?? "Asia/Kolkata";
   },
+  /** Daily windows (app timezone) when no pin is sent, e.g. "20:15-20:50,02:00-02:30". */
+  get publishBlackouts(): { start: string; end: string }[] {
+    return (env("PUBLISH_BLACKOUT") ?? "")
+      .split(",")
+      .map((w) => w.trim().match(/^([01]\d|2[0-3]):([0-5]\d)-([01]\d|2[0-3]):([0-5]\d)$/))
+      .filter((m): m is RegExpMatchArray => Boolean(m))
+      .map((m) => ({ start: `${m[1]}:${m[2]}`, end: `${m[3]}:${m[4]}` }));
+  },
   amazon: {
     get partnerTag() {
       return env("AMAZON_PARTNER_TAG");
