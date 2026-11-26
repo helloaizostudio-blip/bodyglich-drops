@@ -20,7 +20,7 @@ LINES = [
     ("shoes",  "mom",     "calm",    "I don't need new slippers.", ["torn_slippers"]),
     ("back",   "mom",     "sad",     "My back doesn't hurt.", ["mom_back"]),
     ("cycle",  "mom",     "calm",    "It wasn't expensive.", ["flash_cycle"]),
-    ("tired",  "mom",     "whisper", "I'm not tired. Sleep, baby.", ["flash_lullaby"]),
+    ("tired",  "mom",     "sad",     "I'm not tired. Sleep, baby.", ["flash_lullaby"]),
     ("forme",  "zash",    "sad",     "Every wrinkle on her face... was a lie... for *me*.", ["zash_realize"]),
     ("hungry", "zash",    "sad",     "Mom... I'm not *hungry*.", ["roti_back", "zash_wrinkle"]),
     ("smile",  "mom",     "calm",    "You learned it *too*.", ["mom_smiles"]),
@@ -28,17 +28,17 @@ LINES = [
 ]
 
 CLEAR = "highpass=f=85,equalizer=f=320:t=q:w=1.0:g=-2.5,equalizer=f=3200:t=q:w=1.4:g=2.0,acompressor=threshold=-20dB:ratio=2.5:attack=10:release=150:makeup=2,alimiter=limit=0.9"
-# smooth=True: generate at natural Kokoro speed, then speed/pitch with rubberband (cleaner than resampling)
+# the voice recipe from ep22 (the one that sounded right), narrator a touch faster; Mom is the natural af_heart voice, unshifted
 VOICES = {
-    "zash":    dict(voice="am_echo", speed=1.12, pitch=1.16, expressive=True, smooth=True, gen_speed=1.0, gain_db=2.0, tag_amt=0.8, filter=CLEAR),
+    "zash":    dict(voice="am_echo", speed=1.16, pitch=1.20, expressive=True, resample=True, gain_db=2.0, tag_amt=0.3, filter=CLEAR),
     "zfast":   dict(voice="am_echo", speed=1.55, pitch=1.20, expressive=False, resample=True, tag_amt=0.0, filter=CLEAR),
-    "kid":     dict(voice="am_puck", speed=1.15, pitch=1.30, expressive=True, smooth=True, gen_speed=1.0, gain_db=1.5, tag_amt=0.6, filter=CLEAR),
-    "teacher": dict(voice="bm_george", speed=1.05, pitch=1.0, expressive=True, smooth=True, gen_speed=1.0, gain_db=1.5, tag_amt=0.4, filter=CLEAR),
-    "mom":     dict(voice="af_heart", speed=0.96, pitch=0.97, expressive=True, smooth=True, gen_speed=1.0, gain_db=2.0, tag_amt=0.7, filter=CLEAR),
-    "dad":     dict(voice="am_michael", speed=1.05, pitch=0.95, expressive=True, smooth=True, gen_speed=1.0, gain_db=1.5, tag_amt=0.4, filter=CLEAR),
-    "crowd":   dict(voice="am_liam", speed=1.15, pitch=1.10, expressive=True, resample=True, tag_amt=0.4, filter="aecho=0.8:0.5:18|31:0.35|0.25," + CLEAR),
+    "kid":     dict(voice="am_puck", speed=1.10, pitch=1.24, expressive=True, resample=True, gain_db=1.5, tag_amt=0.3, filter=CLEAR),
+    "teacher": dict(voice="bm_george", speed=1.05, pitch=1.0, expressive=True, gain_db=1.5, tag_amt=0.3, filter=CLEAR),
+    "mom":     dict(voice="af_heart", speed=1.0, pitch=1.0, expressive=True, gain_db=2.5, tag_amt=0.3, filter=CLEAR),
+    "dad":     dict(voice="bm_george", speed=1.05, pitch=1.0, expressive=True, gain_db=1.5, tag_amt=0.3, filter=CLEAR),
+    "crowd":   dict(voice="am_liam", speed=1.12, pitch=1.10, expressive=True, resample=True, tag_amt=0.4, filter="aecho=0.8:0.5:18|31:0.35|0.25," + CLEAR),
 }
-LONG_GAPS = {"cookie": 0.25, "hook": 0.35, "teach": 0.4, "nolie": 0.25, "age": 0.7, "h1": 0.3, "study": 0.3, "yes": 0.6, "bully": 0.3,
-             "shame": 1.0, "ate": 0.75, "shoes": 0.75, "back": 0.75, "cycle": 0.75, "tired": 0.9, "forme": 0.9, "hungry": 1.0, "smile": 0.7}
+LONG_GAPS = {"cookie": 0.25, "hook": 0.3, "teach": 0.35, "nolie": 0.2, "age": 0.55, "h1": 0.3, "study": 0.25, "yes": 0.5, "bully": 0.3,
+             "shame": 0.7, "ate": 0.55, "shoes": 0.55, "back": 0.55, "cycle": 0.55, "tired": 0.7, "forme": 0.7, "hungry": 0.8, "smile": 0.6}
 TAIL = 1.5
 LEAD = 0.0
