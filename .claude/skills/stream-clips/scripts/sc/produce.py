@@ -109,6 +109,22 @@ def make(index, pick, ctx, cfg, memory):
     graph, look, seam = frame.plan(part, offset, length, info, cfg, memory, ctx.get("cam"))
 
     inputs = ["-ss", f"{offset:.3f}", "-t", f"{length:.3f}", "-i", str(part)]
+    if cfg.get("auto_brighten", True) and "setsar=1[g1]" in graph:
+        try:                                     # dark night scenes: lift the gameplay so viewers can see it
+            import cv2
+            cap = cv2.VideoCapture(str(part))
+            fps = cap.get(5) or 30
+            lum = []
+            for f in (0.25, 0.5, 0.75):
+                cap.set(1, int((offset + length * f) * fps))
+                ok, fr = cap.read()
+                if ok:
+                    lum.append(cv2.cvtColor(fr, cv2.COLOR_BGR2GRAY).mean())
+            if lum and sum(lum) / len(lum) < 55:
+                graph = graph.replace("setsar=1[g1]", "eq=gamma=1.45:contrast=1.06:saturation=1.12,setsar=1[g1]", 1)
+                say("  dark scene: brightened the gameplay", "info")
+        except Exception:
+            pass
     pay = pick.get("payoff")
     if pay and cfg.get("payoff_zoom", True):     # punch in on the big moment, then settle back
         W, H = cfg["width"], cfg["height"]
@@ -193,6 +209,22 @@ def make(index, pick, ctx, cfg, memory):
          "-movflags", "+faststart", dest.name], timeout=3600, cwd=str(clips_dir))
     # ffmpeg ran inside clips_dir (so the .ass path needs no escaping); move the result out
     produced = clips_dir / dest.name
+    pay = pick.get("payoff")
+    if pay and cfg.get("cold_open", True) and pay > 3.0:
+        # cold open: show the payoff first (about 1.5 s), quick white flash, then the whole clip
+        a = max(0.0, pay - 0.4)
+        b = min(length - 0.05, pay + 1.1)
+        cold = clips_dir / f"{name}.cold.mp4"
+        run(["ffmpeg", "-y", "-v", "error", "-nostdin",
+             "-ss", f"{a:.3f}", "-t", f"{b - a:.3f}", "-i", str(produced), "-i", str(produced),
+             "-filter_complex",
+             f"[0:v]setpts=PTS-STARTPTS,fade=t=out:st={b - a - 0.08:.3f}:d=0.08:color=white[cv];"
+             f"[0:a]asetpts=PTS-STARTPTS,afade=t=out:st={b - a - 0.08:.3f}:d=0.08[ca];"
+             f"[1:v]fade=t=in:st=0:d=0.12:color=white,setpts=PTS-STARTPTS[mv];[1:a]asetpts=PTS-STARTPTS[ma];"
+             f"[cv][ca][mv][ma]concat=n=2:v=1:a=1[v][a]",
+             "-map", "[v]", "-map", "[a]", *_encode_args(enc, cfg), "-c:a", "aac",
+             "-b:a", f"{cfg['audio_kbps']}k", "-movflags", "+faststart", str(cold)], timeout=3600)
+        cold.replace(produced)
     if cfg.get("outro_file"):
         secs = float(cfg.get("outro_seconds") or 2.0)
         W, H = cfg["width"], cfg["height"]

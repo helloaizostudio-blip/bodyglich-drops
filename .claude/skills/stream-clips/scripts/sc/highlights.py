@@ -57,7 +57,7 @@ clip and be honest about what happens: tease the payoff without spoiling it ("He
 this 😳", "The bird just... died 💀", "Watch his face 😂", "This mission broke him 😭"). Use \
 "Wait for it..." ONLY if the big moment lands in the last third of the clip. No generic hooks \
 that would fit any clip.
-payoff_at: the transcript time of the single biggest moment (the reveal, the fail, the punchline, \
+payoff_at: the transcript time of the single biggest moment (it is ALSO replayed as a 1.5 s cold open at the very start, so it must be visually and audibly strong) (the reveal, the fail, the punchline, \
 the scream). The video punches in on it, so it must be the real moment, inside the clip.
 caption: the post text, under 140 characters, ending with a question or a nudge to comment.
 hashtags: 3-6 tags: the topic, the creator, one broad tag.
