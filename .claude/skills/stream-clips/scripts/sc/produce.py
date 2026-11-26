@@ -256,7 +256,7 @@ def make(index, pick, ctx, cfg, memory):
         caption = f"{caption} {cfg['caption_prefix']}".strip()
     tags = list(cfg.get("required_hashtags") or [])
     tags += [t for t in pick.get("hashtags", []) if t.lower() not in {x.lower() for x in tags}]
-    return {"file": dest.name, "type": pick.get("type"), "title": title,
+    return {"file": dest.name, "type": pick.get("type"), "title": pick.get("title") or title, "hook": title,
             "caption": caption, "hashtags": tags[:6],
             "score": pick.get("score"), "why": pick.get("why"), "look": look,
             "start": round(start, 1), "end": round(end, 1), "seconds": round(length, 1),

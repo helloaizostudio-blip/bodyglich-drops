@@ -86,6 +86,13 @@ def audio(url, args, work, live=False):
         dest = hls_slice(url, args, "Audio_Only/audio_only/worst", 0, 1e9, work / "audio.m4a")
         say(f"audio ready ({dest.stat().st_size / 1e6:.0f} MB)", "good")
         return dest
+    if "kick.com" in url:                        # Kick: no audio-only stream, take the 160p video and keep its audio
+        tmp = hls_slice(url, args, "160p/360p/worst", 0, 1e9, work / "audio_src.mp4")
+        dest = work / "audio.m4a"
+        run(["ffmpeg", "-y", "-v", "error", "-nostdin", "-i", str(tmp), "-vn", "-c:a", "copy", str(dest)], timeout=3600)
+        tmp.unlink(missing_ok=True)
+        say(f"audio ready ({dest.stat().st_size / 1e6:.0f} MB)", "good")
+        return dest
     extra = ["--live-from-start"] if live and "youtu" in url else []
     try:
         run(["yt-dlp", *args, *extra, "-f", "ba/b", "-N", "4",
@@ -155,6 +162,8 @@ def video_slice(url, args, start, end, dest: Path, max_height):
         run(["ffmpeg", "-y", "-v", "error", "-nostdin", "-ss", f"{max(0, start):.3f}", "-to", f"{end:.3f}",
              "-i", src, "-c", "copy", "-avoid_negative_ts", "make_zero", str(dest)], timeout=1800)
         return dest
+    if "kick.com" in url:
+        return hls_slice(url, args, "1080p60/720p60/best", max(0, start), end, dest)
     if "twitch.tv" in url:
         h = "1080p60" if max_height >= 1080 else "720p60"
         return hls_slice(url, args, f"{h}/720p60/best", max(0, start), end, dest)
