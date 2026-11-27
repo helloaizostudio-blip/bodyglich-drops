@@ -99,6 +99,7 @@ export function text(str, x, y, size, o = {}) {
 let PAPER = null, GRAIN = [], SPECK = [];
 function noiseCanvas(w, h, fn) { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); const im = g.createImageData(w, h); for (let i = 0; i < w * h; i++) { const [r, gg, b, a] = fn(i % w, (i / w) | 0); im.data.set([r, gg, b, a], i * 4); } g.putImageData(im, 0, 0); return c; }
 function build() {
+  const W = ctx.canvas.width, H = ctx.canvas.height; GRAIN = []; SPECK = [];
   PAPER = document.createElement('canvas'); PAPER.width = W; PAPER.height = H; const g = PAPER.getContext('2d');
   g.fillStyle = INK.paper; g.fillRect(0, 0, W, H);
   for (let i = 0; i < 900; i++) { g.strokeStyle = `rgba(150,120,80,${0.04 + Math.random() * 0.05})`; g.lineWidth = 0.6 + Math.random(); g.beginPath(); const x = Math.random() * W, y = Math.random() * H, a = Math.random() * 6.28, l = 6 + Math.random() * 26; g.moveTo(x, y); g.quadraticCurveTo(x + Math.cos(a + 0.6) * l / 2, y + Math.sin(a + 0.6) * l / 2, x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke(); }
@@ -108,10 +109,10 @@ function build() {
     SPECK.push(noiseCanvas(360, 640, () => (Math.random() < 0.012 ? [250, 246, 236, 255] : [0, 0, 0, 0])));
   }
 }
-export function paper() { if (!PAPER) build(); ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(PAPER, 0, 0); ctx.restore(); }
+export function paper() { if (!PAPER || PAPER.width !== ctx.canvas.width || PAPER.height !== ctx.canvas.height) build(); ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(PAPER, 0, 0); ctx.restore(); }
 /** grain (multiply) + ink drop-outs (paper-coloured specks) + a tiny global registration shiver */
 export function finish() {
-  if (!PAPER) build();
+  if (!PAPER || PAPER.width !== ctx.canvas.width) build(); const W = ctx.canvas.width, H = ctx.canvas.height;
   ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.imageSmoothingEnabled = false;
   ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = 0.22; ctx.drawImage(GRAIN[BOIL % 3], 0, 0, W, H);
   ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 0.55; ctx.drawImage(SPECK[(BOIL + 1) % 3], 0, 0, W, H);
