@@ -3,6 +3,8 @@ import path from "node:path";
 import sharp from "sharp";
 import {
   coreSheetPrompt,
+  FULL_GRID,
+  fullSheetPrompt,
   defaultCharacter,
   EXPRESSION_GRID,
   expressionSheetPrompt,
@@ -12,16 +14,50 @@ import {
 import { assertBudget, recordCost } from "../costs";
 import { generateImage, removeBackground } from "../providers/fal";
 import { ASSETS_DIR, DATA_DIR, getCharacterDoc, getStore, saveCharacter } from "../store";
-import { CHARACTER_ORDER, CORE_EXPRESSIONS, type CharacterId, type CharacterProfile, type Expression, type Project, type Settings, type ViewName } from "../types";
+import { CHARACTER_ORDER, CORE_EXPRESSIONS, EXTENDED_EXPRESSIONS, type CharacterId, type CharacterProfile, type Expression, type Project, type Settings, type ViewName } from "../types";
 import { sliceSheet } from "./sheets";
 
-export type SheetKind = "core" | "expressions" | "views";
+export type SheetKind = "core" | "expressions" | "views" | "full";
 
 const GRID: Record<SheetKind, { rows: number; cols: number; names: readonly string[] }> = {
   core: { rows: 2, cols: 2, names: ["neutral", "talking", "blink", "surprised"] },
   expressions: { rows: 3, cols: 3, names: EXPRESSION_GRID },
   views: { rows: 1, cols: 3, names: VIEW_GRID },
+  /** combined 4x3 reference sheet: 9 expressions + 3 turnaround views */
+  full: { rows: 3, cols: 4, names: FULL_GRID },
 };
+
+/**
+ * Rescale a sprite sliced from another sheet onto the core sprite canvas so that every expression
+ * of a character shares the same anchor (feet) and body height.
+ */
+async function conformToCore(
+  png: Buffer,
+  from: { x: number; y: number; bodyHeight: number },
+  core: { x: number; y: number; bodyHeight: number },
+  W: number,
+  H: number,
+): Promise<Buffer> {
+  const f = core.bodyHeight / from.bodyHeight;
+  const meta = await sharp(png).metadata();
+  const w = Math.max(1, Math.round((meta.width ?? 1) * f));
+  const h = Math.max(1, Math.round((meta.height ?? 1) * f));
+  const scaled = await sharp(png).resize(w, h).png().toBuffer();
+  let left = Math.round(core.x - from.x * f);
+  let top = Math.round(core.y - from.y * f);
+  // crop whatever falls outside the core canvas
+  const cx = Math.max(0, -left),
+    cy = Math.max(0, -top);
+  const cw = Math.min(w - cx, W - Math.max(0, left));
+  const ch = Math.min(h - cy, H - Math.max(0, top));
+  const piece = await sharp(scaled).extract({ left: cx, top: cy, width: Math.max(1, cw), height: Math.max(1, ch) }).png().toBuffer();
+  left = Math.max(0, left);
+  top = Math.max(0, top);
+  return sharp({ create: { width: W, height: H, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
+    .composite([{ input: piece, left, top }])
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+}
 
 export async function getCharacter(id: CharacterId): Promise<CharacterProfile> {
   return (await getCharacterDoc(id)) ?? defaultCharacter(id);
@@ -49,20 +85,33 @@ export async function importSheet(id: CharacterId, file: string, kind: SheetKind
   await store.putFile(sheetKey, file);
   const g = GRID[kind];
   const res = await sliceSheet(file, { rows: g.rows, cols: g.cols, names: [...g.names], referenceName: kind === "views" ? "front" : "neutral" });
+  const coreRef = c.sprites.neutral;
   for (const s of res.sprites) {
+    const isView = (VIEW_GRID as readonly string[]).includes(s.name);
+    const isExtended = (EXTENDED_EXPRESSIONS as readonly string[]).includes(s.name);
+    const isCore = (CORE_EXPRESSIONS as readonly string[]).includes(s.name);
+    // core sheet owns the animation-critical expressions; other sheets only add to the library
+    if (!isView && !(kind === "core" && isCore) && !isExtended && !(isCore && !c.sprites[s.name as Expression])) continue;
+    let png = s.png;
+    let width = s.width,
+      height = s.height;
+    if (!isView && kind !== "core" && coreRef && c.anchor) {
+      png = await conformToCore(s.png, res.anchor, c.anchor, coreRef.width, coreRef.height);
+      width = coreRef.width;
+      height = coreRef.height;
+    }
     const key = `characters/${id}/${kind}/${s.name}-${stamp}.png`;
-    await store.putFile(key, s.png, "image/png");
-    const ref = { key, width: s.width, height: s.height };
-    if (kind === "views") c.views[s.name as ViewName] = ref;
-    // core sheet wins for the animation-critical expressions
-    else if (kind === "core" || !CORE_EXPRESSIONS.includes(s.name as never) || !c.sprites[s.name as Expression])
-      c.sprites[s.name as Expression] = ref;
+    await store.putFile(key, png, "image/png");
+    const ref = { key, width, height };
+    if (isView) c.views[s.name as ViewName] = ref;
+    else c.sprites[s.name as Expression] = ref;
   }
   if (kind === "core") {
     c.anchor = res.anchor;
     c.alignmentScore = Math.min(...Object.values(res.shifts).map((x) => x.score));
   }
-  c.sheets[kind] = sheetKey;
+  if (kind === "full") c.sheets.expressions = c.sheets.views = sheetKey;
+  else c.sheets[kind] = sheetKey;
   await saveCharacter(c);
   return c;
 }
@@ -73,7 +122,8 @@ export async function generateSheet(s: Settings, id: CharacterId, kind: SheetKin
   if (c.locked && kind === "core" && hasCoreSprites(c))
     throw new Error(`${c.displayName} is locked; unlock it in the Character Library to regenerate its core sheet.`);
   await assertBudget(project, s, s.costLimits.falImageUsd * 2, `${kind} sheet for ${id}`);
-  const prompt = kind === "core" ? coreSheetPrompt(c) : kind === "expressions" ? expressionSheetPrompt(c) : viewSheetPrompt(c);
+  const prompt =
+    kind === "core" ? coreSheetPrompt(c) : kind === "expressions" ? expressionSheetPrompt(c) : kind === "full" ? fullSheetPrompt(c) : viewSheetPrompt(c);
   const tmp = path.join(DATA_DIR, "tmp", `${id}-${kind}-${Date.now()}`);
   fs.mkdirSync(tmp, { recursive: true });
   // references: the character's existing neutral sprite (consistency) or the global style reference
@@ -82,7 +132,7 @@ export async function generateSheet(s: Settings, id: CharacterId, kind: SheetKin
   for (const u of c.sheets.uploads.slice(-2)) refs.push(await getStore().localPath(u));
   const style = path.join(ASSETS_DIR, "style-reference.png");
   if (!refs.length && fs.existsSync(style)) refs.push(style);
-  const aspect = kind === "views" ? "16:9" : "1:1";
+  const aspect = kind === "views" ? "16:9" : kind === "full" ? "4:3" : "1:1";
   const raw = await generateImage(s, prompt, path.join(tmp, "sheet.png"), { aspectRatio: aspect, referenceFiles: refs });
   const cut = await removeBackground(s, raw, path.join(tmp, "sheet-cut.png"));
   recordCost(project, { provider: "fal", what: `${kind} sheet ${id}`, usd: s.costLimits.falImageUsd * 2 });
@@ -94,11 +144,23 @@ export async function ensureCharacterLibrary(s: Settings | null, project: Projec
   const chars = await getCharacters();
   for (const id of CHARACTER_ORDER) {
     let c = chars[id];
-    if (hasCoreSprites(c) && (await allSpritesPresent(c))) continue;
+    const bundledFull = path.join(ASSETS_DIR, "characters", id, "sheet-full.png");
+    if (hasCoreSprites(c) && (await allSpritesPresent(c))) {
+      if (!c.sheets.expressions && fs.existsSync(bundledFull)) {
+        log(`importing bundled expression + turnaround sheet for ${c.displayName}`);
+        chars[id] = await importSheet(id, bundledFull, "full");
+      }
+      continue;
+    }
     const bundled = path.join(ASSETS_DIR, "characters", id, "sheet-core.png");
     if (fs.existsSync(bundled)) {
       log(`importing bundled reference sheet for ${c.displayName}`);
       c = await importSheet(id, bundled, "core");
+      const full = path.join(ASSETS_DIR, "characters", id, "sheet-full.png");
+      if (fs.existsSync(full)) {
+        log(`importing bundled expression + turnaround sheet for ${c.displayName}`);
+        c = await importSheet(id, full, "full");
+      }
     } else if (s) {
       log(`generating reference sheet for ${c.displayName} with fal.ai`);
       c = await generateSheet(s, id, "core", project);

@@ -13,7 +13,6 @@ import { APP_ROOT, DATA_DIR, getIdea, getProject, getStore, loadSettings, savePr
 import {
   AUDIO_ROLES,
   CHARACTER_ORDER,
-  CORE_EXPRESSIONS,
   STAGES,
   type AudioClip,
   type AudioRole,
@@ -280,7 +279,8 @@ export async function runPipeline(req: RunRequest, log: Logger = console.log): P
       script: p!.script!,
     });
     const renderer = new SceneRenderer(assets, tl, s);
-    const spriteSig = CHARACTER_ORDER.map((id) => CORE_EXPRESSIONS.map((e) => characters[id].sprites[e]?.key)).flat();
+    const spriteKeys = (id: CharacterId) => Object.values(characters[id].sprites).map((r) => r!.key).sort();
+    const spriteSig = CHARACTER_ORDER.map(spriteKeys).flat();
     for (const scene of tl.scenes) {
       const hash = hashOf({ scene, next: tl.scenes[scene.index + 1]?.characterId, spriteSig, bg: p!.background, script: p!.script, video: s.video, v: 3 });
       const prev = p!.sceneRenders[scene.index];
@@ -299,7 +299,7 @@ export async function runPipeline(req: RunRequest, log: Logger = console.log): P
       l(`scene ${scene.index} (${scene.kind}${scene.characterId ? ` ${scene.characterId}` : ""}): ${frames} frames in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
       await saveProject(p!);
     }
-    p!.renderedSprites = Object.fromEntries(CHARACTER_ORDER.map((id) => [id, CORE_EXPRESSIONS.map((e) => characters[id].sprites[e]!.key)]));
+    p!.renderedSprites = Object.fromEntries(CHARACTER_ORDER.map((id) => [id, spriteKeys(id)]));
     // soundtrack + assembly
     const clips: Partial<Record<AudioRole, string>> = {};
     for (const r of AUDIO_ROLES) clips[r] = await store.localPath(p!.audio[r]!.key);

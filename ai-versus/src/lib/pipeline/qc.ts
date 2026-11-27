@@ -86,9 +86,10 @@ export async function runQc(q: QcInputs, s: Settings): Promise<QcReport> {
   // --- character consistency ---
   for (const id of CHARACTER_ORDER) {
     const c = q.characters[id];
-    const current = CORE_EXPRESSIONS.map((e) => c.sprites[e]?.key ?? "").sort().join(",");
+    const current = Object.values(c.sprites).map((r) => r!.key).sort().join(",");
+    const hasCore = CORE_EXPRESSIONS.every((e) => c.sprites[e]);
     const used = [...(q.renderedSprites[id] ?? [])].sort().join(",");
-    add(`${c.displayName}: rendered with library sprites`, current === used, current === used ? "matches character library" : "sprites changed since render");
+    add(`${c.displayName}: rendered with library sprites`, hasCore && current === used, current === used ? "matches character library" : "sprites changed since render");
     const score = q.spriteScores[id];
     if (score !== undefined) add(`${c.displayName}: expression sprites aligned`, score >= 0.95, `body overlap ${(score * 100).toFixed(1)}%`);
   }

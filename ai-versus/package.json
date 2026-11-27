@@ -8,11 +8,10 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "worker": "tsx src/worker/index.ts",
+    "worker": "tsx --env-file-if-exists=.env src/worker/index.ts",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
-    "sample": "tsx scripts/sample-flooding-elevator.ts",
-    "import-sheets": "tsx scripts/import-sheets.ts"
+    "sample": "tsx --env-file-if-exists=.env scripts/sample-flooding-elevator.ts"
   },
   "engines": {
     "node": ">=20"

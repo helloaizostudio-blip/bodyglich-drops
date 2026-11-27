@@ -1,5 +1,5 @@
 {
-  "projectId": "98ad3957-962b-4ab7-820a-17734fe19aeb",
+  "projectId": "e12972ab-5122-40c6-a8ba-e84a524bf858",
   "script": {
     "title": "Flooding Elevator",
     "hookTop": "What would 5 AIs do",
@@ -1223,91 +1223,91 @@
       }
     ],
     "failedScenes": [],
-    "checkedAt": "2026-11-27T07:23:45.018Z"
+    "checkedAt": "2026-11-27T07:33:15.055Z"
   },
   "stages": {
     "script": {
       "status": "done",
       "log": [
-        "07:22:07 script already present"
+        "07:31:36 script already present"
       ],
-      "startedAt": "2026-11-27T07:22:07.069Z",
-      "finishedAt": "2026-11-27T07:22:07.070Z"
+      "startedAt": "2026-11-27T07:31:36.806Z",
+      "finishedAt": "2026-11-27T07:31:36.806Z"
     },
     "characters": {
       "status": "done",
       "log": [
-        "07:22:07 ChatGPT: 4 expressions ready",
-        "07:22:07 Claude: 4 expressions ready",
-        "07:22:07 Gemini: 4 expressions ready",
-        "07:22:07 Grok: 4 expressions ready",
-        "07:22:07 Meta AI: 4 expressions ready"
+        "07:31:36 ChatGPT: 9 expressions ready",
+        "07:31:36 Claude: 9 expressions ready",
+        "07:31:36 Gemini: 9 expressions ready",
+        "07:31:36 Grok: 9 expressions ready",
+        "07:31:36 Meta AI: 9 expressions ready"
       ],
-      "startedAt": "2026-11-27T07:22:07.071Z",
-      "finishedAt": "2026-11-27T07:22:07.072Z"
+      "startedAt": "2026-11-27T07:31:36.807Z",
+      "finishedAt": "2026-11-27T07:31:36.808Z"
     },
     "background": {
       "status": "done",
       "log": [
-        "07:22:07 background already present"
+        "07:31:36 background already present"
       ],
-      "startedAt": "2026-11-27T07:22:07.072Z",
-      "finishedAt": "2026-11-27T07:22:07.073Z"
+      "startedAt": "2026-11-27T07:31:36.809Z",
+      "finishedAt": "2026-11-27T07:31:36.810Z"
     },
     "voices": {
       "status": "done",
       "log": [
-        "07:22:07 raw speech 48.5s → tempo ×1.127",
-        "07:22:08 narrator_intro: 4.87s, 17 words (estimated timing)",
-        "07:22:08 chatgpt: 8.68s, 23 words (estimated timing)",
-        "07:22:09 claude: 7.41s, 22 words (estimated timing)",
-        "07:22:09 gemini: 6.42s, 21 words (estimated timing)",
-        "07:22:10 grok: 6.62s, 16 words (estimated timing)",
-        "07:22:10 meta: 6.40s, 15 words (estimated timing)",
-        "07:22:11 narrator_outro: 2.72s, 7 words (estimated timing)"
+        "07:31:37 raw speech 48.5s → tempo ×1.127",
+        "07:31:37 narrator_intro: 4.87s, 17 words (estimated timing)",
+        "07:31:38 chatgpt: 8.68s, 23 words (estimated timing)",
+        "07:31:38 claude: 7.41s, 22 words (estimated timing)",
+        "07:31:39 gemini: 6.42s, 21 words (estimated timing)",
+        "07:31:39 grok: 6.62s, 16 words (estimated timing)",
+        "07:31:40 meta: 6.40s, 15 words (estimated timing)",
+        "07:31:40 narrator_outro: 2.72s, 7 words (estimated timing)"
       ],
-      "startedAt": "2026-11-27T07:22:07.073Z",
-      "finishedAt": "2026-11-27T07:22:11.251Z"
+      "startedAt": "2026-11-27T07:31:36.810Z",
+      "finishedAt": "2026-11-27T07:31:40.650Z"
     },
     "timeline": {
       "status": "done",
       "log": [
-        "07:22:11 7 scenes, 49.07s"
+        "07:31:40 7 scenes, 49.07s"
       ],
-      "startedAt": "2026-11-27T07:22:11.253Z",
-      "finishedAt": "2026-11-27T07:22:11.255Z"
+      "startedAt": "2026-11-27T07:31:40.651Z",
+      "finishedAt": "2026-11-27T07:31:40.653Z"
     },
     "render": {
       "status": "done",
       "log": [
-        "07:22:20 scene 0 (intro): 164 frames in 8.7s",
-        "07:22:34 scene 1 (response chatgpt): 285 frames in 14.1s",
-        "07:22:46 scene 2 (response claude): 246 frames in 12.3s",
-        "07:22:58 scene 3 (response gemini): 216 frames in 11.5s",
-        "07:23:09 scene 4 (response grok): 223 frames in 10.9s",
-        "07:23:20 scene 5 (response meta): 216 frames in 10.9s",
-        "07:23:25 scene 6 (ending): 122 frames in 5.7s",
-        "07:23:27 soundtrack mixed (peak 0.859)",
-        "07:23:29 assembled final video (49.07s)"
+        "07:31:50 scene 0 (intro): 164 frames in 8.9s",
+        "07:32:03 scene 1 (response chatgpt): 285 frames in 13.7s",
+        "07:32:15 scene 2 (response claude): 246 frames in 12.0s",
+        "07:32:26 scene 3 (response gemini): 216 frames in 10.5s",
+        "07:32:37 scene 4 (response grok): 223 frames in 11.4s",
+        "07:32:48 scene 5 (response meta): 216 frames in 10.8s",
+        "07:32:54 scene 6 (ending): 122 frames in 6.0s",
+        "07:32:56 soundtrack mixed (peak 0.859)",
+        "07:32:59 assembled final video (49.07s)"
       ],
-      "startedAt": "2026-11-27T07:22:11.256Z",
-      "finishedAt": "2026-11-27T07:23:29.370Z"
+      "startedAt": "2026-11-27T07:31:40.654Z",
+      "finishedAt": "2026-11-27T07:32:59.100Z"
     },
     "qc": {
       "status": "done",
       "log": [
-        "07:23:45 QC: 72/72 checks passed"
+        "07:33:15 QC: 72/72 checks passed"
       ],
-      "startedAt": "2026-11-27T07:23:29.372Z",
-      "finishedAt": "2026-11-27T07:23:45.018Z"
+      "startedAt": "2026-11-27T07:32:59.110Z",
+      "finishedAt": "2026-11-27T07:33:15.055Z"
     },
     "export": {
       "status": "done",
       "log": [
-        "07:23:45 exported outputs/what-would-five-ais-do-if-they-were-trapped-in-a-flooding-el-98ad3957.mp4"
+        "07:33:15 exported outputs/what-would-five-ais-do-if-they-were-trapped-in-a-flooding-el-e12972ab.mp4"
       ],
-      "startedAt": "2026-11-27T07:23:45.020Z",
-      "finishedAt": "2026-11-27T07:23:45.045Z"
+      "startedAt": "2026-11-27T07:33:15.057Z",
+      "finishedAt": "2026-11-27T07:33:15.088Z"
     }
   }
 }

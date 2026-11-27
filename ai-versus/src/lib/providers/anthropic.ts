@@ -268,3 +268,54 @@ export async function regenerateLine(s: Settings, project: Project, characterId:
   if (containsBannedContent(l.text)) throw new Error("rewrite contained banned content");
   return { ...l, characterId, caption: stripTags(l.text) };
 }
+
+// ---------------------------------------------------------------------------------------------
+
+const ScoreSchema = z.object({
+  title: z.string(),
+  setting: z.string().describe("one-sentence single environment"),
+  visualHook: z.string(),
+  hazard: z.enum(HAZARDS),
+  visual: z.number().int(),
+  story: z.number().int(),
+  humor: z.number().int(),
+  clarity: z.number().int(),
+  rationale: z.string(),
+});
+
+/** Score a producer-supplied topic the same way generated ideas are scored. */
+export async function scoreManualIdea(s: Settings, question: string, setting?: string): Promise<Idea> {
+  await assertBudget(null, s, 0.02, "idea scoring");
+  const res = await client(s).beta.messages.parse({
+    model: s.providers.anthropicModel,
+    max_tokens: 4000,
+    betas: ["server-side-fallback-2026-07-01"],
+    fallbacks: "default",
+    output_config: { effort: "low", format: betaZodOutputFormat(ScoreSchema) },
+    system: SYSTEM,
+    messages: [
+      {
+        role: "user",
+        content: `Score this producer-supplied episode idea (1-10 each, honest) and fill in the missing fields.\nQuestion: ${question}\n${setting ? `Setting: ${setting}` : ""}`,
+      },
+    ],
+  });
+  const o = res.parsed_output;
+  if (res.stop_reason === "refusal" || !o) throw new Error("Claude could not score this topic.");
+  const clamp = (n: number) => Math.max(1, Math.min(10, Math.round(n)));
+  const scores = { visual: clamp(o.visual), story: clamp(o.story), humor: clamp(o.humor), clarity: clamp(o.clarity), overall: 0 };
+  scores.overall = Math.round((scores.visual * 0.3 + scores.story * 0.25 + scores.humor * 0.25 + scores.clarity * 0.2) * 10) / 10;
+  return {
+    id: crypto.randomUUID(),
+    title: o.title,
+    question,
+    setting: setting || o.setting,
+    visualHook: o.visualHook,
+    hazard: o.hazard,
+    scores,
+    rationale: o.rationale,
+    source: "manual",
+    status: "proposed",
+    createdAt: new Date().toISOString(),
+  };
+}

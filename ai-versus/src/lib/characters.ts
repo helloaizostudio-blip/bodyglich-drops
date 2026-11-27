@@ -145,3 +145,28 @@ export function viewSheetPrompt(c: Pick<CharacterProfile, "designPrompt">): stri
     "Panels left-to-right: front view, three-quarter view facing left, full side profile view facing left."
   );
 }
+
+/** Combined 4x3 sheet: nine expressions + three turnaround views. Order matches FULL_GRID. */
+export const FULL_GRID = [
+  "happy",
+  "sad",
+  "angry",
+  "confused",
+  "surprised",
+  "talking",
+  "thinking",
+  "neutral",
+  "blink",
+  "front",
+  "three_quarter",
+  "side",
+] as const;
+export function fullSheetPrompt(c: Pick<CharacterProfile, "designPrompt">): string {
+  return (
+    `Character reference sheet, 4 columns x 3 rows grid of twelve equal panels on a plain flat pure white background, ${STYLE_PROMPT}, NO grid lines. ` +
+    `The SAME character in every panel, same size, full body. Character: ${c.designPrompt}. ` +
+    "Row 1: happy (big joyful smile), sad (teary frown), angry (furrowed brow, small anger mark), confused (tilted head, question mark). " +
+    "Row 2: surprised (wide eyes, 'o' mouth), talking (mouth open), thinking (hand on chin, eyes up), neutral (calm smile). " +
+    "Row 3: blinking (eyes closed), front view standing, three-quarter view facing left, full side profile view facing left."
+  );
+}
