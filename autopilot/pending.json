@@ -47,24 +47,6 @@
    "paused": "User stopped Patricia posting on 2026-11-26; do not post."
   },
   {
-   "file": "uploads/boeshi-ghost.mp4",
-   "channel": "clipgta6no4",
-   "zapier_connection": "023e6c17-a90c-8e21-918f-7b8df41b8768",
-   "paid": true,
-   "campaign": "Boeshi",
-   "title": "Boeshi thinks a GHOST is attacking him in GTA 6 👻 twitch.tv/darealboeshi #Boeshi",
-   "description": "A ghost driving a car attacked Boeshi 👻 Was it a glitch? Full stream at twitch.tv/darealboeshi\n#Boeshi #GTA6 #GrandTheftAutoVI #Shorts #Gaming\n\nSource: Boeshi on Twitch, VOD 2941120302 at 1:56:07\n#Shorts",
-   "tags": [
-    "Boeshi",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ],
-   "buffer_channel": "6b0555098541f09ecb870059",
-   "scheduled": "Buffer 6b083e3498798b19ac2ce35e 2026-11-27 07:00 IST (set paid promotion after it posts)"
-  },
-  {
    "file": "uploads/boeshi-ufo.mp4",
    "channel": "clipgta6no4",
    "zapier_connection": "023e6c17-a90c-8e21-918f-7b8df41b8768",
@@ -81,40 +63,6 @@
    ],
    "buffer_channel": "6b0555098541f09ecb870059",
    "scheduled": "Buffer 6b083e3f50a444a7128786f7 2026-11-27 19:00 IST (set paid promotion after it posts)"
-  },
-  {
-   "file": "uploads/boeshi-atv.mp4",
-   "channel": "Vicegta609",
-   "zapier_connection": "025b4883-9fb9-8ad0-83aa-96f0ddb2d6b4",
-   "paid": true,
-   "campaign": "Boeshi",
-   "title": "An ATV is STALKING Boeshi in GTA 6 😳 twitch.tv/darealboeshi #Boeshi",
-   "description": "This ATV would not stop following Boeshi 😳 Is this a glitch? Full stream at twitch.tv/darealboeshi\n#Boeshi #GTA6 #GrandTheftAutoVI #Shorts #Gaming\n\nSource: Boeshi on Twitch, VOD 2941120302 at 1:57:38\n#Shorts",
-   "tags": [
-    "Boeshi",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ]
-  },
-  {
-   "file": "uploads/kai-snaps.mp4",
-   "channel": "clipboygta6",
-   "zapier_connection": "029634c4-d296-86a7-98bf-69e305c44264",
-   "paid": true,
-   "campaign": "Kai Cenat",
-   "title": "Kai Cenat keeps telling Speed to CALL HIS CAR 😂 #KaiCenat #Shorts",
-   "description": "Kai would not stop saying 'call your car' until Speed snapped 😂 Who's more annoying?\n#KaiCenat #GTA6 #GrandTheftAutoVI #IShowSpeed #Shorts\n\nSource: Kai Cenat on Twitch, VOD 2939504732 at 0:42:03\n#Shorts",
-   "tags": [
-    "Kai Cenat",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ],
-   "buffer_channel": "6b05547a8541f09ecb86f9b7",
-   "scheduled": "Buffer 6b083e4b98798b19ac2cee0a 2026-11-27 07:10 IST (set paid promotion after it posts)"
   },
   {
    "file": "uploads/kai-money.mp4",

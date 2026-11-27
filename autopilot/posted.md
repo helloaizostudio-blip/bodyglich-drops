@@ -44,3 +44,6 @@
 | 2026-11-25 | usa_gta6gamin77 | StableRonaldo breaks the news about Mandy (Make) | see usa_gta6gamin77 feed | (no campaign) |
 | 2026-11-26 | prodcatclipai | Patricia: What AI still can't do for agencies (Make) | https://youtube.com/shorts/tADCI7sLXag | Patricia |
 | 2026-11-26 | prodcatclipai | Patricia: He built his keynote in Claude Code? (Make) | link: see channel (feed lag) | Patricia |
+| 2026-11-27 | clipgta6no4 | Boeshi thinks a ghost is attacking him (Buffer, paid) | https://youtube.com/shorts/BZ_bdLpa3us | Boeshi |
+| 2026-11-27 | clipboygta6 | Kai keeps telling Speed to call his car (Buffer, paid) | https://youtube.com/shorts/n_-2J-ULPhM | Kai Cenat |
+| 2026-11-27 | Vicegta609 | An ATV is stalking Boeshi (Zapier, paid) | https://youtube.com/shorts/WsvA9phmlJg | Boeshi |
