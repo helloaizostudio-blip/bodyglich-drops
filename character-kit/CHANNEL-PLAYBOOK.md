@@ -79,3 +79,28 @@ The gentler "try this" hooks raised comments but not the stay-to-watch rate (sti
 - **Visual payoff the viewer can see change** (e.g. a body slimming as the day counter runs).
 - Keep: Blip transformations, the "🤯 THE TWIST" card, the ✅/❌ or "how long could you last?" question, the follow line, a safety pill when relevant.
 - First Short in this style: "The Man Who Didn't Eat for 382 Days" (`examples/survive-*`).
+
+## 27 Nov: why every Short stops at ~2k views, and the pivot
+
+**Data:** every Short gets ~1–3k views. Stayed-to-watch is still ~50% (48% on phones). Comments have gone up, but reach hasn't. YouTube shows each Short to a first test batch; when half of that batch swipes away in the first second, the Short never gets shown to more people.
+
+**What gets millions in our niche** (body Shorts since September, from free YouTube search):
+
+| Short | Views | What it shows |
+|---|---|---|
+| 5 foods for your arteries | 89.1M | Realistic camera inside an artery, 31 s |
+| Kidney transplant | 20.3M | Real surgery, step by step in 3D |
+| ACL replacement | 13.3M | Real surgery in 3D |
+| Pea plant grew in a man's lung | 7.7M | Real case, inside the body |
+| Brain surgery without opening the head | 6.8M | Real procedure |
+
+**Pattern:** a realistic inside-the-body view from frame 1, plus a **real medical procedure or real case** that adults care about, at 30–60 s. Our cartoon studio opener reads as kids' content, so adults swipe away.
+
+**New direction:**
+1. Open inside the body (artery, lung, stomach, bone), with realistic colour and lighting, already moving, plus a big red stakes number ("90% BLOCKED").
+2. Topic = a real procedure or real case: "how doctors fix X without cutting you open", transplants, bizarre ER cases.
+3. Blip and the host only appear in a short cut-away (the transformation and the twist), never as the opener.
+4. Keep the twist card, the ✅/❌ question and the follow line.
+5. Judge after 48 h: stayed-to-watch ≥ 65% means more like it.
+
+First Short in this style: "How Doctors Unblock Your Heart Without Opening Your Chest" (`examples/artery-*`).
