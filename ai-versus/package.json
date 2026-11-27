@@ -1,0 +1,43 @@
+{
+  "name": "ai-versus",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Autonomous chibi AI-character comparison short-video generator",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "worker": "tsx src/worker/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "sample": "tsx scripts/sample-flooding-elevator.ts",
+    "import-sheets": "tsx scripts/import-sheets.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.14.0",
+    "@fal-ai/client": "^1.11.0",
+    "@napi-rs/canvas": "^1.2.1",
+    "@supabase/supabase-js": "^2.119.2",
+    "bullmq": "^6.7.10",
+    "ioredis": "^6.1.0",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sharp": "^0.35.5",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^4.3.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

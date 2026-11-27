@@ -1,0 +1,1313 @@
+{
+  "projectId": "98ad3957-962b-4ab7-820a-17734fe19aeb",
+  "script": {
+    "title": "Flooding Elevator",
+    "hookTop": "What would 5 AIs do",
+    "hookBottom": "if they were trapped in a flooding elevator?",
+    "narratorIntro": "[excited] Five AIs are trapped in an elevator... and the water is rising! What would each one do?",
+    "narratorOutro": "[curious] So... which AI had the best answer?",
+    "endingCaption": "Which AI had the best answer?",
+    "environment": {
+      "prompt": "interior of a cramped stuck elevator cabin, brushed steel walls, closed doors, glowing control panel, flickering red emergency light, murky blue-green flood water filling the bottom third with ripples, water trickling through the door seam, a floating rubber duck, ceiling emergency hatch",
+      "hazard": "water",
+      "palette": "steel grey, emergency red, teal water"
+    },
+    "disclaimer": "Fictional parody · not real AI outputs",
+    "lines": [
+      {
+        "characterId": "chatgpt",
+        "text": "[confident, friendly] Okay team, stay calm! Step one: press the alarm. Step two: climb onto the handrail. Step three... I've drafted a fourteen-point escape plan!",
+        "emphasis": [
+          "calm!",
+          "alarm.",
+          "fourteen-point"
+        ],
+        "mood": "cheerful",
+        "listenerReaction": "surprised",
+        "caption": "Okay team, stay calm! Step one: press the alarm. Step two: climb onto the handrail. Step three... I've drafted a fourteen-point escape plan!"
+      },
+      {
+        "characterId": "claude",
+        "text": "[calm, gentle] Before anyone panics, is everyone okay? Good. The ceiling hatch is our way out. Let's lift the smallest of us up... together.",
+        "emphasis": [
+          "okay?",
+          "hatch",
+          "together."
+        ],
+        "mood": "calm",
+        "listenerReaction": "happy",
+        "caption": "Before anyone panics, is everyone okay? Good. The ceiling hatch is our way out. Let's lift the smallest of us up... together."
+      },
+      {
+        "characterId": "gemini",
+        "text": "[fast, excited] Ooh, I just looked it up! Door seals, water pressure, hatch specs... the hatch opens outward! Quick, somebody lift me up!",
+        "emphasis": [
+          "outward!",
+          "Quick,"
+        ],
+        "mood": "excited",
+        "listenerReaction": "surprised",
+        "caption": "Ooh, I just looked it up! Door seals, water pressure, hatch specs... the hatch opens outward! Quick, somebody lift me up!"
+      },
+      {
+        "characterId": "grok",
+        "text": "[smug, sarcastic] Relax. I already pressed every button. Twice. Worst case? We become the world's first AI submarine.",
+        "emphasis": [
+          "Twice.",
+          "submarine."
+        ],
+        "mood": "smug",
+        "listenerReaction": "confused",
+        "caption": "Relax. I already pressed every button. Twice. Worst case? We become the world's first AI submarine."
+      },
+      {
+        "characterId": "meta",
+        "text": "[cheerful] Wait, wait, let me post this first! Hashtag elevator pool party! [laughs] Okay, okay... I'm helping!",
+        "emphasis": [
+          "post",
+          "pool",
+          "party!"
+        ],
+        "mood": "cheerful",
+        "listenerReaction": "surprised",
+        "caption": "Wait, wait, let me post this first! Hashtag elevator pool party! Okay, okay... I'm helping!"
+      }
+    ]
+  },
+  "timeline": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "duration": 49.06666666666667,
+    "scenes": [
+      {
+        "index": 0,
+        "kind": "intro",
+        "audioRole": "narrator_intro",
+        "start": 0,
+        "end": 5.466666666666667,
+        "voiceStart": 0.3,
+        "voiceEnd": 5.168958,
+        "words": [
+          {
+            "text": "Five",
+            "start": 0.35,
+            "end": 0.63
+          },
+          {
+            "text": "AIs",
+            "start": 0.62,
+            "end": 0.8400000000000001
+          },
+          {
+            "text": "are",
+            "start": 0.8300000000000001,
+            "end": 1.04
+          },
+          {
+            "text": "trapped",
+            "start": 1.03,
+            "end": 1.47
+          },
+          {
+            "text": "in",
+            "start": 1.46,
+            "end": 1.6800000000000002
+          },
+          {
+            "text": "an",
+            "start": 1.6700000000000002,
+            "end": 1.83
+          },
+          {
+            "text": "elevator...",
+            "start": 1.82,
+            "end": 2.26
+          },
+          {
+            "text": "and",
+            "start": 2.4299999999999997,
+            "end": 2.6599999999999997
+          },
+          {
+            "text": "the",
+            "start": 2.65,
+            "end": 2.86
+          },
+          {
+            "text": "water",
+            "start": 2.85,
+            "end": 3.15
+          },
+          {
+            "text": "is",
+            "start": 3.1399999999999997,
+            "end": 3.3
+          },
+          {
+            "text": "rising!",
+            "start": 3.29,
+            "end": 3.63
+          },
+          {
+            "text": "What",
+            "start": 4.01,
+            "end": 4.23
+          },
+          {
+            "text": "would",
+            "start": 4.22,
+            "end": 4.62
+          },
+          {
+            "text": "each",
+            "start": 4.61,
+            "end": 4.81
+          },
+          {
+            "text": "one",
+            "start": 4.8,
+            "end": 4.97
+          },
+          {
+            "text": "do?",
+            "start": 4.96,
+            "end": 5.08
+          }
+        ],
+        "emphasis": [],
+        "mood": "worried",
+        "listenerReaction": "surprised"
+      },
+      {
+        "index": 1,
+        "kind": "response",
+        "characterId": "chatgpt",
+        "audioRole": "chatgpt",
+        "start": 5.466666666666667,
+        "end": 14.966666666666667,
+        "voiceStart": 5.968958,
+        "voiceEnd": 14.649999999999999,
+        "words": [
+          {
+            "text": "Okay",
+            "start": 6.008958,
+            "end": 6.308958
+          },
+          {
+            "text": "team,",
+            "start": 6.298958,
+            "end": 6.6089579999999994
+          },
+          {
+            "text": "stay",
+            "start": 6.738958,
+            "end": 7.018958
+          },
+          {
+            "text": "calm!",
+            "start": 7.008958,
+            "end": 7.278957999999999
+          },
+          {
+            "text": "Step",
+            "start": 7.698957999999999,
+            "end": 7.988958
+          },
+          {
+            "text": "one:",
+            "start": 7.978958,
+            "end": 8.168958
+          },
+          {
+            "text": "press",
+            "start": 8.578958,
+            "end": 8.788958
+          },
+          {
+            "text": "the",
+            "start": 8.778958,
+            "end": 8.988958
+          },
+          {
+            "text": "alarm.",
+            "start": 8.978958,
+            "end": 9.198958
+          },
+          {
+            "text": "Step",
+            "start": 9.728958,
+            "end": 10.038958000000001
+          },
+          {
+            "text": "two:",
+            "start": 10.028958,
+            "end": 10.218958
+          },
+          {
+            "text": "climb",
+            "start": 10.508958,
+            "end": 10.728957999999999
+          },
+          {
+            "text": "onto",
+            "start": 10.718958,
+            "end": 10.918958
+          },
+          {
+            "text": "the",
+            "start": 10.908958,
+            "end": 11.078958
+          },
+          {
+            "text": "handrail.",
+            "start": 11.068958,
+            "end": 11.388957999999999
+          },
+          {
+            "text": "Step",
+            "start": 11.868958,
+            "end": 12.208957999999999
+          },
+          {
+            "text": "three...",
+            "start": 12.198958000000001,
+            "end": 12.438958
+          },
+          {
+            "text": "I've",
+            "start": 12.808958,
+            "end": 12.948958000000001
+          },
+          {
+            "text": "drafted",
+            "start": 12.938958,
+            "end": 13.268958
+          },
+          {
+            "text": "a",
+            "start": 13.258958,
+            "end": 13.488958
+          },
+          {
+            "text": "fourteen-point",
+            "start": 13.478957999999999,
+            "end": 14.038958000000001
+          },
+          {
+            "text": "escape",
+            "start": 14.028958,
+            "end": 14.288958000000001
+          },
+          {
+            "text": "plan!",
+            "start": 14.278958,
+            "end": 14.558958
+          }
+        ],
+        "emphasis": [
+          "calm!",
+          "alarm.",
+          "fourteen-point"
+        ],
+        "mood": "cheerful",
+        "listenerReaction": "surprised"
+      },
+      {
+        "index": 2,
+        "kind": "response",
+        "characterId": "claude",
+        "audioRole": "claude",
+        "start": 14.966666666666667,
+        "end": 23.166666666666668,
+        "voiceStart": 15.45,
+        "voiceEnd": 22.856813,
+        "words": [
+          {
+            "text": "Before",
+            "start": 15.489999999999998,
+            "end": 15.86
+          },
+          {
+            "text": "anyone",
+            "start": 15.86,
+            "end": 16.24
+          },
+          {
+            "text": "panics,",
+            "start": 16.24,
+            "end": 16.65
+          },
+          {
+            "text": "is",
+            "start": 16.95,
+            "end": 17.11
+          },
+          {
+            "text": "everyone",
+            "start": 17.099999999999998,
+            "end": 17.54
+          },
+          {
+            "text": "okay?",
+            "start": 17.53,
+            "end": 17.77
+          },
+          {
+            "text": "Good.",
+            "start": 18.3,
+            "end": 18.56
+          },
+          {
+            "text": "The",
+            "start": 18.97,
+            "end": 19.169999999999998
+          },
+          {
+            "text": "ceiling",
+            "start": 19.16,
+            "end": 19.46
+          },
+          {
+            "text": "hatch",
+            "start": 19.45,
+            "end": 19.71
+          },
+          {
+            "text": "is",
+            "start": 19.7,
+            "end": 19.83
+          },
+          {
+            "text": "our",
+            "start": 19.82,
+            "end": 19.98
+          },
+          {
+            "text": "way",
+            "start": 19.97,
+            "end": 20.13
+          },
+          {
+            "text": "out.",
+            "start": 20.119999999999997,
+            "end": 20.33
+          },
+          {
+            "text": "Let's",
+            "start": 20.65,
+            "end": 20.96
+          },
+          {
+            "text": "lift",
+            "start": 20.95,
+            "end": 21.22
+          },
+          {
+            "text": "the",
+            "start": 21.21,
+            "end": 21.36
+          },
+          {
+            "text": "smallest",
+            "start": 21.35,
+            "end": 21.66
+          },
+          {
+            "text": "of",
+            "start": 21.65,
+            "end": 21.759999999999998
+          },
+          {
+            "text": "us",
+            "start": 21.75,
+            "end": 21.869999999999997
+          },
+          {
+            "text": "up...",
+            "start": 21.86,
+            "end": 21.97
+          },
+          {
+            "text": "together.",
+            "start": 22.35,
+            "end": 22.74
+          }
+        ],
+        "emphasis": [
+          "okay?",
+          "hatch",
+          "together."
+        ],
+        "mood": "calm",
+        "listenerReaction": "happy"
+      },
+      {
+        "index": 3,
+        "kind": "response",
+        "characterId": "gemini",
+        "audioRole": "gemini",
+        "start": 23.166666666666668,
+        "end": 30.366666666666667,
+        "voiceStart": 23.656813,
+        "voiceEnd": 30.077626,
+        "words": [
+          {
+            "text": "Ooh,",
+            "start": 23.686813,
+            "end": 23.846813
+          },
+          {
+            "text": "I",
+            "start": 23.836813,
+            "end": 23.936813
+          },
+          {
+            "text": "just",
+            "start": 23.926813,
+            "end": 24.216813
+          },
+          {
+            "text": "looked",
+            "start": 24.206813,
+            "end": 24.606813
+          },
+          {
+            "text": "it",
+            "start": 24.596813,
+            "end": 24.726813
+          },
+          {
+            "text": "up!",
+            "start": 24.716813,
+            "end": 24.896812999999998
+          },
+          {
+            "text": "Door",
+            "start": 25.156813,
+            "end": 25.416813
+          },
+          {
+            "text": "seals,",
+            "start": 25.406813,
+            "end": 25.726813
+          },
+          {
+            "text": "water",
+            "start": 25.716813,
+            "end": 26.036813
+          },
+          {
+            "text": "pressure,",
+            "start": 26.026813,
+            "end": 26.496813
+          },
+          {
+            "text": "hatch",
+            "start": 26.486812999999998,
+            "end": 26.766813
+          },
+          {
+            "text": "specs...",
+            "start": 26.756813,
+            "end": 27.156813
+          },
+          {
+            "text": "the",
+            "start": 27.556813,
+            "end": 27.716813000000002
+          },
+          {
+            "text": "hatch",
+            "start": 27.706813,
+            "end": 27.976813
+          },
+          {
+            "text": "opens",
+            "start": 27.966813000000002,
+            "end": 28.256813
+          },
+          {
+            "text": "outward!",
+            "start": 28.246813,
+            "end": 28.616813
+          },
+          {
+            "text": "Quick,",
+            "start": 28.876813,
+            "end": 29.116813
+          },
+          {
+            "text": "somebody",
+            "start": 29.346813,
+            "end": 29.606813
+          },
+          {
+            "text": "lift",
+            "start": 29.596813,
+            "end": 29.816813
+          },
+          {
+            "text": "me",
+            "start": 29.806813,
+            "end": 29.916812999999998
+          },
+          {
+            "text": "up!",
+            "start": 29.906813,
+            "end": 30.006813
+          }
+        ],
+        "emphasis": [
+          "outward!",
+          "Quick,"
+        ],
+        "mood": "excited",
+        "listenerReaction": "surprised"
+      },
+      {
+        "index": 4,
+        "kind": "response",
+        "characterId": "grok",
+        "audioRole": "grok",
+        "start": 30.366666666666667,
+        "end": 37.8,
+        "voiceStart": 30.877626,
+        "voiceEnd": 37.500834,
+        "words": [
+          {
+            "text": "Relax.",
+            "start": 30.907626,
+            "end": 31.697626
+          },
+          {
+            "text": "I",
+            "start": 31.877626,
+            "end": 31.977626
+          },
+          {
+            "text": "already",
+            "start": 31.967626,
+            "end": 32.267626
+          },
+          {
+            "text": "pressed",
+            "start": 32.257626,
+            "end": 32.627626
+          },
+          {
+            "text": "every",
+            "start": 32.617626,
+            "end": 32.847626
+          },
+          {
+            "text": "button.",
+            "start": 32.837626,
+            "end": 33.177626
+          },
+          {
+            "text": "Twice.",
+            "start": 33.587626,
+            "end": 34.087626
+          },
+          {
+            "text": "Worst",
+            "start": 34.447626,
+            "end": 34.827626
+          },
+          {
+            "text": "case?",
+            "start": 34.817626,
+            "end": 35.097626
+          },
+          {
+            "text": "We",
+            "start": 35.417626,
+            "end": 35.567626
+          },
+          {
+            "text": "become",
+            "start": 35.557626,
+            "end": 35.877626
+          },
+          {
+            "text": "the",
+            "start": 35.867626,
+            "end": 36.057626
+          },
+          {
+            "text": "world's",
+            "start": 36.047626,
+            "end": 36.457626
+          },
+          {
+            "text": "first",
+            "start": 36.447626,
+            "end": 36.807626
+          },
+          {
+            "text": "AI",
+            "start": 36.797626,
+            "end": 36.957626
+          },
+          {
+            "text": "submarine.",
+            "start": 36.947626,
+            "end": 37.387626
+          }
+        ],
+        "emphasis": [
+          "Twice.",
+          "submarine."
+        ],
+        "mood": "smug",
+        "listenerReaction": "confused"
+      },
+      {
+        "index": 5,
+        "kind": "response",
+        "characterId": "meta",
+        "audioRole": "meta",
+        "start": 37.8,
+        "end": 45,
+        "voiceStart": 38.300833999999995,
+        "voiceEnd": 44.69758399999999,
+        "words": [
+          {
+            "text": "Wait,",
+            "start": 38.330833999999996,
+            "end": 38.74083399999999
+          },
+          {
+            "text": "wait,",
+            "start": 38.830833999999996,
+            "end": 39.870833999999995
+          },
+          {
+            "text": "let",
+            "start": 40.150833999999996,
+            "end": 40.330833999999996
+          },
+          {
+            "text": "me",
+            "start": 40.320834,
+            "end": 40.520833999999994
+          },
+          {
+            "text": "post",
+            "start": 40.510833999999996,
+            "end": 40.750834
+          },
+          {
+            "text": "this",
+            "start": 40.74083399999999,
+            "end": 41.03083399999999
+          },
+          {
+            "text": "first!",
+            "start": 41.020833999999994,
+            "end": 41.28083399999999
+          },
+          {
+            "text": "Hashtag",
+            "start": 41.370833999999995,
+            "end": 41.650833999999996
+          },
+          {
+            "text": "elevator",
+            "start": 41.640834,
+            "end": 41.890834
+          },
+          {
+            "text": "pool",
+            "start": 41.88083399999999,
+            "end": 42.020833999999994
+          },
+          {
+            "text": "party!",
+            "start": 42.010833999999996,
+            "end": 42.470833999999996
+          },
+          {
+            "text": "Okay,",
+            "start": 42.590833999999994,
+            "end": 43.520833999999994
+          },
+          {
+            "text": "okay...",
+            "start": 43.780834,
+            "end": 43.820834
+          },
+          {
+            "text": "I'm",
+            "start": 43.910833999999994,
+            "end": 44.090833999999994
+          },
+          {
+            "text": "helping!",
+            "start": 44.080833999999996,
+            "end": 44.610834
+          }
+        ],
+        "emphasis": [
+          "post",
+          "pool",
+          "party!"
+        ],
+        "mood": "cheerful",
+        "listenerReaction": "surprised"
+      },
+      {
+        "index": 6,
+        "kind": "ending",
+        "audioRole": "narrator_outro",
+        "start": 45,
+        "end": 49.06666666666667,
+        "voiceStart": 45.34758399999999,
+        "voiceEnd": 48.06475099999999,
+        "words": [
+          {
+            "text": "So...",
+            "start": 45.37758399999999,
+            "end": 46.09758399999999
+          },
+          {
+            "text": "which",
+            "start": 46.33758399999999,
+            "end": 46.69758399999999
+          },
+          {
+            "text": "AI",
+            "start": 46.687583999999994,
+            "end": 46.87758399999999
+          },
+          {
+            "text": "had",
+            "start": 46.867583999999994,
+            "end": 47.09758399999999
+          },
+          {
+            "text": "the",
+            "start": 47.08758399999999,
+            "end": 47.30758399999999
+          },
+          {
+            "text": "best",
+            "start": 47.29758399999999,
+            "end": 47.617583999999994
+          },
+          {
+            "text": "answer?",
+            "start": 47.60758399999999,
+            "end": 47.99758399999999
+          }
+        ],
+        "emphasis": [],
+        "mood": "cheerful",
+        "listenerReaction": "happy"
+      }
+    ],
+    "seed": 7
+  },
+  "qc": {
+    "ok": true,
+    "checks": [
+      {
+        "name": "all five AI characters included",
+        "ok": true,
+        "detail": "chatgpt, claude, gemini, grok, meta"
+      },
+      {
+        "name": "all five answers present",
+        "ok": true,
+        "detail": "5 lines"
+      },
+      {
+        "name": "narrator introduces the situation",
+        "ok": true,
+        "detail": "[excited] Five AIs are trapped in an elevator... and the water is rising! What would each one do?"
+      },
+      {
+        "name": "no superhero / movie content in script",
+        "ok": true,
+        "detail": "clean"
+      },
+      {
+        "name": "narrator_intro: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 0
+      },
+      {
+        "name": "narrator_intro: captions match the line",
+        "ok": true,
+        "detail": "17 words",
+        "scene": 0
+      },
+      {
+        "name": "narrator_intro: captions inside the voice window",
+        "ok": true,
+        "detail": "0.30–5.17s",
+        "scene": 0
+      },
+      {
+        "name": "narrator_intro: mouth driven by the voice",
+        "ok": true,
+        "detail": "147/146 envelope frames, 86% mouth-active",
+        "scene": 0
+      },
+      {
+        "name": "chatgpt: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 1
+      },
+      {
+        "name": "chatgpt: captions match the line",
+        "ok": true,
+        "detail": "23 words",
+        "scene": 1
+      },
+      {
+        "name": "chatgpt: captions inside the voice window",
+        "ok": true,
+        "detail": "5.97–14.65s",
+        "scene": 1
+      },
+      {
+        "name": "chatgpt: mouth driven by the voice",
+        "ok": true,
+        "detail": "261/260 envelope frames, 69% mouth-active",
+        "scene": 1
+      },
+      {
+        "name": "claude: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 2
+      },
+      {
+        "name": "claude: captions match the line",
+        "ok": true,
+        "detail": "22 words",
+        "scene": 2
+      },
+      {
+        "name": "claude: captions inside the voice window",
+        "ok": true,
+        "detail": "15.45–22.86s",
+        "scene": 2
+      },
+      {
+        "name": "claude: mouth driven by the voice",
+        "ok": true,
+        "detail": "223/222 envelope frames, 72% mouth-active",
+        "scene": 2
+      },
+      {
+        "name": "gemini: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 3
+      },
+      {
+        "name": "gemini: captions match the line",
+        "ok": true,
+        "detail": "21 words",
+        "scene": 3
+      },
+      {
+        "name": "gemini: captions inside the voice window",
+        "ok": true,
+        "detail": "23.66–30.08s",
+        "scene": 3
+      },
+      {
+        "name": "gemini: mouth driven by the voice",
+        "ok": true,
+        "detail": "193/193 envelope frames, 82% mouth-active",
+        "scene": 3
+      },
+      {
+        "name": "grok: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 4
+      },
+      {
+        "name": "grok: captions match the line",
+        "ok": true,
+        "detail": "16 words",
+        "scene": 4
+      },
+      {
+        "name": "grok: captions inside the voice window",
+        "ok": true,
+        "detail": "30.88–37.50s",
+        "scene": 4
+      },
+      {
+        "name": "grok: mouth driven by the voice",
+        "ok": true,
+        "detail": "199/199 envelope frames, 74% mouth-active",
+        "scene": 4
+      },
+      {
+        "name": "meta: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 5
+      },
+      {
+        "name": "meta: captions match the line",
+        "ok": true,
+        "detail": "15 words",
+        "scene": 5
+      },
+      {
+        "name": "meta: captions inside the voice window",
+        "ok": true,
+        "detail": "38.30–44.70s",
+        "scene": 5
+      },
+      {
+        "name": "meta: mouth driven by the voice",
+        "ok": true,
+        "detail": "192/192 envelope frames, 81% mouth-active",
+        "scene": 5
+      },
+      {
+        "name": "narrator_outro: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 6
+      },
+      {
+        "name": "narrator_outro: captions match the line",
+        "ok": true,
+        "detail": "7 words",
+        "scene": 6
+      },
+      {
+        "name": "narrator_outro: captions inside the voice window",
+        "ok": true,
+        "detail": "45.35–48.06s",
+        "scene": 6
+      },
+      {
+        "name": "narrator_outro: mouth driven by the voice",
+        "ok": true,
+        "detail": "82/82 envelope frames, 88% mouth-active",
+        "scene": 6
+      },
+      {
+        "name": "no overlapping voices",
+        "ok": true,
+        "detail": "0.30–5.17 | 5.97–14.65 | 15.45–22.86 | 23.66–30.08 | 30.88–37.50 | 38.30–44.70 | 45.35–48.06"
+      },
+      {
+        "name": "audio not clipping",
+        "ok": true,
+        "detail": "peak 0.859"
+      },
+      {
+        "name": "ChatGPT: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "ChatGPT: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.8%"
+      },
+      {
+        "name": "Claude: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "Claude: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.7%"
+      },
+      {
+        "name": "Gemini: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "Gemini: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.4%"
+      },
+      {
+        "name": "Grok: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "Grok: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.7%"
+      },
+      {
+        "name": "Meta AI: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "Meta AI: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.2%"
+      },
+      {
+        "name": "scene 0 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 5.47s (expected 5.47s)",
+        "scene": 0
+      },
+      {
+        "name": "scene 0 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 0
+      },
+      {
+        "name": "scene 0 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 0
+      },
+      {
+        "name": "scene 1 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 9.50s (expected 9.50s)",
+        "scene": 1
+      },
+      {
+        "name": "scene 1 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 1
+      },
+      {
+        "name": "scene 1 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 1
+      },
+      {
+        "name": "scene 2 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 8.20s (expected 8.20s)",
+        "scene": 2
+      },
+      {
+        "name": "scene 2 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 2
+      },
+      {
+        "name": "scene 2 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 2
+      },
+      {
+        "name": "scene 3 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 7.20s (expected 7.20s)",
+        "scene": 3
+      },
+      {
+        "name": "scene 3 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 3
+      },
+      {
+        "name": "scene 3 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 3
+      },
+      {
+        "name": "scene 4 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 7.43s (expected 7.43s)",
+        "scene": 4
+      },
+      {
+        "name": "scene 4 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 4
+      },
+      {
+        "name": "scene 4 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 4
+      },
+      {
+        "name": "scene 5 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 7.20s (expected 7.20s)",
+        "scene": 5
+      },
+      {
+        "name": "scene 5 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 5
+      },
+      {
+        "name": "scene 5 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 5
+      },
+      {
+        "name": "scene 6 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 4.07s (expected 4.07s)",
+        "scene": 6
+      },
+      {
+        "name": "scene 6 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 6
+      },
+      {
+        "name": "scene 6 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 6
+      },
+      {
+        "name": "final: H.264 1080x1920",
+        "ok": true,
+        "detail": "h264 1080x1920 yuv420p"
+      },
+      {
+        "name": "final: 30 FPS",
+        "ok": true,
+        "detail": "30/1"
+      },
+      {
+        "name": "final: AAC audio",
+        "ok": true,
+        "detail": "aac 48000Hz 2ch"
+      },
+      {
+        "name": "final: duration within target",
+        "ok": true,
+        "detail": "49.07s (target 30–50s)"
+      },
+      {
+        "name": "final: ends right after the comparison ending (no extra footage)",
+        "ok": true,
+        "detail": "video 49.07s vs timeline 49.07s; scenes: intro → response → response → response → response → response → ending"
+      },
+      {
+        "name": "final: only generated scenes (no inserted clips)",
+        "ok": true,
+        "detail": "7 scenes, all rendered by the character renderer"
+      },
+      {
+        "name": "final: no black frames",
+        "ok": true,
+        "detail": "none"
+      }
+    ],
+    "failedScenes": [],
+    "checkedAt": "2026-11-27T07:23:45.018Z"
+  },
+  "stages": {
+    "script": {
+      "status": "done",
+      "log": [
+        "07:22:07 script already present"
+      ],
+      "startedAt": "2026-11-27T07:22:07.069Z",
+      "finishedAt": "2026-11-27T07:22:07.070Z"
+    },
+    "characters": {
+      "status": "done",
+      "log": [
+        "07:22:07 ChatGPT: 4 expressions ready",
+        "07:22:07 Claude: 4 expressions ready",
+        "07:22:07 Gemini: 4 expressions ready",
+        "07:22:07 Grok: 4 expressions ready",
+        "07:22:07 Meta AI: 4 expressions ready"
+      ],
+      "startedAt": "2026-11-27T07:22:07.071Z",
+      "finishedAt": "2026-11-27T07:22:07.072Z"
+    },
+    "background": {
+      "status": "done",
+      "log": [
+        "07:22:07 background already present"
+      ],
+      "startedAt": "2026-11-27T07:22:07.072Z",
+      "finishedAt": "2026-11-27T07:22:07.073Z"
+    },
+    "voices": {
+      "status": "done",
+      "log": [
+        "07:22:07 raw speech 48.5s → tempo ×1.127",
+        "07:22:08 narrator_intro: 4.87s, 17 words (estimated timing)",
+        "07:22:08 chatgpt: 8.68s, 23 words (estimated timing)",
+        "07:22:09 claude: 7.41s, 22 words (estimated timing)",
+        "07:22:09 gemini: 6.42s, 21 words (estimated timing)",
+        "07:22:10 grok: 6.62s, 16 words (estimated timing)",
+        "07:22:10 meta: 6.40s, 15 words (estimated timing)",
+        "07:22:11 narrator_outro: 2.72s, 7 words (estimated timing)"
+      ],
+      "startedAt": "2026-11-27T07:22:07.073Z",
+      "finishedAt": "2026-11-27T07:22:11.251Z"
+    },
+    "timeline": {
+      "status": "done",
+      "log": [
+        "07:22:11 7 scenes, 49.07s"
+      ],
+      "startedAt": "2026-11-27T07:22:11.253Z",
+      "finishedAt": "2026-11-27T07:22:11.255Z"
+    },
+    "render": {
+      "status": "done",
+      "log": [
+        "07:22:20 scene 0 (intro): 164 frames in 8.7s",
+        "07:22:34 scene 1 (response chatgpt): 285 frames in 14.1s",
+        "07:22:46 scene 2 (response claude): 246 frames in 12.3s",
+        "07:22:58 scene 3 (response gemini): 216 frames in 11.5s",
+        "07:23:09 scene 4 (response grok): 223 frames in 10.9s",
+        "07:23:20 scene 5 (response meta): 216 frames in 10.9s",
+        "07:23:25 scene 6 (ending): 122 frames in 5.7s",
+        "07:23:27 soundtrack mixed (peak 0.859)",
+        "07:23:29 assembled final video (49.07s)"
+      ],
+      "startedAt": "2026-11-27T07:22:11.256Z",
+      "finishedAt": "2026-11-27T07:23:29.370Z"
+    },
+    "qc": {
+      "status": "done",
+      "log": [
+        "07:23:45 QC: 72/72 checks passed"
+      ],
+      "startedAt": "2026-11-27T07:23:29.372Z",
+      "finishedAt": "2026-11-27T07:23:45.018Z"
+    },
+    "export": {
+      "status": "done",
+      "log": [
+        "07:23:45 exported outputs/what-would-five-ais-do-if-they-were-trapped-in-a-flooding-el-98ad3957.mp4"
+      ],
+      "startedAt": "2026-11-27T07:23:45.020Z",
+      "finishedAt": "2026-11-27T07:23:45.045Z"
+    }
+  }
+}
