@@ -1,5 +1,5 @@
 {
-  "projectId": "63c5d047-4d6d-4275-a0f4-a85bd7ce6c7b",
+  "projectId": "f0cbecee-f5bc-43ac-93ec-3a5ca60b1a42",
   "script": {
     "title": "Black Hole",
     "hookTop": "5 AIs. 1 black hole.",
@@ -82,9 +82,9 @@
         "kind": "intro",
         "audioRole": "narrator_intro",
         "start": 0,
-        "end": 5.933333333333334,
+        "end": 5.9,
         "voiceStart": 0.3,
-        "voiceEnd": 5.625354,
+        "voiceEnd": 5.595521,
         "words": [
           {
             "text": "Five",
@@ -104,67 +104,67 @@
           {
             "text": "spaceship.",
             "start": 1.61,
-            "end": 2.21
+            "end": 2.19
           },
           {
             "text": "And",
-            "start": 2.56,
-            "end": 2.7399999999999998
+            "start": 2.55,
+            "end": 2.7199999999999998
           },
           {
             "text": "it's",
-            "start": 2.73,
-            "end": 2.9499999999999997
+            "start": 2.71,
+            "end": 2.92
           },
           {
             "text": "getting",
-            "start": 2.94,
-            "end": 3.23
+            "start": 2.9099999999999997,
+            "end": 3.21
           },
           {
             "text": "sucked",
-            "start": 3.23,
-            "end": 3.56
+            "start": 3.1999999999999997,
+            "end": 3.54
           },
           {
             "text": "into",
-            "start": 3.56,
-            "end": 3.78
+            "start": 3.53,
+            "end": 3.75
           },
           {
             "text": "a",
-            "start": 3.77,
-            "end": 3.86
+            "start": 3.7399999999999998,
+            "end": 3.83
           },
           {
             "text": "black",
-            "start": 3.85,
-            "end": 4.15
+            "start": 3.82,
+            "end": 4.13
           },
           {
             "text": "hole!",
-            "start": 4.14,
-            "end": 4.32
+            "start": 4.12,
+            "end": 4.3
           },
           {
             "text": "Who",
-            "start": 4.76,
-            "end": 4.92
+            "start": 4.72,
+            "end": 4.88
           },
           {
             "text": "saves",
-            "start": 4.91,
-            "end": 5.2299999999999995
+            "start": 4.87,
+            "end": 5.2
           },
           {
             "text": "the",
-            "start": 5.22,
-            "end": 5.39
+            "start": 5.1899999999999995,
+            "end": 5.36
           },
           {
             "text": "day?",
-            "start": 5.38,
-            "end": 5.54
+            "start": 5.35,
+            "end": 5.51
           }
         ],
         "emphasis": [],
@@ -176,105 +176,105 @@
         "kind": "response",
         "characterId": "chatgpt",
         "audioRole": "chatgpt",
-        "start": 5.933333333333334,
-        "end": 13.533333333333333,
-        "voiceStart": 6.425354,
-        "voiceEnd": 13.2315,
+        "start": 5.9,
+        "end": 13.466666666666667,
+        "voiceStart": 6.395521,
+        "voiceEnd": 13.163271,
         "words": [
           {
             "text": "Easy!",
-            "start": 6.445353999999999,
-            "end": 6.8853539999999995
+            "start": 6.415520999999999,
+            "end": 6.8555209999999995
           },
           {
             "text": "Step",
-            "start": 7.265353999999999,
-            "end": 7.605353999999999
+            "start": 7.235520999999999,
+            "end": 7.5655209999999995
           },
           {
             "text": "one:",
-            "start": 7.5953539999999995,
-            "end": 7.795354
+            "start": 7.555521,
+            "end": 7.7755209999999995
           },
           {
             "text": "open",
-            "start": 8.255354,
-            "end": 8.475354
+            "start": 8.215520999999999,
+            "end": 8.445521
           },
           {
             "text": "the",
-            "start": 8.465354,
-            "end": 8.635354
+            "start": 8.435521,
+            "end": 8.605521
           },
           {
             "text": "window",
-            "start": 8.625354,
-            "end": 8.905353999999999
+            "start": 8.595521,
+            "end": 8.865521
           },
           {
             "text": "and",
-            "start": 8.895354,
-            "end": 9.065354
+            "start": 8.855521,
+            "end": 9.025521
           },
           {
             "text": "let",
-            "start": 9.055354,
-            "end": 9.225354
+            "start": 9.015521,
+            "end": 9.185521
           },
           {
             "text": "the",
-            "start": 9.215354,
-            "end": 9.445354
+            "start": 9.175521,
+            "end": 9.405521
           },
           {
             "text": "black",
-            "start": 9.435354,
-            "end": 9.685354
+            "start": 9.395520999999999,
+            "end": 9.645520999999999
           },
           {
             "text": "hole",
-            "start": 9.675353999999999,
-            "end": 9.905353999999999
+            "start": 9.635521,
+            "end": 9.865521
           },
           {
             "text": "out.",
-            "start": 9.895354,
-            "end": 10.085353999999999
+            "start": 9.855521,
+            "end": 10.025521
           },
           {
             "text": "Step",
-            "start": 10.615354,
-            "end": 10.985354000000001
+            "start": 10.555520999999999,
+            "end": 10.945521
           },
           {
             "text": "two...",
-            "start": 10.975354,
-            "end": 11.215354
+            "start": 10.935521,
+            "end": 11.165521
           },
           {
             "text": "wait,",
-            "start": 11.665354,
-            "end": 11.835353999999999
+            "start": 11.605521,
+            "end": 11.775521
           },
           {
             "text": "why",
-            "start": 12.205354,
-            "end": 12.375354
+            "start": 12.125520999999999,
+            "end": 12.295521
           },
           {
             "text": "am",
-            "start": 12.365354,
-            "end": 12.505354
+            "start": 12.285521,
+            "end": 12.435521
           },
           {
             "text": "I",
-            "start": 12.495353999999999,
-            "end": 12.605353999999998
+            "start": 12.425521,
+            "end": 12.525521
           },
           {
             "text": "stretching?",
-            "start": 12.595354,
-            "end": 13.085353999999999
+            "start": 12.515521,
+            "end": 13.015521
           }
         ],
         "emphasis": [
@@ -289,105 +289,105 @@
         "kind": "response",
         "characterId": "claude",
         "audioRole": "claude",
-        "start": 13.533333333333333,
-        "end": 20.5,
-        "voiceStart": 14.031500000000001,
-        "voiceEnd": 20.196729,
+        "start": 13.466666666666667,
+        "end": 20.633333333333333,
+        "voiceStart": 13.963271,
+        "voiceEnd": 20.331209,
         "words": [
           {
             "text": "Everyone,",
-            "start": 14.0615,
-            "end": 14.581500000000002
+            "start": 14.013271000000001,
+            "end": 14.513271000000001
           },
           {
             "text": "grab",
-            "start": 14.8115,
-            "end": 15.161500000000002
+            "start": 14.733271,
+            "end": 15.053271
           },
           {
             "text": "on.",
-            "start": 15.151500000000002,
-            "end": 15.351500000000001
+            "start": 15.043271,
+            "end": 15.243271
           },
           {
             "text": "We",
-            "start": 15.7215,
-            "end": 15.951500000000001
+            "start": 15.743271,
+            "end": 15.963271
           },
           {
             "text": "fire",
-            "start": 15.941500000000001,
-            "end": 16.151500000000002
+            "start": 15.953271,
+            "end": 16.183271
           },
           {
             "text": "the",
-            "start": 16.1415,
-            "end": 16.3215
+            "start": 16.173271,
+            "end": 16.373271000000003
           },
           {
             "text": "engines",
-            "start": 16.311500000000002,
-            "end": 16.6415
+            "start": 16.363271,
+            "end": 16.723271
           },
           {
             "text": "right",
-            "start": 16.631500000000003,
-            "end": 16.9215
+            "start": 16.713271,
+            "end": 17.043271
           },
           {
             "text": "at",
-            "start": 16.9115,
-            "end": 17.081500000000002
+            "start": 17.033271,
+            "end": 17.183271
           },
           {
             "text": "the",
-            "start": 17.0715,
-            "end": 17.2515
+            "start": 17.173271,
+            "end": 17.363271
           },
           {
             "text": "edge",
-            "start": 17.241500000000002,
-            "end": 17.491500000000002
+            "start": 17.353271,
+            "end": 17.673271
           },
           {
             "text": "and",
-            "start": 17.4815,
-            "end": 17.8015
+            "start": 17.663271,
+            "end": 17.853271
           },
           {
             "text": "slingshot",
-            "start": 17.791500000000003,
-            "end": 18.2115
+            "start": 17.843271,
+            "end": 18.283271
           },
           {
             "text": "out.",
-            "start": 18.201500000000003,
-            "end": 18.4415
+            "start": 18.273271,
+            "end": 18.473271
           },
           {
             "text": "I'll",
-            "start": 18.8015,
-            "end": 18.9815
+            "start": 18.853271,
+            "end": 19.053271000000002
           },
           {
             "text": "steer.",
-            "start": 18.971500000000002,
-            "end": 19.2515
+            "start": 19.043271,
+            "end": 19.393271
           },
           {
             "text": "I've",
-            "start": 19.5715,
-            "end": 19.741500000000002
+            "start": 19.723271,
+            "end": 19.883271
           },
           {
             "text": "got",
-            "start": 19.741500000000002,
-            "end": 19.9415
+            "start": 19.873271000000003,
+            "end": 20.033271
           },
           {
             "text": "you.",
-            "start": 19.9415,
-            "end": 20.1115
+            "start": 20.023271,
+            "end": 20.243271
           }
         ],
         "emphasis": [
@@ -402,110 +402,110 @@
         "kind": "response",
         "characterId": "gemini",
         "audioRole": "gemini",
-        "start": 20.5,
-        "end": 27.966666666666665,
-        "voiceStart": 20.996729000000002,
-        "voiceEnd": 27.681729,
+        "start": 20.633333333333333,
+        "end": 28.066666666666666,
+        "voiceStart": 21.131209000000002,
+        "voiceEnd": 27.769251000000004,
         "words": [
           {
             "text": "He",
-            "start": 21.046729000000003,
-            "end": 21.186729000000003
+            "start": 21.181209000000003,
+            "end": 21.321209000000003
           },
           {
             "text": "just",
-            "start": 21.176729,
-            "end": 21.396729
+            "start": 21.311209,
+            "end": 21.531209
           },
           {
             "text": "tried",
-            "start": 21.386729000000003,
-            "end": 21.676729
+            "start": 21.521209000000002,
+            "end": 21.801209000000004
           },
           {
             "text": "to",
-            "start": 21.666729000000004,
-            "end": 21.836729000000002
+            "start": 21.791209000000002,
+            "end": 21.961209000000004
           },
           {
             "text": "open",
-            "start": 21.826729,
-            "end": 22.086729000000002
+            "start": 21.951209000000002,
+            "end": 22.191209
           },
           {
             "text": "a",
-            "start": 22.076729,
-            "end": 22.176729
+            "start": 22.181209000000003,
+            "end": 22.281209
           },
           {
             "text": "window",
-            "start": 22.166729000000004,
-            "end": 22.486729
+            "start": 22.271209000000002,
+            "end": 22.601209
           },
           {
             "text": "in",
-            "start": 22.476729000000002,
-            "end": 22.616729000000003
+            "start": 22.591209000000003,
+            "end": 22.741209
           },
           {
             "text": "space.",
-            "start": 22.606729,
-            "end": 22.856729
+            "start": 22.731209000000003,
+            "end": 22.981209000000003
           },
           {
             "text": "Iconic.",
-            "start": 22.956729000000003,
-            "end": 23.446729
+            "start": 23.071209000000003,
+            "end": 23.571209000000003
           },
           {
             "text": "Move,",
-            "start": 23.696729,
-            "end": 24.486729000000004
+            "start": 23.821209000000003,
+            "end": 24.601209
           },
           {
             "text": "sweetie.",
-            "start": 24.866729000000003,
-            "end": 25.616729000000003
+            "start": 24.981209000000003,
+            "end": 25.721209
           },
           {
             "text": "I'll",
-            "start": 25.726729000000002,
-            "end": 25.986729000000004
+            "start": 25.831209,
+            "end": 26.021209000000002
           },
           {
             "text": "fix",
-            "start": 25.976729000000002,
-            "end": 26.206729000000003
+            "start": 26.011209,
+            "end": 26.231209000000003
           },
           {
             "text": "the",
-            "start": 26.196729,
-            "end": 26.356729
+            "start": 26.221209,
+            "end": 26.451209000000002
           },
           {
             "text": "orbit",
-            "start": 26.346729000000003,
-            "end": 26.636729000000003
+            "start": 26.441209,
+            "end": 26.721209
           },
           {
             "text": "before",
-            "start": 26.626729,
-            "end": 26.966729
+            "start": 26.721209,
+            "end": 27.081209
           },
           {
             "text": "he",
-            "start": 26.966729,
-            "end": 27.096729000000003
+            "start": 27.071209000000003,
+            "end": 27.201209000000002
           },
           {
             "text": "helps",
-            "start": 27.086729000000002,
-            "end": 27.376729
+            "start": 27.191209,
+            "end": 27.471209
           },
           {
             "text": "again.",
-            "start": 27.366729000000003,
-            "end": 27.596729000000003
+            "start": 27.461209000000004,
+            "end": 27.691209
           }
         ],
         "emphasis": [
@@ -520,95 +520,95 @@
         "kind": "response",
         "characterId": "grok",
         "audioRole": "grok",
-        "start": 27.966666666666665,
-        "end": 36.86666666666667,
-        "voiceStart": 28.481729,
-        "voiceEnd": 36.572417,
+        "start": 28.066666666666666,
+        "end": 36.9,
+        "voiceStart": 28.569251000000005,
+        "voiceEnd": 36.614814,
         "words": [
           {
             "text": "Relax,",
-            "start": 28.601729000000002,
-            "end": 29.411729
+            "start": 28.689251000000006,
+            "end": 29.479251000000005
           },
           {
             "text": "guys.",
-            "start": 29.401729000000003,
-            "end": 29.991729000000003
+            "start": 29.469251000000003,
+            "end": 30.069251000000005
           },
           {
             "text": "Near",
-            "start": 30.441729000000002,
-            "end": 30.711729000000002
+            "start": 30.509251000000006,
+            "end": 30.789251000000004
           },
           {
             "text": "a",
-            "start": 30.701729,
-            "end": 30.831729000000003
+            "start": 30.779251000000006,
+            "end": 30.909251000000005
           },
           {
             "text": "black",
-            "start": 30.821729,
-            "end": 31.261729000000003
+            "start": 30.899251000000007,
+            "end": 31.329251000000006
           },
           {
             "text": "hole,",
-            "start": 31.251729,
-            "end": 31.521729
+            "start": 31.319251000000005,
+            "end": 31.589251000000004
           },
           {
             "text": "time",
-            "start": 31.661729,
-            "end": 32.001729000000005
+            "start": 31.729251000000005,
+            "end": 32.06925100000001
           },
           {
             "text": "slows",
-            "start": 31.991729000000003,
-            "end": 32.461729
+            "start": 32.06925100000001,
+            "end": 32.519251000000004
           },
           {
             "text": "down.",
-            "start": 32.451729,
-            "end": 32.831729
+            "start": 32.519251000000004,
+            "end": 32.879251000000004
           },
           {
             "text": "So",
-            "start": 33.281729,
-            "end": 33.541729000000004
+            "start": 33.339251000000004,
+            "end": 33.589251000000004
           },
           {
             "text": "technically...",
-            "start": 33.531729,
-            "end": 34.671729
+            "start": 33.579251000000006,
+            "end": 34.71925100000001
           },
           {
             "text": "I'm",
-            "start": 35.141729,
-            "end": 35.281729
+            "start": 35.189251000000006,
+            "end": 35.329251000000006
           },
           {
             "text": "still",
-            "start": 35.271729,
-            "end": 35.541729000000004
+            "start": 35.31925100000001,
+            "end": 35.589251000000004
           },
           {
             "text": "on",
-            "start": 35.541729000000004,
-            "end": 35.671729
+            "start": 35.579251000000006,
+            "end": 35.71925100000001
           },
           {
             "text": "my",
-            "start": 35.661729,
-            "end": 35.801729
+            "start": 35.70925100000001,
+            "end": 35.839251000000004
           },
           {
             "text": "lunch",
-            "start": 35.791729000000004,
-            "end": 36.031729
+            "start": 35.829251000000006,
+            "end": 36.079251000000006
           },
           {
             "text": "break!",
-            "start": 36.021729,
-            "end": 36.331729
+            "start": 36.06925100000001,
+            "end": 36.389251
           }
         ],
         "emphasis": [
@@ -623,95 +623,95 @@
         "kind": "response",
         "characterId": "meta",
         "audioRole": "meta",
-        "start": 36.86666666666667,
+        "start": 36.9,
         "end": 44.5,
-        "voiceStart": 37.372417,
-        "voiceEnd": 44.20773,
+        "voiceStart": 37.414814,
+        "voiceEnd": 44.198106,
         "words": [
           {
             "text": "Nobody",
-            "start": 37.432417,
-            "end": 37.972417
+            "start": 37.474814,
+            "end": 38.024814
           },
           {
             "text": "let",
-            "start": 37.972417,
-            "end": 38.422416999999996
+            "start": 38.014814,
+            "end": 38.464814
           },
           {
             "text": "go",
-            "start": 38.422416999999996,
-            "end": 38.662417
+            "start": 38.454814,
+            "end": 38.704814
           },
           {
             "text": "of",
-            "start": 38.652417,
-            "end": 38.892417
+            "start": 38.694814,
+            "end": 38.934814
           },
           {
             "text": "me!",
-            "start": 38.882417,
-            "end": 39.122417
+            "start": 38.924814,
+            "end": 39.164814
           },
           {
             "text": "Promise",
-            "start": 39.372417,
-            "end": 39.702417
+            "start": 39.434814,
+            "end": 39.784814
           },
           {
             "text": "we",
-            "start": 39.692417,
-            "end": 39.912417
+            "start": 39.774814,
+            "end": 39.964814
           },
           {
             "text": "stay",
-            "start": 39.902417,
-            "end": 40.172416999999996
+            "start": 39.954814,
+            "end": 40.204814
           },
           {
             "text": "together",
-            "start": 40.162417,
-            "end": 40.622417
+            "start": 40.194814,
+            "end": 40.644814
           },
           {
             "text": "forever?",
-            "start": 40.612417,
-            "end": 40.942417
+            "start": 40.634814,
+            "end": 40.964814
           },
           {
             "text": "Okay,",
-            "start": 41.382417,
-            "end": 41.762417
+            "start": 41.394814,
+            "end": 41.774814
           },
           {
             "text": "group",
-            "start": 41.952417,
-            "end": 42.442417
+            "start": 41.974814,
+            "end": 42.464814
           },
           {
             "text": "hug...",
-            "start": 42.432417,
-            "end": 42.722417
+            "start": 42.454814,
+            "end": 42.754813999999996
           },
           {
             "text": "and",
-            "start": 42.862417,
-            "end": 43.122417
+            "start": 42.884814,
+            "end": 43.124814
           },
           {
             "text": "one",
-            "start": 43.112417,
-            "end": 43.332417
+            "start": 43.114814,
+            "end": 43.334814
           },
           {
             "text": "last",
-            "start": 43.322417,
-            "end": 43.592417
+            "start": 43.324814,
+            "end": 43.594814
           },
           {
             "text": "selfie!",
-            "start": 43.582417,
-            "end": 44.122417
+            "start": 43.584814,
+            "end": 44.124814
           }
         ],
         "emphasis": [
@@ -727,48 +727,48 @@
         "audioRole": "narrator_outro",
         "start": 44.5,
         "end": 49.06666666666667,
-        "voiceStart": 44.85773,
-        "voiceEnd": 48.07998,
+        "voiceStart": 44.848106,
+        "voiceEnd": 48.052106,
         "words": [
           {
             "text": "So...",
-            "start": 44.907729999999994,
-            "end": 45.657729999999994
+            "start": 44.898106,
+            "end": 45.638106
           },
           {
             "text": "which",
-            "start": 45.88773,
-            "end": 46.257729999999995
+            "start": 45.868106000000004,
+            "end": 46.238106
           },
           {
             "text": "AI",
-            "start": 46.24773,
-            "end": 46.467729999999996
+            "start": 46.228106000000004,
+            "end": 46.458106
           },
           {
             "text": "would",
-            "start": 46.45773,
-            "end": 46.80773
+            "start": 46.448106,
+            "end": 46.788106
           },
           {
             "text": "you",
-            "start": 46.797729999999994,
-            "end": 47.037729999999996
+            "start": 46.778106,
+            "end": 47.008106
           },
           {
             "text": "trust",
-            "start": 47.02773,
-            "end": 47.38773
+            "start": 46.998106,
+            "end": 47.358106
           },
           {
             "text": "to",
-            "start": 47.37773,
-            "end": 47.687729999999995
+            "start": 47.348106,
+            "end": 47.568106
           },
           {
             "text": "fly?",
-            "start": 47.67773,
-            "end": 47.99773
+            "start": 47.558106,
+            "end": 47.968106
           }
         ],
         "emphasis": [],
@@ -816,13 +816,13 @@
       {
         "name": "narrator_intro: captions inside the voice window",
         "ok": true,
-        "detail": "0.30–5.63s",
+        "detail": "0.30–5.60s",
         "scene": 0
       },
       {
         "name": "narrator_intro: mouth driven by the voice",
         "ok": true,
-        "detail": "160/160 envelope frames, 78% mouth-active",
+        "detail": "159/159 envelope frames, 76% mouth-active",
         "scene": 0
       },
       {
@@ -840,13 +840,13 @@
       {
         "name": "chatgpt: captions inside the voice window",
         "ok": true,
-        "detail": "6.43–13.23s",
+        "detail": "6.40–13.16s",
         "scene": 1
       },
       {
         "name": "chatgpt: mouth driven by the voice",
         "ok": true,
-        "detail": "205/204 envelope frames, 64% mouth-active",
+        "detail": "204/203 envelope frames, 66% mouth-active",
         "scene": 1
       },
       {
@@ -864,13 +864,13 @@
       {
         "name": "claude: captions inside the voice window",
         "ok": true,
-        "detail": "14.03–20.20s",
+        "detail": "13.96–20.33s",
         "scene": 2
       },
       {
         "name": "claude: mouth driven by the voice",
         "ok": true,
-        "detail": "185/185 envelope frames, 75% mouth-active",
+        "detail": "192/191 envelope frames, 77% mouth-active",
         "scene": 2
       },
       {
@@ -888,13 +888,13 @@
       {
         "name": "gemini: captions inside the voice window",
         "ok": true,
-        "detail": "21.00–27.68s",
+        "detail": "21.13–27.77s",
         "scene": 3
       },
       {
         "name": "gemini: mouth driven by the voice",
         "ok": true,
-        "detail": "201/201 envelope frames, 83% mouth-active",
+        "detail": "200/199 envelope frames, 83% mouth-active",
         "scene": 3
       },
       {
@@ -912,13 +912,13 @@
       {
         "name": "grok: captions inside the voice window",
         "ok": true,
-        "detail": "28.48–36.57s",
+        "detail": "28.57–36.61s",
         "scene": 4
       },
       {
         "name": "grok: mouth driven by the voice",
         "ok": true,
-        "detail": "243/243 envelope frames, 74% mouth-active",
+        "detail": "242/241 envelope frames, 72% mouth-active",
         "scene": 4
       },
       {
@@ -936,13 +936,13 @@
       {
         "name": "meta: captions inside the voice window",
         "ok": true,
-        "detail": "37.37–44.21s",
+        "detail": "37.41–44.20s",
         "scene": 5
       },
       {
         "name": "meta: mouth driven by the voice",
         "ok": true,
-        "detail": "206/205 envelope frames, 79% mouth-active",
+        "detail": "204/203 envelope frames, 80% mouth-active",
         "scene": 5
       },
       {
@@ -960,24 +960,24 @@
       {
         "name": "narrator_outro: captions inside the voice window",
         "ok": true,
-        "detail": "44.86–48.08s",
+        "detail": "44.85–48.05s",
         "scene": 6
       },
       {
         "name": "narrator_outro: mouth driven by the voice",
         "ok": true,
-        "detail": "97/97 envelope frames, 86% mouth-active",
+        "detail": "97/96 envelope frames, 85% mouth-active",
         "scene": 6
       },
       {
         "name": "no overlapping voices",
         "ok": true,
-        "detail": "0.30–5.63 | 6.43–13.23 | 14.03–20.20 | 21.00–27.68 | 28.48–36.57 | 37.37–44.21 | 44.86–48.08"
+        "detail": "0.30–5.60 | 6.40–13.16 | 13.96–20.33 | 21.13–27.77 | 28.57–36.61 | 37.41–44.20 | 44.85–48.05"
       },
       {
         "name": "audio not clipping",
         "ok": true,
-        "detail": "peak 0.863"
+        "detail": "peak 0.866"
       },
       {
         "name": "ChatGPT: rendered with library sprites",
@@ -1017,7 +1017,7 @@
       {
         "name": "Grok: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.8%"
+        "detail": "body overlap 99.7%"
       },
       {
         "name": "Meta AI: rendered with library sprites",
@@ -1027,12 +1027,12 @@
       {
         "name": "Meta AI: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.8%"
+        "detail": "body overlap 99.7%"
       },
       {
         "name": "scene 0 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 5.93s (expected 5.93s)",
+        "detail": "h264 1080x1920 5.90s (expected 5.90s)",
         "scene": 0
       },
       {
@@ -1050,7 +1050,7 @@
       {
         "name": "scene 1 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 7.60s (expected 7.60s)",
+        "detail": "h264 1080x1920 7.57s (expected 7.57s)",
         "scene": 1
       },
       {
@@ -1068,7 +1068,7 @@
       {
         "name": "scene 2 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 6.97s (expected 6.97s)",
+        "detail": "h264 1080x1920 7.17s (expected 7.17s)",
         "scene": 2
       },
       {
@@ -1086,7 +1086,7 @@
       {
         "name": "scene 3 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 7.47s (expected 7.47s)",
+        "detail": "h264 1080x1920 7.43s (expected 7.43s)",
         "scene": 3
       },
       {
@@ -1104,7 +1104,7 @@
       {
         "name": "scene 4 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 8.90s (expected 8.90s)",
+        "detail": "h264 1080x1920 8.83s (expected 8.83s)",
         "scene": 4
       },
       {
@@ -1122,7 +1122,7 @@
       {
         "name": "scene 5 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 7.63s (expected 7.63s)",
+        "detail": "h264 1080x1920 7.60s (expected 7.60s)",
         "scene": 5
       },
       {
@@ -1192,6 +1192,6 @@
       }
     ],
     "failedScenes": [],
-    "checkedAt": "2026-11-27T09:22:49.308Z"
+    "checkedAt": "2026-11-27T09:32:53.678Z"
   }
 }
