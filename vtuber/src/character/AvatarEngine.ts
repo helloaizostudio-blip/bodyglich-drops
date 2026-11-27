@@ -291,7 +291,12 @@ export class AvatarEngine {
 
     this.cam.update(dt);
     this.stage.renderer.render(this.stage.scene, this.cam.camera);
+    // Same task as the render, so the WebGL buffer is still valid for copying.
+    for (const fn of this.afterRender) fn(this.canvas);
   }
+
+  /** Callbacks run right after each frame renders (used by the reel recorder). */
+  readonly afterRender = new Set<(canvas: HTMLCanvasElement) => void>();
 
   /** Capture the current frame as a PNG (respects transparency). */
   snapshot(): string {

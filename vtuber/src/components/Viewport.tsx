@@ -5,6 +5,7 @@ import { settings, status, toast } from '../state/store';
 import { useStore } from '../state/createStore';
 import { EXPRESSIONS, EXPRESSION_NAMES } from '../expressions/presets';
 import { StreamOverlay } from './StreamOverlay';
+import { RecordButton } from './RecordButton';
 import { describeError } from '../utils/errors';
 import { loadUserModel, restoreInitialModel } from '../vrm/modelLibrary';
 
@@ -93,8 +94,10 @@ export function Viewport() {
         </div>
       )}
 
+      {!isPopout && <RecordButton />}
+
       {streamMode && !isPopout && (
-        <button className="btn sm exit-stream" onClick={() => status.set({ streamMode: false })}>
+        <button className="btn sm exit-stream" style={{ left: 14, right: 'auto' }} onClick={() => status.set({ streamMode: false })}>
           Exit stream mode (Esc)
         </button>
       )}

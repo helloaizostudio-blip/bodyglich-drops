@@ -16,6 +16,7 @@ export class AudioEngine {
   ctx: AudioContext | null = null;
   analyser: AnalyserNode | null = null;
   private playbackGain: GainNode | null = null;
+  private recordDest: MediaStreamAudioDestinationNode | null = null;
   private micStream: MediaStream | null = null;
   private micSource: MediaStreamAudioSourceNode | null = null;
   private mediaEl: HTMLAudioElement | null = null;
@@ -83,6 +84,7 @@ export class AudioEngine {
     this.micDeviceId = deviceId;
     this.micSource = ctx.createMediaStreamSource(this.micStream);
     this.micSource.connect(this.analyser!); // analysed only — never routed to speakers (no feedback)
+    if (this.recordDest) this.micSource.connect(this.recordDest);
     this.micStream.getAudioTracks()[0]?.addEventListener('ended', () => this.stopMic());
     this.emit();
   }
@@ -162,6 +164,20 @@ export class AudioEngine {
     this.remoteSources.clear();
     this.remoteCursor = 0;
     this.emit();
+  }
+
+  /**
+   * Audio for recordings: microphone + clip/remote playback mixed together.
+   * The mic goes only into the recording, never to the speakers.
+   */
+  async getRecordingStream(): Promise<MediaStream> {
+    const ctx = await this.ensureContext();
+    if (!this.recordDest) {
+      this.recordDest = ctx.createMediaStreamDestination();
+      this.playbackGain!.connect(this.recordDest);
+      this.micSource?.connect(this.recordDest);
+    }
+    return this.recordDest.stream;
   }
 
   setVolume(v: number) {
