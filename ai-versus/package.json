@@ -11,7 +11,7 @@
     "worker": "tsx --env-file-if-exists=.env src/worker/index.ts",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
-    "sample": "tsx --env-file-if-exists=.env scripts/sample-flooding-elevator.ts",
+    "sample": "tsx --env-file-if-exists=.env scripts/produce-episode.ts samples/flooding-elevator",
     "episode": "tsx --env-file-if-exists=.env scripts/produce-episode.ts"
   },
   "engines": {

@@ -3,11 +3,11 @@ import type { CharacterId, CharacterProfile, VoiceProfile } from "./types";
 /**
  * Permanent character bible. These descriptions are reused for every (re)generation so the
  * designs never drift between topics. They are original mascots *inspired by* each assistant's
- * colour identity — no logos are reproduced.
+ * brand identity; ChatGPT, Grok and Meta AI wear their brand logos, Claude and Gemini wear spark/sparkle emblems.
  */
 export const STYLE_PROMPT =
   "cute chibi 2D anime sticker art style, oversized head, tiny body, short stubby arms and legs, big expressive eyes, " +
-  "rounded shapes, thick smooth outlines, soft cel shading, vibrant colors, NO text, NO letters, NO logos, NO watermark";
+  "rounded shapes, thick smooth outlines, soft cel shading, vibrant colors, NO text, NO extra logos besides the character's own chest emblem, NO watermark";
 
 const voice = (voiceId: string, voiceName: string, o: Partial<VoiceProfile> = {}): VoiceProfile => ({
   voiceId,
@@ -38,8 +38,8 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
     speakingStyle: "Cheerful and earnest: 'Step one... step two...' then a goofy misunderstanding or a confidently wrong idea.",
     designPrompt:
       "a tiny adorable, lovably goofy white and teal robot mascot with an oversized round white helmet head with a slightly bent antenna, a glossy black screen face with " +
-      "mismatched glowing teal eyes (one big, one small) and a wide crooked derpy grin, teal headphone ear-discs, a tiny body wearing a dark teal hoodie with a simple white " +
-      "speech-bubble emblem on the chest, short stubby arms and legs, small rounded hands and feet, clumsy innocent body language",
+      "mismatched glowing teal eyes (one big, one small) and a wide crooked derpy grin, teal headphone ear-discs, a tiny body wearing a dark teal hoodie with the OpenAI logo " +
+      "(white interlocking knot mark) on the chest, short stubby arms and legs, small rounded hands and feet, clumsy innocent body language",
     voice: voice("iP95p4xoKVk53GoZ742B", "Chris - Charming, Down-to-Earth"),
   },
   claude: {
@@ -55,7 +55,7 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
       "a tiny smart and slightly heroic chibi boy with an oversized head, fluffy wavy light-brown hair, big warm determined brown eyes behind thin round glasses, " +
       "a confident brave smile, a short orange scarf fluttering behind him (no cape), a cozy warm beige-cream hoodie with a small hand-drawn orange spark doodle on the chest, " +
       "black pants, cream sneakers, short stubby limbs, small hands, upright heroic posture",
-    voice: voice("SAz9YHcvj6GT2YYXdXww", "River - Relaxed, Neutral, Informative", { stability: 0.6, style: 0.2 }),
+    voice: voice("nPczCjzI2devNBz1zQrb", "Brian - Deep, Resonant and Comforting", { stability: 0.55, style: 0.3 }),
   },
   gemini: {
     id: "gemini",
@@ -83,7 +83,7 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
     speakingStyle: "Playful stand-up comedian: a setup, a quick twist, a punchline. Short, punchy, cheeky.",
     designPrompt:
       "a tiny funny comedian chibi boy with an oversized head, spiky messy white hair, a sleek black eye mask showing bright playful white eyes, a huge cheeky grin, " +
-      "a black oversized hoodie with a small silver lightning-bolt emblem, black pants and black boots, short stubby limbs, goofy playful body language",
+      "a black oversized hoodie with a bold white X logo on the chest, black pants and black boots, short stubby limbs, goofy playful body language",
     voice: voice("N2lVS1w4EtoT3dr4eOWO", "Callum - Husky Trickster", { style: 0.55 }),
   },
   meta: {
@@ -97,7 +97,7 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
     speakingStyle: "Sweet, needy and dramatic: 'don't leave me!', 'are we still friends?', then a bubbly, attention-seeking idea.",
     designPrompt:
       "a tiny clingy, affectionate chibi girl with an oversized head, glossy navy-black bob hair, big sparkling teary puppy-dog blue eyes, glowing blue-and-violet cat-ear headphones, " +
-      "a white hoodie with a small blue heart on the chest, navy shorts, white sneakers, short stubby limbs, little floating hearts, hugging her smartphone to her chest",
+      "a white hoodie with the blue Meta infinity-loop logo on the chest, navy shorts, white sneakers, short stubby limbs, little floating hearts, hugging her smartphone to her chest",
     voice: voice("cgSgspJ2msm6clMCkdW9", "Jessica - Playful, Bright, Warm"),
   },
 };

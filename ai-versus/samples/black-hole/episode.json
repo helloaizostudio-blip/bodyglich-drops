@@ -1,6 +1,8 @@
 {
   "topic": "What Would Five AIs Do If Their Spaceship Was Getting Sucked Into A Black Hole?",
-  "background": { "procedural": "blackhole-cockpit" },
+  "background": {
+    "procedural": "blackhole-cockpit"
+  },
   "script": {
     "title": "Black Hole",
     "hookTop": "5 AIs. 1 black hole.",
@@ -13,20 +15,65 @@
       "hazard": "space",
       "palette": "deep purple, orange, teal"
     },
-    "disclaimer": "Fictional parody · not real AI outputs",
+    "disclaimer": "Fictional parody \u00b7 not real AI outputs",
     "lines": [
-      { "characterId": "chatgpt", "text": "[proud, clueless] Easy! Step one: open the window and let the black hole out. Step two... wait, why am I stretching?", "emphasis": ["window", "stretching?"], "mood": "cheerful", "listenerReaction": "confused" },
-      { "characterId": "claude", "text": "[calm, determined] Everyone, grab on. We fire the engines right at the edge and slingshot out. I'll steer. I've got you.", "emphasis": ["slingshot", "got"], "mood": "calm", "listenerReaction": "happy" },
-      { "characterId": "gemini", "text": "[sassy, unimpressed] He just tried to open a window in space. Iconic. Move, sweetie. I'll fix the orbit before he helps again.", "emphasis": ["Iconic.", "sweetie."], "mood": "smug", "listenerReaction": "surprised" },
-      { "characterId": "grok", "text": "[playful, laughing] Relax, guys. Near a black hole, time slows down. So technically... I'm still on my lunch break!", "emphasis": ["lunch", "break!"], "mood": "excited", "listenerReaction": "happy" },
-      { "characterId": "meta", "text": "[whiny, clingy] Nobody let go of me! Promise we stay together forever? Okay, group hug... and one last selfie!", "emphasis": ["forever?", "selfie!"], "mood": "worried", "listenerReaction": "surprised" }
+      {
+        "characterId": "chatgpt",
+        "text": "[proud, clueless] Easy! Step one: open the window and let the black hole out. Step two... wait, why am I stretching?",
+        "emphasis": [
+          "window",
+          "stretching?"
+        ],
+        "mood": "cheerful",
+        "listenerReaction": "confused"
+      },
+      {
+        "characterId": "claude",
+        "text": "[calm, determined] Everyone, grab on. We fire the engines right at the edge and slingshot out. I'll steer. I've got you.",
+        "emphasis": [
+          "slingshot",
+          "got"
+        ],
+        "mood": "calm",
+        "listenerReaction": "happy"
+      },
+      {
+        "characterId": "gemini",
+        "text": "[sassy, unimpressed] He just tried to open a window in space. Iconic. Move, sweetie. I'll fix the orbit before he helps again.",
+        "emphasis": [
+          "Iconic.",
+          "sweetie."
+        ],
+        "mood": "smug",
+        "listenerReaction": "surprised"
+      },
+      {
+        "characterId": "grok",
+        "text": "[playful, laughing] Relax, guys. Near a black hole, time slows down. So technically... I'm still on my lunch break!",
+        "emphasis": [
+          "lunch",
+          "break!"
+        ],
+        "mood": "excited",
+        "listenerReaction": "happy"
+      },
+      {
+        "characterId": "meta",
+        "text": "[whiny, clingy] Nobody let go of me! Promise we stay together forever? Okay, group hug... and one last selfie!",
+        "emphasis": [
+          "forever?",
+          "selfie!"
+        ],
+        "mood": "worried",
+        "listenerReaction": "surprised"
+      }
     ]
   },
   "voiceIds": {
     "narrator_intro": "TX3LPaxmHKxFdv7VOQHJ",
     "narrator_outro": "TX3LPaxmHKxFdv7VOQHJ",
     "chatgpt": "iP95p4xoKVk53GoZ742B",
-    "claude": "SAz9YHcvj6GT2YYXdXww",
+    "claude": "nPczCjzI2devNBz1zQrb",
     "gemini": "FGY2WhTYpPnrIDTdsKH5",
     "grok": "N2lVS1w4EtoT3dr4eOWO",
     "meta": "cgSgspJ2msm6clMCkdW9"

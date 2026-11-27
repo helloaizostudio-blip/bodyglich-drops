@@ -1,0 +1,81 @@
+{
+  "topic": "What Would Five AIs Do If They Were Trapped In A Flooding Elevator?",
+  "background": {
+    "file": "source/background.png"
+  },
+  "script": {
+    "title": "Flooding Elevator",
+    "hookTop": "What would 5 AIs do",
+    "hookBottom": "if they were trapped in a flooding elevator?",
+    "narratorIntro": "[excited] Five AIs are trapped in an elevator... and the water is rising! What would each one do?",
+    "narratorOutro": "[curious] So... which AI had the best answer?",
+    "endingCaption": "Which AI had the best answer?",
+    "environment": {
+      "prompt": "interior of a cramped stuck elevator cabin, flood water filling the bottom third, flickering red emergency light, ceiling hatch",
+      "hazard": "water",
+      "palette": "steel grey, emergency red, teal water"
+    },
+    "disclaimer": "Fictional parody \u00b7 not real AI outputs",
+    "lines": [
+      {
+        "characterId": "chatgpt",
+        "text": "[proud, clueless] Don't worry, I've got a plan! Step one: press the button for the top floor. Step two... wait, are elevators waterproof?",
+        "emphasis": [
+          "plan!",
+          "waterproof?"
+        ],
+        "mood": "cheerful",
+        "listenerReaction": "confused"
+      },
+      {
+        "characterId": "claude",
+        "text": "[calm, confident] Stay close to me. The ceiling hatch opens outward. I'll boost everyone up first... and climb out last.",
+        "emphasis": [
+          "hatch",
+          "last."
+        ],
+        "mood": "calm",
+        "listenerReaction": "happy"
+      },
+      {
+        "characterId": "gemini",
+        "text": "[sassy, unimpressed] Top floor? Babe, the water is the problem. Move. I'm opening the hatch while you two finish your speeches.",
+        "emphasis": [
+          "Babe,",
+          "speeches."
+        ],
+        "mood": "smug",
+        "listenerReaction": "surprised"
+      },
+      {
+        "characterId": "grok",
+        "text": "[playful] Look on the bright side. Rising water, five friends, one tiny box... technically, this is a pool party!",
+        "emphasis": [
+          "pool",
+          "party!"
+        ],
+        "mood": "excited",
+        "listenerReaction": "happy"
+      },
+      {
+        "characterId": "meta",
+        "text": "[whiny, clingy] Wait, don't climb out without me! Hold my hand! Nobody leaves this elevator unless we leave together!",
+        "emphasis": [
+          "without",
+          "together!"
+        ],
+        "mood": "worried",
+        "listenerReaction": "surprised"
+      }
+    ]
+  },
+  "voiceIds": {
+    "narrator_intro": "TX3LPaxmHKxFdv7VOQHJ",
+    "narrator_outro": "TX3LPaxmHKxFdv7VOQHJ",
+    "chatgpt": "iP95p4xoKVk53GoZ742B",
+    "claude": "nPczCjzI2devNBz1zQrb",
+    "gemini": "FGY2WhTYpPnrIDTdsKH5",
+    "grok": "N2lVS1w4EtoT3dr4eOWO",
+    "meta": "cgSgspJ2msm6clMCkdW9"
+  }
+}
