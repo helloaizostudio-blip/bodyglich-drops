@@ -49,3 +49,5 @@
 | 2026-11-27 | Vicegta609 | An ATV is stalking Boeshi (Zapier, paid) | https://youtube.com/shorts/WsvA9phmlJg | Boeshi |
 | 2026-11-27 | Clipnourgta6 | Asmongold chases a thief on a mobility scooter (Zapier) | https://youtube.com/shorts/Ok_zXUcAfO0 | (no campaign) |
 | 2026-11-27 | clipgta6no3 | Asmongold: watch the champion at work (Zapier) | https://youtube.com/shorts/lfTxlOFWZ58 | (no campaign) |
+| 2026-11-27 | clipgta6no4 | Boeshi | Boeshi spots a UFO in GTA 6 🛸 | https://youtube.com/shorts/Mt6I8rKiwzc | paid (Buffer) |
+| 2026-11-27 | clipboygta6 | Kai Cenat | Kai Cenat hits $183,000 in ONE run in GTA 6 💰 | https://youtube.com/shorts/kYGZ5WAmmpM | paid (Buffer) |

@@ -1,102 +1,66 @@
 {
- "_note": "Finished clips already in uploads/ on branch ccr-5b710d78-d8tir0, waiting to be posted (Zapier daily cap hit). Post these before cutting new clips for the same channel, then remove the entry and the file.",
- "pending": [
-  {
-   "file": "uploads/lacy-beats.mp4",
-   "channel": "gta9clipsstream",
-   "zapier_connection": "02da9ebd-7095-85cb-a1ed-f9a25e05ca19",
-   "paid": false,
-   "title": "Lacy Finally BEATS GTA 6 🏆 #Shorts",
-   "description": "After the whole marathon, Lacy finally did it. How long did it take you? Credit: Lacy on Twitch.\n#Lacy #GTA6 #GrandTheftAutoVI #gaming #shorts\n\nSource: Lacy on Twitch, VOD 2937465519 at 5:18:45\n#Shorts",
-   "tags": [
-    "Lacy",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ]
-  },
-  {
-   "file": "uploads/patricia-impact.mp4",
-   "channel": "prodcatclipai",
-   "make_connection": 13394361,
-   "paid": false,
-   "campaign": "Patricia",
-   "title": "Who REALLY drives an agency's impact? #Shorts",
-   "description": "Agency coach Chris Out explains Price's law on the Patricia podcast with Ricardo Ghekiere. Does this match your team?\n\nPatricia is the AI coworker for agencies, inside Slack and Teams: https://www.patricia.app/\n\n#ai #podcast #business #patricia #Shorts",
-   "paused": "User stopped Patricia posting on 2026-11-26; do not post."
-  },
-  {
-   "file": "uploads/patricia-soft.mp4",
-   "channel": "prodcatclipai",
-   "make_connection": 13394361,
-   "paid": false,
-   "campaign": "Patricia",
-   "title": "Why SOFT agency owners will get crushed #Shorts",
-   "description": "Chris Out argues the market will correct soft owners, in his chat with Ricardo, founder of Patricia. Too harsh?\n\nPatricia is the AI coworker for agencies, inside Slack and Teams: https://www.patricia.app/\n\n#ai #podcast #business #patricia #Shorts",
-   "paused": "User stopped Patricia posting on 2026-11-26; do not post."
-  },
-  {
-   "file": "uploads/patricia-top-employees.mp4",
-   "channel": "prodcatclipai",
-   "make_connection": 13394361,
-   "paid": false,
-   "campaign": "Patricia",
-   "title": "Why top employees HATE average coworkers #Shorts",
-   "description": "Ricardo, founder of Patricia, on why A players leave teams full of B and C players. Have you seen this happen?\n\nPatricia is the AI coworker for agencies, inside Slack and Teams: https://www.patricia.app/\n\n#ai #podcast #business #patricia #Shorts",
-   "paused": "User stopped Patricia posting on 2026-11-26; do not post."
-  },
-  {
-   "file": "uploads/boeshi-ufo.mp4",
-   "channel": "clipgta6no4",
-   "zapier_connection": "023e6c17-a90c-8e21-918f-7b8df41b8768",
-   "paid": true,
-   "campaign": "Boeshi",
-   "title": "Boeshi spots a UFO in GTA 6 🛸 twitch.tv/darealboeshi #Boeshi",
-   "description": "Boeshi just saw a UFO in Vice City 🛸 Have you found it yet? Full stream at twitch.tv/darealboeshi\n#Boeshi #GTA6 #GrandTheftAutoVI #Shorts #Gaming\n\nSource: Boeshi on Twitch, VOD 2941120302 at 2:41:08\n#Shorts",
-   "tags": [
-    "Boeshi",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ],
-   "buffer_channel": "6b0555098541f09ecb870059",
-   "scheduled": "Buffer 6b083e3f50a444a7128786f7 2026-11-27 19:00 IST (set paid promotion after it posts)"
-  },
-  {
-   "file": "uploads/kai-money.mp4",
-   "channel": "clipboygta6",
-   "zapier_connection": "029634c4-d296-86a7-98bf-69e305c44264",
-   "paid": true,
-   "campaign": "Kai Cenat",
-   "title": "Kai Cenat hits $183,000 in ONE run in GTA 6 💰 #KaiCenat #Shorts",
-   "description": "Kai went from zero to 183K in the million dollar race 💰 Can he hit a million?\n#KaiCenat #GTA6 #GrandTheftAutoVI #IShowSpeed #Shorts\n\nSource: Kai Cenat on Twitch, VOD 2939504732 at 1:25:09\n#Shorts",
-   "tags": [
-    "Kai Cenat",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ],
-   "buffer_channel": "6b05547a8541f09ecb86f9b7",
-   "scheduled": "Buffer 6b083e57b7fcd4cc0abc4bf0 2026-11-27 19:10 IST (set paid promotion after it posts)"
-  },
-  {
-   "file": "uploads/zack-efficiency.mp4",
-   "channel": "Clipnourgta6",
-   "zapier_connection": "029d17ae-730f-8074-b183-87c041baf3a7",
-   "paid": false,
-   "campaign": null,
-   "title": "Asmongold flexes his EFFICIENCY... 2 seconds later 💀 #Shorts",
-   "description": "Zack (Asmongold) bragged about how fast his new car was 💀 Then this. Credit: Zack on Twitch.\n#Asmongold #GTA6 #GrandTheftAutoVI #Shorts #Gaming\n\nSource: Asmongold on Twitch, VOD 2940553066 at 5:32:18\n#Shorts",
-   "tags": [
-    "Asmongold",
-    "GTA6",
-    "GTA 6",
-    "Grand Theft Auto VI",
-    "Shorts"
-   ]
-  }
- ]
+  "_note": "Finished clips already in uploads/ on branch ccr-5b710d78-d8tir0, waiting to be posted (Zapier daily cap hit). Post these before cutting new clips for the same channel, then remove the entry and the file.",
+  "pending": [
+    {
+      "file": "uploads/lacy-beats.mp4",
+      "channel": "gta9clipsstream",
+      "zapier_connection": "02da9ebd-7095-85cb-a1ed-f9a25e05ca19",
+      "paid": false,
+      "title": "Lacy Finally BEATS GTA 6 🏆 #Shorts",
+      "description": "After the whole marathon, Lacy finally did it. How long did it take you? Credit: Lacy on Twitch.\n#Lacy #GTA6 #GrandTheftAutoVI #gaming #shorts\n\nSource: Lacy on Twitch, VOD 2937465519 at 5:18:45\n#Shorts",
+      "tags": [
+        "Lacy",
+        "GTA6",
+        "GTA 6",
+        "Grand Theft Auto VI",
+        "Shorts"
+      ]
+    },
+    {
+      "file": "uploads/patricia-impact.mp4",
+      "channel": "prodcatclipai",
+      "make_connection": 13394361,
+      "paid": false,
+      "campaign": "Patricia",
+      "title": "Who REALLY drives an agency's impact? #Shorts",
+      "description": "Agency coach Chris Out explains Price's law on the Patricia podcast with Ricardo Ghekiere. Does this match your team?\n\nPatricia is the AI coworker for agencies, inside Slack and Teams: https://www.patricia.app/\n\n#ai #podcast #business #patricia #Shorts",
+      "paused": "User stopped Patricia posting on 2026-11-26; do not post."
+    },
+    {
+      "file": "uploads/patricia-soft.mp4",
+      "channel": "prodcatclipai",
+      "make_connection": 13394361,
+      "paid": false,
+      "campaign": "Patricia",
+      "title": "Why SOFT agency owners will get crushed #Shorts",
+      "description": "Chris Out argues the market will correct soft owners, in his chat with Ricardo, founder of Patricia. Too harsh?\n\nPatricia is the AI coworker for agencies, inside Slack and Teams: https://www.patricia.app/\n\n#ai #podcast #business #patricia #Shorts",
+      "paused": "User stopped Patricia posting on 2026-11-26; do not post."
+    },
+    {
+      "file": "uploads/patricia-top-employees.mp4",
+      "channel": "prodcatclipai",
+      "make_connection": 13394361,
+      "paid": false,
+      "campaign": "Patricia",
+      "title": "Why top employees HATE average coworkers #Shorts",
+      "description": "Ricardo, founder of Patricia, on why A players leave teams full of B and C players. Have you seen this happen?\n\nPatricia is the AI coworker for agencies, inside Slack and Teams: https://www.patricia.app/\n\n#ai #podcast #business #patricia #Shorts",
+      "paused": "User stopped Patricia posting on 2026-11-26; do not post."
+    },
+    {
+      "file": "uploads/zack-efficiency.mp4",
+      "channel": "Clipnourgta6",
+      "zapier_connection": "029d17ae-730f-8074-b183-87c041baf3a7",
+      "paid": false,
+      "campaign": null,
+      "title": "Asmongold flexes his EFFICIENCY... 2 seconds later 💀 #Shorts",
+      "description": "Zack (Asmongold) bragged about how fast his new car was 💀 Then this. Credit: Zack on Twitch.\n#Asmongold #GTA6 #GrandTheftAutoVI #Shorts #Gaming\n\nSource: Asmongold on Twitch, VOD 2940553066 at 5:32:18\n#Shorts",
+      "tags": [
+        "Asmongold",
+        "GTA6",
+        "GTA 6",
+        "Grand Theft Auto VI",
+        "Shorts"
+      ]
+    }
+  ]
 }
