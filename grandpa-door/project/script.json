@@ -1,0 +1,78 @@
+{
+ "title": "Grandpa Holds The Door",
+ "voice": "elevenlabs:Rai",
+ "music": "bounce",
+ "sources": [
+  "Original comedy script (fiction)."
+ ],
+ "lines": [
+  {
+   "text": "My grandparents have been holding the same door for each other since 1961.",
+   "caps": "My *grandparents | have been holding | the same *door | for each other | since *1961."
+  },
+  {
+   "text": "Neither of them has ever gone through.",
+   "caps": "Neither of them | has *EVER | gone *through."
+  },
+  {
+   "text": "It started when Grandpa held a door for a lady",
+   "caps": "It started when | *Grandpa | held a *door | for a lady"
+  },
+  {
+   "text": "who was still way, WAY too far away.",
+   "caps": "who was still | *way, | *WAY | too far *away."
+  },
+  {
+   "text": "Most people let it close. Not Grandpa.",
+   "caps": "Most people | let it *close. | Not *Grandpa."
+  },
+  {
+   "text": "She saw him. So she did the polite little jog.",
+   "caps": "She *saw him. | So she did | the *polite | little *jog."
+  },
+  {
+   "text": "So he jogged too. Towards her.",
+   "caps": "So he *jogged | too. | *Towards her."
+  },
+  {
+   "text": "They met in the middle of the road. Nowhere near the door.",
+   "caps": "They *met | in the middle | of the *road. | *Nowhere | near the door."
+  },
+  {
+   "text": "So she held the next one. Out of respect.",
+   "caps": "So *she held | the next one. | Out of *respect."
+  },
+  {
+   "text": "64 years. 900,000 doors.",
+   "caps": "*64 years. | *900,000 | doors."
+  },
+  {
+   "text": "Car doors. Fridge doors. Their own front door.",
+   "caps": "*Car doors. | *Fridge doors. | Their own | *front door."
+  },
+  {
+   "text": "They got married in a revolving door. The ceremony took 11 hours.",
+   "caps": "They got *married | in a *revolving | door. | The *ceremony | took *11 hours."
+  },
+  {
+   "text": "Then, last Tuesday... came the elevator.",
+   "caps": "Then, last *Tuesday... | came the | *elevator."
+  },
+  {
+   "text": "After you. No, no. After YOU.",
+   "caps": "*After you. | No, no. | After *YOU."
+  },
+  {
+   "text": "They've been riding to floor 9 for a week.",
+   "caps": "They've been | *riding | to floor *9 | for a *week."
+  },
+  {
+   "text": "Anyway. That's why I never hold doors.",
+   "caps": "*Anyway. | That's why I | *never | hold doors."
+  },
+  {
+   "text": "Oh no. Someone's waving.",
+   "caps": "Oh *no. | Someone's | *waving."
+  }
+ ]
+}
