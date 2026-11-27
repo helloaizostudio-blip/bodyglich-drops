@@ -104,3 +104,12 @@ The gentler "try this" hooks raised comments but not the stay-to-watch rate (sti
 5. Judge after 48 h: stayed-to-watch ≥ 65% means more like it.
 
 First Short in this style: "How Doctors Unblock Your Heart Without Opening Your Chest" (`examples/artery-*`).
+
+## Voice: ElevenLabs from 28 Nov
+
+- **Voice:** ElevenLabs "Liam – Energetic, Social Media Creator" (`TX3LPaxmHKxFdv7VOQHJ`, young American, made for Shorts), model `eleven_v4`.
+- **Budget:** the account is on the free tier (10,000 characters a month, shared with other projects). Body Glitch gets at most 1,800 a month.
+  - Generate the whole script in one take, `generations_count` 1, and never re-run.
+  - Check `account_get_usage` before and after each Short.
+- **Fallback:** Kokoro (am_puck / am_michael) when the budget is short.
+- **Judge it:** compare stayed-to-watch on the ElevenLabs Shorts with the Kokoro ones after 48 h.
