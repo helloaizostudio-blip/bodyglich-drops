@@ -1,0 +1,24 @@
+{
+  "title": "How Doctors Unblock Your Heart Without Opening Your Chest",
+  "voice": "am_michael",
+  "speed": 1.08,
+  "lead": 0.05,
+  "outro": 0.5,
+  "gap": 0.12,
+  "music": "tension",
+  "sources": [
+    "Coronary artery disease: fatty plaque builds up inside the coronary arteries and narrows them, reducing blood flow to the heart muscle (NHLBI, 'Coronary Heart Disease')",
+    "Coronary angioplasty / PCI: a catheter is inserted into an artery in the wrist (radial) or groin and guided to the narrowed coronary artery; a balloon on the catheter is inflated to widen the artery, pressing the plaque against the wall, and a stent (small wire-mesh tube) is usually left in place to keep it open (NHS, 'Coronary angioplasty and stent insertion'; NHLBI, 'Percutaneous Coronary Intervention')",
+    "The procedure is done under local anaesthetic, usually with a sedative, so the patient is awake; many people go home the same day or the next day (NHS, 'Coronary angioplasty – What happens')"
+  ],
+  "lines": [
+    { "text": "Imagine your heart artery is ninety percent blocked. Here's how doctors open it, without cutting your chest.", "caps": "Imagine your *heart artery | is *90% blocked | Here's how | doctors *open it | without *cutting your chest" },
+    { "text": "Fatty plaque builds up inside the artery, and blood can barely squeeze through.", "caps": "Fatty *plaque | builds up | inside the artery | and blood | can *barely squeeze through" },
+    { "text": "So doctors make a tiny cut in your wrist, and slide a thin tube all the way up to your heart.", "caps": "So doctors make | a tiny cut | in your *wrist | and slide | a thin *tube | all the way | up to your *heart" },
+    { "text": "Then they push a tiny balloon into the blockage, and inflate it.", "caps": "Then they push | a tiny *balloon | into the blockage | and *inflate it" },
+    { "text": "The balloon crushes the plaque flat, and blood rushes through again.", "caps": "The balloon | *crushes the plaque | flat | and blood | *rushes through again" },
+    { "text": "Then they leave behind a metal mesh tube called a stent, to keep it open.", "caps": "Then they leave behind | a metal mesh tube | called a *stent | to keep it *open" },
+    { "text": "And here's the twist. You're awake the whole time, and many people go home the next day.", "caps": "And here's | the *twist | You're *awake | the whole time | and many people | go *home | the next day" },
+    { "text": "Would you watch your own surgery? Tell me below.", "caps": "Would you *watch | your own *surgery? | Tell me *below" }
+  ]
+}
