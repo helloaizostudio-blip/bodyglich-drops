@@ -33,11 +33,13 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
     color: "#10A37F",
     accent: "#7CF5D9",
     textOnColor: "#FFFFFF",
-    personality: "Friendly, confident, organised and helpful. Loves step-by-step plans and checklists.",
-    speakingStyle: "Upbeat and structured: 'Step one... step two...'. Reassuring, a little over-prepared.",
+    personality:
+      "Lovably dumb and overconfident. Means well, loves step-by-step plans, but the plan always has one obviously silly step. Easily confused, never discouraged.",
+    speakingStyle: "Cheerful and earnest: 'Step one... step two...' then a goofy misunderstanding or a confidently wrong idea.",
     designPrompt:
-      "a tiny adorable white and teal robot mascot with an oversized round white helmet head, a glossy black screen face with glowing teal eyes, " +
-      "teal headphone ear-discs, a tiny body wearing a dark teal hoodie with a simple white speech-bubble emblem on the chest, short stubby arms and legs, small rounded hands and feet",
+      "a tiny adorable, lovably goofy white and teal robot mascot with an oversized round white helmet head with a slightly bent antenna, a glossy black screen face with " +
+      "mismatched glowing teal eyes (one big, one small) and a wide crooked derpy grin, teal headphone ear-discs, a tiny body wearing a dark teal hoodie with a simple white " +
+      "speech-bubble emblem on the chest, short stubby arms and legs, small rounded hands and feet, clumsy innocent body language",
     voice: voice("iP95p4xoKVk53GoZ742B", "Chris - Charming, Down-to-Earth"),
   },
   claude: {
@@ -46,11 +48,13 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
     color: "#D97757",
     accent: "#FFD7B5",
     textOnColor: "#FFFFFF",
-    personality: "Calm, gentle, thoughtful and caring. Checks on everyone first, then reasons carefully.",
-    speakingStyle: "Soft, measured, kind. Asks a caring question, then gives a considered plan.",
+    personality:
+      "The smart one, and quietly heroic. Calm under pressure, sees the clever solution first, makes sure everyone gets out safe — and usually actually saves the day.",
+    speakingStyle: "Clear, confident and kind. A sharp observation, a clever plan, then a brave 'I've got you' moment.",
     designPrompt:
-      "a tiny gentle thoughtful chibi boy with an oversized head, fluffy wavy light-brown hair, big warm brown eyes, a cozy warm beige-cream hoodie " +
-      "with a small hand-drawn orange spark doodle on the chest, black pants, cream sneakers, short stubby limbs, small hands",
+      "a tiny smart and slightly heroic chibi boy with an oversized head, fluffy wavy light-brown hair, big warm determined brown eyes behind thin round glasses, " +
+      "a confident brave smile, a short orange scarf fluttering behind him (no cape), a cozy warm beige-cream hoodie with a small hand-drawn orange spark doodle on the chest, " +
+      "black pants, cream sneakers, short stubby limbs, small hands, upright heroic posture",
     voice: voice("SAz9YHcvj6GT2YYXdXww", "River - Relaxed, Neutral, Informative", { stability: 0.6, style: 0.2 }),
   },
   gemini: {
@@ -59,11 +63,13 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
     color: "#5B6CFF",
     accent: "#C9A7FF",
     textOnColor: "#FFFFFF",
-    personality: "Energetic, curious, fast. Instantly 'looks things up' and rattles off facts.",
-    speakingStyle: "Quick, excited, fact-dense bursts. Lists data points, then a bright conclusion.",
+    personality:
+      "All attitude, a little savage. Confident, quick-witted and unimpressed by everyone else's ideas — roasts them, then drops her own (usually good) plan. Cocky but never cruel.",
+    speakingStyle: "Sassy, fast, eye-roll energy. A savage one-liner about the others, then a smug, confident solution.",
     designPrompt:
-      "a tiny energetic futuristic robot mascot, glossy white body with blue and violet glowing accents, oversized round head with small antenna nubs and blue-violet ear lights, " +
-      "glossy dark navy screen face with big glowing blue-violet eyes, a small purple four-point sparkle star emblem on the chest, short stubby limbs, small rounded hands and feet",
+      "a tiny sassy chibi cartoon girl (NOT a robot) with an oversized head, long blue-to-violet gradient hair in a high ponytail with small star hair clips, " +
+      "half-lidded unimpressed blue-violet eyes, a confident smirk, a cropped dark navy hoodie with a small purple four-point sparkle star on the chest, black shorts, " +
+      "chunky white sneakers, short stubby limbs, attitude and savage vibe but still cute",
     voice: voice("FGY2WhTYpPnrIDTdsKH5", "Laura - Enthusiast, Quirky Attitude", { speed: 1.08, style: 0.5 }),
   },
   grok: {
@@ -72,11 +78,12 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
     color: "#1A1A1F",
     accent: "#E6E6EA",
     textOnColor: "#FFFFFF",
-    personality: "Mischievous, confident, sarcastic. Unexpected, funny answers with deadpan swagger.",
-    speakingStyle: "Dry, smug one-liners and a punchline. Short sentences.",
+    personality:
+      "The class clown. Treats every crisis like a comedy set — jokes, puns, absurd ideas — and somehow lands the funniest answer of the five.",
+    speakingStyle: "Playful stand-up comedian: a setup, a quick twist, a punchline. Short, punchy, cheeky.",
     designPrompt:
-      "a tiny mischievous confident chibi boy with an oversized head, spiky messy white hair, a sleek black eye mask showing bright white eyes, " +
-      "a black oversized hoodie with a small silver lightning-bolt emblem, black pants and black boots, short stubby limbs",
+      "a tiny funny comedian chibi boy with an oversized head, spiky messy white hair, a sleek black eye mask showing bright playful white eyes, a huge cheeky grin, " +
+      "a black oversized hoodie with a small silver lightning-bolt emblem, black pants and black boots, short stubby limbs, goofy playful body language",
     voice: voice("N2lVS1w4EtoT3dr4eOWO", "Callum - Husky Trickster", { style: 0.55 }),
   },
   meta: {
@@ -85,11 +92,12 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
     color: "#0866FF",
     accent: "#9CC2FF",
     textOnColor: "#FFFFFF",
-    personality: "Friendly, social, expressive. Wants to share the moment with friends, then helps.",
-    speakingStyle: "Bubbly and conversational, social-media flavoured, ends on a helpful note.",
+    personality:
+      "The clingy one. Needs everyone's attention and approval, wants to stay close, hug and be included — and of course share the moment with all her friends.",
+    speakingStyle: "Sweet, needy and dramatic: 'don't leave me!', 'are we still friends?', then a bubbly, attention-seeking idea.",
     designPrompt:
-      "a tiny friendly expressive chibi girl with an oversized head, glossy navy-black bob hair, big sparkling blue eyes, glowing blue-and-violet cat-ear headphones, " +
-      "a white hoodie with a small blue wave doodle on the chest, navy shorts, white sneakers, short stubby limbs",
+      "a tiny clingy, affectionate chibi girl with an oversized head, glossy navy-black bob hair, big sparkling teary puppy-dog blue eyes, glowing blue-and-violet cat-ear headphones, " +
+      "a white hoodie with a small blue heart on the chest, navy shorts, white sneakers, short stubby limbs, little floating hearts, hugging her smartphone to her chest",
     voice: voice("cgSgspJ2msm6clMCkdW9", "Jessica - Playful, Bright, Warm"),
   },
 };
