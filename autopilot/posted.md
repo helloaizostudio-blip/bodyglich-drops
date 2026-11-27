@@ -47,3 +47,4 @@
 | 2026-11-27 | clipgta6no4 | Boeshi thinks a ghost is attacking him (Buffer, paid) | https://youtube.com/shorts/BZ_bdLpa3us | Boeshi |
 | 2026-11-27 | clipboygta6 | Kai keeps telling Speed to call his car (Buffer, paid) | https://youtube.com/shorts/n_-2J-ULPhM | Kai Cenat |
 | 2026-11-27 | Vicegta609 | An ATV is stalking Boeshi (Zapier, paid) | https://youtube.com/shorts/WsvA9phmlJg | Boeshi |
+| 2026-11-27 | Clipnourgta6 | Asmongold chases a thief on a mobility scooter (Zapier) | https://youtube.com/shorts/Ok_zXUcAfO0 | (no campaign) |
