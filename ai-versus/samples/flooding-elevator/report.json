@@ -1,5 +1,5 @@
 {
-  "projectId": "e12972ab-5122-40c6-a8ba-e84a524bf858",
+  "projectId": "e68a8b70-2ba0-4cbf-84bb-50785479fd09",
   "script": {
     "title": "Flooding Elevator",
     "hookTop": "What would 5 AIs do",
@@ -8,7 +8,7 @@
     "narratorOutro": "[curious] So... which AI had the best answer?",
     "endingCaption": "Which AI had the best answer?",
     "environment": {
-      "prompt": "interior of a cramped stuck elevator cabin, brushed steel walls, closed doors, glowing control panel, flickering red emergency light, murky blue-green flood water filling the bottom third with ripples, water trickling through the door seam, a floating rubber duck, ceiling emergency hatch",
+      "prompt": "interior of a cramped stuck elevator cabin, flood water filling the bottom third, flickering red emergency light, ceiling hatch",
       "hazard": "water",
       "palette": "steel grey, emergency red, teal water"
     },
@@ -16,61 +16,58 @@
     "lines": [
       {
         "characterId": "chatgpt",
-        "text": "[confident, friendly] Okay team, stay calm! Step one: press the alarm. Step two: climb onto the handrail. Step three... I've drafted a fourteen-point escape plan!",
+        "text": "[proud, clueless] Don't worry, I've got a plan! Step one: press the button for the top floor. Step two... wait, are elevators waterproof?",
         "emphasis": [
-          "calm!",
-          "alarm.",
-          "fourteen-point"
+          "plan!",
+          "waterproof?"
         ],
         "mood": "cheerful",
-        "listenerReaction": "surprised",
-        "caption": "Okay team, stay calm! Step one: press the alarm. Step two: climb onto the handrail. Step three... I've drafted a fourteen-point escape plan!"
+        "listenerReaction": "confused",
+        "caption": "Don't worry, I've got a plan! Step one: press the button for the top floor. Step two... wait, are elevators waterproof?"
       },
       {
         "characterId": "claude",
-        "text": "[calm, gentle] Before anyone panics, is everyone okay? Good. The ceiling hatch is our way out. Let's lift the smallest of us up... together.",
+        "text": "[calm, confident] Stay close to me. The ceiling hatch opens outward. I'll boost everyone up first... and climb out last.",
         "emphasis": [
-          "okay?",
           "hatch",
-          "together."
+          "last."
         ],
         "mood": "calm",
         "listenerReaction": "happy",
-        "caption": "Before anyone panics, is everyone okay? Good. The ceiling hatch is our way out. Let's lift the smallest of us up... together."
+        "caption": "Stay close to me. The ceiling hatch opens outward. I'll boost everyone up first... and climb out last."
       },
       {
         "characterId": "gemini",
-        "text": "[fast, excited] Ooh, I just looked it up! Door seals, water pressure, hatch specs... the hatch opens outward! Quick, somebody lift me up!",
+        "text": "[sassy, unimpressed] Top floor? Babe, the water is the problem. Move. I'm opening the hatch while you two finish your speeches.",
         "emphasis": [
-          "outward!",
-          "Quick,"
+          "Babe,",
+          "speeches."
         ],
-        "mood": "excited",
+        "mood": "smug",
         "listenerReaction": "surprised",
-        "caption": "Ooh, I just looked it up! Door seals, water pressure, hatch specs... the hatch opens outward! Quick, somebody lift me up!"
+        "caption": "Top floor? Babe, the water is the problem. Move. I'm opening the hatch while you two finish your speeches."
       },
       {
         "characterId": "grok",
-        "text": "[smug, sarcastic] Relax. I already pressed every button. Twice. Worst case? We become the world's first AI submarine.",
+        "text": "[playful] Look on the bright side. Rising water, five friends, one tiny box... technically, this is a pool party!",
         "emphasis": [
-          "Twice.",
-          "submarine."
-        ],
-        "mood": "smug",
-        "listenerReaction": "confused",
-        "caption": "Relax. I already pressed every button. Twice. Worst case? We become the world's first AI submarine."
-      },
-      {
-        "characterId": "meta",
-        "text": "[cheerful] Wait, wait, let me post this first! Hashtag elevator pool party! [laughs] Okay, okay... I'm helping!",
-        "emphasis": [
-          "post",
           "pool",
           "party!"
         ],
-        "mood": "cheerful",
+        "mood": "excited",
+        "listenerReaction": "happy",
+        "caption": "Look on the bright side. Rising water, five friends, one tiny box... technically, this is a pool party!"
+      },
+      {
+        "characterId": "meta",
+        "text": "[whiny, clingy] Wait, don't climb out without me! Hold my hand! Nobody leaves this elevator unless we leave together!",
+        "emphasis": [
+          "without",
+          "together!"
+        ],
+        "mood": "worried",
         "listenerReaction": "surprised",
-        "caption": "Wait, wait, let me post this first! Hashtag elevator pool party! Okay, okay... I'm helping!"
+        "caption": "Wait, don't climb out without me! Hold my hand! Nobody leaves this elevator unless we leave together!"
       }
     ]
   },
@@ -85,94 +82,94 @@
         "kind": "intro",
         "audioRole": "narrator_intro",
         "start": 0,
-        "end": 5.466666666666667,
+        "end": 5.866666666666666,
         "voiceStart": 0.3,
-        "voiceEnd": 5.168958,
+        "voiceEnd": 5.576458,
         "words": [
           {
             "text": "Five",
             "start": 0.35,
-            "end": 0.63
+            "end": 0.65
           },
           {
             "text": "AIs",
-            "start": 0.62,
-            "end": 0.8400000000000001
+            "start": 0.64,
+            "end": 0.8700000000000001
           },
           {
             "text": "are",
-            "start": 0.8300000000000001,
-            "end": 1.04
+            "start": 0.8600000000000001,
+            "end": 1.09
           },
           {
             "text": "trapped",
-            "start": 1.03,
-            "end": 1.47
+            "start": 1.08,
+            "end": 1.55
           },
           {
             "text": "in",
-            "start": 1.46,
-            "end": 1.6800000000000002
+            "start": 1.54,
+            "end": 1.78
           },
           {
             "text": "an",
-            "start": 1.6700000000000002,
-            "end": 1.83
+            "start": 1.77,
+            "end": 1.9500000000000002
           },
           {
             "text": "elevator...",
-            "start": 1.82,
-            "end": 2.26
+            "start": 1.9400000000000002,
+            "end": 2.4099999999999997
           },
           {
             "text": "and",
-            "start": 2.4299999999999997,
-            "end": 2.6599999999999997
+            "start": 2.6,
+            "end": 2.8699999999999997
           },
           {
             "text": "the",
-            "start": 2.65,
-            "end": 2.86
+            "start": 2.86,
+            "end": 3.08
           },
           {
             "text": "water",
-            "start": 2.85,
-            "end": 3.15
+            "start": 3.07,
+            "end": 3.3899999999999997
           },
           {
             "text": "is",
-            "start": 3.1399999999999997,
-            "end": 3.3
+            "start": 3.38,
+            "end": 3.55
           },
           {
             "text": "rising!",
-            "start": 3.29,
-            "end": 3.63
+            "start": 3.54,
+            "end": 3.9
           },
           {
             "text": "What",
-            "start": 4.01,
-            "end": 4.23
+            "start": 4.31,
+            "end": 4.56
           },
           {
             "text": "would",
-            "start": 4.22,
-            "end": 4.62
+            "start": 4.55,
+            "end": 4.9799999999999995
           },
           {
             "text": "each",
-            "start": 4.61,
-            "end": 4.81
+            "start": 4.97,
+            "end": 5.18
           },
           {
             "text": "one",
-            "start": 4.8,
-            "end": 4.97
+            "start": 5.17,
+            "end": 5.36
           },
           {
             "text": "do?",
-            "start": 4.96,
-            "end": 5.08
+            "start": 5.35,
+            "end": 5.4799999999999995
           }
         ],
         "emphasis": [],
@@ -184,260 +181,228 @@
         "kind": "response",
         "characterId": "chatgpt",
         "audioRole": "chatgpt",
-        "start": 5.466666666666667,
-        "end": 14.966666666666667,
-        "voiceStart": 5.968958,
-        "voiceEnd": 14.649999999999999,
+        "start": 5.866666666666666,
+        "end": 14.8,
+        "voiceStart": 6.3764579999999995,
+        "voiceEnd": 14.484895999999999,
         "words": [
           {
-            "text": "Okay",
-            "start": 6.008958,
-            "end": 6.308958
+            "text": "Don't",
+            "start": 6.406458,
+            "end": 6.746458
           },
           {
-            "text": "team,",
-            "start": 6.298958,
-            "end": 6.6089579999999994
-          },
-          {
-            "text": "stay",
-            "start": 6.738958,
-            "end": 7.018958
-          },
-          {
-            "text": "calm!",
-            "start": 7.008958,
-            "end": 7.278957999999999
-          },
-          {
-            "text": "Step",
-            "start": 7.698957999999999,
-            "end": 7.988958
-          },
-          {
-            "text": "one:",
-            "start": 7.978958,
-            "end": 8.168958
-          },
-          {
-            "text": "press",
-            "start": 8.578958,
-            "end": 8.788958
-          },
-          {
-            "text": "the",
-            "start": 8.778958,
-            "end": 8.988958
-          },
-          {
-            "text": "alarm.",
-            "start": 8.978958,
-            "end": 9.198958
-          },
-          {
-            "text": "Step",
-            "start": 9.728958,
-            "end": 10.038958000000001
-          },
-          {
-            "text": "two:",
-            "start": 10.028958,
-            "end": 10.218958
-          },
-          {
-            "text": "climb",
-            "start": 10.508958,
-            "end": 10.728957999999999
-          },
-          {
-            "text": "onto",
-            "start": 10.718958,
-            "end": 10.918958
-          },
-          {
-            "text": "the",
-            "start": 10.908958,
-            "end": 11.078958
-          },
-          {
-            "text": "handrail.",
-            "start": 11.068958,
-            "end": 11.388957999999999
-          },
-          {
-            "text": "Step",
-            "start": 11.868958,
-            "end": 12.208957999999999
-          },
-          {
-            "text": "three...",
-            "start": 12.198958000000001,
-            "end": 12.438958
+            "text": "worry,",
+            "start": 6.736458,
+            "end": 7.116458
           },
           {
             "text": "I've",
-            "start": 12.808958,
-            "end": 12.948958000000001
+            "start": 7.266457999999999,
+            "end": 7.446458
           },
           {
-            "text": "drafted",
-            "start": 12.938958,
-            "end": 13.268958
+            "text": "got",
+            "start": 7.446458,
+            "end": 7.6264579999999995
           },
           {
             "text": "a",
-            "start": 13.258958,
-            "end": 13.488958
-          },
-          {
-            "text": "fourteen-point",
-            "start": 13.478957999999999,
-            "end": 14.038958000000001
-          },
-          {
-            "text": "escape",
-            "start": 14.028958,
-            "end": 14.288958000000001
+            "start": 7.6264579999999995,
+            "end": 7.806457999999999
           },
           {
             "text": "plan!",
-            "start": 14.278958,
-            "end": 14.558958
+            "start": 7.806457999999999,
+            "end": 8.036458
+          },
+          {
+            "text": "Step",
+            "start": 8.496458,
+            "end": 8.786458
+          },
+          {
+            "text": "one:",
+            "start": 8.776458,
+            "end": 8.966458
+          },
+          {
+            "text": "press",
+            "start": 9.466458,
+            "end": 9.656458
+          },
+          {
+            "text": "the",
+            "start": 9.646457999999999,
+            "end": 9.826457999999999
+          },
+          {
+            "text": "button",
+            "start": 9.816457999999999,
+            "end": 10.046458
+          },
+          {
+            "text": "for",
+            "start": 10.036458,
+            "end": 10.246458
+          },
+          {
+            "text": "the",
+            "start": 10.236457999999999,
+            "end": 10.446458
+          },
+          {
+            "text": "top",
+            "start": 10.436458,
+            "end": 10.566458
+          },
+          {
+            "text": "floor.",
+            "start": 10.556458,
+            "end": 10.886458
+          },
+          {
+            "text": "Step",
+            "start": 11.356458,
+            "end": 11.696458
+          },
+          {
+            "text": "two...",
+            "start": 11.686458,
+            "end": 11.886458
+          },
+          {
+            "text": "wait,",
+            "start": 12.506457999999999,
+            "end": 12.696458
+          },
+          {
+            "text": "are",
+            "start": 13.056458,
+            "end": 13.246458
+          },
+          {
+            "text": "elevators",
+            "start": 13.236457999999999,
+            "end": 13.766458
+          },
+          {
+            "text": "waterproof?",
+            "start": 13.756457999999999,
+            "end": 14.406457999999999
           }
         ],
         "emphasis": [
-          "calm!",
-          "alarm.",
-          "fourteen-point"
+          "plan!",
+          "waterproof?"
         ],
         "mood": "cheerful",
-        "listenerReaction": "surprised"
+        "listenerReaction": "confused"
       },
       {
         "index": 2,
         "kind": "response",
         "characterId": "claude",
         "audioRole": "claude",
-        "start": 14.966666666666667,
-        "end": 23.166666666666668,
-        "voiceStart": 15.45,
-        "voiceEnd": 22.856813,
+        "start": 14.8,
+        "end": 21.966666666666665,
+        "voiceStart": 15.284896,
+        "voiceEnd": 21.675375,
         "words": [
           {
-            "text": "Before",
-            "start": 15.489999999999998,
-            "end": 15.86
+            "text": "Stay",
+            "start": 15.324895999999999,
+            "end": 15.584896
           },
           {
-            "text": "anyone",
-            "start": 15.86,
-            "end": 16.24
+            "text": "close",
+            "start": 15.574895999999999,
+            "end": 15.884896
           },
           {
-            "text": "panics,",
-            "start": 16.24,
-            "end": 16.65
+            "text": "to",
+            "start": 15.874896,
+            "end": 16.044896
           },
           {
-            "text": "is",
-            "start": 16.95,
-            "end": 17.11
-          },
-          {
-            "text": "everyone",
-            "start": 17.099999999999998,
-            "end": 17.54
-          },
-          {
-            "text": "okay?",
-            "start": 17.53,
-            "end": 17.77
-          },
-          {
-            "text": "Good.",
-            "start": 18.3,
-            "end": 18.56
+            "text": "me.",
+            "start": 16.034896,
+            "end": 16.184896
           },
           {
             "text": "The",
-            "start": 18.97,
-            "end": 19.169999999999998
+            "start": 16.784896,
+            "end": 16.964896
           },
           {
             "text": "ceiling",
-            "start": 19.16,
-            "end": 19.46
+            "start": 16.954895999999998,
+            "end": 17.284896
           },
           {
             "text": "hatch",
-            "start": 19.45,
-            "end": 19.71
+            "start": 17.274896,
+            "end": 17.594896
           },
           {
-            "text": "is",
-            "start": 19.7,
-            "end": 19.83
+            "text": "opens",
+            "start": 17.584896,
+            "end": 17.874896
           },
           {
-            "text": "our",
-            "start": 19.82,
-            "end": 19.98
+            "text": "outward.",
+            "start": 17.864896,
+            "end": 18.284896
           },
           {
-            "text": "way",
-            "start": 19.97,
-            "end": 20.13
+            "text": "I'll",
+            "start": 18.824896,
+            "end": 19.014896
           },
           {
-            "text": "out.",
-            "start": 20.119999999999997,
-            "end": 20.33
+            "text": "boost",
+            "start": 19.004896,
+            "end": 19.384895999999998
           },
           {
-            "text": "Let's",
-            "start": 20.65,
-            "end": 20.96
+            "text": "everyone",
+            "start": 19.374896,
+            "end": 19.774896
           },
           {
-            "text": "lift",
-            "start": 20.95,
-            "end": 21.22
+            "text": "up",
+            "start": 19.764896,
+            "end": 19.994896
           },
           {
-            "text": "the",
-            "start": 21.21,
-            "end": 21.36
+            "text": "first...",
+            "start": 19.984896,
+            "end": 20.314896
           },
           {
-            "text": "smallest",
-            "start": 21.35,
-            "end": 21.66
+            "text": "and",
+            "start": 20.624896,
+            "end": 20.814896
           },
           {
-            "text": "of",
-            "start": 21.65,
-            "end": 21.759999999999998
+            "text": "climb",
+            "start": 20.804896,
+            "end": 21.104896
           },
           {
-            "text": "us",
-            "start": 21.75,
-            "end": 21.869999999999997
+            "text": "out",
+            "start": 21.094896,
+            "end": 21.284896
           },
           {
-            "text": "up...",
-            "start": 21.86,
-            "end": 21.97
-          },
-          {
-            "text": "together.",
-            "start": 22.35,
-            "end": 22.74
+            "text": "last.",
+            "start": 21.274896,
+            "end": 21.594896
           }
         ],
         "emphasis": [
-          "okay?",
           "hatch",
-          "together."
+          "last."
         ],
         "mood": "calm",
         "listenerReaction": "happy"
@@ -447,122 +412,112 @@
         "kind": "response",
         "characterId": "gemini",
         "audioRole": "gemini",
-        "start": 23.166666666666668,
-        "end": 30.366666666666667,
-        "voiceStart": 23.656813,
-        "voiceEnd": 30.077626,
+        "start": 21.966666666666665,
+        "end": 29.533333333333335,
+        "voiceStart": 22.475375,
+        "voiceEnd": 29.247417,
         "words": [
           {
-            "text": "Ooh,",
-            "start": 23.686813,
-            "end": 23.846813
+            "text": "Top",
+            "start": 22.525375,
+            "end": 22.645375
           },
           {
-            "text": "I",
-            "start": 23.836813,
-            "end": 23.936813
+            "text": "floor?",
+            "start": 22.635375,
+            "end": 22.795375
           },
           {
-            "text": "just",
-            "start": 23.926813,
-            "end": 24.216813
-          },
-          {
-            "text": "looked",
-            "start": 24.206813,
-            "end": 24.606813
-          },
-          {
-            "text": "it",
-            "start": 24.596813,
-            "end": 24.726813
-          },
-          {
-            "text": "up!",
-            "start": 24.716813,
-            "end": 24.896812999999998
-          },
-          {
-            "text": "Door",
-            "start": 25.156813,
-            "end": 25.416813
-          },
-          {
-            "text": "seals,",
-            "start": 25.406813,
-            "end": 25.726813
-          },
-          {
-            "text": "water",
-            "start": 25.716813,
-            "end": 26.036813
-          },
-          {
-            "text": "pressure,",
-            "start": 26.026813,
-            "end": 26.496813
-          },
-          {
-            "text": "hatch",
-            "start": 26.486812999999998,
-            "end": 26.766813
-          },
-          {
-            "text": "specs...",
-            "start": 26.756813,
-            "end": 27.156813
+            "text": "Babe,",
+            "start": 22.965374999999998,
+            "end": 23.295375
           },
           {
             "text": "the",
-            "start": 27.556813,
-            "end": 27.716813000000002
+            "start": 23.625375,
+            "end": 23.955375
+          },
+          {
+            "text": "water",
+            "start": 23.945375,
+            "end": 24.505375
+          },
+          {
+            "text": "is",
+            "start": 24.495375,
+            "end": 24.725375
+          },
+          {
+            "text": "the",
+            "start": 24.715375,
+            "end": 25.015375
+          },
+          {
+            "text": "problem.",
+            "start": 25.005375,
+            "end": 25.715375
+          },
+          {
+            "text": "Move.",
+            "start": 25.995375,
+            "end": 26.445375
+          },
+          {
+            "text": "I'm",
+            "start": 26.755375,
+            "end": 26.875375
+          },
+          {
+            "text": "opening",
+            "start": 26.865375,
+            "end": 27.175375
+          },
+          {
+            "text": "the",
+            "start": 27.165375,
+            "end": 27.325375
           },
           {
             "text": "hatch",
-            "start": 27.706813,
-            "end": 27.976813
+            "start": 27.315375,
+            "end": 27.555374999999998
           },
           {
-            "text": "opens",
-            "start": 27.966813000000002,
-            "end": 28.256813
+            "text": "while",
+            "start": 27.545375,
+            "end": 27.815375
           },
           {
-            "text": "outward!",
-            "start": 28.246813,
-            "end": 28.616813
+            "text": "you",
+            "start": 27.805374999999998,
+            "end": 27.965375
           },
           {
-            "text": "Quick,",
-            "start": 28.876813,
-            "end": 29.116813
+            "text": "two",
+            "start": 27.955375,
+            "end": 28.105375
           },
           {
-            "text": "somebody",
-            "start": 29.346813,
-            "end": 29.606813
+            "text": "finish",
+            "start": 28.095375,
+            "end": 28.405375
           },
           {
-            "text": "lift",
-            "start": 29.596813,
-            "end": 29.816813
+            "text": "your",
+            "start": 28.395375,
+            "end": 28.585375
           },
           {
-            "text": "me",
-            "start": 29.806813,
-            "end": 29.916812999999998
-          },
-          {
-            "text": "up!",
-            "start": 29.906813,
-            "end": 30.006813
+            "text": "speeches.",
+            "start": 28.575375,
+            "end": 29.015375
           }
         ],
         "emphasis": [
-          "outward!",
-          "Quick,"
+          "Babe,",
+          "speeches."
         ],
-        "mood": "excited",
+        "mood": "smug",
         "listenerReaction": "surprised"
       },
       {
@@ -570,236 +525,255 @@
         "kind": "response",
         "characterId": "grok",
         "audioRole": "grok",
-        "start": 30.366666666666667,
-        "end": 37.8,
-        "voiceStart": 30.877626,
-        "voiceEnd": 37.500834,
+        "start": 29.533333333333335,
+        "end": 37.733333333333334,
+        "voiceStart": 30.047417,
+        "voiceEnd": 37.443688,
         "words": [
           {
-            "text": "Relax.",
-            "start": 30.907626,
-            "end": 31.697626
+            "text": "Look",
+            "start": 30.147417,
+            "end": 30.397417
           },
           {
-            "text": "I",
-            "start": 31.877626,
-            "end": 31.977626
-          },
-          {
-            "text": "already",
-            "start": 31.967626,
-            "end": 32.267626
-          },
-          {
-            "text": "pressed",
-            "start": 32.257626,
-            "end": 32.627626
-          },
-          {
-            "text": "every",
-            "start": 32.617626,
-            "end": 32.847626
-          },
-          {
-            "text": "button.",
-            "start": 32.837626,
-            "end": 33.177626
-          },
-          {
-            "text": "Twice.",
-            "start": 33.587626,
-            "end": 34.087626
-          },
-          {
-            "text": "Worst",
-            "start": 34.447626,
-            "end": 34.827626
-          },
-          {
-            "text": "case?",
-            "start": 34.817626,
-            "end": 35.097626
-          },
-          {
-            "text": "We",
-            "start": 35.417626,
-            "end": 35.567626
-          },
-          {
-            "text": "become",
-            "start": 35.557626,
-            "end": 35.877626
+            "text": "on",
+            "start": 30.387417,
+            "end": 30.527417
           },
           {
             "text": "the",
-            "start": 35.867626,
-            "end": 36.057626
+            "start": 30.517417,
+            "end": 30.697416999999998
           },
           {
-            "text": "world's",
-            "start": 36.047626,
-            "end": 36.457626
+            "text": "bright",
+            "start": 30.687417,
+            "end": 31.037416999999998
           },
           {
-            "text": "first",
-            "start": 36.447626,
-            "end": 36.807626
+            "text": "side.",
+            "start": 31.027417,
+            "end": 31.237417
           },
           {
-            "text": "AI",
-            "start": 36.797626,
-            "end": 36.957626
+            "text": "Rising",
+            "start": 31.607416999999998,
+            "end": 32.137417
           },
           {
-            "text": "submarine.",
-            "start": 36.947626,
-            "end": 37.387626
+            "text": "water,",
+            "start": 32.127417,
+            "end": 32.577417
+          },
+          {
+            "text": "five",
+            "start": 32.877417,
+            "end": 33.277417
+          },
+          {
+            "text": "friends,",
+            "start": 33.267417,
+            "end": 33.707417
+          },
+          {
+            "text": "one",
+            "start": 33.847417,
+            "end": 34.137417
+          },
+          {
+            "text": "tiny",
+            "start": 34.127417,
+            "end": 34.497417
+          },
+          {
+            "text": "box...",
+            "start": 34.487417,
+            "end": 34.777417
+          },
+          {
+            "text": "technically,",
+            "start": 34.877417,
+            "end": 35.047416999999996
+          },
+          {
+            "text": "this",
+            "start": 35.437416999999996,
+            "end": 35.937416999999996
+          },
+          {
+            "text": "is",
+            "start": 35.927417,
+            "end": 36.177417
+          },
+          {
+            "text": "a",
+            "start": 36.167417,
+            "end": 36.347417
+          },
+          {
+            "text": "pool",
+            "start": 36.337417,
+            "end": 36.817417
+          },
+          {
+            "text": "party!",
+            "start": 36.807417,
+            "end": 37.347417
           }
         ],
         "emphasis": [
-          "Twice.",
-          "submarine."
+          "pool",
+          "party!"
         ],
-        "mood": "smug",
-        "listenerReaction": "confused"
+        "mood": "excited",
+        "listenerReaction": "happy"
       },
       {
         "index": 5,
         "kind": "response",
         "characterId": "meta",
         "audioRole": "meta",
-        "start": 37.8,
-        "end": 45,
-        "voiceStart": 38.300833999999995,
-        "voiceEnd": 44.69758399999999,
+        "start": 37.733333333333334,
+        "end": 44.766666666666666,
+        "voiceStart": 38.243688,
+        "voiceEnd": 44.470855,
         "words": [
           {
             "text": "Wait,",
-            "start": 38.330833999999996,
-            "end": 38.74083399999999
+            "start": 38.283688,
+            "end": 38.573688
           },
           {
-            "text": "wait,",
-            "start": 38.830833999999996,
-            "end": 39.870833999999995
+            "text": "don't",
+            "start": 38.563688,
+            "end": 38.863687999999996
           },
           {
-            "text": "let",
-            "start": 40.150833999999996,
-            "end": 40.330833999999996
+            "text": "climb",
+            "start": 38.853688,
+            "end": 39.313688
           },
           {
-            "text": "me",
-            "start": 40.320834,
-            "end": 40.520833999999994
+            "text": "out",
+            "start": 39.303688,
+            "end": 39.553688
           },
           {
-            "text": "post",
-            "start": 40.510833999999996,
-            "end": 40.750834
+            "text": "without",
+            "start": 39.543687999999996,
+            "end": 40.053688
+          },
+          {
+            "text": "me!",
+            "start": 40.043687999999996,
+            "end": 40.233688
+          },
+          {
+            "text": "Hold",
+            "start": 40.513688,
+            "end": 40.853688
+          },
+          {
+            "text": "my",
+            "start": 40.843688,
+            "end": 41.083687999999995
+          },
+          {
+            "text": "hand!",
+            "start": 41.073688,
+            "end": 41.413688
+          },
+          {
+            "text": "Nobody",
+            "start": 41.683688,
+            "end": 42.023688
+          },
+          {
+            "text": "leaves",
+            "start": 42.013688,
+            "end": 42.333687999999995
           },
           {
             "text": "this",
-            "start": 40.74083399999999,
-            "end": 41.03083399999999
-          },
-          {
-            "text": "first!",
-            "start": 41.020833999999994,
-            "end": 41.28083399999999
-          },
-          {
-            "text": "Hashtag",
-            "start": 41.370833999999995,
-            "end": 41.650833999999996
+            "start": 42.323688,
+            "end": 42.653688
           },
           {
             "text": "elevator",
-            "start": 41.640834,
-            "end": 41.890834
+            "start": 42.643688,
+            "end": 43.063688
           },
           {
-            "text": "pool",
-            "start": 41.88083399999999,
-            "end": 42.020833999999994
+            "text": "unless",
+            "start": 43.053688,
+            "end": 43.423688
           },
           {
-            "text": "party!",
-            "start": 42.010833999999996,
-            "end": 42.470833999999996
+            "text": "we",
+            "start": 43.413688,
+            "end": 43.573688
           },
           {
-            "text": "Okay,",
-            "start": 42.590833999999994,
-            "end": 43.520833999999994
+            "text": "leave",
+            "start": 43.563688,
+            "end": 43.903688
           },
           {
-            "text": "okay...",
-            "start": 43.780834,
-            "end": 43.820834
-          },
-          {
-            "text": "I'm",
-            "start": 43.910833999999994,
-            "end": 44.090833999999994
-          },
-          {
-            "text": "helping!",
-            "start": 44.080833999999996,
-            "end": 44.610834
+            "text": "together!",
+            "start": 43.893688,
+            "end": 44.393688
           }
         ],
         "emphasis": [
-          "post",
-          "pool",
-          "party!"
+          "without",
+          "together!"
         ],
-        "mood": "cheerful",
+        "mood": "worried",
         "listenerReaction": "surprised"
       },
       {
         "index": 6,
         "kind": "ending",
         "audioRole": "narrator_outro",
-        "start": 45,
+        "start": 44.766666666666666,
         "end": 49.06666666666667,
-        "voiceStart": 45.34758399999999,
-        "voiceEnd": 48.06475099999999,
+        "voiceStart": 45.120855,
+        "voiceEnd": 48.06073,
         "words": [
           {
             "text": "So...",
-            "start": 45.37758399999999,
-            "end": 46.09758399999999
+            "start": 45.150855,
+            "end": 45.900855
           },
           {
             "text": "which",
-            "start": 46.33758399999999,
-            "end": 46.69758399999999
+            "start": 46.180855,
+            "end": 46.570855
           },
           {
             "text": "AI",
-            "start": 46.687583999999994,
-            "end": 46.87758399999999
+            "start": 46.560855,
+            "end": 46.760855
           },
           {
             "text": "had",
-            "start": 46.867583999999994,
-            "end": 47.09758399999999
+            "start": 46.750855,
+            "end": 47.000855
           },
           {
             "text": "the",
-            "start": 47.08758399999999,
-            "end": 47.30758399999999
+            "start": 46.990854999999996,
+            "end": 47.230855
           },
           {
             "text": "best",
-            "start": 47.29758399999999,
-            "end": 47.617583999999994
+            "start": 47.220855,
+            "end": 47.560855
           },
           {
             "text": "answer?",
-            "start": 47.60758399999999,
-            "end": 47.99758399999999
+            "start": 47.550855,
+            "end": 47.980855
           }
         ],
         "emphasis": [],
@@ -847,13 +821,13 @@
       {
         "name": "narrator_intro: captions inside the voice window",
         "ok": true,
-        "detail": "0.30–5.17s",
+        "detail": "0.30–5.58s",
         "scene": 0
       },
       {
         "name": "narrator_intro: mouth driven by the voice",
         "ok": true,
-        "detail": "147/146 envelope frames, 86% mouth-active",
+        "detail": "159/158 envelope frames, 85% mouth-active",
         "scene": 0
       },
       {
@@ -865,19 +839,19 @@
       {
         "name": "chatgpt: captions match the line",
         "ok": true,
-        "detail": "23 words",
+        "detail": "21 words",
         "scene": 1
       },
       {
         "name": "chatgpt: captions inside the voice window",
         "ok": true,
-        "detail": "5.97–14.65s",
+        "detail": "6.38–14.48s",
         "scene": 1
       },
       {
         "name": "chatgpt: mouth driven by the voice",
         "ok": true,
-        "detail": "261/260 envelope frames, 69% mouth-active",
+        "detail": "244/243 envelope frames, 67% mouth-active",
         "scene": 1
       },
       {
@@ -889,19 +863,19 @@
       {
         "name": "claude: captions match the line",
         "ok": true,
-        "detail": "22 words",
+        "detail": "18 words",
         "scene": 2
       },
       {
         "name": "claude: captions inside the voice window",
         "ok": true,
-        "detail": "15.45–22.86s",
+        "detail": "15.28–21.68s",
         "scene": 2
       },
       {
         "name": "claude: mouth driven by the voice",
         "ok": true,
-        "detail": "223/222 envelope frames, 72% mouth-active",
+        "detail": "192/192 envelope frames, 73% mouth-active",
         "scene": 2
       },
       {
@@ -913,19 +887,19 @@
       {
         "name": "gemini: captions match the line",
         "ok": true,
-        "detail": "21 words",
+        "detail": "19 words",
         "scene": 3
       },
       {
         "name": "gemini: captions inside the voice window",
         "ok": true,
-        "detail": "23.66–30.08s",
+        "detail": "22.48–29.25s",
         "scene": 3
       },
       {
         "name": "gemini: mouth driven by the voice",
         "ok": true,
-        "detail": "193/193 envelope frames, 82% mouth-active",
+        "detail": "204/203 envelope frames, 76% mouth-active",
         "scene": 3
       },
       {
@@ -937,19 +911,19 @@
       {
         "name": "grok: captions match the line",
         "ok": true,
-        "detail": "16 words",
+        "detail": "18 words",
         "scene": 4
       },
       {
         "name": "grok: captions inside the voice window",
         "ok": true,
-        "detail": "30.88–37.50s",
+        "detail": "30.05–37.44s",
         "scene": 4
       },
       {
         "name": "grok: mouth driven by the voice",
         "ok": true,
-        "detail": "199/199 envelope frames, 74% mouth-active",
+        "detail": "222/222 envelope frames, 79% mouth-active",
         "scene": 4
       },
       {
@@ -961,19 +935,19 @@
       {
         "name": "meta: captions match the line",
         "ok": true,
-        "detail": "15 words",
+        "detail": "17 words",
         "scene": 5
       },
       {
         "name": "meta: captions inside the voice window",
         "ok": true,
-        "detail": "38.30–44.70s",
+        "detail": "38.24–44.47s",
         "scene": 5
       },
       {
         "name": "meta: mouth driven by the voice",
         "ok": true,
-        "detail": "192/192 envelope frames, 81% mouth-active",
+        "detail": "187/187 envelope frames, 86% mouth-active",
         "scene": 5
       },
       {
@@ -991,24 +965,24 @@
       {
         "name": "narrator_outro: captions inside the voice window",
         "ok": true,
-        "detail": "45.35–48.06s",
+        "detail": "45.12–48.06s",
         "scene": 6
       },
       {
         "name": "narrator_outro: mouth driven by the voice",
         "ok": true,
-        "detail": "82/82 envelope frames, 88% mouth-active",
+        "detail": "89/88 envelope frames, 88% mouth-active",
         "scene": 6
       },
       {
         "name": "no overlapping voices",
         "ok": true,
-        "detail": "0.30–5.17 | 5.97–14.65 | 15.45–22.86 | 23.66–30.08 | 30.88–37.50 | 38.30–44.70 | 45.35–48.06"
+        "detail": "0.30–5.58 | 6.38–14.48 | 15.28–21.68 | 22.48–29.25 | 30.05–37.44 | 38.24–44.47 | 45.12–48.06"
       },
       {
         "name": "audio not clipping",
         "ok": true,
-        "detail": "peak 0.859"
+        "detail": "peak 0.862"
       },
       {
         "name": "ChatGPT: rendered with library sprites",
@@ -1018,7 +992,7 @@
       {
         "name": "ChatGPT: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.8%"
+        "detail": "body overlap 99.7%"
       },
       {
         "name": "Claude: rendered with library sprites",
@@ -1028,7 +1002,7 @@
       {
         "name": "Claude: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.7%"
+        "detail": "body overlap 99.2%"
       },
       {
         "name": "Gemini: rendered with library sprites",
@@ -1038,7 +1012,7 @@
       {
         "name": "Gemini: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.4%"
+        "detail": "body overlap 99.7%"
       },
       {
         "name": "Grok: rendered with library sprites",
@@ -1058,12 +1032,12 @@
       {
         "name": "Meta AI: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.2%"
+        "detail": "body overlap 99.7%"
       },
       {
         "name": "scene 0 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 5.47s (expected 5.47s)",
+        "detail": "h264 1080x1920 5.87s (expected 5.87s)",
         "scene": 0
       },
       {
@@ -1081,7 +1055,7 @@
       {
         "name": "scene 1 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 9.50s (expected 9.50s)",
+        "detail": "h264 1080x1920 8.93s (expected 8.93s)",
         "scene": 1
       },
       {
@@ -1099,7 +1073,7 @@
       {
         "name": "scene 2 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 8.20s (expected 8.20s)",
+        "detail": "h264 1080x1920 7.17s (expected 7.17s)",
         "scene": 2
       },
       {
@@ -1117,7 +1091,7 @@
       {
         "name": "scene 3 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 7.20s (expected 7.20s)",
+        "detail": "h264 1080x1920 7.57s (expected 7.57s)",
         "scene": 3
       },
       {
@@ -1135,7 +1109,7 @@
       {
         "name": "scene 4 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 7.43s (expected 7.43s)",
+        "detail": "h264 1080x1920 8.20s (expected 8.20s)",
         "scene": 4
       },
       {
@@ -1153,7 +1127,7 @@
       {
         "name": "scene 5 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 7.20s (expected 7.20s)",
+        "detail": "h264 1080x1920 7.03s (expected 7.03s)",
         "scene": 5
       },
       {
@@ -1171,7 +1145,7 @@
       {
         "name": "scene 6 clip valid",
         "ok": true,
-        "detail": "h264 1080x1920 4.07s (expected 4.07s)",
+        "detail": "h264 1080x1920 4.30s (expected 4.30s)",
         "scene": 6
       },
       {
@@ -1223,91 +1197,6 @@
       }
     ],
     "failedScenes": [],
-    "checkedAt": "2026-11-27T07:33:15.055Z"
-  },
-  "stages": {
-    "script": {
-      "status": "done",
-      "log": [
-        "07:31:36 script already present"
-      ],
-      "startedAt": "2026-11-27T07:31:36.806Z",
-      "finishedAt": "2026-11-27T07:31:36.806Z"
-    },
-    "characters": {
-      "status": "done",
-      "log": [
-        "07:31:36 ChatGPT: 9 expressions ready",
-        "07:31:36 Claude: 9 expressions ready",
-        "07:31:36 Gemini: 9 expressions ready",
-        "07:31:36 Grok: 9 expressions ready",
-        "07:31:36 Meta AI: 9 expressions ready"
-      ],
-      "startedAt": "2026-11-27T07:31:36.807Z",
-      "finishedAt": "2026-11-27T07:31:36.808Z"
-    },
-    "background": {
-      "status": "done",
-      "log": [
-        "07:31:36 background already present"
-      ],
-      "startedAt": "2026-11-27T07:31:36.809Z",
-      "finishedAt": "2026-11-27T07:31:36.810Z"
-    },
-    "voices": {
-      "status": "done",
-      "log": [
-        "07:31:37 raw speech 48.5s → tempo ×1.127",
-        "07:31:37 narrator_intro: 4.87s, 17 words (estimated timing)",
-        "07:31:38 chatgpt: 8.68s, 23 words (estimated timing)",
-        "07:31:38 claude: 7.41s, 22 words (estimated timing)",
-        "07:31:39 gemini: 6.42s, 21 words (estimated timing)",
-        "07:31:39 grok: 6.62s, 16 words (estimated timing)",
-        "07:31:40 meta: 6.40s, 15 words (estimated timing)",
-        "07:31:40 narrator_outro: 2.72s, 7 words (estimated timing)"
-      ],
-      "startedAt": "2026-11-27T07:31:36.810Z",
-      "finishedAt": "2026-11-27T07:31:40.650Z"
-    },
-    "timeline": {
-      "status": "done",
-      "log": [
-        "07:31:40 7 scenes, 49.07s"
-      ],
-      "startedAt": "2026-11-27T07:31:40.651Z",
-      "finishedAt": "2026-11-27T07:31:40.653Z"
-    },
-    "render": {
-      "status": "done",
-      "log": [
-        "07:31:50 scene 0 (intro): 164 frames in 8.9s",
-        "07:32:03 scene 1 (response chatgpt): 285 frames in 13.7s",
-        "07:32:15 scene 2 (response claude): 246 frames in 12.0s",
-        "07:32:26 scene 3 (response gemini): 216 frames in 10.5s",
-        "07:32:37 scene 4 (response grok): 223 frames in 11.4s",
-        "07:32:48 scene 5 (response meta): 216 frames in 10.8s",
-        "07:32:54 scene 6 (ending): 122 frames in 6.0s",
-        "07:32:56 soundtrack mixed (peak 0.859)",
-        "07:32:59 assembled final video (49.07s)"
-      ],
-      "startedAt": "2026-11-27T07:31:40.654Z",
-      "finishedAt": "2026-11-27T07:32:59.100Z"
-    },
-    "qc": {
-      "status": "done",
-      "log": [
-        "07:33:15 QC: 72/72 checks passed"
-      ],
-      "startedAt": "2026-11-27T07:32:59.110Z",
-      "finishedAt": "2026-11-27T07:33:15.055Z"
-    },
-    "export": {
-      "status": "done",
-      "log": [
-        "07:33:15 exported outputs/what-would-five-ais-do-if-they-were-trapped-in-a-flooding-el-e12972ab.mp4"
-      ],
-      "startedAt": "2026-11-27T07:33:15.057Z",
-      "finishedAt": "2026-11-27T07:33:15.088Z"
-    }
+    "checkedAt": "2026-11-27T09:43:36.099Z"
   }
 }
