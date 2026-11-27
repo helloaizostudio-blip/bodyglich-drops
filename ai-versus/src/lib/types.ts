@@ -217,7 +217,7 @@ export interface Project {
   status: "queued" | "running" | "done" | "failed";
   stages: Record<StageName, StageState>;
   script?: Script;
-  background?: { key: string; videoKey?: string; source: "fal" | "import" };
+  background?: { key: string; videoKey?: string; source: "fal" | "import" | "procedural"; procedural?: string };
   audio: Partial<Record<AudioRole, AudioClip>>;
   timeline?: Timeline;
   sceneRenders: Record<number, { key: string; frames: number; renderedAt: string; hash: string }>;

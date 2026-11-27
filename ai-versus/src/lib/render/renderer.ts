@@ -5,6 +5,7 @@ import { createCanvas, GlobalFonts, loadImage, type Canvas, type Image, type SKR
 import { FFMPEG, probe } from "../audio/ffmpeg";
 import { rng } from "../audio/synth";
 import { ASSETS_DIR } from "../store";
+import { drawProcedural, PROCEDURAL_HOLE, type ProceduralScene } from "./procedural";
 import {
   CHARACTER_ORDER,
   type CharacterId,
@@ -36,7 +37,9 @@ const DISPLAY = "Lilita";
 const UI = "Inter, 'DejaVu Sans', sans-serif";
 
 export interface RenderAssets {
-  background: Image;
+  background: Image | null;
+  /** animated environment drawn in code instead of an image */
+  procedural?: ProceduralScene;
   backgroundVideo?: string;
   characters: Record<CharacterId, CharacterProfile>;
   sprites: Record<CharacterId, Partial<Record<Expression, Image>>>;
@@ -45,7 +48,8 @@ export interface RenderAssets {
 }
 
 export async function loadRenderAssets(opts: {
-  backgroundPath: string;
+  backgroundPath?: string;
+  procedural?: ProceduralScene;
   backgroundVideoPath?: string;
   characters: Record<CharacterId, CharacterProfile>;
   spritePath: (key: string) => Promise<string>;
@@ -60,7 +64,8 @@ export async function loadRenderAssets(opts: {
     }
   }
   return {
-    background: await loadImage(opts.backgroundPath),
+    background: opts.backgroundPath ? await loadImage(opts.backgroundPath) : null,
+    procedural: opts.procedural,
     backgroundVideo: opts.backgroundVideoPath,
     characters: opts.characters,
     sprites,
@@ -208,6 +213,14 @@ export class SceneRenderer {
     const H = img.height * scale;
     const bmp = this.cache.get(img, key, w, H, o.dim ?? 0);
     const ctx = this.ctx;
+    if (this.hazard !== "water") {
+      ctx.save();
+      ctx.fillStyle = `rgba(0,0,0,${0.35 * Math.max(0.3, 1 - (o.hop ?? 0) / (h * 0.3))})`;
+      ctx.beginPath();
+      ctx.ellipse(x, feetY, h * 0.26, h * 0.045, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
     ctx.save();
     ctx.globalAlpha = o.alpha ?? 1;
     ctx.translate(x, feetY - (o.hop ?? 0));
@@ -233,7 +246,22 @@ export class SceneRenderer {
     const { ctx } = this;
     const W = this.tl.width,
       H = this.tl.height;
-    const src: Image | Canvas = this.bgFrame ?? this.a.background;
+    const sxn = noise(f.t * 9, 1) * shake * this.k,
+      syn = noise(f.t * 9, 2) * shake * this.k;
+    if (!this.bgFrame && this.a.procedural) {
+      // camera: zoom about the focus point, plus a slow "gravity" wobble for space scenes
+      const fx = W / 2,
+        fy = focusY * this.k;
+      ctx.save();
+      ctx.translate(fx + sxn, fy + syn);
+      if (this.hazard === "space") ctx.rotate(Math.sin(f.t * 0.9) * 0.018);
+      ctx.scale(zoom * 1.04, zoom * 1.04);
+      ctx.translate(-fx, -fy);
+      drawProcedural(this.a.procedural, ctx, f.t, this.k);
+      ctx.restore();
+      return;
+    }
+    const src: Image | Canvas = this.bgFrame ?? this.a.background!;
     const c0 = Math.max(W / src.width, H / src.height);
     const w0 = src.width * c0,
       h0 = src.height * c0;
@@ -241,8 +269,6 @@ export class SceneRenderer {
       y0 = (H - h0) / 2;
     const fx = W / 2,
       fy = focusY * this.k;
-    const sxn = noise(f.t * 9, 1) * shake * this.k,
-      syn = noise(f.t * 9, 2) * shake * this.k;
     ctx.drawImage(src, fx + (x0 - fx) * zoom + sxn, fy + (y0 - fy) * zoom + syn, w0 * zoom, h0 * zoom);
   }
 
@@ -250,7 +276,14 @@ export class SceneRenderer {
     if (this.hazard === "none" || this.hazard === "snow") return;
     const { ctx, k } = this;
     const flick = 0.55 + 0.45 * Math.max(0, Math.sin(t * 5.2)) * (0.7 + 0.3 * noise(t * 6, 9));
-    const color = this.hazard === "water" || this.hazard === "fire" || this.hazard === "zombies" ? "255,40,40" : "80,140,255";
+    const color =
+      this.hazard === "space"
+        ? Math.floor(t * 1.6) % 2
+          ? "255,40,60"
+          : "60,120,255"
+        : this.hazard === "water" || this.hazard === "fire" || this.hazard === "zombies"
+          ? "255,40,40"
+          : "80,140,255";
     const g = ctx.createRadialGradient(540 * k, 190 * k, 10, 540 * k, 190 * k, 900 * k);
     g.addColorStop(0, `rgba(${color},${0.22 * flick})`);
     g.addColorStop(1, `rgba(${color},0)`);
@@ -345,10 +378,14 @@ export class SceneRenderer {
         ctx.arc(x0 + Math.sin(t + i) * 40 * k, lerp(-20, H, p), size * 0.8 * k, 0, Math.PI * 2);
         ctx.fill();
       } else if (this.hazard === "space") {
-        const tw = 0.5 + 0.5 * Math.sin(t * (1 + speed * 3) + i * 7);
-        ctx.fillStyle = `rgba(255,255,255,${0.7 * tw})`;
+        // glowing dust being pulled toward the black hole
+        const p = (t * speed * 0.18 + ph) % 1;
+        const y0 = (0.55 + r() * 0.4) * H;
+        const x = lerp(x0, PROCEDURAL_HOLE.x * k, p * p);
+        const y = lerp(y0, PROCEDURAL_HOLE.y * k, p * p);
+        ctx.fillStyle = `rgba(${i % 2 ? "255,190,120" : "190,160,255"},${0.75 * (1 - p)})`;
         ctx.beginPath();
-        ctx.arc(x0, r() * H * 0.6, size * 0.4 * k, 0, Math.PI * 2);
+        ctx.ellipse(x, y, size * 0.9 * k, size * 0.45 * k, Math.atan2(PROCEDURAL_HOLE.y * k - y, PROCEDURAL_HOLE.x * k - x), 0, Math.PI * 2);
         ctx.fill();
       } else if (this.hazard === "sand" || this.hazard === "zombies") {
         const p = (t * speed * 0.12 + ph) % 1;

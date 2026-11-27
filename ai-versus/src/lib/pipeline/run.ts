@@ -9,6 +9,7 @@ import { synthesize } from "../providers/elevenlabs";
 import { generateImage, imageToVideo } from "../providers/fal";
 import { loadRenderAssets, renderSceneToFile, SceneRenderer } from "../render/renderer";
 import { assembleVideo, mixSoundtrack } from "../render/mix";
+import type { ProceduralScene } from "../render/procedural";
 import { APP_ROOT, DATA_DIR, getIdea, getProject, getStore, loadSettings, saveProject } from "../store";
 import {
   AUDIO_ROLES,
@@ -149,7 +150,8 @@ export async function runPipeline(req: RunRequest, log: Logger = console.log): P
   // ---------------- 3. background ----------------
   await stage("background", async (l) => {
     const sc = p!.script!;
-    if (!p!.background || !(await store.hasFile(p!.background.key))) {
+    if (p!.background?.source === "procedural") l(`procedural animated background: ${p!.background.procedural}`);
+    else if (!p!.background || !(await store.hasFile(p!.background.key))) {
       await assertBudget(p!, s, s.costLimits.falImageUsd, "background");
       l("generating environment with fal.ai");
       const prompt = `High-quality 2D cartoon anime background illustration, vertical 9:16, ${sc.environment.prompt}. Palette: ${sc.environment.palette}. NO characters, NO people, NO text. Clean cel-shaded style matching: ${STYLE_PROMPT}.`;
@@ -159,7 +161,7 @@ export async function runPipeline(req: RunRequest, log: Logger = console.log): P
       await store.putFile(key, file);
       p!.background = { key, source: "fal" };
     } else l("background already present");
-    if (s.providers.useImageToVideoBackground && !p!.background.videoKey) {
+    if (s.providers.useImageToVideoBackground && p!.background!.source !== "procedural" && !p!.background!.videoKey) {
       await assertBudget(p!, s, s.costLimits.falVideoUsd, "ambient background video");
       l("animating background ambience (image-to-video)");
       const vid = await imageToVideo(s, await store.localPath(p!.background.key), sc.environment.prompt, path.join(workDir(p!), "background.mp4"));
@@ -271,7 +273,8 @@ export async function runPipeline(req: RunRequest, log: Logger = console.log): P
     const envelopes: Record<string, number[]> = {};
     for (const r of AUDIO_ROLES) envelopes[r] = p!.audio[r]!.envelope;
     const assets = await loadRenderAssets({
-      backgroundPath: await store.localPath(p!.background!.key),
+      backgroundPath: p!.background!.source === "procedural" ? undefined : await store.localPath(p!.background!.key),
+      procedural: p!.background!.source === "procedural" ? (p!.background!.procedural as ProceduralScene) : undefined,
       backgroundVideoPath: p!.background!.videoKey ? await store.localPath(p!.background!.videoKey) : undefined,
       characters,
       spritePath: (k) => store.localPath(k),

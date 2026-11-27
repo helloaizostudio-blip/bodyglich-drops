@@ -1,0 +1,1197 @@
+{
+  "projectId": "94911ddd-1fa1-4f95-9cd3-d50f2ce0eb8d",
+  "script": {
+    "title": "Black Hole",
+    "hookTop": "5 AIs. 1 black hole.",
+    "hookBottom": "Who survives?",
+    "narratorIntro": "[urgent, dramatic] Five AIs. One spaceship. And it's getting sucked into a black hole! Who saves the day?",
+    "narratorOutro": "[curious] So... which AI would you trust to fly?",
+    "endingCaption": "Which AI would you trust to fly?",
+    "environment": {
+      "prompt": "tiny spaceship cockpit, huge window showing a swirling black hole with an orange-purple accretion disk, blinking consoles, alarm lights",
+      "hazard": "space",
+      "palette": "deep purple, orange, teal"
+    },
+    "disclaimer": "Fictional parody · not real AI outputs",
+    "lines": [
+      {
+        "characterId": "chatgpt",
+        "text": "[proud, clueless] Easy! Step one: open the window and let the black hole out. Step two... wait, why am I stretching?",
+        "emphasis": [
+          "window",
+          "stretching?"
+        ],
+        "mood": "cheerful",
+        "listenerReaction": "confused",
+        "caption": "Easy! Step one: open the window and let the black hole out. Step two... wait, why am I stretching?"
+      },
+      {
+        "characterId": "claude",
+        "text": "[calm, determined] Everyone, grab on. We fire the engines right at the edge and slingshot out. I'll steer. I've got you.",
+        "emphasis": [
+          "slingshot",
+          "got"
+        ],
+        "mood": "calm",
+        "listenerReaction": "happy",
+        "caption": "Everyone, grab on. We fire the engines right at the edge and slingshot out. I'll steer. I've got you."
+      },
+      {
+        "characterId": "gemini",
+        "text": "[sassy, unimpressed] He just tried to open a window in space. Iconic. Move, sweetie. I'll fix the orbit before he helps again.",
+        "emphasis": [
+          "Iconic.",
+          "sweetie."
+        ],
+        "mood": "smug",
+        "listenerReaction": "surprised",
+        "caption": "He just tried to open a window in space. Iconic. Move, sweetie. I'll fix the orbit before he helps again."
+      },
+      {
+        "characterId": "grok",
+        "text": "[playful, laughing] Relax, guys. Near a black hole, time slows down. So technically... I'm still on my lunch break!",
+        "emphasis": [
+          "lunch",
+          "break!"
+        ],
+        "mood": "excited",
+        "listenerReaction": "happy",
+        "caption": "Relax, guys. Near a black hole, time slows down. So technically... I'm still on my lunch break!"
+      },
+      {
+        "characterId": "meta",
+        "text": "[whiny, clingy] Nobody let go of me! Promise we stay together forever? Okay, group hug... and one last selfie!",
+        "emphasis": [
+          "forever?",
+          "selfie!"
+        ],
+        "mood": "worried",
+        "listenerReaction": "surprised",
+        "caption": "Nobody let go of me! Promise we stay together forever? Okay, group hug... and one last selfie!"
+      }
+    ]
+  },
+  "timeline": {
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "duration": 49.06666666666667,
+    "scenes": [
+      {
+        "index": 0,
+        "kind": "intro",
+        "audioRole": "narrator_intro",
+        "start": 0,
+        "end": 5.933333333333334,
+        "voiceStart": 0.3,
+        "voiceEnd": 5.625354,
+        "words": [
+          {
+            "text": "Five",
+            "start": 0.35,
+            "end": 0.81
+          },
+          {
+            "text": "AIs.",
+            "start": 0.81,
+            "end": 1.19
+          },
+          {
+            "text": "One",
+            "start": 1.4100000000000001,
+            "end": 1.62
+          },
+          {
+            "text": "spaceship.",
+            "start": 1.61,
+            "end": 2.21
+          },
+          {
+            "text": "And",
+            "start": 2.56,
+            "end": 2.7399999999999998
+          },
+          {
+            "text": "it's",
+            "start": 2.73,
+            "end": 2.9499999999999997
+          },
+          {
+            "text": "getting",
+            "start": 2.94,
+            "end": 3.23
+          },
+          {
+            "text": "sucked",
+            "start": 3.23,
+            "end": 3.56
+          },
+          {
+            "text": "into",
+            "start": 3.56,
+            "end": 3.78
+          },
+          {
+            "text": "a",
+            "start": 3.77,
+            "end": 3.86
+          },
+          {
+            "text": "black",
+            "start": 3.85,
+            "end": 4.15
+          },
+          {
+            "text": "hole!",
+            "start": 4.14,
+            "end": 4.32
+          },
+          {
+            "text": "Who",
+            "start": 4.76,
+            "end": 4.92
+          },
+          {
+            "text": "saves",
+            "start": 4.91,
+            "end": 5.2299999999999995
+          },
+          {
+            "text": "the",
+            "start": 5.22,
+            "end": 5.39
+          },
+          {
+            "text": "day?",
+            "start": 5.38,
+            "end": 5.54
+          }
+        ],
+        "emphasis": [],
+        "mood": "worried",
+        "listenerReaction": "surprised"
+      },
+      {
+        "index": 1,
+        "kind": "response",
+        "characterId": "chatgpt",
+        "audioRole": "chatgpt",
+        "start": 5.933333333333334,
+        "end": 13.533333333333333,
+        "voiceStart": 6.425354,
+        "voiceEnd": 13.2315,
+        "words": [
+          {
+            "text": "Easy!",
+            "start": 6.445353999999999,
+            "end": 6.8853539999999995
+          },
+          {
+            "text": "Step",
+            "start": 7.265353999999999,
+            "end": 7.605353999999999
+          },
+          {
+            "text": "one:",
+            "start": 7.5953539999999995,
+            "end": 7.795354
+          },
+          {
+            "text": "open",
+            "start": 8.255354,
+            "end": 8.475354
+          },
+          {
+            "text": "the",
+            "start": 8.465354,
+            "end": 8.635354
+          },
+          {
+            "text": "window",
+            "start": 8.625354,
+            "end": 8.905353999999999
+          },
+          {
+            "text": "and",
+            "start": 8.895354,
+            "end": 9.065354
+          },
+          {
+            "text": "let",
+            "start": 9.055354,
+            "end": 9.225354
+          },
+          {
+            "text": "the",
+            "start": 9.215354,
+            "end": 9.445354
+          },
+          {
+            "text": "black",
+            "start": 9.435354,
+            "end": 9.685354
+          },
+          {
+            "text": "hole",
+            "start": 9.675353999999999,
+            "end": 9.905353999999999
+          },
+          {
+            "text": "out.",
+            "start": 9.895354,
+            "end": 10.085353999999999
+          },
+          {
+            "text": "Step",
+            "start": 10.615354,
+            "end": 10.985354000000001
+          },
+          {
+            "text": "two...",
+            "start": 10.975354,
+            "end": 11.215354
+          },
+          {
+            "text": "wait,",
+            "start": 11.665354,
+            "end": 11.835353999999999
+          },
+          {
+            "text": "why",
+            "start": 12.205354,
+            "end": 12.375354
+          },
+          {
+            "text": "am",
+            "start": 12.365354,
+            "end": 12.505354
+          },
+          {
+            "text": "I",
+            "start": 12.495353999999999,
+            "end": 12.605353999999998
+          },
+          {
+            "text": "stretching?",
+            "start": 12.595354,
+            "end": 13.085353999999999
+          }
+        ],
+        "emphasis": [
+          "window",
+          "stretching?"
+        ],
+        "mood": "cheerful",
+        "listenerReaction": "confused"
+      },
+      {
+        "index": 2,
+        "kind": "response",
+        "characterId": "claude",
+        "audioRole": "claude",
+        "start": 13.533333333333333,
+        "end": 20.5,
+        "voiceStart": 14.031500000000001,
+        "voiceEnd": 20.196729,
+        "words": [
+          {
+            "text": "Everyone,",
+            "start": 14.0615,
+            "end": 14.581500000000002
+          },
+          {
+            "text": "grab",
+            "start": 14.8115,
+            "end": 15.161500000000002
+          },
+          {
+            "text": "on.",
+            "start": 15.151500000000002,
+            "end": 15.351500000000001
+          },
+          {
+            "text": "We",
+            "start": 15.7215,
+            "end": 15.951500000000001
+          },
+          {
+            "text": "fire",
+            "start": 15.941500000000001,
+            "end": 16.151500000000002
+          },
+          {
+            "text": "the",
+            "start": 16.1415,
+            "end": 16.3215
+          },
+          {
+            "text": "engines",
+            "start": 16.311500000000002,
+            "end": 16.6415
+          },
+          {
+            "text": "right",
+            "start": 16.631500000000003,
+            "end": 16.9215
+          },
+          {
+            "text": "at",
+            "start": 16.9115,
+            "end": 17.081500000000002
+          },
+          {
+            "text": "the",
+            "start": 17.0715,
+            "end": 17.2515
+          },
+          {
+            "text": "edge",
+            "start": 17.241500000000002,
+            "end": 17.491500000000002
+          },
+          {
+            "text": "and",
+            "start": 17.4815,
+            "end": 17.8015
+          },
+          {
+            "text": "slingshot",
+            "start": 17.791500000000003,
+            "end": 18.2115
+          },
+          {
+            "text": "out.",
+            "start": 18.201500000000003,
+            "end": 18.4415
+          },
+          {
+            "text": "I'll",
+            "start": 18.8015,
+            "end": 18.9815
+          },
+          {
+            "text": "steer.",
+            "start": 18.971500000000002,
+            "end": 19.2515
+          },
+          {
+            "text": "I've",
+            "start": 19.5715,
+            "end": 19.741500000000002
+          },
+          {
+            "text": "got",
+            "start": 19.741500000000002,
+            "end": 19.9415
+          },
+          {
+            "text": "you.",
+            "start": 19.9415,
+            "end": 20.1115
+          }
+        ],
+        "emphasis": [
+          "slingshot",
+          "got"
+        ],
+        "mood": "calm",
+        "listenerReaction": "happy"
+      },
+      {
+        "index": 3,
+        "kind": "response",
+        "characterId": "gemini",
+        "audioRole": "gemini",
+        "start": 20.5,
+        "end": 27.966666666666665,
+        "voiceStart": 20.996729000000002,
+        "voiceEnd": 27.681729,
+        "words": [
+          {
+            "text": "He",
+            "start": 21.046729000000003,
+            "end": 21.186729000000003
+          },
+          {
+            "text": "just",
+            "start": 21.176729,
+            "end": 21.396729
+          },
+          {
+            "text": "tried",
+            "start": 21.386729000000003,
+            "end": 21.676729
+          },
+          {
+            "text": "to",
+            "start": 21.666729000000004,
+            "end": 21.836729000000002
+          },
+          {
+            "text": "open",
+            "start": 21.826729,
+            "end": 22.086729000000002
+          },
+          {
+            "text": "a",
+            "start": 22.076729,
+            "end": 22.176729
+          },
+          {
+            "text": "window",
+            "start": 22.166729000000004,
+            "end": 22.486729
+          },
+          {
+            "text": "in",
+            "start": 22.476729000000002,
+            "end": 22.616729000000003
+          },
+          {
+            "text": "space.",
+            "start": 22.606729,
+            "end": 22.856729
+          },
+          {
+            "text": "Iconic.",
+            "start": 22.956729000000003,
+            "end": 23.446729
+          },
+          {
+            "text": "Move,",
+            "start": 23.696729,
+            "end": 24.486729000000004
+          },
+          {
+            "text": "sweetie.",
+            "start": 24.866729000000003,
+            "end": 25.616729000000003
+          },
+          {
+            "text": "I'll",
+            "start": 25.726729000000002,
+            "end": 25.986729000000004
+          },
+          {
+            "text": "fix",
+            "start": 25.976729000000002,
+            "end": 26.206729000000003
+          },
+          {
+            "text": "the",
+            "start": 26.196729,
+            "end": 26.356729
+          },
+          {
+            "text": "orbit",
+            "start": 26.346729000000003,
+            "end": 26.636729000000003
+          },
+          {
+            "text": "before",
+            "start": 26.626729,
+            "end": 26.966729
+          },
+          {
+            "text": "he",
+            "start": 26.966729,
+            "end": 27.096729000000003
+          },
+          {
+            "text": "helps",
+            "start": 27.086729000000002,
+            "end": 27.376729
+          },
+          {
+            "text": "again.",
+            "start": 27.366729000000003,
+            "end": 27.596729000000003
+          }
+        ],
+        "emphasis": [
+          "Iconic.",
+          "sweetie."
+        ],
+        "mood": "smug",
+        "listenerReaction": "surprised"
+      },
+      {
+        "index": 4,
+        "kind": "response",
+        "characterId": "grok",
+        "audioRole": "grok",
+        "start": 27.966666666666665,
+        "end": 36.86666666666667,
+        "voiceStart": 28.481729,
+        "voiceEnd": 36.572417,
+        "words": [
+          {
+            "text": "Relax,",
+            "start": 28.601729000000002,
+            "end": 29.411729
+          },
+          {
+            "text": "guys.",
+            "start": 29.401729000000003,
+            "end": 29.991729000000003
+          },
+          {
+            "text": "Near",
+            "start": 30.441729000000002,
+            "end": 30.711729000000002
+          },
+          {
+            "text": "a",
+            "start": 30.701729,
+            "end": 30.831729000000003
+          },
+          {
+            "text": "black",
+            "start": 30.821729,
+            "end": 31.261729000000003
+          },
+          {
+            "text": "hole,",
+            "start": 31.251729,
+            "end": 31.521729
+          },
+          {
+            "text": "time",
+            "start": 31.661729,
+            "end": 32.001729000000005
+          },
+          {
+            "text": "slows",
+            "start": 31.991729000000003,
+            "end": 32.461729
+          },
+          {
+            "text": "down.",
+            "start": 32.451729,
+            "end": 32.831729
+          },
+          {
+            "text": "So",
+            "start": 33.281729,
+            "end": 33.541729000000004
+          },
+          {
+            "text": "technically...",
+            "start": 33.531729,
+            "end": 34.671729
+          },
+          {
+            "text": "I'm",
+            "start": 35.141729,
+            "end": 35.281729
+          },
+          {
+            "text": "still",
+            "start": 35.271729,
+            "end": 35.541729000000004
+          },
+          {
+            "text": "on",
+            "start": 35.541729000000004,
+            "end": 35.671729
+          },
+          {
+            "text": "my",
+            "start": 35.661729,
+            "end": 35.801729
+          },
+          {
+            "text": "lunch",
+            "start": 35.791729000000004,
+            "end": 36.031729
+          },
+          {
+            "text": "break!",
+            "start": 36.021729,
+            "end": 36.331729
+          }
+        ],
+        "emphasis": [
+          "lunch",
+          "break!"
+        ],
+        "mood": "excited",
+        "listenerReaction": "happy"
+      },
+      {
+        "index": 5,
+        "kind": "response",
+        "characterId": "meta",
+        "audioRole": "meta",
+        "start": 36.86666666666667,
+        "end": 44.5,
+        "voiceStart": 37.372417,
+        "voiceEnd": 44.20773,
+        "words": [
+          {
+            "text": "Nobody",
+            "start": 37.432417,
+            "end": 37.972417
+          },
+          {
+            "text": "let",
+            "start": 37.972417,
+            "end": 38.422416999999996
+          },
+          {
+            "text": "go",
+            "start": 38.422416999999996,
+            "end": 38.662417
+          },
+          {
+            "text": "of",
+            "start": 38.652417,
+            "end": 38.892417
+          },
+          {
+            "text": "me!",
+            "start": 38.882417,
+            "end": 39.122417
+          },
+          {
+            "text": "Promise",
+            "start": 39.372417,
+            "end": 39.702417
+          },
+          {
+            "text": "we",
+            "start": 39.692417,
+            "end": 39.912417
+          },
+          {
+            "text": "stay",
+            "start": 39.902417,
+            "end": 40.172416999999996
+          },
+          {
+            "text": "together",
+            "start": 40.162417,
+            "end": 40.622417
+          },
+          {
+            "text": "forever?",
+            "start": 40.612417,
+            "end": 40.942417
+          },
+          {
+            "text": "Okay,",
+            "start": 41.382417,
+            "end": 41.762417
+          },
+          {
+            "text": "group",
+            "start": 41.952417,
+            "end": 42.442417
+          },
+          {
+            "text": "hug...",
+            "start": 42.432417,
+            "end": 42.722417
+          },
+          {
+            "text": "and",
+            "start": 42.862417,
+            "end": 43.122417
+          },
+          {
+            "text": "one",
+            "start": 43.112417,
+            "end": 43.332417
+          },
+          {
+            "text": "last",
+            "start": 43.322417,
+            "end": 43.592417
+          },
+          {
+            "text": "selfie!",
+            "start": 43.582417,
+            "end": 44.122417
+          }
+        ],
+        "emphasis": [
+          "forever?",
+          "selfie!"
+        ],
+        "mood": "worried",
+        "listenerReaction": "surprised"
+      },
+      {
+        "index": 6,
+        "kind": "ending",
+        "audioRole": "narrator_outro",
+        "start": 44.5,
+        "end": 49.06666666666667,
+        "voiceStart": 44.85773,
+        "voiceEnd": 48.07998,
+        "words": [
+          {
+            "text": "So...",
+            "start": 44.907729999999994,
+            "end": 45.657729999999994
+          },
+          {
+            "text": "which",
+            "start": 45.88773,
+            "end": 46.257729999999995
+          },
+          {
+            "text": "AI",
+            "start": 46.24773,
+            "end": 46.467729999999996
+          },
+          {
+            "text": "would",
+            "start": 46.45773,
+            "end": 46.80773
+          },
+          {
+            "text": "you",
+            "start": 46.797729999999994,
+            "end": 47.037729999999996
+          },
+          {
+            "text": "trust",
+            "start": 47.02773,
+            "end": 47.38773
+          },
+          {
+            "text": "to",
+            "start": 47.37773,
+            "end": 47.687729999999995
+          },
+          {
+            "text": "fly?",
+            "start": 47.67773,
+            "end": 47.99773
+          }
+        ],
+        "emphasis": [],
+        "mood": "cheerful",
+        "listenerReaction": "happy"
+      }
+    ],
+    "seed": 7
+  },
+  "qc": {
+    "ok": true,
+    "checks": [
+      {
+        "name": "all five AI characters included",
+        "ok": true,
+        "detail": "chatgpt, claude, gemini, grok, meta"
+      },
+      {
+        "name": "all five answers present",
+        "ok": true,
+        "detail": "5 lines"
+      },
+      {
+        "name": "narrator introduces the situation",
+        "ok": true,
+        "detail": "[urgent, dramatic] Five AIs. One spaceship. And it's getting sucked into a black hole! Who saves the day?"
+      },
+      {
+        "name": "no superhero / movie content in script",
+        "ok": true,
+        "detail": "clean"
+      },
+      {
+        "name": "narrator_intro: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 0
+      },
+      {
+        "name": "narrator_intro: captions match the line",
+        "ok": true,
+        "detail": "16 words",
+        "scene": 0
+      },
+      {
+        "name": "narrator_intro: captions inside the voice window",
+        "ok": true,
+        "detail": "0.30–5.63s",
+        "scene": 0
+      },
+      {
+        "name": "narrator_intro: mouth driven by the voice",
+        "ok": true,
+        "detail": "160/160 envelope frames, 78% mouth-active",
+        "scene": 0
+      },
+      {
+        "name": "chatgpt: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 1
+      },
+      {
+        "name": "chatgpt: captions match the line",
+        "ok": true,
+        "detail": "19 words",
+        "scene": 1
+      },
+      {
+        "name": "chatgpt: captions inside the voice window",
+        "ok": true,
+        "detail": "6.43–13.23s",
+        "scene": 1
+      },
+      {
+        "name": "chatgpt: mouth driven by the voice",
+        "ok": true,
+        "detail": "205/204 envelope frames, 64% mouth-active",
+        "scene": 1
+      },
+      {
+        "name": "claude: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 2
+      },
+      {
+        "name": "claude: captions match the line",
+        "ok": true,
+        "detail": "19 words",
+        "scene": 2
+      },
+      {
+        "name": "claude: captions inside the voice window",
+        "ok": true,
+        "detail": "14.03–20.20s",
+        "scene": 2
+      },
+      {
+        "name": "claude: mouth driven by the voice",
+        "ok": true,
+        "detail": "185/185 envelope frames, 75% mouth-active",
+        "scene": 2
+      },
+      {
+        "name": "gemini: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 3
+      },
+      {
+        "name": "gemini: captions match the line",
+        "ok": true,
+        "detail": "20 words",
+        "scene": 3
+      },
+      {
+        "name": "gemini: captions inside the voice window",
+        "ok": true,
+        "detail": "21.00–27.68s",
+        "scene": 3
+      },
+      {
+        "name": "gemini: mouth driven by the voice",
+        "ok": true,
+        "detail": "201/201 envelope frames, 83% mouth-active",
+        "scene": 3
+      },
+      {
+        "name": "grok: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 4
+      },
+      {
+        "name": "grok: captions match the line",
+        "ok": true,
+        "detail": "17 words",
+        "scene": 4
+      },
+      {
+        "name": "grok: captions inside the voice window",
+        "ok": true,
+        "detail": "28.48–36.57s",
+        "scene": 4
+      },
+      {
+        "name": "grok: mouth driven by the voice",
+        "ok": true,
+        "detail": "243/243 envelope frames, 74% mouth-active",
+        "scene": 4
+      },
+      {
+        "name": "meta: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 5
+      },
+      {
+        "name": "meta: captions match the line",
+        "ok": true,
+        "detail": "17 words",
+        "scene": 5
+      },
+      {
+        "name": "meta: captions inside the voice window",
+        "ok": true,
+        "detail": "37.37–44.21s",
+        "scene": 5
+      },
+      {
+        "name": "meta: mouth driven by the voice",
+        "ok": true,
+        "detail": "206/205 envelope frames, 79% mouth-active",
+        "scene": 5
+      },
+      {
+        "name": "narrator_outro: speaks the scripted answer",
+        "ok": true,
+        "detail": "TTS input matches script",
+        "scene": 6
+      },
+      {
+        "name": "narrator_outro: captions match the line",
+        "ok": true,
+        "detail": "8 words",
+        "scene": 6
+      },
+      {
+        "name": "narrator_outro: captions inside the voice window",
+        "ok": true,
+        "detail": "44.86–48.08s",
+        "scene": 6
+      },
+      {
+        "name": "narrator_outro: mouth driven by the voice",
+        "ok": true,
+        "detail": "97/97 envelope frames, 86% mouth-active",
+        "scene": 6
+      },
+      {
+        "name": "no overlapping voices",
+        "ok": true,
+        "detail": "0.30–5.63 | 6.43–13.23 | 14.03–20.20 | 21.00–27.68 | 28.48–36.57 | 37.37–44.21 | 44.86–48.08"
+      },
+      {
+        "name": "audio not clipping",
+        "ok": true,
+        "detail": "peak 0.863"
+      },
+      {
+        "name": "ChatGPT: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "ChatGPT: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.8%"
+      },
+      {
+        "name": "Claude: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "Claude: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.7%"
+      },
+      {
+        "name": "Gemini: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "Gemini: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.4%"
+      },
+      {
+        "name": "Grok: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "Grok: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.7%"
+      },
+      {
+        "name": "Meta AI: rendered with library sprites",
+        "ok": true,
+        "detail": "matches character library"
+      },
+      {
+        "name": "Meta AI: expression sprites aligned",
+        "ok": true,
+        "detail": "body overlap 99.2%"
+      },
+      {
+        "name": "scene 0 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 5.93s (expected 5.93s)",
+        "scene": 0
+      },
+      {
+        "name": "scene 0 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 0
+      },
+      {
+        "name": "scene 0 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 0
+      },
+      {
+        "name": "scene 1 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 7.60s (expected 7.60s)",
+        "scene": 1
+      },
+      {
+        "name": "scene 1 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 1
+      },
+      {
+        "name": "scene 1 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 1
+      },
+      {
+        "name": "scene 2 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 6.97s (expected 6.97s)",
+        "scene": 2
+      },
+      {
+        "name": "scene 2 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 2
+      },
+      {
+        "name": "scene 2 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 2
+      },
+      {
+        "name": "scene 3 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 7.47s (expected 7.47s)",
+        "scene": 3
+      },
+      {
+        "name": "scene 3 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 3
+      },
+      {
+        "name": "scene 3 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 3
+      },
+      {
+        "name": "scene 4 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 8.90s (expected 8.90s)",
+        "scene": 4
+      },
+      {
+        "name": "scene 4 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 4
+      },
+      {
+        "name": "scene 4 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 4
+      },
+      {
+        "name": "scene 5 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 7.63s (expected 7.63s)",
+        "scene": 5
+      },
+      {
+        "name": "scene 5 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 5
+      },
+      {
+        "name": "scene 5 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 5
+      },
+      {
+        "name": "scene 6 clip valid",
+        "ok": true,
+        "detail": "h264 1080x1920 4.57s (expected 4.57s)",
+        "scene": 6
+      },
+      {
+        "name": "scene 6 decodes cleanly",
+        "ok": true,
+        "detail": "ok",
+        "scene": 6
+      },
+      {
+        "name": "scene 6 has no black frames",
+        "ok": true,
+        "detail": "none",
+        "scene": 6
+      },
+      {
+        "name": "final: H.264 1080x1920",
+        "ok": true,
+        "detail": "h264 1080x1920 yuv420p"
+      },
+      {
+        "name": "final: 30 FPS",
+        "ok": true,
+        "detail": "30/1"
+      },
+      {
+        "name": "final: AAC audio",
+        "ok": true,
+        "detail": "aac 48000Hz 2ch"
+      },
+      {
+        "name": "final: duration within target",
+        "ok": true,
+        "detail": "49.07s (target 30–50s)"
+      },
+      {
+        "name": "final: ends right after the comparison ending (no extra footage)",
+        "ok": true,
+        "detail": "video 49.07s vs timeline 49.07s; scenes: intro → response → response → response → response → response → ending"
+      },
+      {
+        "name": "final: only generated scenes (no inserted clips)",
+        "ok": true,
+        "detail": "7 scenes, all rendered by the character renderer"
+      },
+      {
+        "name": "final: no black frames",
+        "ok": true,
+        "detail": "none"
+      }
+    ],
+    "failedScenes": [],
+    "checkedAt": "2026-11-27T09:09:26.913Z"
+  }
+}
