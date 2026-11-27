@@ -36,6 +36,7 @@ def build(m, tl):
     shots = tl['shots']; total = tl['dur']; seg = {s['id']: s for s in tl['segs']}
     def shot(n): return next(x for x in shots if x['name'] == n)
     turn = seg['small']['start']; end = shot('shoe_shadow')['s']
+    E22.SONG = os.path.join(HERE, 'assets', 'numbers_temporex.mp3')
     m.put(E22.song(total), 0.0, E22.SONG_GAIN, bus='music')   # the user's background track, in every video, start to end
     m.put(A.rumble(total - end + 0.2), end, 0.5, bus='music')
     for s in shots:
