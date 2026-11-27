@@ -1,4 +1,4 @@
-"""Episode 24 "The Only Tall Guy": bouncy plucked bed for the funny half, soft piano from the lonely beat on,
+"""Episode 24 "The Only Tall Guy": the user's background track (numbers_temporex) under the whole video,
 a bonk, a wish boom, squeaks for tiny Zash, a rumble for the shoe."""
 import os, sys
 import numpy as np
@@ -36,9 +36,7 @@ def build(m, tl):
     shots = tl['shots']; total = tl['dur']; seg = {s['id']: s for s in tl['segs']}
     def shot(n): return next(x for x in shots if x['name'] == n)
     turn = seg['small']['start']; end = shot('shoe_shadow')['s']
-    m.put(bounce(turn + 0.4), 0.0, 0.34, bus='music')
-    pn = E22.piano(end - turn + 12, seg['moral']['start'] - turn)[:int((end - turn + 0.6) * SR)]; f = int(0.8 * SR); pn[:f] *= np.linspace(0, 1, f); pn[-f:] *= np.linspace(1, 0, f)
-    m.put(pn, turn - 0.3, 0.46, bus='music')
+    m.put(E22.song(total), 0.0, E22.SONG_GAIN, bus='music')   # the user's background track, in every video, start to end
     m.put(A.rumble(total - end + 0.2), end, 0.5, bus='music')
     for s in shots:
         m.put(E22.softhit(), s['s'], 0.3); m.put(whoosh(0.22), max(0, s['s'] - 0.08), 0.07, pan=rng.uniform(-0.3, 0.3))
