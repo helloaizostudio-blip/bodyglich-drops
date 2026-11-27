@@ -67,7 +67,7 @@ export const CHARACTER_SEEDS: Record<CharacterId, Seed> = {
       "All attitude, a little savage. Confident, quick-witted and unimpressed by everyone else's ideas — roasts them, then drops her own (usually good) plan. Cocky but never cruel.",
     speakingStyle: "Sassy, fast, eye-roll energy. A savage one-liner about the others, then a smug, confident solution.",
     designPrompt:
-      "a tiny sassy chibi cartoon girl (NOT a robot) with an oversized head, long blue-to-violet gradient hair in a high ponytail with small star hair clips, " +
+      "a tiny sassy chibi cartoon girl (NOT a robot) with the same chibi proportions as the rest of the cast (oversized head about half her total height, tiny body), long blue-to-violet gradient hair in a high ponytail with small star hair clips, " +
       "half-lidded unimpressed blue-violet eyes, a confident smirk, a cropped dark navy hoodie with a small purple four-point sparkle star on the chest, black shorts, " +
       "chunky white sneakers, short stubby limbs, attitude and savage vibe but still cute",
     voice: voice("FGY2WhTYpPnrIDTdsKH5", "Laura - Enthusiast, Quirky Attitude", { speed: 1.08, style: 0.5 }),
