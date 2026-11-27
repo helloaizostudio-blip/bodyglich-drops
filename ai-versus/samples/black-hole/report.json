@@ -1,5 +1,5 @@
 {
-  "projectId": "94911ddd-1fa1-4f95-9cd3-d50f2ce0eb8d",
+  "projectId": "63c5d047-4d6d-4275-a0f4-a85bd7ce6c7b",
   "script": {
     "title": "Black Hole",
     "hookTop": "5 AIs. 1 black hole.",
@@ -987,7 +987,7 @@
       {
         "name": "ChatGPT: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.8%"
+        "detail": "body overlap 99.7%"
       },
       {
         "name": "Claude: rendered with library sprites",
@@ -997,7 +997,7 @@
       {
         "name": "Claude: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.7%"
+        "detail": "body overlap 99.2%"
       },
       {
         "name": "Gemini: rendered with library sprites",
@@ -1007,7 +1007,7 @@
       {
         "name": "Gemini: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.4%"
+        "detail": "body overlap 99.7%"
       },
       {
         "name": "Grok: rendered with library sprites",
@@ -1017,7 +1017,7 @@
       {
         "name": "Grok: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.7%"
+        "detail": "body overlap 99.8%"
       },
       {
         "name": "Meta AI: rendered with library sprites",
@@ -1027,7 +1027,7 @@
       {
         "name": "Meta AI: expression sprites aligned",
         "ok": true,
-        "detail": "body overlap 99.2%"
+        "detail": "body overlap 99.8%"
       },
       {
         "name": "scene 0 clip valid",
@@ -1192,6 +1192,6 @@
       }
     ],
     "failedScenes": [],
-    "checkedAt": "2026-11-27T09:09:26.913Z"
+    "checkedAt": "2026-11-27T09:22:49.308Z"
   }
 }

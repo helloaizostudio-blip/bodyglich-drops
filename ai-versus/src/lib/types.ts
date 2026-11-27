@@ -52,7 +52,7 @@ export interface CharacterProfile {
   /** worst body-overlap score between expression sprites after registration (1 = identical) */
   alignmentScore?: number;
   /** reference sheet images (storage keys) */
-  sheets: { core?: string; expressions?: string; views?: string; uploads: string[] };
+  sheets: { core?: string; expressions?: string; views?: string; uploads: string[]; bundledCoreHash?: string; bundledFullHash?: string };
   views: Partial<Record<ViewName, SpriteRef>>;
   locked: boolean;
   updatedAt: string;

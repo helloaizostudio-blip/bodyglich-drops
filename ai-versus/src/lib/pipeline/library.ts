@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
@@ -142,29 +143,36 @@ export async function generateSheet(s: Settings, id: CharacterId, kind: SheetKin
 /** Make sure all five characters have animation sprites; bundled sheets are imported first. */
 export async function ensureCharacterLibrary(s: Settings | null, project: Project | null, log: (m: string) => void) {
   const chars = await getCharacters();
+  const fileHash = (f: string) => (fs.existsSync(f) ? crypto.createHash("sha1").update(fs.readFileSync(f)).digest("hex").slice(0, 16) : "");
   for (const id of CHARACTER_ORDER) {
     let c = chars[id];
-    const bundledFull = path.join(ASSETS_DIR, "characters", id, "sheet-full.png");
-    if (hasCoreSprites(c) && (await allSpritesPresent(c))) {
-      if (!c.sheets.expressions && fs.existsSync(bundledFull)) {
-        log(`importing bundled expression + turnaround sheet for ${c.displayName}`);
-        chars[id] = await importSheet(id, bundledFull, "full");
-      }
-      continue;
+    const dir = path.join(ASSETS_DIR, "characters", id);
+    const bundledCore = path.join(dir, "sheet-core.png");
+    const bundledFull = path.join(dir, "sheet-full.png");
+    const coreHash = fileHash(bundledCore);
+    const fullHash = fileHash(bundledFull);
+    // a changed bundled sheet means the permanent design was updated: rebuild that character
+    const designChanged = !!coreHash && c.sheets.bundledCoreHash !== coreHash && !c.locked;
+    if (designChanged || !hasCoreSprites(c) || !(await allSpritesPresent(c))) {
+      if (coreHash) {
+        log(`importing bundled reference sheet for ${c.displayName}`);
+        c.sprites = {};
+        c.views = {};
+        await saveCharacter(c);
+        c = await importSheet(id, bundledCore, "core");
+        c.sheets.bundledCoreHash = coreHash;
+        c.sheets.bundledFullHash = undefined;
+      } else if (s) {
+        log(`generating reference sheet for ${c.displayName} with fal.ai`);
+        c = await generateSheet(s, id, "core", project);
+      } else throw new Error(`${c.displayName} has no sprites and no generator is configured`);
     }
-    const bundled = path.join(ASSETS_DIR, "characters", id, "sheet-core.png");
-    if (fs.existsSync(bundled)) {
-      log(`importing bundled reference sheet for ${c.displayName}`);
-      c = await importSheet(id, bundled, "core");
-      const full = path.join(ASSETS_DIR, "characters", id, "sheet-full.png");
-      if (fs.existsSync(full)) {
-        log(`importing bundled expression + turnaround sheet for ${c.displayName}`);
-        c = await importSheet(id, full, "full");
-      }
-    } else if (s) {
-      log(`generating reference sheet for ${c.displayName} with fal.ai`);
-      c = await generateSheet(s, id, "core", project);
-    } else throw new Error(`${c.displayName} has no sprites and no generator is configured`);
+    if (fullHash && c.sheets.bundledFullHash !== fullHash) {
+      log(`importing bundled expression + turnaround sheet for ${c.displayName}`);
+      c = await importSheet(id, bundledFull, "full");
+      c.sheets.bundledFullHash = fullHash;
+    }
+    await saveCharacter(c);
     chars[id] = c;
   }
   return chars;
