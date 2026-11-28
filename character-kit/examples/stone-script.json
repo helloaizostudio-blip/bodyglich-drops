@@ -1,0 +1,40 @@
+{
+ "title": "How Doctors Smash a Kidney Stone Without Cutting You",
+ "voice": "elevenlabs:TX3LPaxmHKxFdv7VOQHJ",
+ "speed": 1.08,
+ "lead": 0.05,
+ "outro": 0.5,
+ "gap": 0.12,
+ "music": "tension",
+ "sources": [
+  "Shock wave lithotripsy (ESWL): shock waves aimed from outside the body break kidney/ureteric stones into small pieces that are passed in urine; usually thousands of shocks per session (NHS, 'Kidney stones - Treatment'; NIDDK, 'Treatment for Kidney Stones')",
+  "Kidney stones can block the ureter (the tube draining the kidney) and cause severe pain (renal colic) (NHS; NIDDK)",
+  "Roller coaster study: Mitchell & Wartinger (2016), J Am Osteopath Assoc 116(10):647-652 - a 3D-printed model kidney with real stones ridden on a roller coaster; small stones passed far more often, especially in the back seat"
+ ],
+ "lines": [
+  {
+   "text": "This kidney stone is stuck, and the pain is brutal. Here's how doctors smash it without a single cut."
+  },
+  {
+   "text": "It's jammed in the tube that drains your kidney."
+  },
+  {
+   "text": "So doctors fire thousands of shock waves at it, from outside your body."
+  },
+  {
+   "text": "Each wave cracks it a little more,"
+  },
+  {
+   "text": "until it shatters into tiny grains, like sand."
+  },
+  {
+   "text": "Then you just pee the pieces out."
+  },
+  {
+   "text": "And here's the twist. In a model kidney, riding a roller coaster helped small stones pass."
+  },
+  {
+   "text": "Would you ride one to skip the pain? Tell me below."
+  }
+ ]
+}
