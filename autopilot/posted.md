@@ -51,3 +51,4 @@
 | 2026-11-27 | clipgta6no3 | Asmongold: watch the champion at work (Zapier) | https://youtube.com/shorts/lfTxlOFWZ58 | (no campaign) |
 | 2026-11-27 | clipgta6no4 | Boeshi spots a UFO in GTA 6 (Buffer, paid) | https://youtube.com/shorts/Mt6I8rKiwzc | Boeshi |
 | 2026-11-27 | clipboygta6 | Kai Cenat hits $183,000 in ONE run (Buffer, paid) | https://youtube.com/shorts/kYGZ5WAmmpM | Kai Cenat |
+| 2026-11-28 | Clipnourgta6 | Asmongold flexes his efficiency, 2 seconds later (Zapier) | https://youtube.com/shorts/0OJRhJKfVok | (no campaign) |
